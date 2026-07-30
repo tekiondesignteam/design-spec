@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Pre-commit guardrail for the shared design repo.
+#
+# Blocks any commit that adds, modifies, renames, or deletes files under
+# design-system/. That folder is the read-only source of truth — designers
+# work only inside their own projects/<name>/ folder.
+#
+# Install (from the repo root):
+#   cp hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+#
+# Bypass (maintainers only, when intentionally editing the design system):
+#   git commit --no-verify
+
+# Staged paths (added/copied/modified/renamed/deleted), NUL-safe.
+blocked=$(git diff --cached --name-only --diff-filter=ACMRD -z \
+  | tr '\0' '\n' \
+  | grep -E '^design-system/' )
+
+if [ -n "$blocked" ]; then
+  echo "✋  Commit blocked: this change touches the read-only design-system/ folder."
+  echo ""
+  echo "    The design system is the shared source of truth. Designers work only"
+  echo "    inside their own projects/<name>/ folder."
+  echo ""
+  echo "    Offending files:"
+  echo "$blocked" | sed 's/^/      - /'
+  echo ""
+  echo "    If you are a maintainer intentionally editing the design system,"
+  echo "    bypass with:  git commit --no-verify"
+  exit 1
+fi
+
+exit 0
