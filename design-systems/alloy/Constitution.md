@@ -4,7 +4,7 @@
 Alloy is the **Digital Retail Program (DRP)** design system — white-label ecommerce UI for GM's four brands (**Chevrolet, Buick, GMC, Cadillac**), one system switched at runtime via a `[data-brand]` attribute on `<html>`. This file is inherited by every project built on Alloy and records only values true system-wide. Fields are either an exact value/path pulled from the Alloy sources (`styles/tokens.css`, `styles/brands.css`, `styles/global.css`, `CLAUDE.md`) or a governance decision by the design-system owner. Genuine gaps say **"not yet defined."**
 
 **Design source of truth:** Figma `RsCbyz0LF6FaItYny1FqUU` ("GM • 01. Core Variables") + Storybook `https://aecgm-dev.tekion.xyz/docs/ui-components/`.
-**Populated:** 2026-07-30 from `design-systems/alloy/`.
+**Populated:** 2026-07-30 from `design-systems/alloy/`; the previously-undefined fields (grid, breakpoints, density, accessibility, i18n, motion, versioning, governance) were resolved by owner decision on the same date.
 
 ---
 
@@ -27,16 +27,16 @@ Alloy is the **Digital Retail Program (DRP)** design system — white-label ecom
 
 ## 3. Layout & Grid
 
-- Grid system (columns, gutters): **not yet defined** — no formal column grid. Search results use a card grid (VSR card 305px desktop / 433px mobile).
-- Breakpoints: **Responsive tiers exist (desktop / tablet / mobile)** — e.g. header heights desktop 88px, tablet 64–120px, mobile 80–121px — but there are **no named breakpoint tokens**. Formal breakpoint values: not yet defined.
-- Density rules: **not yet defined** as a mode. Density is expressed through per-component size variants (e.g. button 32 / 40 / 48px, input 44 / 56px) chosen per context.
+- Grid system (columns, gutters): **Responsive column grid — 12 (desktop) / 8 (tablet) / 4 (mobile).** Gutters from the spacing scale (24px desktop, 16px tablet/mobile). Search results additionally use a card grid (VSR card 305px desktop / 433px mobile).
+- Breakpoints: **Mobile < 600px · Tablet 600–1024px · Desktop ≥ 1024px.** These are the tiers the column grid (§3) steps at and that the header height variants (desktop 88 / tablet 64–120 / mobile 80–121px) already assume; formalize them as named breakpoint tokens.
+- Density rules: **Comfortable only** — a single density. There is no global compact/comfortable switch; density is expressed through per-component size variants (e.g. button 32 / 40 / 48px, input 44 / 56px) chosen by context.
 
 ## 4. Color & Theming
 
 - Light mode palette - file/path: `styles/tokens.css` (Chevy base) + `styles/brands.css`.
 - Dark mode palette - file/path: **None — the theming axis is brand, not light/dark.** No dark mode.
 - Semantic color rules: Four brands via `[data-brand]` on `<html>`; brand accent = **`var(--brand-color)`** (Chevrolet `#0077D9` · Buick `#D44400` · GMC `#CC0000` · Cadillac `#171473`). Status colors are semantic: success `#2d871b`, warning `#b3842d`, error `#d64022`, primary `#0077d9`. **Never hardcode a brand hex** — always route through `var(--brand-color)`; never invent parallel token namespaces (`CLAUDE.md`).
-- Minimum contrast ratio required: **not yet defined.**
+- Minimum contrast ratio required: **WCAG AA — 4.5:1** for normal text, **3:1** for large text (≥24px, or ≥18.66px bold) and UI components / graphical objects. Verify each brand accent (`var(--brand-color)`) and muted greys (`#666666`, `#b3b3b3`) meet this on their backgrounds.
 
 ## 5. Typography
 
@@ -54,20 +54,20 @@ Alloy is the **Digital Retail Program (DRP)** design system — white-label ecom
 
 ## 7. Accessibility
 
-- Minimum tap/click target size: **44×44px where defined** (e.g. `--checkbox-hit-area` = 44px; avatar bell hit 40px) — used, but **not yet enforced system-wide**.
-- Target WCAG compliance level (e.g. AA or AAA): **not yet defined.**
-- Keyboard navigation requirement: **Partially addressed** — a focus ring is tokenized (`--focus-ring-color` `#0077d9`, offset 4px, radius rect 4 / btn 12) and components expose focus handling; there is no documented system-wide keyboard-accessibility guarantee.
+- Minimum tap/click target size: **40×40px**, enforced system-wide (aligns with Alloy's medium control height; smaller controls reserve hit area via padding). Note: the checkbox already ships a larger 44px hit-area (`--checkbox-hit-area`), which exceeds this and is fine.
+- Target WCAG compliance level (e.g. AA or AAA): **WCAG 2.1 AA** (matches the 4.5:1 contrast target in §4). Public GM consumer sites — accessibility is a release consideration.
+- Keyboard navigation requirement: **Required — all interactive elements must be keyboard-reachable and operable, with a visible focus ring.** This is a release gate (consistent with the AA target in §4/§7). The focus ring is already tokenized (`--focus-ring-color` `#0077d9`, offset 4px, radius rect 4 / btn 12) — use it, never suppress it.
 
 ## 8. Internationalization (i18n) & Localization
 
-- RTL (Right-to-Left) support required? **not yet defined.**
-- Text expansion rule: **not yet defined.**
+- RTL (Right-to-Left) support required? **No — LTR only.** GM DRP markets are LTR; components are not required to mirror.
+- Text expansion rule: **Containers must handle 1.5x text length without breaking layout.** No fixed-width labels; text wraps or truncates gracefully rather than overflowing or clipping.
 
 ## 9. Motion
 
-- Standard durations (fast/medium/slow, in ms): **not yet defined** — no motion tokens in the system.
-- Standard easing curves: **not yet defined.**
-- Rule for when motion is/isn't appropriate: **not yet defined.**
+- Standard durations (fast/medium/slow, in ms): **Fast 100ms** (micro-feedback: hover, press) · **Medium 200ms** (standard transitions: toggles, expand/collapse) · **Slow 300ms** (entrances: menus, modals, drawers). Add as motion tokens in `styles/tokens.css`.
+- Standard easing curves: **ease-out** as the default (entrances and most transitions); ease-in for exits. **No bounce, no spring.**
+- Rule for when motion is/isn't appropriate: Functional and subtle only — state feedback, overlay enter/exit, expand/collapse. No decorative or ambient motion. Respect `prefers-reduced-motion` (reduce/disable non-essential motion).
 
 ## 10. Visual Identity Baseline
 
@@ -82,15 +82,25 @@ Alloy is the **Digital Retail Program (DRP)** design system — white-label ecom
 
 ## 12. Versioning & Upgrades
 
-- Versioning strategy: **not yet defined** — no SemVer; work is tracked in sprints (S-numbers, e.g. "S8 closed 2026-04-27"). Figma (`RsCbyz0LF6FaItYny1FqUU`) + Storybook are the source of truth.
-- Breaking change communication (migration guides): **not yet defined** — no CHANGELOG/migration-guide location. System-level quality is tracked in repo-root docs: `audit-summary.md`, `systemic-findings.md`, `drift-prevention-memo.md`, `css-runtime-changes.md`.
+- Versioning strategy: **Date-based (CalVer)** — `YYYY.MM` (e.g. `2026.07`). Complements the existing sprint tracking (S-numbers) and keeps Figma (`RsCbyz0LF6FaItYny1FqUU`) + Storybook as the design source of truth.
+- Breaking change communication (migration guides): **`design-systems/alloy/CHANGELOG.md`** — one entry per CalVer release, with breaking token/class changes and migration steps inline. (System-level quality/drift continues in the repo-root docs: `audit-summary.md`, `systemic-findings.md`, `drift-prevention-memo.md`, `css-runtime-changes.md`.)
 
 ## 13. Governance
 
-- Who approves exceptions/deviations to this file: **not yet defined** — the DRP design-system owner (no name recorded in-repo).
-- Where exceptions get logged: per project, in that project's `constitution.md` §5; system-level drift is captured in the repo's audit docs above. A formal system-wide exceptions log is **not yet defined**.
-- Review cadence for this document: **not yet defined** (sprint cadence in practice).
+- Who approves exceptions/deviations to this file: **Alpesh Karanpuria** (akaranpuria@tekion.com), design-system owner/maintainer, signs off on any deviation. Figma (`RsCbyz0LF6FaItYny1FqUU`) + Storybook remain the design source of truth.
+- Where exceptions get logged: **Per project only** — in that project's `constitution.md` §5 "Project-specific deviations" (date / what / who approved). No system-wide exceptions log; system-level drift continues to be tracked in the repo-root audit docs.
+- Review cadence for this document: **Every release** — reviewed and updated at each CalVer release, when the system changes.
 
 ---
 
-**Note for design system owner:** Fields above are exact references or explicit "not yet defined." The gaps in Alloy today — column grid, formal breakpoints, density mode, contrast/WCAG/tap-target enforcement, RTL/text-expansion, all of motion, versioning/migration, and formal governance — mirror the same categories T1 resolved by owner decision. Resolve them in the Alloy sources, then update this file so downstream projects inherit the answers. **Brand and multi-theme (not light/dark) is the deliberate theming model.**
+**Follow-up actions to make these decisions real in the Alloy sources:**
+
+1. **Breakpoint + grid tokens** — add named breakpoints (600 / 1024) and the 12 / 8 / 4-column grid with 24/16px gutters.
+2. **Motion tokens** — add `fast 100 / medium 200 / slow 300ms` + ease-out to `styles/tokens.css`; honor `prefers-reduced-motion`.
+3. **Contrast** — audit each `var(--brand-color)` and muted greys for AA 4.5:1; fix failures.
+4. **Tap target** — ensure interactive controls reserve a 40×40px hit area.
+5. **Keyboard nav** — make full keyboard operability a release gate; never suppress the focus ring.
+6. **Text expansion** — audit for 1.5x tolerance; no fixed-width labels.
+7. **Versioning** — stamp a CalVer version and create `design-systems/alloy/CHANGELOG.md`.
+
+**Brand-based multi-theme (not light/dark) is the deliberate theming model.** Decisions here are binding until changed via §13 governance (owner: Alpesh Karanpuria; reviewed every release).
