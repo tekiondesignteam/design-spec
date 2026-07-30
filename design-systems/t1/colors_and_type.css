@@ -1,0 +1,253 @@
+/* ==========================================================================
+   T1 Design System — Core Tokens
+   Typography + Color primitives + Semantic tokens
+   Source of truth. Components reference these via var(--t1-*).
+   ========================================================================== */
+
+/* ---- Fonts ---------------------------------------------------------------- */
+/* Active weights: Light (300) · Regular (400) · Medium (500) · Semibold (600) */
+@font-face { font-family: "Proxima Nova"; font-weight: 300; font-style: normal;
+  src: url("./fonts/Proxima-Nova-Light.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Proxima Nova"; font-weight: 300; font-style: italic;
+  src: url("./fonts/Proxima-Nova-Light-Italic.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Proxima Nova"; font-weight: 400; font-style: normal;
+  src: url("./fonts/Proxima-Nova-Regular.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Proxima Nova"; font-weight: 400; font-style: italic;
+  src: url("./fonts/Proxima-Nova-Regular-Italic.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Proxima Nova"; font-weight: 500; font-style: normal;
+  src: url("./fonts/Proxima-Nova-Medium.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Proxima Nova"; font-weight: 500; font-style: italic;
+  src: url("./fonts/Proxima-Nova-Medium-It.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Proxima Nova"; font-weight: 600; font-style: normal;
+  src: url("./fonts/Proxima-Nova-Semibold.otf") format("opentype"); font-display: swap; }
+@font-face { font-family: "Proxima Nova"; font-weight: 600; font-style: italic;
+  src: url("./fonts/Proxima-Nova-Semibold-Italic.otf") format("opentype"); font-display: swap; }
+
+:root {
+  /* ========================================================================
+     COLOR PRIMITIVES — raw palette, extracted from Figma metadata.
+     Never reference these directly in components; use semantic tokens below.
+     ======================================================================== */
+
+  /* Neutral / grey ramp (dominant palette — 1200+ uses) */
+  --t1-neutral-0:    rgb(255,255,255);  /* white — fills, stroke, text */
+  --t1-neutral-25:   rgb(247,248,249);  /* subtle bg — neutral button hover */
+  --t1-neutral-50:   rgb(244,245,246);  /* subtle fills, row hover */
+  --t1-neutral-100:  rgb(237,238,240);  /* bubble fill, dividers */
+  --t1-neutral-150:  rgb(232,233,235);  /* strokes */
+  --t1-neutral-200:  rgb(212,213,214);  /* borders */
+  --t1-neutral-400:  rgb(150,154,163);  /* placeholder / muted */
+  --t1-neutral-500:  rgb(109,112,122);  /* secondary text */
+  --t1-neutral-600:  rgb(68,79,92);     /* icon / secondary text */
+  --t1-neutral-700:  rgb(63,71,87);     /* button label */
+  --t1-neutral-900:  rgb(22,22,22);     /* primary text */
+  --t1-neutral-ink:  rgb(10,10,10);     /* icon ink */
+  --t1-neutral-1000: rgb(0,0,0);
+
+  /* Primary blue (ActionBlue) */
+  --t1-blue-50:   rgb(235,244,255);
+  --t1-blue-100:  rgb(219,235,255);
+  --t1-blue-400:  rgb(66,133,244);
+  --t1-blue-500:  rgb(51,115,221);
+  --t1-blue-600:  rgb(26,108,196);
+  --t1-blue-700:  rgb(0,96,255);
+
+  /* Brand violet (AI / Tekion One mark) */
+  --t1-violet-500: rgb(138,56,245);
+  --t1-violet-600: rgb(151,71,255);
+  --t1-violet-100: rgb(197,205,243);
+
+  /* Success green */
+  --t1-green-25:  rgb(239,250,238);  /* very light green — success card header bg */
+  --t1-green-50:  rgb(225,250,240);
+  --t1-green-100: rgb(207,245,235);
+  --t1-green-400: rgb(86,191,77);
+  --t1-green-500: rgb(6,188,117);
+  --t1-green-700: rgb(5,122,76);
+
+  /* Teal — switch states */
+  --t1-teal-400: rgb(207,212,220); /* #cfd4dc — switch unselected track */
+  --t1-teal-500: rgb(0,191,165);   /* #00bfa5 — switch selected track */
+
+  /* Error red */
+  --t1-red-400:  rgb(245,47,29);
+  --t1-red-500:  rgb(214,37,8);
+  --t1-red-600:  rgb(160,27,5);   /* #a01b05 — assistivetext/error/text */
+  --t1-red-700:  rgb(147,25,4);
+
+  /* Warning amber */
+  --t1-amber-50:  rgb(255,243,220);  /* warning light bg */
+  --t1-amber-400: rgb(255,178,60);
+  --t1-amber-700: rgb(138,87,0);    /* warning text */
+
+  /* Brand gradient (AI send / generate) — teal → cyan → blue */
+  --t1-grad-teal:  rgb(37,200,165);
+  --t1-grad-cyan:  rgb(27,144,180);
+  --t1-grad-blue:  rgb(26,108,196);
+  --t1-gradient-brand: linear-gradient(180deg,
+      var(--t1-grad-teal) 0%,
+      var(--t1-grad-cyan) 50%,
+      var(--t1-grad-blue) 100%);
+  --t1-gradient-brand-diag: linear-gradient(135deg,
+      var(--t1-grad-teal) 0%,
+      var(--t1-grad-cyan) 50%,
+      var(--t1-grad-blue) 100%);
+
+  /* Shadow primitive */
+  --t1-shadow-soft: 0 1px 2px rgba(25,40,57,0.09), 0 2px 8px rgba(25,40,57,0.06);
+  --t1-shadow-card: 0 4px 16px rgba(25,40,57,0.09);
+  --t1-shadow-pop:  0 12px 32px rgba(25,40,57,0.14);
+
+  /* ========================================================================
+     SEMANTIC TOKENS — use these in components.
+     ======================================================================== */
+
+  /* Foreground */
+  --t1-fg:              var(--t1-neutral-900);
+  --t1-fg-muted:        var(--t1-neutral-500);
+  --t1-fg-subtle:       var(--t1-neutral-400);
+  --t1-fg-on-primary:   var(--t1-neutral-0);
+  --t1-fg-brand:        var(--t1-blue-500);
+  --t1-fg-success:      var(--t1-green-700);
+  --t1-fg-danger:       var(--t1-red-500);
+  --t1-fg-icon:         var(--t1-neutral-ink);
+  --t1-fg-icon-muted:   var(--t1-neutral-600);
+
+  /* Background / surface */
+  --t1-bg:              var(--t1-neutral-0);
+  --t1-bg-canvas:       var(--t1-neutral-50);
+  --t1-bg-muted:        var(--t1-neutral-100);
+  --t1-bg-brand:        var(--t1-blue-400);
+  --t1-bg-brand-soft:   var(--t1-blue-50);
+  --t1-bg-success-soft: var(--t1-green-50);
+  --t1-bg-danger-soft:  rgb(253,232,229);
+
+  /* Border */
+  --t1-border:          var(--t1-neutral-200);
+  --t1-border-subtle:   var(--t1-neutral-150);
+  --t1-border-strong:   var(--t1-neutral-400);
+  --t1-border-input:    var(--t1-neutral-400);
+  --t1-border-focus:    var(--t1-blue-400);
+  --t1-border-danger:   var(--t1-red-500);
+
+  /* Radius scale — tight, pills, cards */
+  --t1-radius-xs: 2px;   /* buttons, inputs, badges */
+  --t1-radius-sm: 4px;
+  --t1-radius-md: 8px;   /* chat bubble corners, icon buttons */
+  --t1-radius-lg: 12px;  /* prompt composer, modals */
+  --t1-radius-xl: 16px;
+  --t1-radius-pill: 9999px;
+
+  /* Spacing (4pt grid) */
+  --t1-space-0: 0px;
+  --t1-space-1: 4px;
+  --t1-space-2: 8px;
+  --t1-space-3: 12px;
+  --t1-space-4: 16px;
+  --t1-space-5: 20px;
+  --t1-space-6: 24px;
+  --t1-space-8: 32px;
+  --t1-space-10: 40px;
+  --t1-space-12: 48px;
+  --t1-space-16: 64px;
+
+  /* ========================================================================
+     TYPOGRAPHY — family, weights, type scale
+     ======================================================================== */
+
+  --t1-font-sans: "Proxima Nova", "Mona Sans", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --t1-font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --t1-weight-light:    300;
+  --t1-weight-regular:  400;
+  --t1-weight-medium:   500;
+  --t1-weight-semibold: 600;
+
+  /* Type scale (font-size / line-height). Observed in Figma: 10, 12, 14, 16, 24, 32. */
+  --t1-text-10:  10px;  --t1-leading-10:  12px;   /* tiny labels, overline */
+  --t1-text-12:  12px;  --t1-leading-12:  14px;   /* assistive / badge */
+  --t1-text-14:  14px;  --t1-leading-14:  16px;   /* body default */
+  --t1-text-16:  16px;  --t1-leading-16:  24px;   /* prompt input, h5 */
+  --t1-text-24:  24px;  --t1-leading-24:  30px;   /* welcome greeting, h3 */
+  --t1-text-32:  32px;  --t1-leading-32:  40px;   /* display */
+}
+
+/* ==========================================================================
+   SEMANTIC TYPE CLASSES — apply these directly or copy the rules
+   ========================================================================== */
+
+html, body { font-family: var(--t1-font-sans); color: var(--t1-fg); }
+
+.t1-display {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-semibold);
+  font-size: var(--t1-text-32);
+  line-height: var(--t1-leading-32);
+  color: var(--t1-fg);
+  letter-spacing: -0.01em;
+}
+.t1-h1 {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-semibold);
+  font-size: var(--t1-text-24);
+  line-height: var(--t1-leading-24);
+  color: var(--t1-fg);
+}
+.t1-h2 {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-semibold);
+  font-size: var(--t1-text-16);
+  line-height: var(--t1-leading-16);
+  color: var(--t1-fg);
+}
+.t1-body {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-regular);
+  font-size: var(--t1-text-14);
+  line-height: var(--t1-leading-14);
+  color: var(--t1-fg);
+}
+.t1-body-md {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-medium);
+  font-size: var(--t1-text-14);
+  line-height: var(--t1-leading-14);
+  color: var(--t1-fg);
+}
+.t1-body-lg {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-regular);
+  font-size: var(--t1-text-16);
+  line-height: var(--t1-leading-16);
+  color: var(--t1-fg);
+}
+.t1-caption {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-regular);
+  font-size: var(--t1-text-12);
+  line-height: var(--t1-leading-12);
+  color: var(--t1-fg-muted);
+}
+.t1-overline {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-semibold);
+  font-size: var(--t1-text-10);
+  line-height: var(--t1-leading-10);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--t1-fg-muted);
+}
+.t1-label {
+  font-family: var(--t1-font-sans);
+  font-weight: var(--t1-weight-semibold);
+  font-size: var(--t1-text-14);
+  line-height: var(--t1-leading-14);
+  color: var(--t1-fg);
+}
+.t1-mono {
+  font-family: var(--t1-font-mono);
+  font-size: var(--t1-text-12);
+  line-height: var(--t1-leading-14);
+  color: var(--t1-fg);
+}

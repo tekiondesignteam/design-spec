@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Switch · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-stage { display: inline-block; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Switch</div>
+  <div id="root" class="preview-stage"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <style>
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #969aa3; margin: 28px 0 10px; }
+    .row { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+  </style>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.Switch) { setTimeout(waitForComponents, 50); return; }
+
+      const Section = ({ label, children }) => (
+        <><div className="section-label">{label}</div><div className="row">{children}</div></>
+      );
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <div>
+          <Section label="Unchecked / Checked">
+            <Switch label="Off" />
+            <Switch checked label="On" />
+          </Section>
+
+          <Section label="No label">
+            <Switch />
+            <Switch checked />
+          </Section>
+
+          <Section label="Disabled">
+            <Switch label="Disabled off" disabled />
+            <Switch checked label="Disabled on" disabled />
+          </Section>
+
+          <Section label="Force states — is-checked / is-disabled">
+            <Switch className="is-checked" label="Forced on" />
+            <Switch className="is-disabled" label="Forced disabled" />
+          </Section>
+        </div>
+      );
+    })();
+  </script>
+</body>
+</html>

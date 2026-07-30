@@ -1,0 +1,160 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   SUGGESTION-LIST  (Figma: aiT1SuggestionList)
+                    item states  (Figma: aiT1SuggestionListItem)
+   BEM prefix: t1-sug
+
+   Item state tokens  (from Figma variables)
+   ─────────────────────────────────────────────────────────────────────────
+   State      Background   Text
+   default    #ffffff      #444f5c   → $t1-neutral-0    / $t1-neutral-600
+   hover      #dbebff      #6d707a   → $t1-blue-100     / $t1-neutral-500
+   active     #dbebff      #6d707a   → $t1-blue-100     / $t1-neutral-500
+   disabled   #f4f5f6      #969aa3   → $t1-neutral-50   / $t1-neutral-400
+
+   Other tokens
+   ─────────────────────────────────────────────────────────────────────────
+   Container width            240px
+   Container gap              2px   (between items, Figma: aiT1SuggestionList/gap)
+   Item min-height            32px
+   Item padding               8px 12px
+   Item border-radius         2px
+   Item gap (icon ↔ label)    8px
+   Icon size                  16×16px
+   Icon color (default)       #969aa3   → $t1-neutral-400
+   Label                      body2Regular: 14px / 400 / 16px
+   Divider height             1px
+   Divider color              #d4d5d6   → $t1-neutral-200
+
+   Anatomy
+   ─────────────────────────────────────────────────────────────────────────
+   .t1-sug
+     .t1-sug__item              (button, states: default / hover / active)
+     .t1-sug__item[disabled]    disabled state
+       .t1-sug__icon-wrap       16×16 icon container
+         <i ph-chat-circle-text>
+       .t1-sug__label           body2Regular, truncated
+     .t1-sug__divider           1px separator between pairs
+   ========================================================================== */
+
+/* ── Container ──────────────────────────────────────────────────────────── */
+.t1-sug {
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+  box-sizing:     border-box;
+}
+
+/* ── Item row (button) ──────────────────────────────────────────────────── */
+.t1-sug__item {
+  display:        flex;
+  align-items:    center;
+  gap:            8px;
+  min-height:     32px;
+  padding:        8px 12px;
+  background:     $t1-neutral-0;       /* default: #ffffff */
+  border-radius: $t1-radius-xs;
+  box-sizing:     border-box;
+  width:          100%;
+  cursor:         pointer;
+
+  /* Reset button defaults */
+  border:         none;
+  outline:        none;
+  text-align:     left;
+  font:           inherit;
+  -webkit-appearance: none;
+  appearance:     none;
+
+  transition:     background 100ms ease, color 100ms ease;
+}
+
+/* ── Hover state ────────────────────────────────────────────────────────── */
+/* bg #dbebff ($t1-blue-100), text → neutral-500 (#6d707a) */
+.t1-sug__item:hover:not(:disabled),
+.t1-sug__item.is-hover {
+  background: $t1-blue-100;            /* #dbebff */
+
+  .t1-sug__label {
+    color: $t1-neutral-500;            /* #6d707a */
+  }
+}
+
+/* ── Active / pressed state ─────────────────────────────────────────────── */
+/* Same background as hover, same text colour */
+.t1-sug__item:active:not(:disabled),
+.t1-sug__item.is-active {
+  background: $t1-blue-100;            /* #dbebff */
+
+  .t1-sug__label {
+    color: $t1-neutral-500;            /* #6d707a */
+  }
+}
+
+/* ── Disabled state ─────────────────────────────────────────────────────── */
+/* bg #f4f5f6 ($t1-neutral-50), text → neutral-400 (#969aa3) */
+.t1-sug__item:disabled,
+.t1-sug__item.is-disabled {
+  background:     $t1-neutral-50;      /* #f4f5f6 */
+  cursor:         not-allowed;
+  pointer-events: none;
+
+  .t1-sug__label {
+    color: $t1-neutral-400;            /* #969aa3 */
+  }
+
+  .t1-sug__icon-wrap {
+    color: $t1-neutral-400;            /* icon also dims */
+    opacity: 0.6;
+  }
+}
+
+/* ── Focus ring (keyboard nav) ──────────────────────────────────────────── */
+.t1-sug__item:focus-visible {
+  outline:        2px solid $t1-blue-500;
+  outline-offset: -2px;
+}
+
+/* ── Icon wrapper ───────────────────────────────────────────────────────── */
+/* Fixed 16×16 container; inherits no colour from item — pinned to neutral-400 */
+.t1-sug__icon-wrap {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           16px;
+  height:          16px;
+  flex-shrink:     0;
+  color:           $t1-neutral-400;    /* #969aa3 — icon/tertiary/default */
+  font-size:       16px;
+  line-height:     1;
+}
+
+/* ── Label ──────────────────────────────────────────────────────────────── */
+/* body2Regular: 14px / 400 / 16px · 0 tracking · truncated */
+.t1-sug__label {
+  font-family:    $t1-font-sans;
+  font-size:      14px;
+  font-weight:    400;
+  line-height:    16px;
+  letter-spacing: 0;
+  color:          $t1-neutral-600;     /* default: #444f5c */
+
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+  white-space:    nowrap;
+
+  flex:           1;
+  min-width:      0;                   /* required for ellipsis in flex child */
+
+  transition:     color 100ms ease;
+}
+
+/* ── Divider ────────────────────────────────────────────────────────────── */
+/* 1px line rendered between every adjacent pair of items */
+.t1-sug__divider {
+  height:      1px;
+  background:  $t1-neutral-200;        /* #d4d5d6 */
+  width:       100%;
+  flex-shrink: 0;
+}

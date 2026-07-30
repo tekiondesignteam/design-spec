@@ -1,0 +1,108 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   TASK-CARD
+   BEM prefix: t1-tc
+
+   Layout
+   ─────────────────────────────────────────────────────────────────────────
+   .t1-tc                   — horizontal flex card shell (min-width 320px)
+     .t1-tc__icon-block     — 36×36 gray square with icon (flex-shrink: 0)
+     .t1-tc__container      — flex-col, gap 16px  (flex: 1)
+       .t1-tc__title        — card heading (14px/600)
+       .t1-tc__tasks        — flex-col task rows (gap 16px)
+         .t1-tc__task       — checkbox + label row
+         .t1-tc__task-label — 12px task text
+       .t1-tc__actions      — "Stop" + "Notify When Done" link row
+   ========================================================================== */
+
+/* ── Card shell ──────────────────────────────────────────────────────────── */
+.t1-tc {
+  width:       100%;
+  min-width:   0;
+  background:  $t1-neutral-0;
+  border:      1px solid $t1-neutral-200;
+  border-radius: $t1-radius-xs;            /* 2px */
+  padding:     $t1-space-4;               /* 16px */
+  box-sizing:  border-box;
+  display:     flex;
+  align-items: flex-start;
+  gap:         $t1-space-4;               /* 16px */
+  font-family: $t1-font-sans;
+}
+
+/* ── Icon block ──────────────────────────────────────────────────────────── */
+.t1-tc__icon-block {
+  width:         36px;
+  height:        36px;
+  background:    $t1-neutral-100;          /* #edeef0 */
+  border-radius: $t1-radius-xs;
+  display:       grid;
+  place-items:   center;
+  flex-shrink:   0;
+  color:         $t1-neutral-500;          /* #6d707a */
+  font-size:     18px;
+}
+
+/* ── Right-hand container ────────────────────────────────────────────────── */
+.t1-tc__container {
+  flex:            1;
+  min-width:       0;
+  display:         flex;
+  flex-direction:  column;
+  gap:             $t1-space-4;           /* 16px */
+}
+
+/* ── Title ───────────────────────────────────────────────────────────────── */
+.t1-tc__title {
+  font-size:   14px;
+  font-weight: $t1-weight-semibold;       /* 600 */
+  color:       $t1-neutral-900;           /* #161616 */
+  line-height: 16px;
+}
+
+/* ── Task list ───────────────────────────────────────────────────────────── */
+.t1-tc__tasks {
+  display:        flex;
+  flex-direction: column;
+  gap:            $t1-space-4;            /* 16px */
+}
+
+.t1-tc__task {
+  display:        flex;
+  align-items:    center;
+  gap:            $t1-space-2;            /* 8px */
+  width:          100%;
+
+  /* Task state is AI-controlled — block all user interaction on the row */
+  pointer-events: none;
+  cursor:         default;
+  user-select:    none;
+}
+
+.t1-tc__task-label {
+  font-size:   12px;
+  font-weight: $t1-weight-medium;         /* 500 */
+  color:       $t1-neutral-900;           /* #161616 */
+  line-height: 16px;
+}
+
+/* Strikethrough + muted for completed tasks */
+.t1-tc__task--done .t1-tc__task-label {
+  color:           $t1-neutral-400;       /* #969aa3 */
+  text-decoration: line-through;
+}
+
+/* ── Action group — user-facing controls (Stop / Notify) ─────────────────── */
+.t1-tc__actions {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-4;              /* 16px */
+}
+
+/* Match Figma link/md: 14px, weight 500, line-height 20px */
+.t1-tc .t1-link {
+  font-size:   14px;
+  font-weight: $t1-weight-medium;
+  line-height: 20px;
+}

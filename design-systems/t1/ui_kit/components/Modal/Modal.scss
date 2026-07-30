@@ -1,0 +1,136 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   MODAL  (Figma: aiT1Modal)
+   BEM prefix: t1-modal
+
+   Design tokens (Figma → SCSS)
+   ─────────────────────────────────────────────────────────────────────────
+   Overlay bg        : rgba(0,0,0,0.4)            → hardcoded
+   Panel bg          : #ffffff                    → $t1-neutral-0
+   Panel radius      : none
+   Panel shadow      : elevation/pop              → $t1-shadow-pop
+   Panel width       : 480px                      → via inline style prop
+   Panel max-width   : 100vw − 48px
+   Panel max-height  : 100vh − 96px
+
+   Header bg         : #edeef0                    → $t1-neutral-100
+   Header padding    : 16px 24px                  → $t1-space-4 $t1-space-6
+   Header gap        : 16px                       → $t1-space-4
+   Header title      : 20px/600/lh-32px           → $t1-weight-semibold
+   Header title color: #161616                    → $t1-neutral-900
+   Header subtitle   : 16px/400/lh-24px           → $t1-weight-regular
+   Header subtitle c : #444f5c                    → $t1-neutral-600
+   Header content gap: 8px                        → $t1-space-2
+
+   Body padding      : 24px                       → $t1-space-6
+
+   Footer border     : 1px solid #d4d5d6          → $t1-neutral-200
+   Footer padding    : 16px 24px                  → $t1-space-4 $t1-space-6
+   Footer gap        : 16px                       → $t1-space-4
+   ========================================================================== */
+
+/* ── Overlay / backdrop ──────────────────────────────────────────────────── */
+.t1-modal-overlay {
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0, 0, 0, 0.4);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  z-index:         1000;
+  padding:         $t1-space-6;           /* breathing room on small viewports */
+  box-sizing:      border-box;
+}
+
+/* Scoped variant — contained inside nearest positioned ancestor (e.g. AI panel) */
+.t1-modal-overlay--scoped {
+  position: absolute;
+  z-index:  100;                          /* lower than fixed — stays inside panel */
+}
+
+/* ── Modal panel ─────────────────────────────────────────────────────────── */
+.t1-modal {
+  background:     $t1-neutral-0;
+  box-shadow:     $t1-shadow-pop;
+  border-radius: $t1-radius-xs;
+  display:        flex;
+  flex-direction: column;
+  max-width:      calc(100vw - 48px);
+  max-height:     calc(100vh - 96px);
+  overflow:       hidden;
+  font-family:    $t1-font-sans;
+  box-sizing:     border-box;
+}
+
+/* Scoped modal panel — dimensions relative to container, not viewport */
+.t1-modal-overlay--scoped .t1-modal {
+  max-width:  calc(100% - 32px);
+  max-height: calc(100% - 64px);
+  width:      100%;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.t1-modal__header {
+  display:                    flex;
+  align-items:                flex-start;               /* close btn stays top when subtitle present */
+  gap:                        $t1-space-4;              /* 16px */
+  padding:                    $t1-space-4 $t1-space-6;  /* 16px 24px */
+  background:                 $t1-neutral-100;          /* #edeef0 */
+  flex-shrink:                0;
+}
+
+/* Title + subtitle column */
+.t1-modal__header-content {
+  flex:           1 0 0;
+  min-width:      0;
+  display:        flex;
+  flex-direction: column;
+  gap:            $t1-space-2;           /* 8px */
+}
+
+/* ── Title — 20px / 600 / lh-32px ───────────────────────────────────────── */
+.t1-modal__title {
+  font-size:   20px;
+  font-weight: $t1-weight-semibold;      /* 600 */
+  line-height: 32px;
+  color:       $t1-neutral-900;          /* #161616 */
+  margin:      0;
+}
+
+/* ── Subtitle — 16px / 400 / lh-24px ────────────────────────────────────── */
+.t1-modal__subtitle {
+  font-size:   16px;
+  font-weight: $t1-weight-regular;       /* 400 */
+  line-height: 24px;
+  color:       $t1-neutral-600;          /* #444f5c */
+  margin:      0;
+}
+
+/* ── Close button wrapper ────────────────────────────────────────────────── */
+.t1-modal__close {
+  flex-shrink: 0;
+  margin-top:  4px;                      /* optical top-align with title cap-height */
+}
+
+/* ── Body / content slot ─────────────────────────────────────────────────── */
+.t1-modal__body {
+  flex:       1 1 auto;
+  overflow-y: auto;
+  padding:    $t1-space-6;               /* 24px */
+  font-size:  14px;
+  line-height: 20px;
+  color:      $t1-neutral-900;
+  box-sizing: border-box;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.t1-modal__footer {
+  display:         flex;
+  align-items:     center;
+  justify-content: flex-end;
+  gap:             $t1-space-4;          /* 16px */
+  padding:         $t1-space-4 $t1-space-6; /* 16px 24px */
+  border-top:      1px solid $t1-neutral-200; /* #d4d5d6 */
+  flex-shrink:     0;
+}

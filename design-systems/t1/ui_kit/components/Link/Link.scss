@@ -1,0 +1,9 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ---------- LINK ---------- */
+.t1-link { color: var(--t1-blue-500); text-decoration: none; cursor: pointer; font-size: 13px; }
+.t1-link--small { font-size: 12px; }
+.t1-link--large { font-size: 14px; }
+.t1-link:hover { text-decoration: underline; }
+.t1-link.is-underlined { text-decoration: underline; }
+.t1-link--neutral { color: var(--t1-neutral-700); }

@@ -1,0 +1,63 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ---------- HISTORY CARD ---------- */
+.t1-history { background: $t1-neutral-0; border: 1px solid var(--t1-border-subtle); border-radius: $t1-radius-xs; padding: 12px; max-width: 360px; cursor: pointer; transition: border-color 120ms; }
+.t1-history:hover { border-color: var(--t1-border); }
+.t1-history__head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+.t1-history__title { font-weight: 600; font-size: 13px; color: var(--t1-fg); }
+.t1-history__when { font-size: 11px; color: var(--t1-fg-muted); white-space: nowrap; }
+.t1-history__preview { font-size: 12px; color: var(--t1-fg-muted); line-height: 16px; }
+
+
+/* ----- CONVERSATION HISTORY (15:75727) ----- */
+.t1-history-v2 {
+  width: 326px;
+  padding: 16px;
+  background: $t1-neutral-0;
+  border: 1px solid $t1-neutral-200;
+  border-radius: $t1-radius-xs;
+  font-family: var(--t1-font-sans);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+.t1-history-v2__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.t1-history-v2__title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  min-width: 0;
+}
+.t1-history-v2__title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: $t1-neutral-900;
+}
+.t1-history-v2__subtext {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: $t1-neutral-900;
+}
+.t1-history-v2__when {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: $t1-neutral-900;
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.t1-history-v2__preview {
+  font-size: 14px;
+  line-height: 16px;
+  color: $t1-neutral-900;
+}
+.t1-history-v2 .t1-btn { align-self: flex-start; }

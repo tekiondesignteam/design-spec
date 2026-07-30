@@ -1,0 +1,108 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   RESPONSE  (Figma: aiT1Response)
+   BEM prefix: t1-response
+
+   Layout
+   ─────────────────────────────────────────────────────────────────────────
+   .t1-response          — flex-col, gap 12px, min-w 160px
+     .t1-response__main  — flex-col, gap 4px
+       .t1-response__header
+         .t1-response__title      — body2Medium  14px/500/20px   #161616
+         .t1-response__body-text  — body2Regular 14px/400/16px   #161616
+       .t1-response__list         — ordered / unordered list
+     .t1-response__slot           — contentSlot dashed container
+     FeedbackAction               — inline-flex row
+   ========================================================================== */
+
+/* ── Root ────────────────────────────────────────────────────────────────── */
+.t1-response {
+  display:           flex;
+  flex-direction:    column;
+  gap:               12px;
+  min-width:         0;
+  max-width:         640px;
+  width:             100%;
+  padding-left:      24px;
+  font-family:       $t1-font-sans;
+  box-sizing:        border-box;
+  /* Container context so child components (FeedbackAction) can query panel width */
+  container-type:    inline-size;
+  container-name:    t1-response;
+}
+
+@media (max-width: 480px) {
+  .t1-response {
+    padding-left: 12px;
+    gap:          8px;
+  }
+}
+
+/* ── Main section ────────────────────────────────────────────────────────── */
+.t1-response__main {
+  display:        flex;
+  flex-direction: column;
+  gap:            4px;           /* gap between header and list blocks          */
+  width:          100%;
+}
+
+/* ── Header (title + body stacked, gap 0) ────────────────────────────────── */
+.t1-response__header {
+  display:        flex;
+  flex-direction: column;
+  gap:            0;
+  width:          100%;
+  color:          $t1-neutral-900;
+}
+
+/* ── Title — body2Medium ─────────────────────────────────────────────────── */
+.t1-response__title {
+  font-size:   14px;
+  font-weight: $t1-weight-medium;    /* 500 */
+  line-height: 20px;
+  color:       $t1-neutral-900;
+  width:       100%;
+}
+
+/* ── Body text — body2Regular ────────────────────────────────────────────── */
+.t1-response__body-text {
+  font-size:   14px;
+  font-weight: $t1-weight-regular;    /* 400 */
+  line-height: 22px;                  /* up from 16px — comfortable reading ratio */
+  color:       $t1-neutral-900;       /* #161616 */
+  width:       100%;
+}
+
+/* ── List (ordered / unordered) ──────────────────────────────────────────── */
+.t1-response__list {
+  font-size:   14px;
+  font-weight: $t1-weight-regular;
+  line-height: 22px;                  /* match body-text */
+  color:       $t1-neutral-900;
+  width:       100%;
+
+  ol, ul {
+    margin:       0;
+    padding-left: 21px;
+  }
+
+  li {
+    line-height:   22px;
+    margin-bottom: $t1-space-1;       /* 4px gap between list items */
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* ── Content slot (dashed violet container for embedded cards) ───────────── */
+.t1-response__slot {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: flex-start;
+  padding:         10px 0;
+  width:           100%;
+  box-sizing:      border-box;
+}

@@ -1,0 +1,187 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   FEEDBACK-ACTION  (Figma: aiT1FeedbackAction)
+   BEM prefix: t1-fa
+
+   Layout tokens
+   ─────────────────────────────────────────────────────────────────────────
+   root gap            8px   (between left action cluster and right chips)
+   containerLeft gap   0px   (icon buttons sit flush)
+   chips gap           8px
+
+   Icon buttons  →  IconButton color=inverse style=contained size=sm (24px)
+   Chips         →  outlined pill: h 24px · border $t1-neutral-200 · r 9999px
+   ========================================================================== */
+
+/* ── Root wrapper ────────────────────────────────────────────────────────── */
+.t1-fa {
+  display:     inline-flex;
+  align-items: center;
+  gap:         8px;
+  font-family: $t1-font-sans;
+  flex-wrap:   wrap;
+  max-width:   100%;
+}
+
+@media (max-width: 480px) {
+  .t1-fa {
+    gap: 6px;
+  }
+
+  .t1-fa__chips {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+/* ── Left cluster: icon buttons ──────────────────────────────────────────── */
+.t1-fa__actions {
+  display:     flex;
+  align-items: center;
+  gap:         0;
+}
+
+/* ── Icon size inside each IconButton ────────────────────────────────────── */
+.t1-fa__icon {
+  font-size:       14px;
+  line-height:     1;
+  pointer-events:  none;
+}
+
+/* ── Tooltip wrapper ─────────────────────────────────────────────────────── */
+.t1-fa__tip {
+  position: relative;
+  display:  inline-flex;
+}
+
+.t1-fa__tip::after {
+  content:          attr(data-tip);
+  position:         absolute;
+  bottom:           calc(100% + 6px);
+  left:             50%;
+  transform:        translateX(-50%);
+  background:       $t1-neutral-900;
+  color:            $t1-neutral-0;
+  font-family:      $t1-font-sans;
+  font-size:        11px;
+  line-height:      16px;
+  font-weight:      400;
+  padding:          3px 8px;
+  border-radius: $t1-radius-xs;
+  white-space:      nowrap;
+  pointer-events:   none;
+  opacity:          0;
+  transition:       opacity 120ms ease;
+  z-index:          50;
+}
+
+.t1-fa__tip:hover::after,
+.t1-fa__tip:focus-within::after {
+  opacity: 1;
+}
+
+/* ── Active toggle state (thumbs up / down toggled on) ───────────────────── */
+.t1-fa__ibtn--active {
+  color: $t1-blue-400 !important;
+}
+
+.t1-fa__ibtn--active:hover:not(:disabled) {
+  background: $t1-blue-50 !important;
+  color:      $t1-blue-500 !important;
+}
+
+/* ── Right cluster: chips ────────────────────────────────────────────────── */
+.t1-fa__chips {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+
+.t1-fa__chip {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          0;
+  height:       24px;
+  padding:      0 6px;
+  border:       1px solid $t1-neutral-200;
+  border-radius: $t1-radius-pill;
+  background:   transparent;
+  cursor:       pointer;
+  box-sizing:   border-box;
+  transition:   background 120ms ease, border-color 120ms ease;
+}
+
+.t1-fa__chip:hover {
+  background:   $t1-neutral-100;
+  border-color: $t1-neutral-500;
+}
+
+.t1-fa__chip-icon {
+  font-size:   12px;
+  color:       $t1-neutral-600;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.t1-fa__chip-label {
+  font-size:   14px;
+  line-height: 16px;
+  font-weight: $t1-weight-semibold;
+  color:       $t1-neutral-600;
+  white-space: nowrap;
+  padding:     0 4px;
+}
+
+/* count and text are plain inline spans — inherit label styles */
+.t1-fa__chip-count,
+.t1-fa__chip-text {
+  font: inherit;
+  color: inherit;
+}
+
+/* Container query — fires when the Response panel is narrow (popover / docked),
+   regardless of viewport width. Threshold: 400px panel → ~368px response width. */
+@container t1-response (max-width: 440px) {
+  .t1-fa__chip-text {
+    display: none;
+  }
+}
+
+/* Viewport fallback — fires on true mobile (FeedbackAction used outside Response) */
+@media (max-width: 480px) {
+  .t1-fa__chip-text {
+    display: none;
+  }
+}
+
+/* Focus ring on chips (keyboard navigation) */
+.t1-fa__chip:focus-visible {
+  outline:        2px solid $t1-border-focus;
+  outline-offset: 2px;
+}
+
+/* ── Modal list (Filters / Sources body content) ─────────────────────────── */
+.t1-fa__modal-list {
+  list-style: none;
+  margin:     0;
+  padding:    0;
+  display:    flex;
+  flex-direction: column;
+  gap:        0;
+}
+
+.t1-fa__modal-item {
+  display:     flex;
+  align-items: center;
+  gap:         10px;
+  padding:     10px 0;
+  font-size:   14px;
+  line-height: 20px;
+  color:       $t1-neutral-900;
+  border-bottom: 1px solid $t1-neutral-100;
+}
+
+.t1-fa__modal-item:last-child {
+  border-bottom: none;
+}

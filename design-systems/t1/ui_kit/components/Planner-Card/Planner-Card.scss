@@ -1,0 +1,130 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   PLANNER-CARD  (Figma: aiT1PlannerCard)
+   BEM prefix: t1-pc
+
+   States
+   ─────────────────────────────────────────────────────────────────────────
+   default    bg $t1-neutral-0  border $t1-neutral-200
+   completed  bg $t1-green-25   border $t1-green-500   (all items checked)
+
+   Tokens (from Figma variable defs)
+   ─────────────────────────────────────────────────────────────────────────
+   card bg completed        $t1-green-25   (#effaee)
+   card border completed    $t1-green-500  (#06bc75)
+   progress title           14/16/600  $t1-neutral-900
+   progress suffix default  12/16/600  $t1-neutral-400   "X/N DONE"
+   progress suffix complete 12/16/600  $t1-green-500     "COMPLETED"
+   progress header gap      24px
+   progress section gap     8px
+   list group gap           16px
+   list header              14/16/600  $t1-neutral-400   "1. List"
+   item text unchecked      12/16/500  $t1-neutral-900
+   item text checked        12/16/400  $t1-neutral-400
+   ========================================================================== */
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+.t1-pc {
+  background: $t1-neutral-0;
+  border: 1px solid $t1-neutral-200;
+  border-radius: $t1-radius-xs;
+  padding: 16px;
+  width: 320px;
+  box-sizing: border-box;
+  font-family: $t1-font-sans;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.t1-pc--completed {
+  background: $t1-green-25;
+  border-color: $t1-green-500;
+}
+
+/* ── Progress header ─────────────────────────────────────────────────────── */
+.t1-pc__head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.t1-pc__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.t1-pc__title {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: $t1-weight-semibold;
+  color: $t1-neutral-900;
+  flex: 1;
+  min-width: 0;
+}
+
+.t1-pc__suffix {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: $t1-weight-semibold;
+  color: $t1-neutral-400;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.t1-pc--completed .t1-pc__suffix {
+  color: $t1-green-500;
+}
+
+/* ── List groups container ───────────────────────────────────────────────── */
+.t1-pc__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Single list group ───────────────────────────────────────────────────── */
+.t1-pc__group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Numbered group label  "1. List" ────────────────────────────────────── */
+.t1-pc__group-label {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: $t1-weight-semibold;
+  color: $t1-neutral-400;
+}
+
+/* ── Item list ───────────────────────────────────────────────────────────── */
+.t1-pc__items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Single item ─────────────────────────────────────────────────────────── */
+.t1-pc__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.t1-pc__item-text {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: $t1-weight-medium;
+  color: $t1-neutral-900;
+}
+
+.t1-pc__item--checked .t1-pc__item-text {
+  font-weight: $t1-weight-regular;
+  color: $t1-neutral-400;
+}

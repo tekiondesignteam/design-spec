@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nav-Bar · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #e8eaed; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: .04em; color: #888; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: #161616; margin-bottom: 32px; }
+    .preview-row   { display: flex; flex-direction: column; gap: 32px; }
+    .preview-panel { display: flex; flex-direction: column; gap: 8px; }
+    .preview-panel-label {
+      font-size: 11px; color: #888; text-transform: uppercase;
+      letter-spacing: .05em; font-weight: 600;
+    }
+    .preview-panel--mobile .t1-nb { max-width: 400px; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Nav-Bar</div>
+  <div id="root"></div>
+
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.NavBar) { setTimeout(waitForComponents, 50); return; }
+
+      function App() {
+        return (
+          <div className="preview-row">
+
+            {/* ── Mobile — hamburger + more (Figma 8:60377, more=true) ─────── */}
+            <div className="preview-panel preview-panel--mobile">
+              <div className="preview-panel-label">Mobile — Hamburger + More (8:60377)</div>
+              <NavBar
+                title="Title"
+                onMenuClick={() => {}}
+                showMore={true}
+              />
+            </div>
+
+            {/* ── Mobile — hamburger + new-chat + more ─────────────────────── */}
+            <div className="preview-panel preview-panel--mobile">
+              <div className="preview-panel-label">Mobile — Hamburger + New Chat + More</div>
+              <NavBar
+                title="Title"
+                onMenuClick={() => {}}
+                showNewChat={true}
+                showMore={true}
+              />
+            </div>
+
+            {/* ── Desktop / content page variant (Figma 430:41165) ─────────── */}
+            <div className="preview-panel">
+              <div className="preview-panel-label">Desktop — Title + Action Button (430:41165)</div>
+              <NavBar
+                title="Task"
+                actionLabel="New Task"
+                actionIcon="plus"
+                onAction={() => alert('New Task!')}
+              />
+            </div>
+
+            {/* ── Title only — no prefix or suffix ─────────────────────────── */}
+            <div className="preview-panel">
+              <div className="preview-panel-label">Title only</div>
+              <NavBar title="Title" />
+            </div>
+
+            {/* ── Long title truncation ─────────────────────────────────────── */}
+            <div className="preview-panel">
+              <div className="preview-panel-label">Long title truncation</div>
+              <NavBar
+                title="This is a very long page title that should truncate gracefully"
+                actionLabel="New Task"
+                onAction={() => {}}
+              />
+            </div>
+
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    })();
+  </script>
+</body>
+</html>

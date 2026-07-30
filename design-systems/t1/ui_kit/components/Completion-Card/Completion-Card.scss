@@ -1,0 +1,152 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   COMPLETION-CARD  (Figma: aiT1completionCard)
+
+   Tokens used
+   ─────────────────────────────────────────────────────────────────────────
+   Card border        : $t1-neutral-200   (#d4d5d6)
+   Header bg          : $t1-green-25      (#effaee)
+   Avatar bg          : $t1-green-500     (#06bc75)
+   Header title/sub   : $t1-green-500
+   Header separator   : $t1-neutral-200
+   Body bg            : $t1-neutral-0     (white)
+   Row label          : $t1-neutral-400   (#969aa3)  12px / 500
+   Row value          : $t1-neutral-600   (#444f5c)  14px / 600
+   Row divider        : $t1-neutral-200
+   Avatar icon color  : $t1-neutral-0     (white)
+   ========================================================================== */
+
+/* ── Outer card ───────────────────────────────────────────────────────────── */
+.t1-cc {
+  width:         320px;
+  border-radius: $t1-radius-xs;
+  border:        1px solid $t1-neutral-200;
+  overflow:      hidden;
+  background:    $t1-neutral-0;
+  font-family:   $t1-font-sans;
+  box-sizing:    border-box;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.t1-cc__header {
+  display:       flex;
+  align-items:   center;
+  gap:           8px;
+  padding:       16px;
+  background:    $t1-green-25;
+  border-bottom: 1px solid $t1-neutral-200;
+  box-sizing:    border-box;
+}
+
+/* ── Avatar — 32×32 success-green square ────────────────────────────────── */
+.t1-cc__avatar {
+  width:         32px;
+  height:        32px;
+  border-radius: $t1-radius-xs;
+  background:    $t1-green-500;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  flex-shrink:   0;
+}
+
+.t1-cc__avatar-icon {
+  font-size: 16px;
+  color:     $t1-neutral-0;
+  line-height: 1;
+}
+
+/* ── Header text (title + subtitle) ──────────────────────────────────────── */
+.t1-cc__header-content {
+  display:        flex;
+  flex-direction: column;
+  gap:            0;
+  justify-content: center;
+  flex:           1 0 0;
+  min-width:      0;
+}
+
+.t1-cc__title {
+  font-size:   16px;
+  font-weight: $t1-weight-semibold;
+  line-height: 24px;
+  color:       $t1-green-500;
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}
+
+.t1-cc__subtitle {
+  font-size:   14px;
+  font-weight: $t1-weight-medium;
+  line-height: 16px;
+  color:       $t1-green-500;
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Body ─────────────────────────────────────────────────────────────────── */
+.t1-cc__body {
+  display:        flex;
+  flex-direction: column;
+  gap:            16px;
+  padding:        16px;
+  background:     $t1-neutral-0;
+  box-sizing:     border-box;
+}
+
+/* ── Rows container ───────────────────────────────────────────────────────── */
+.t1-cc__rows {
+  display:        flex;
+  flex-direction: column;
+}
+
+/* ── Individual row ───────────────────────────────────────────────────────── */
+.t1-cc__row {
+  display:     flex;
+  align-items: center;
+  gap:         16px;
+  padding:     12px 0;
+}
+
+.t1-cc__row-label {
+  font-size:   12px;
+  font-weight: $t1-weight-medium;
+  line-height: 16px;
+  color:       $t1-neutral-400;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.t1-cc__row-value {
+  flex:        1 0 0;
+  font-size:   14px;
+  font-weight: $t1-weight-semibold;
+  line-height: 16px;
+  color:       $t1-neutral-600;
+  text-align:  right;
+  min-width:   0;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Row divider ──────────────────────────────────────────────────────────── */
+.t1-cc__row-sep {
+  height:     1px;
+  background: $t1-neutral-200;
+  flex-shrink: 0;
+}
+
+/* ── Action (full-width button wrapper) ──────────────────────────────────── */
+.t1-cc__action {
+  display: flex;
+  width:   100%;
+}
+
+.t1-cc__action .t1-btn {
+  width:           100%;
+  justify-content: center;
+}

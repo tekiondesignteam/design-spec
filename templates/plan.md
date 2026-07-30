@@ -51,5 +51,5 @@ Order steps so each produces something reviewable. Layout/shell first, then sect
 ## Guardrails carried from the constitution
 
 - Work only inside `projects/{{PROJECT_NAME}}/`.
-- `design-system/` is read-only.
-- Only design-system tokens/components — gaps get flagged, not invented.
+- Everything under `design-systems/` is read-only. Use only this project's design system — **{{DESIGN_SYSTEM}}** (`design-systems/{{DESIGN_SYSTEM}}/`) — never another.
+- Only {{DESIGN_SYSTEM}} tokens/components — gaps get flagged, not invented.

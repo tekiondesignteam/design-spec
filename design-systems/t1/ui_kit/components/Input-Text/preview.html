@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Input-Text · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #969aa3; margin: 28px 0 10px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 640px; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Input-Text</div>
+  <div id="root"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.InputText) { setTimeout(waitForComponents, 50); return; }
+
+      /* Inline SVG icon helpers for the preview */
+      const SearchIco = () => (
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <circle cx="7" cy="7" r="4.5"/><line x1="10.5" y1="10.5" x2="14" y2="14"/>
+        </svg>
+      );
+      const MailIco = () => (
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+          <polyline points="1,3 8,9 15,3"/>
+        </svg>
+      );
+      const ClearIco = () => (
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/>
+        </svg>
+      );
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <div>
+          {/* ---- States ---- */}
+          <div className="section-label">States</div>
+          <div className="grid">
+            <InputText label="Default"       placeholder="Enter text" />
+            <InputText label="Filled"        value="Sarah Chen" />
+            <InputText label="With assistive" placeholder="name@example.com" assistive="We'll never share your email." />
+            <InputText label="Error"         value="bad@email" error="Please enter a valid email address." />
+            <InputText label="Disabled"      value="Locked value" disabled />
+          </div>
+
+          {/* ---- Prefix / Suffix icons ---- */}
+          <div className="section-label">With prefix / suffix icons</div>
+          <div className="grid">
+            <InputText label="Search"        placeholder="Search…"          startIcon={<SearchIco />} />
+            <InputText label="Email"         placeholder="you@example.com"  startIcon={<MailIco />} endIcon={<ClearIco />} />
+            <InputText label="Filled + icons" value="hello@tekion.com"      startIcon={<MailIco />} endIcon={<ClearIco />} />
+            <InputText label="Error + icons" value="bad@email"              startIcon={<MailIco />} error="Please enter a valid email address." />
+          </div>
+
+          {/* ---- Character counter ---- */}
+          <div className="section-label">Character counter (maxLength)</div>
+          <div className="grid">
+            <InputText label="Counter empty"  placeholder="Type something…"  maxLength={256} />
+            <InputText label="Counter filled" value="Sarah Chen"             maxLength={50} />
+            <InputText label="Error + counter" value="bad-value" error="Please enter a valid value." maxLength={256} />
+            <InputText label="Disabled + counter" value="Locked"             maxLength={100} disabled />
+          </div>
+
+          {/* ---- All features combined ---- */}
+          <div className="section-label">All features combined</div>
+          <div className="grid">
+            <InputText
+              label="Full example"
+              placeholder="Search messages…"
+              startIcon={<SearchIco />}
+              endIcon={<ClearIco />}
+              assistive="Up to 256 characters."
+              maxLength={256}
+            />
+            <InputText
+              label="Full error"
+              value="bad@email"
+              startIcon={<MailIco />}
+              endIcon={<ClearIco />}
+              error="Please enter a valid email address."
+              maxLength={256}
+            />
+          </div>
+        </div>
+      );
+    })();
+  </script>
+</body>
+</html>

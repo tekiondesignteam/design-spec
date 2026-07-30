@@ -2,16 +2,17 @@
 
 > The constitution holds the **rules that never change** for this project and the **visual direction** everything must follow. Read this file first, and re-read it whenever the session gets long or a decision feels ambiguous. When any instruction conflicts with this file, this file wins.
 
-**Owner:** {{DESIGNER_NAME}}  |  **Last updated:** {{DATE}}
+**Owner:** {{DESIGNER_NAME}}  |  **Design system:** {{DESIGN_SYSTEM}}  |  **Last updated:** {{DATE}}
 
 ---
 
 ## 1. Hard boundaries (non-negotiable)
 
 - This project lives **only** in `projects/{{PROJECT_NAME}}/`. Never create, edit, or delete files outside this folder.
-- The `design-system/` folder is the **read-only source of truth**. Read from it freely; never write to it. Do not copy design-system files into this project and edit the copies — reference the originals.
+- This project's design system is **{{DESIGN_SYSTEM}}**, at `design-systems/{{DESIGN_SYSTEM}}/`. That folder — and every other folder under `design-systems/` — is a **read-only source of truth**. Read from `design-systems/{{DESIGN_SYSTEM}}/` freely; never write to it. Do not copy its files into this project and edit the copies — reference the originals.
+- **Never read from or mix in a different design system.** This project uses {{DESIGN_SYSTEM}} and only {{DESIGN_SYSTEM}}.
 - Do not touch any other `projects/<other>/` folder.
-- All components, tokens, colors, spacing, and type come from `design-system/`. If something you need is missing there, note it in §4 as a gap — do not invent a new token or one-off style.
+- All components, tokens, colors, spacing, and type come from `design-systems/{{DESIGN_SYSTEM}}/`. If something you need is missing there, note it in §4 as a gap — do not invent a new token or one-off style, and do not borrow from another design system.
 
 ## 2. Visual direction
 
@@ -20,18 +21,18 @@
 - **Primary surfaces:** {{e.g. left-nav settings layout, card grid, full-page flow}}
 - **What this should NOT look like:** {{anti-references — keep Claude from drifting toward the wrong style}}
 
-## 3. Design-system anchors (fill these in from `design-system/`)
+## 3. Design-system anchors (fill these in from `design-systems/{{DESIGN_SYSTEM}}/`)
 
 List the exact tokens/components this project is allowed to use, so Claude re-anchors here instead of guessing:
 
 - **Color tokens:** {{list}}
 - **Type scale:** {{list}}
 - **Spacing scale:** {{list}}
-- **Components in scope:** {{list the design-system components this project builds from}}
+- **Components in scope:** {{list the {{DESIGN_SYSTEM}} components this project builds from}}
 
 ## 4. Known gaps / open questions
 
-Anything the design system doesn't cover yet. Do not solve these by inventing styles — flag them.
+Anything {{DESIGN_SYSTEM}} doesn't cover yet. Do not solve these by inventing styles or borrowing from another system — flag them.
 
 - {{gap}}
 
@@ -39,7 +40,7 @@ Anything the design system doesn't cover yet. Do not solve these by inventing st
 
 A screen is done when:
 
-- It uses only design-system tokens and components (per §1, §3).
+- It uses only {{DESIGN_SYSTEM}} tokens and components (per §1, §3).
 - Every state in the spec (empty / loading / error / success) is built.
 - It matches the visual direction in §2.
 - Nothing outside `projects/{{PROJECT_NAME}}/` was modified.

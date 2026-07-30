@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FAB-Icon · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-stage { display: inline-block; }
+    .section       { margin-bottom: 40px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--t1-fg-muted); margin-bottom: 16px; }
+    .row           { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+    .item          { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .item-label    { font-size: 11px; color: var(--t1-fg-muted); }
+    .state-hover  { background: linear-gradient(98.52deg, rgb(231,252,255) 0%, rgb(243,231,205) 100%) !important; }
+    .state-active { background: linear-gradient(98.52deg, rgb(189,247,255) 0%, rgb(245,237,201) 100%) !important; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">FAB-Icon</div>
+  <div id="root" class="preview-stage"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.FabIcon) { setTimeout(waitForComponents, 50); return; }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <>
+          {/* Live — hover / active react to real mouse events */}
+          <div className="section">
+            <div className="section-label">Live interaction (hover &amp; click to see states)</div>
+            <div className="row">
+              <div className="item">
+                <FabIcon />
+                <span className="item-label">default</span>
+              </div>
+              <div className="item">
+                <FabIcon disabled />
+                <span className="item-label">disabled</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Frozen state demos — shows all 3 Figma states side-by-side */}
+          <div className="section">
+            <div className="section-label">All 3 states (Figma: default / hover / active)</div>
+            <div className="row">
+              <div className="item">
+                <button className="t1-fab" style={{pointerEvents:'none'}}>
+                  <svg className="t1-fab__logo" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="pg1" x1="0.422607" y1="2.13244" x2="17.3755" y2="6.01376" gradientUnits="userSpaceOnUse"><stop stopColor="#25C8A5"/><stop offset="0.5" stopColor="#1B90B4"/><stop offset="1" stopColor="#1A6CC4"/></linearGradient></defs>
+                    <path d="M7.0275 4.57162C7.70578 3.22474 9.44818 2.13244 10.9184 2.13244H15.5774L14.3486 4.57162L11.1368 4.68878C10.2383 4.72137 9.42704 5.2367 9.01478 6.03654L6.08408 11.7288H3.42202L7.0275 4.57162Z" fill="url(#pg1)"/>
+                    <path d="M1.65233 2.13244L7.30849 2.13509L6.07968 4.57427H0.422607L1.65233 2.13244Z" fill="url(#pg1)"/>
+                    <path d="M13.9847 6.58877L11.7974 6.5923L10.5677 9.03412L12.0274 9.04204C12.2159 9.03942 12.3401 9.23674 12.2555 9.40499L10.0075 13.8675H12.6695L15.2822 8.65623C15.7623 7.69783 15.0559 6.57205 13.9838 6.58877H13.9847Z" fill="url(#pg1)"/>
+                  </svg>
+                </button>
+                <span className="item-label">default</span>
+              </div>
+              <div className="item">
+                <button className="t1-fab state-hover" style={{pointerEvents:'none'}}>
+                  <svg className="t1-fab__logo" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="pg2" x1="0.422607" y1="2.13244" x2="17.3755" y2="6.01376" gradientUnits="userSpaceOnUse"><stop stopColor="#25C8A5"/><stop offset="0.5" stopColor="#1B90B4"/><stop offset="1" stopColor="#1A6CC4"/></linearGradient></defs>
+                    <path d="M7.0275 4.57162C7.70578 3.22474 9.44818 2.13244 10.9184 2.13244H15.5774L14.3486 4.57162L11.1368 4.68878C10.2383 4.72137 9.42704 5.2367 9.01478 6.03654L6.08408 11.7288H3.42202L7.0275 4.57162Z" fill="url(#pg2)"/>
+                    <path d="M1.65233 2.13244L7.30849 2.13509L6.07968 4.57427H0.422607L1.65233 2.13244Z" fill="url(#pg2)"/>
+                    <path d="M13.9847 6.58877L11.7974 6.5923L10.5677 9.03412L12.0274 9.04204C12.2159 9.03942 12.3401 9.23674 12.2555 9.40499L10.0075 13.8675H12.6695L15.2822 8.65623C15.7623 7.69783 15.0559 6.57205 13.9838 6.58877H13.9847Z" fill="url(#pg2)"/>
+                  </svg>
+                </button>
+                <span className="item-label">hover</span>
+              </div>
+              <div className="item">
+                <button className="t1-fab state-active" style={{pointerEvents:'none'}}>
+                  <svg className="t1-fab__logo" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="pg3" x1="0.422607" y1="2.13244" x2="17.3755" y2="6.01376" gradientUnits="userSpaceOnUse"><stop stopColor="#25C8A5"/><stop offset="0.5" stopColor="#1B90B4"/><stop offset="1" stopColor="#1A6CC4"/></linearGradient></defs>
+                    <path d="M7.0275 4.57162C7.70578 3.22474 9.44818 2.13244 10.9184 2.13244H15.5774L14.3486 4.57162L11.1368 4.68878C10.2383 4.72137 9.42704 5.2367 9.01478 6.03654L6.08408 11.7288H3.42202L7.0275 4.57162Z" fill="url(#pg3)"/>
+                    <path d="M1.65233 2.13244L7.30849 2.13509L6.07968 4.57427H0.422607L1.65233 2.13244Z" fill="url(#pg3)"/>
+                    <path d="M13.9847 6.58877L11.7974 6.5923L10.5677 9.03412L12.0274 9.04204C12.2159 9.03942 12.3401 9.23674 12.2555 9.40499L10.0075 13.8675H12.6695L15.2822 8.65623C15.7623 7.69783 15.0559 6.57205 13.9838 6.58877H13.9847Z" fill="url(#pg3)"/>
+                  </svg>
+                </button>
+                <span className="item-label">active</span>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    })();
+  </script>
+</body>
+</html>

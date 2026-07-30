@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Notification-Banner-Toast · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 40px; }
+    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--t1-fg-muted); margin-bottom: 16px; }
+    .group-title   { font-size: 16px; font-weight: 700; color: var(--t1-fg); margin: 48px 0 24px; border-bottom: 1px solid var(--t1-border); padding-bottom: 12px; }
+    .row           { display: flex; flex-direction: column; gap: 12px; }
+    .col-grid      { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Notification-Banner-Toast</div>
+  <div id="root"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.Toast || !window.NotificationBanner) { setTimeout(waitForComponents, 50); return; }
+
+      const Demo = () => (
+        <div>
+
+          {/* ── TOAST ───────────────────────────────────────────────────── */}
+          <div className="group-title">Toast</div>
+          <div className="col-grid">
+
+            <div>
+              <div className="section-label">Info</div>
+              <Toast
+                color="info"
+                title="Update available"
+                description="Version 2.4 will be deployed tomorrow at 9 AM."
+                onClose={() => {}}
+              />
+            </div>
+
+            <div>
+              <div className="section-label">Error</div>
+              <Toast
+                color="error"
+                title="Submission failed"
+                description="Please check the required fields and try again."
+                onClose={() => {}}
+              />
+            </div>
+
+            <div>
+              <div className="section-label">Warning</div>
+              <Toast
+                color="warning"
+                title="Session expiring"
+                description="Your session will expire in 5 minutes."
+                onClose={() => {}}
+              />
+            </div>
+
+            <div>
+              <div className="section-label">Success</div>
+              <Toast
+                color="success"
+                title="Deal saved"
+                description="Deal #DEAL-10042 has been saved successfully."
+                onClose={() => {}}
+              />
+            </div>
+
+          </div>
+
+          {/* Toast without close button */}
+          <div style={{ marginTop: 24 }}>
+            <div className="section-label">Without close button</div>
+            <div className="col-grid">
+              <Toast color="info"    title="Syncing data"        description="Fetching latest records from DMS." />
+              <Toast color="success" title="Payment confirmed"   description="Transaction ID: TXN-98127" />
+            </div>
+          </div>
+
+          {/* Toast title-only */}
+          <div style={{ marginTop: 24 }}>
+            <div className="section-label">Title only</div>
+            <div className="col-grid">
+              <Toast color="info"    title="Update available"  onClose={() => {}} />
+              <Toast color="error"   title="Request failed"    onClose={() => {}} />
+              <Toast color="warning" title="Low storage"       onClose={() => {}} />
+              <Toast color="success" title="Changes saved"     onClose={() => {}} />
+            </div>
+          </div>
+
+
+          {/* ── NOTIFICATION BANNER ─────────────────────────────────────── */}
+          <div className="group-title">Notification Banner</div>
+          <div className="row" style={{ maxWidth: 640 }}>
+
+            <div>
+              <div className="section-label">Neutral</div>
+              <NotificationBanner
+                color="neutral"
+                title="System maintenance"
+                description="Scheduled downtime on Saturday 2–4 AM."
+                onClose={() => {}}
+              />
+            </div>
+
+            <div>
+              <div className="section-label">Info</div>
+              <NotificationBanner
+                color="info"
+                title="New feature available"
+                description="Try the updated Deal Manager in your sidebar."
+                onClose={() => {}}
+              />
+            </div>
+
+            <div>
+              <div className="section-label">Error</div>
+              <NotificationBanner
+                color="error"
+                title="Sync failed"
+                description="Could not connect to DMS. Retry or contact support."
+                onClose={() => {}}
+              />
+            </div>
+
+            <div>
+              <div className="section-label">Warning</div>
+              <NotificationBanner
+                color="warning"
+                title="Incomplete profile"
+                description="Add missing fields before submitting the deal."
+                onClose={() => {}}
+              />
+            </div>
+
+            <div>
+              <div className="section-label">Success</div>
+              <NotificationBanner
+                color="success"
+                title="Deal submitted"
+                description="Deal #DEAL-10042 is now pending finance approval."
+                onClose={() => {}}
+              />
+            </div>
+
+          </div>
+
+          {/* Banner without close button */}
+          <div style={{ marginTop: 24, maxWidth: 640 }}>
+            <div className="section-label">Without close button</div>
+            <div className="row">
+              <NotificationBanner color="info"    title="Read-only mode" description="You have view-only access to this record." />
+              <NotificationBanner color="warning" title="Draft auto-saved" description="Your changes were saved automatically." />
+            </div>
+          </div>
+
+        </div>
+      );
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+    })();
+  </script>
+</body>
+</html>

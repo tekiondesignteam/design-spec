@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Global-Search · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #f5f7f9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 40px; }
+
+    .variant-section { margin-bottom: 32px; }
+    .variant-label   { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t1-fg-muted); margin-bottom: 12px; }
+    .variant-row     { display: flex; align-items: center; }
+
+    .divider { border: none; border-top: 1px solid #e4e5e7; margin: 40px 0; }
+
+    .note {
+      font-size: 12px; color: var(--t1-fg-muted);
+      background: #fff; border: 1px solid #e4e5e7;
+      border-radius: 4px; padding: 8px 12px;
+      margin-top: 16px; display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Global-Search</div>
+  <div id="root"></div>
+
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    /* ── Static variant shell (frozen visual state, no interactivity) ── */
+    const StaticGS = ({ segLogoActive, segSearchActive, fieldActive, placeholder, value, showAsk }) => {
+      const LOGO_WHITE = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.0275 4.57162C7.70578 3.22474 9.44818 2.13244 10.9184 2.13244H15.5774L14.3486 4.57162L11.1368 4.68878C10.2383 4.72137 9.42704 5.2367 9.01478 6.03654L6.08408 11.7288H3.42202L7.0275 4.57162Z" fill="white"/><path d="M1.65233 2.13244L7.30849 2.13509L6.07968 4.57427H0.422607L1.65233 2.13244Z" fill="white"/><path d="M13.9847 6.58877L11.7974 6.5923L10.5677 9.03412L12.0274 9.04204C12.2159 9.03942 12.3401 9.23674 12.2555 9.40499L10.0075 13.8675H12.6695L15.2822 8.65623C15.7623 7.69783 15.0559 6.57205 13.9838 6.58877H13.9847Z" fill="white"/></svg>';
+      const LOGO_GRAD  = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.0275 4.57162C7.70578 3.22474 9.44818 2.13244 10.9184 2.13244H15.5774L14.3486 4.57162L11.1368 4.68878C10.2383 4.72137 9.42704 5.2367 9.01478 6.03654L6.08408 11.7288H3.42202L7.0275 4.57162Z" fill="url(#sgs-grad)"/><path d="M1.65233 2.13244L7.30849 2.13509L6.07968 4.57427H0.422607L1.65233 2.13244Z" fill="url(#sgs-grad)"/><path d="M13.9847 6.58877L11.7974 6.5923L10.5677 9.03412L12.0274 9.04204C12.2159 9.03942 12.3401 9.23674 12.2555 9.40499L10.0075 13.8675H12.6695L15.2822 8.65623C15.7623 7.69783 15.0559 6.57205 13.9838 6.58877H13.9847Z" fill="url(#sgs-grad)"/><defs><linearGradient id="sgs-grad" x1="0.422607" y1="2.13244" x2="17.3755" y2="6.01376" gradientUnits="userSpaceOnUse"><stop stop-color="#25C8A5"/><stop offset="0.5" stop-color="#1B90B4"/><stop offset="1" stop-color="#1A6CC4"/></linearGradient></defs></svg>';
+
+      const logoGrad = 'linear-gradient(-44.62deg, rgb(33,87,245) 2.91%, rgb(37,141,255) 40.71%, rgb(134,255,187) 106.85%)';
+
+      return (
+        <div style={{ display:'flex', alignItems:'center', gap:'16px' }}>
+          {/* Segment switch */}
+          <div style={{ display:'flex', alignItems:'center', gap:'2px', padding:'4px', background:'#3f4757', borderRadius:'2px', flexShrink:0 }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'28px', height:'28px', borderRadius:'2px', background: segLogoActive ? logoGrad : '#3f4757', flexShrink:0 }}>
+              <span style={{ display:'block', lineHeight:0, width:'16px', height:'16px' }} dangerouslySetInnerHTML={{ __html: segLogoActive ? LOGO_WHITE : LOGO_GRAD }} />
+            </div>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', width:'28px', height:'28px', borderRadius:'2px', background: segSearchActive ? '#525c69' : '#3f4757', flexShrink:0, color:'white' }}>
+              <Phi name="magnifying-glass" size={16} weight="regular" />
+            </div>
+          </div>
+
+          {/* Field */}
+          <div style={{ width:'600px', height:'32px', background:'white', border:`1px solid ${fieldActive ? '#0060ff' : '#969aa3'}`, borderRadius:'2px', boxSizing:'border-box', flexShrink:0, overflow:'hidden' }}>
+            <div style={{ display:'flex', alignItems:'center', height:'100%', padding:`0 ${showAsk ? '4px' : '10px'} 0 10px`, gap:'8px', boxSizing:'border-box' }}>
+              <div style={{ flex:'1 0 0', minWidth:0, fontFamily:'var(--t1-font-sans)', fontSize:'14px', fontWeight:400, lineHeight:'16px', color: value ? '#161616' : '#969aa3', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
+                {value || placeholder}
+              </div>
+              {showAsk && (
+                <Button variant="contained" color="primary" size="sm" iconStart="arrow-bend-down-left">Ask</Button>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const App = () => (
+      <div>
+        {/* ── Variant 1: normalSearch / default ── */}
+        <div className="variant-section">
+          <div className="variant-label">Type=normalSearch · State=default — node 8:69133</div>
+          <div className="variant-row">
+            <StaticGS segLogoActive={true} segSearchActive={false} fieldActive={false} placeholder="Search here..." value="" showAsk={false} />
+          </div>
+        </div>
+
+        {/* ── Variant 2: aiSearch / active ── */}
+        <div className="variant-section">
+          <div className="variant-label">Type=aiSearch · State=active — node 8:69127</div>
+          <div className="variant-row">
+            <StaticGS segLogoActive={true} segSearchActive={false} fieldActive={true} placeholder="" value="Value" showAsk={true} />
+          </div>
+        </div>
+
+        {/* ── Variant 3: Search / default ── */}
+        <div className="variant-section">
+          <div className="variant-label">Type=Search · State=default — node 8:69136</div>
+          <div className="variant-row">
+            <StaticGS segLogoActive={false} segSearchActive={true} fieldActive={false} placeholder="Ask • Find • Summarize" value="" showAsk={false} />
+          </div>
+        </div>
+
+        {/* ── Variant 4: aiSearch / typing ── */}
+        <div className="variant-section">
+          <div className="variant-label">Type=aiSearch · State=typing — node 8:69130</div>
+          <div className="variant-row">
+            <StaticGS segLogoActive={false} segSearchActive={true} fieldActive={true} placeholder="" value="Value" showAsk={true} />
+          </div>
+        </div>
+
+        <hr className="divider" />
+
+        {/* ── Live interactive ── */}
+        <div className="variant-section">
+          <div className="variant-label">Interactive — click segments to switch mode, type to activate Ask</div>
+          <div className="variant-row">
+            <GlobalSearch onAsk={v => alert('Ask: ' + v)} />
+          </div>
+          <div className="note">Click the T1 logo for AI mode · Click the magnifier for search mode · Type to see Ask button appear (AI mode only)</div>
+        </div>
+
+        {/* ── Search mode live ── */}
+        <div className="variant-section" style={{ marginTop: 24 }}>
+          <div className="variant-label">Interactive — search mode preset</div>
+          <div className="variant-row">
+            <GlobalSearch initialMode="search" />
+          </div>
+        </div>
+      </div>
+    );
+
+    (function waitForComponents() {
+      if (!window.GlobalSearch || !window.Button || !window.Phi) {
+        setTimeout(waitForComponents, 50);
+        return;
+      }
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    })();
+  </script>
+</body>
+</html>

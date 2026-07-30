@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Reasoning-Log · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-stage { display: block; max-width: 520px; }
+    .ctrl-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 32px; }
+    .ctrl-btn {
+      height: 32px; padding: 0 14px; border-radius: 6px; border: 1px solid #d4d5d6;
+      background: #fff; font-size: 12px; font-weight: 600; cursor: pointer;
+      font-family: var(--t1-font-sans); color: #444f5c;
+      transition: background 80ms, border-color 80ms;
+    }
+    .ctrl-btn:hover { background: #f4f5f6; }
+    .ctrl-btn.is-active { background: #1a6cc4; color: #fff; border-color: #1a6cc4; }
+    .ctrl-sep { width: 1px; height: 24px; background: #e8e9eb; }
+    .section-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--t1-fg-muted); margin-bottom: 12px;
+    }
+    .preview-row { margin-bottom: 40px; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Reasoning-Log</div>
+  <div id="root" class="preview-stage"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.ReasoningLog) { setTimeout(waitForComponents, 50); return; }
+
+      const Demo = () => {
+        const [inProgress,  setInProgress]  = React.useState(true);
+        const [interrupted, setInterrupted] = React.useState(false);
+
+        const stateLabel = interrupted ? 'Interrupted' : inProgress ? 'In Progress' : 'Done';
+
+        return (
+          <div>
+            <div className="ctrl-bar">
+              <button className={'ctrl-btn' + (inProgress && !interrupted  ? ' is-active' : '')}
+                onClick={() => { setInterrupted(false); setInProgress(true); }}>
+                In Progress
+              </button>
+              <button className={'ctrl-btn' + (!inProgress && !interrupted ? ' is-active' : '')}
+                onClick={() => { setInterrupted(false); setInProgress(false); }}>
+                Done
+              </button>
+              <div className="ctrl-sep" />
+              <button className={'ctrl-btn' + (interrupted ? ' is-active' : '')}
+                onClick={() => { setInProgress(false); setInterrupted(true); }}>
+                Interrupted
+              </button>
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">Live · {stateLabel}</div>
+              <ReasoningLog
+                key={String(inProgress) + String(interrupted)}
+                inProgress={inProgress}
+                interrupted={interrupted}
+              />
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">Snapshot · In Progress</div>
+              <ReasoningLog inProgress={true} interrupted={false} />
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">Snapshot · Done</div>
+              <ReasoningLog inProgress={false} interrupted={false} />
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">Snapshot · Interrupted</div>
+              <ReasoningLog inProgress={false} interrupted={true} />
+            </div>
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+    })();
+  </script>
+</body>
+</html>

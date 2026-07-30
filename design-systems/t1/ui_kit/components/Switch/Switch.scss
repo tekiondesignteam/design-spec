@@ -1,0 +1,82 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   SWITCH — 1:1 Figma /Switch
+
+   Track  : 48×24px · border-radius $t1-radius-md · padding 2px · border 1px transparent
+   Handle : 20×20px · border-radius 6px           · border 1px transparent
+   Travel : 22px  (48 − 2×border − 4×padding − 20×handle)
+
+   Unselected track : $t1-teal-400   (#cfd4dc — Figma exact)
+   Selected   track : $t1-teal-500   (#00bfa5 — Figma exact)
+   Handle (both)    : $t1-neutral-0
+   ========================================================================== */
+
+/* ---- Root ----------------------------------------------------------------- */
+.t1-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: $t1-space-2;
+  cursor: pointer;
+  user-select: none;
+}
+.t1-switch:focus-visible {
+  outline: 2px solid $t1-blue-700;
+  outline-offset: 2px;
+  border-radius: $t1-radius-xs;
+}
+
+/* ---- Track --------------------------------------------------------------- */
+/* Figma: 48×24px · border-radius 8px · padding 2px · border 1px transparent */
+.t1-switch__track {
+  display: inline-flex;
+  align-items: center;
+  width: 48px;
+  height: 24px;
+  padding: 2px;
+  border: 1px solid transparent;
+  border-radius: $t1-radius-xs;
+  background: $t1-teal-400;         /* unselected/default/track/background #cfd4dc */
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: background-color .15s ease;
+}
+
+/* ---- Handle -------------------------------------------------------------- */
+/* Figma: 20×20px · border-radius 6px · border 1px transparent               */
+.t1-switch__handle {
+  width: 20px;
+  height: 20px;
+  border: 1px solid transparent;
+  border-radius: $t1-radius-xs;
+  background: $t1-neutral-0;        /* handle bg: white both states            */
+  flex-shrink: 0;
+  box-sizing: border-box;
+  transition: transform .15s ease;
+}
+
+/* ---- Checked ------------------------------------------------------------- */
+/* Track bg → $t1-teal-500 · handle slides right 22px                        */
+/* 22px = 48 − 2(border) − 4(padding) − 20(handle)                          */
+.t1-switch.is-checked .t1-switch__track {
+  background: $t1-teal-500;         /* selected/default/track/background       */
+}
+.t1-switch.is-checked .t1-switch__handle {
+  transform: translateX(22px);
+}
+
+/* ---- Disabled ------------------------------------------------------------ */
+.t1-switch.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ---- Label --------------------------------------------------------------- */
+.t1-switch__label {
+  font-family: var(--t1-font-sans);
+  font-size: var(--t1-text-14);
+  font-weight: $t1-weight-regular;
+  line-height: var(--t1-leading-14);
+  color: var(--t1-fg);
+}

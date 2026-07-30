@@ -1,0 +1,179 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   GLOBAL-SEARCH  (Figma: aiT1GlobalSearch)
+   T1 AI-powered search bar — segment switch + search field
+
+   Figma refs
+   ─────────────────────────────────────────────────────────────────────────
+   Main frame  : T1-Components
+   normalSearch:   · aiSearch active: 
+   aiSearch type:  · Search default: 
+
+   BEM prefix  : t1-gs
+
+   Design tokens (Figma → SCSS token)
+   ─────────────────────────────────────────────────────────────────────────
+   Segment pill bg       : #3f4757  → $t1-neutral-700
+   Search slot active bg : #525c69  → $t1-iib-inv-plain-active
+   Logo slot active bg   : gradient → $t1-gs-logo-grad
+   Field border default  : #969aa3  → $t1-neutral-400
+   Field border active   : #0060ff  → $t1-blue-700
+   Placeholder text      : #969aa3  → $t1-neutral-400
+   Value text            : #161616  → $t1-neutral-900
+   ========================================================================== */
+
+/* ── Root row ─────────────────────────────────────────────────────────────── */
+.t1-gs {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-4;   /* 16px — Figma: ait1globalsearch/gap */
+  width:       100%;          /* fills parent — responsive */
+}
+
+/* ── Segment switch pill ──────────────────────────────────────────────────── */
+.t1-gs__seg {
+  display:       flex;
+  align-items:   center;
+  gap:           2px;              /* Figma: ait1segmentswitch/gap = 2px */
+  padding:       4px;              /* Figma: ait1segmentswitch/padding = 4px */
+  background:    $t1-neutral-700;  /* #3f4757 */
+  border-radius: $t1-radius-xs;    /* 2px */
+  flex-shrink:   0;
+}
+
+/* ── Segment slot (28×28) ─────────────────────────────────────────────────── */
+.t1-gs__seg-slot {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           28px;
+  height:          28px;
+  padding:         0;
+  border:          none;
+  border-radius: $t1-radius-xs;    /* 2px */
+  background:      $t1-neutral-700;  /* default — blends into pill */
+  color:           $t1-neutral-0;    /* icons always white */
+  cursor:          pointer;
+  flex-shrink:     0;
+  transition:      background 150ms ease;
+
+  /* SVG injected via dangerouslySetInnerHTML */
+  span { display: block; line-height: 0; }
+  svg  { display: block; }
+
+  &:focus-visible {
+    outline:        2px solid $t1-neutral-0;
+    outline-offset: -2px;
+  }
+}
+
+/* Logo slot — active: brand gradient bg */
+.t1-gs__seg-slot--logo-active {
+  background: $t1-gs-logo-grad;
+}
+
+/* Magnifier slot — active: lighter dark bg */
+.t1-gs__seg-slot--search-active {
+  background: $t1-iib-inv-plain-active;  /* #525c69 */
+}
+
+/* ── T1 logo SVG wrapper ─────────────────────────────────────────────────── */
+.t1-gs__seg-logo {
+  display:     block;
+  line-height: 0;
+  width:       16px;
+  height:      16px;
+
+  svg { display: block; }
+}
+
+/* ── Search field ─────────────────────────────────────────────────────────── */
+.t1-gs__field {
+  flex:          1 1 0;          /* fills remaining width — responsive */
+  min-width:     0;              /* prevents flex overflow */
+  height:        32px;
+  background:    $t1-neutral-0;
+  border:        1px solid $t1-neutral-400;   /* #969aa3 — default */
+  border-radius: $t1-radius-xs;               /* 2px */
+  box-sizing:    border-box;
+  transition:    border-color 150ms ease;
+
+  /* Active / focused / typing — blue border */
+  &--active {
+    border-color: $t1-blue-700;   /* #0060ff */
+  }
+}
+
+/* ── Field inner row ──────────────────────────────────────────────────────── */
+.t1-gs__field-inner {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-2;   /* 8px — Figma: textfieldcontainer/gap */
+  height:      100%;
+  padding:     0 10px;        /* Figma: textfieldcontainer/horizontalPadding = 10px */
+  box-sizing:  border-box;
+}
+
+/* Compress right padding when Ask button is present */
+.t1-gs__field--has-ask .t1-gs__field-inner {
+  padding-right: $t1-space-1;   /* 4px — button sits near right border */
+}
+
+/* ── Text input (kept for backwards compat if used directly) ─────────────── */
+.t1-gs__input {
+  flex:        1 0 0;
+  min-width:   0;
+  height:      100%;
+  border:      none;
+  outline:     none;
+  background:  transparent;
+  font-family: $t1-font-sans;
+  font-size:   14px;
+  font-weight: $t1-weight-regular;
+  line-height: 16px;
+  color:       $t1-neutral-900;
+  padding:     0;
+
+  &::placeholder {
+    color: $t1-neutral-400;
+  }
+}
+
+/* ── Field wrapper — positions Search + Ask button together ──────────────── */
+.t1-gs__field-wrap {
+  flex:     1 1 0;
+  min-width: 0;
+  position: relative;   /* anchors .t1-gs__ask-slot */
+}
+
+/* Search fills the wrapper; renders its own border/radius natively */
+.t1-gs__search {
+  width:     100%;
+  min-width: 0;
+  display:   block;
+}
+
+/* When Ask button is present, push the input text left so it doesn't hide under button */
+.t1-gs__field-wrap--has-ask .t1-gs__search .t1-srch__input {
+  padding-right: 76px;
+}
+
+/* Hide the magnifying-glass icon only — all other Search styles intact */
+.t1-gs__search .t1-srch__icon {
+  display: none;
+}
+
+/* Override Search's radius — GlobalSearch uses 2px */
+.t1-gs__search .t1-srch__field {
+  border-radius: $t1-radius-xs;   /* 4px */
+}
+
+/* Ask button slot — floats inside the right edge of the Search field */
+.t1-gs__ask-slot {
+  position:  absolute;
+  right:     4px;
+  top:       50%;
+  transform: translateY(-50%);
+  z-index:   1;
+}

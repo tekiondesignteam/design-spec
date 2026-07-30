@@ -51,5 +51,5 @@ Order steps so each produces something reviewable. Layout/shell first, then sect
 ## Guardrails carried from the constitution
 
 - Work only inside `projects/t1-sample/`.
-- `design-system/` is read-only.
-- Only design-system tokens/components — gaps get flagged, not invented.
+- Everything under `design-systems/` is read-only. Use only this project's design system — **t1** (`design-systems/t1/`) — never another.
+- Only t1 tokens/components — gaps get flagged, not invented.

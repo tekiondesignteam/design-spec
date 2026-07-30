@@ -1,0 +1,150 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   DEAL-CARD
+   BEM prefix: t1-dc
+
+   Layout
+   ─────────────────────────────────────────────────────────────────────────
+   .t1-dc                     — 320px card shell
+     .t1-dc__header           — icon-block + deal-info row
+       .t1-dc__icon-block     — 36×36 gray rounded square with vehicle icon
+       .t1-dc__deal-info      — deal ID + vehicle label
+     .t1-dc__container        — body + separator + footer (gap 8px)
+       .t1-dc__body           — 3 × .t1-dc__field columns (gap 28px)
+       Separator (kit)
+       .t1-dc__footer         — last-updated field + View button (gap 28px)
+         .t1-dc__field        — label/value column (shared by body & footer)
+   ========================================================================== */
+
+/* ── Domain cards responsive grid ───────────────────────────────────────── */
+/* Default (mobile / narrow): single column, stacked */
+.t1-domain-grid {
+  display:        flex;
+  flex-direction: column;
+  gap:            12px;
+  width:          100%;
+}
+
+/* ≥ 1440px viewport: 2-column grid */
+@media (min-width: 1440px) {
+  .t1-domain-grid {
+    display:               grid;
+    grid-template-columns: 1fr 1fr;
+    align-items:           start;
+    gap:                   12px;
+  }
+}
+
+/* ── Card shell ──────────────────────────────────────────────────────────── */
+.t1-dc {
+  width:     100%;
+  min-width: 0;
+  background: $t1-neutral-0;
+  border: 1px solid $t1-neutral-200;
+  border-radius: $t1-radius-xs;           /* 2px */
+  padding: 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: $t1-font-sans;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.t1-dc__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Icon block — gray rounded square with vehicle icon ──────────────────── */
+.t1-dc__icon-block {
+  width: 36px;
+  height: 36px;
+  background: $t1-neutral-100;
+  border-radius: $t1-radius-xs;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: $t1-neutral-500;
+  font-size: 18px;
+}
+
+/* ── Deal info ───────────────────────────────────────────────────────────── */
+.t1-dc__deal-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.t1-dc__deal-id {
+  font-size: 16px;
+  font-weight: 500;
+  color: $t1-neutral-900;
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.t1-dc__vehicle {
+  font-size: 14px;
+  font-weight: 500;
+  color: $t1-neutral-400;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Container — wraps body, separator, footer ───────────────────────────── */
+.t1-dc__container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Body — 3-column field row ───────────────────────────────────────────── */
+.t1-dc__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+/* ── Footer — last-updated + View button ─────────────────────────────────── */
+.t1-dc__footer {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/* ── Field — shared by body columns and footer ───────────────────────────── */
+.t1-dc__field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.t1-dc__field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: $t1-neutral-400;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.t1-dc__field-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: $t1-neutral-600;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Separator inside the card uses the standard border color */
+.t1-dc .t1-sep { background: $t1-neutral-200; }

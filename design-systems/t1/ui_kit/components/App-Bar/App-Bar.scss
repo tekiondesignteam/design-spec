@@ -1,0 +1,269 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   APP-BAR  (Figma: aiT1AppBar · node 8:47311)
+   BEM prefix: t1-ab
+
+   Variants
+   ─────────────────────────────────────────────────────────────────────────
+   panel             400px  gradient 143.74°  Logo+Title | [min][move][close]
+   fullscreen        100%   gradient 167.99°  Logo+Title | [min][move][close]
+   sticky-maximized  400px  gradient 143.74°  grip + Logo+Title | [min][move][close]
+   sticky-minimized  400px  gradient 143.74°  grip + Logo+Title | [collapse][close]
+   mobile-drag       400px  gradient 143.74°  pill + Logo+Title | [close]
+
+   Background gradient — Figma: aiT1/background/primary/default
+   ─────────────────────────────────────────────────────────────────────────
+   $t1-fab-def-start (teal tint) → $t1-fab-def-end (warm cream)
+   panel / sticky-* / mobile-drag : 143.736deg
+   fullscreen                     : 167.987deg
+   ========================================================================== */
+
+/* ── Root ─────────────────────────────────────────────────────────────────── */
+.t1-ab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: $t1-radius-xs $t1-radius-xs 0 0;
+  background: linear-gradient(143.736deg, $t1-fab-def-start 0%, $t1-fab-def-end 100%);
+  width: 400px;
+  box-sizing: border-box;
+  font-family: $t1-font-sans;
+  position: relative;
+  user-select: none;
+}
+
+/* Fullscreen: full-width panel + steeper gradient angle */
+.t1-ab--fullscreen {
+  background: linear-gradient(167.987deg, $t1-fab-def-start 0%, $t1-fab-def-end 100%);
+  width: 100%;
+}
+
+/* Mobile-drag: stacked column layout */
+.t1-ab--mobile-drag {
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+
+/* ── App title (Logo + text) ─────────────────────────────────────────────── */
+.t1-ab__title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: $t1-radius-xs;
+  flex-shrink: 0;
+}
+
+/* Logo: T1.svg as a CSS mask so the brand gradient paints through the
+   white fill paths. Gradient: Figma aiT1/logo — $t1-grad-* brand palette. */
+.t1-ab__logo {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(90deg, $t1-grad-teal 0%, $t1-grad-cyan 50%, $t1-grad-blue 100%);
+  -webkit-mask: url('../assets/T1.svg') no-repeat center / contain;
+  mask: url('../assets/T1.svg') no-repeat center / contain;
+}
+
+.t1-ab__name {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: $t1-neutral-600;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+/* ── Window controls group ───────────────────────────────────────────────── */
+.t1-ab__controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Control button (24×24, 4px radius per Figma iconbutton/sm) ──────────── */
+.t1-ab__ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: $t1-radius-xs;
+  background: transparent;
+  cursor: pointer;
+  color: $t1-neutral-600;
+  transition: background 120ms ease, color 120ms ease;
+  flex-shrink: 0;
+}
+
+/* Hover — Figma: iconbutton/neutral/plain/hover */
+.t1-ab__ctrl-btn:hover,
+.t1-ab__ctrl-btn--open {
+  background: $t1-neutral-100;
+  color: $t1-neutral-900;
+}
+
+.t1-ab__ctrl-btn:focus-visible {
+  outline: 2px solid $t1-border-focus;
+  outline-offset: 1px;
+}
+
+/* Close: red danger affordance on hover — Figma value, no matching $t1-* token */
+.t1-ab__ctrl-btn--close:hover {
+  background: #fee2e2; /* close-btn danger bg — Figma specific */
+  color: #dc2626;      /* close-btn danger text — Figma specific */
+}
+
+.t1-ab__ctrl-icon {
+  font-size: 16px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ── Move & Resize menu (popover) ────────────────────────────────────────── */
+.t1-ab__menu-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.t1-ab__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 212px;
+  background: $t1-neutral-0;
+  border: 1px solid $t1-border;
+  border-radius: $t1-radius-xs;
+  box-shadow: 0 2px 16px 0 rgba(25, 40, 57, 0.09);
+  padding: 8px 0;
+  z-index: 100;
+  font-family: $t1-font-sans;
+}
+
+.t1-ab__menu-header {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: $t1-neutral-600;
+  padding: 4px 16px;
+}
+
+.t1-ab__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: $t1-neutral-600;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+
+.t1-ab__menu-item:hover,
+.t1-ab__menu-item:focus-visible {
+  background: $t1-neutral-25;
+  outline: none;
+}
+
+.t1-ab__menu-item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: $t1-neutral-500;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.t1-ab__menu-item-icon--flip {
+  transform: scaleX(-1);
+}
+
+.t1-ab__menu-item-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Mobile-drag: content row (title + close, full width) ────────────────── */
+.t1-ab__content-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* ── Mobile-drag: pill handle ────────────────────────────────────────────── */
+.t1-ab__drag-pill {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: $t1-neutral-200;
+  border-radius: $t1-radius-xs;
+  cursor: grab;
+  touch-action: none;
+}
+
+.t1-ab__drag-pill:active {
+  cursor: grabbing;
+}
+
+/* ── Sticky variants: drag grip on left edge (absolute) ─────────────────── */
+.t1-ab__drag-grip {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: grab;
+  color: $t1-neutral-400;
+  flex-shrink: 0;
+  transition: color 120ms ease;
+  touch-action: none;
+}
+
+.t1-ab__drag-grip:hover {
+  color: $t1-neutral-600;
+}
+
+.t1-ab__drag-grip:active {
+  cursor: grabbing;
+}
+
+.t1-ab__drag-grip:focus-visible {
+  outline: 2px solid $t1-border-focus;
+  outline-offset: 1px;
+  border-radius: $t1-radius-xs;
+}
+
+.t1-ab__drag-grip-icon {
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
+}

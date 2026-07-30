@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>App-Bar · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-stage { display: block; max-width: 1400px; }
+    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--t1-fg-muted); margin-bottom: 12px; }
+    .preview-row   { margin-bottom: 64px; }
+    .log           { margin-top: 10px; font-size: 12px; color: var(--t1-fg-muted); min-height: 18px; font-family: ui-monospace, monospace; }
+    .interactive-note { font-size: 12px; color: var(--t1-fg-muted); margin-bottom: 24px; font-style: italic; }
+    .drag-host     { position: relative; width: 400px; }
+    .drag-host--fs { width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">App-Bar</div>
+  <p class="interactive-note">Click the layout icon to open the Move &amp; Resize menu. Drag the grip / pill on sticky &amp; mobile variants. All variants cycle via the interactive instance at the top.</p>
+  <div id="root" class="preview-stage"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.AppBar) { setTimeout(waitForComponents, 50); return; }
+
+      const Demo = () => {
+        const [log, setLog] = React.useState('');
+        const [dragLog, setDragLog] = React.useState('');
+
+        return (
+          <div>
+
+            {/* ── Interactive (self-managed state) ── */}
+            <div className="preview-row">
+              <div className="section-label">Interactive · self-managed state · click controls / menu to cycle</div>
+              <AppBar
+                onMinimize={()    => setLog('→ stickyMinimized')}
+                onFullscreen={()  => setLog('→ fullscreen')}
+                onRestore={()     => setLog('→ panel (restored)')}
+                onCollapse={()    => setLog('→ panel (collapsed)')}
+                onClose={()       => setLog('✕ close clicked')}
+                onMove={(target)  => setLog('→ move: ' + target)}
+              />
+              <div className="log">{log || 'Click minimize (–), layout (⤡), or close. The layout button opens the Move & Resize menu.'}</div>
+            </div>
+
+            {/* ── Static variants ── */}
+            <div className="preview-row">
+              <div className="section-label">panel · 400px · floating / docked window chrome</div>
+              <AppBar type="panel" />
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">panel orientation=left · menu shows "Left of the Screen"</div>
+              <AppBar type="panel" orientation="left" />
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">fullscreen · 100% width · menu offers dock + pop-out</div>
+              <AppBar type="fullscreen" />
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">stickyMaximized · drag grip + Move & Resize menu</div>
+              <div
+                className="drag-host"
+                onPointerDown={() => setDragLog('⇢ stickyMaximized drag start')}
+              >
+                <AppBar
+                  type="stickyMaximized"
+                  onDragStart={() => setDragLog('⇢ stickyMaximized drag start')}
+                />
+              </div>
+              <div className="log">{dragLog.startsWith('⇢ stickyMaximized') ? dragLog : ''}</div>
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">stickyMinimized · drag grip + collapse</div>
+              <AppBar
+                type="stickyMinimized"
+                onDragStart={() => setDragLog('⇢ stickyMinimized drag start')}
+              />
+              <div className="log">{dragLog.startsWith('⇢ stickyMinimized') ? dragLog : ''}</div>
+            </div>
+
+            <div className="preview-row">
+              <div className="section-label">mobileDrag · pull-down pill handle</div>
+              <AppBar
+                type="mobileDrag"
+                onDragStart={() => setDragLog('⇢ mobileDrag pill grabbed')}
+              />
+              <div className="log">{dragLog.startsWith('⇢ mobileDrag') ? dragLog : ''}</div>
+            </div>
+
+            {/* ── Legacy aliases (back-compat) ── */}
+            <div className="preview-row">
+              <div className="section-label">Legacy aliases · type="default" / "expanded" / "minimized" still work</div>
+              <AppBar type="default" />
+            </div>
+
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+    })();
+  </script>
+</body>
+</html>

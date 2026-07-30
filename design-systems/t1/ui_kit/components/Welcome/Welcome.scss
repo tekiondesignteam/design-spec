@@ -1,0 +1,76 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   WELCOME  (Figma: aiT1Welcome)
+   BEM prefix: t1-wlc
+
+   Props
+   ─────────────────────────────────────────────────────────────────────────
+   name          string   recipient first name  (shown as "Hi {name},")
+   description   string   subtitle text
+
+   Tokens (from Figma variable defs)
+   ─────────────────────────────────────────────────────────────────────────
+   width                 164px
+   gap (root)            16px
+   logo                  40×40px (inline SVG)
+   heading               24px / 30px / 600   $t1-neutral-900
+   description           14px / 16px / 400   $t1-neutral-400
+   ========================================================================== */
+
+/* ── Root wrapper ────────────────────────────────────────────────────────── */
+.t1-wlc {
+  width:      fit-content;
+  min-width:  164px;
+  max-width:  100%;
+  box-sizing: border-box;
+  font-family: $t1-font-sans;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .t1-wlc {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .t1-wlc__heading {
+    font-size:   22px;
+    line-height: 28px;
+  }
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────────── */
+.t1-wlc__logo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* ── Label block ─────────────────────────────────────────────────────────── */
+.t1-wlc__labels {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Heading ("Hi {name},") ──────────────────────────────────────────────── */
+.t1-wlc__heading {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: $t1-weight-semibold;
+  color: $t1-neutral-900;
+  margin: 0;
+}
+
+/* ── Description ─────────────────────────────────────────────────────────── */
+.t1-wlc__description {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: $t1-weight-regular;
+  color: $t1-neutral-400;
+  margin: 0;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Deal-Card · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-stage { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--t1-fg-muted); margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Deal-Card</div>
+  <div id="root" class="preview-stage"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.DealCard) { setTimeout(waitForComponents, 50); return; }
+
+      const Demo = () => (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'flex-start' }}>
+
+          {/* Figma default */}
+          <div>
+            <div className="section-label">Default</div>
+            <DealCard />
+          </div>
+
+          {/* Populated */}
+          <div>
+            <div className="section-label">Populated</div>
+            <DealCard
+              dealId="#DEAL-10042"
+              vehicle="2024 Honda Accord EX-L"
+              salesperson="Marcus Rivera"
+              purchaseType="Finance"
+              status="Negotiating"
+              lastUpdated="Jan 12, 2026 12:00 PM"
+              onView={() => alert('View deal #DEAL-10042')}
+            />
+          </div>
+
+          {/* Responsive truncation at 200px */}
+          <div style={{ width: 200 }}>
+            <div className="section-label">Narrow (200px)</div>
+            <DealCard
+              dealId="#DEAL-98765"
+              vehicle="2025 Mercedes-Benz GLE 450 4MATIC"
+              salesperson="Alexandra Worthington-Hughes"
+              purchaseType="Cash / Full Payment"
+              status="Awaiting Finance Approval"
+              lastUpdated="Apr 21, 2026 09:45 AM"
+            />
+          </div>
+
+        </div>
+      );
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+    })();
+  </script>
+</body>
+</html>

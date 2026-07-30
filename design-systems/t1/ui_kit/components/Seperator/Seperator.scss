@@ -1,0 +1,8 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ---------- SEPARATOR ---------- */
+.t1-sep { background: var(--t1-border-subtle); }
+.t1-sep--horizontal { height: 1px; width: 100%; }
+.t1-sep--vertical { width: 1px; height: 100%; min-height: 16px; }
+.t1-sep--inset { margin-left: 16px; }
+.t1-sep--pipe.t1-sep--vertical { background: var(--t1-border); height: 12px; align-self: center; }

@@ -1,0 +1,231 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   TOAST  (Figma: aiT1Toast)
+   BEM prefix: t1-toast
+
+   Variants: info · error · warning · success
+   Layout  : [icon-block] [content: title / desc]  (optional close right)
+
+   NOTIFICATION BANNER  (Figma: aiT1NotificationBanner)
+   BEM prefix: t1-banner
+
+   Variants: neutral · info · error · warning · success
+   Layout  : [4px bar] [icon] [title · desc inline] [close btn]
+
+   Design tokens (Figma → SCSS)
+   ─────────────────────────────────────────────────────────────────────────
+   Toast shadow      : elevation/6           → $t1-shadow-toast
+   Toast padding     : 16px                  → $t1-space-4
+   Toast gap         : 8px                   → $t1-space-2
+   Icon block size   : 32×32                 → hardcoded 32px
+   Icon block radius : 2px                   → $t1-radius-md
+   Toast title       : 16px/600/lh-24px      → $t1-weight-semibold
+   Toast desc        : 14px/400/lh-16px      → $t1-neutral-600
+
+   Banner border     : 1px solid #d4d5d6     → $t1-neutral-200
+   Banner padding    : 8px                   → $t1-space-2
+   Banner bar width  : 4px                   → hardcoded 4px
+   Banner bar radius : pill                  → $t1-radius-pill
+   Banner gap        : 16px                  → $t1-space-4
+   Banner title      : 16px/600/lh-24px      → colored per variant
+   Banner desc       : 14px/400/lh-16px      → $t1-neutral-900
+
+   Color tokens
+   ─────────────────────────────────────────────────────────────────────────
+   info    : $t1-blue-400    #4285f4
+   error   : $t1-red-400     #f52f1d
+   warning : $t1-amber-400   #ffb23c
+   success : $t1-green-500   #06bc75
+   neutral : $t1-neutral-400 #969aa3
+   ========================================================================== */
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TOAST
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Root ────────────────────────────────────────────────────────────────── */
+.t1-toast {
+  display:     flex;
+  align-items: flex-start;        /* top-aligned when title + description present */
+  gap:         $t1-space-2;       /* 8px — Figma: toast/contentcontainer/gap */
+  padding:     $t1-space-4;       /* 16px — Figma: toast/container/padding */
+  background:  $t1-neutral-0;
+  border:      1px solid transparent; /* shadow creates separation */
+  border-radius: $t1-radius-xs;   /* 2px */
+  box-shadow:  $t1-shadow-toast;  /* elevation/6 */
+  max-width:   361px;             /* Figma: w-[361px] */
+  width:       100%;
+  box-sizing:  border-box;
+  font-family: $t1-font-sans;
+}
+
+/* ── Icon wrap ───────────────────────────────────────────────────────────────  */
+.t1-toast__icon-wrap {
+  flex-shrink: 0;
+}
+
+/* Optical offset only when both title + description are present */
+.t1-toast--with-desc .t1-toast__icon-wrap {
+  margin-top: 4px;
+}
+
+/* ── Colored icon block (32×32) ──────────────────────────────────────────── */
+.t1-toast__icon-block {
+  width:         32px;
+  height:        32px;
+  border-radius: $t1-radius-xs;  /* 2px */
+  display:       grid;
+  place-items:   center;
+  flex-shrink:   0;
+  color:         $t1-neutral-0;  /* white icon */
+}
+
+/* Variant fills */
+.t1-toast--info    .t1-toast__icon-block { background: $t1-blue-400; }
+.t1-toast--error   .t1-toast__icon-block { background: $t1-red-400; }
+.t1-toast--warning .t1-toast__icon-block { background: $t1-amber-400; }
+.t1-toast--success .t1-toast__icon-block { background: $t1-green-500; }
+
+/* ── Content column: title + description ─────────────────────────────────── */
+.t1-toast__content {
+  display:        flex;
+  flex-direction: column;
+  gap:            0;              /* Figma: toast/labelcontainer/gap = 0 */
+  flex:           1 1 0;
+  min-width:      0;
+}
+
+/* ── Title — 16px / 600 / lh-24px ───────────────────────────────────────── */
+.t1-toast__title {
+  font-size:   16px;
+  font-weight: $t1-weight-semibold;  /* 600 */
+  line-height: 24px;
+  color:       $t1-neutral-900;      /* #161616 */
+}
+
+/* ── Description — 14px / 400 / lh-16px ─────────────────────────────────── */
+.t1-toast__desc {
+  font-size:   14px;
+  font-weight: $t1-weight-regular;   /* 400 */
+  line-height: 16px;
+  color:       $t1-neutral-600;      /* #444f5c */
+}
+
+/* ── Optional close button (top-right, uses kit IconButton) ──────────────── */
+.t1-toast__close {
+  flex-shrink: 0;
+  margin-top:  -2px; /* optical alignment with title top */
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NOTIFICATION BANNER
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Root ────────────────────────────────────────────────────────────────── */
+.t1-banner {
+  display:     flex;
+  align-items: stretch;
+  background:  $t1-neutral-0;
+  border:      1px solid $t1-neutral-200;  /* #d4d5d6 */
+  width:       100%;
+  box-sizing:  border-box;
+  font-family: $t1-font-sans;
+}
+
+/* ── 4px colored left status bar ─────────────────────────────────────────── */
+.t1-banner__bar {
+  width:         4px;             /* Figma: statusIndicator w-[4px] */
+  flex-shrink:   0;
+  border-radius: $t1-radius-pill; /* 9999px — pill per Figma */
+  margin:        $t1-space-2;     /* 8px inset — Figma: py-[8px] pl-[8px] */
+  margin-right:  0;
+}
+
+/* Bar color variants */
+.t1-banner--neutral .t1-banner__bar { background: $t1-neutral-400; }
+.t1-banner--info    .t1-banner__bar { background: $t1-blue-400; }
+.t1-banner--error   .t1-banner__bar { background: $t1-red-400; }
+.t1-banner--warning .t1-banner__bar { background: $t1-amber-400; }
+.t1-banner--success .t1-banner__bar { background: $t1-green-500; }
+
+/* ── Inner container (after the bar) ─────────────────────────────────────── */
+.t1-banner__inner {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-4;       /* 16px — Figma: notifiction/container/gap */
+  flex:        1 1 0;
+  min-width:   0;
+  padding:     $t1-space-2;       /* 8px — Figma: px/py notifiction/horizontalpadding */
+}
+
+/* ── Icon wrap ───────────────────────────────────────────────────────────────  */
+.t1-banner__icon {
+  flex-shrink: 0;
+  display:     flex;
+  align-items: center;
+}
+
+/* ── Colored icon block (32×32) — same pattern as toast ─────────────────── */
+.t1-banner__icon-block {
+  width:         32px;
+  height:        32px;
+  border-radius: $t1-radius-xs;   /* 2px */
+  display:       grid;
+  place-items:   center;
+  flex-shrink:   0;
+  color:         $t1-neutral-0;   /* white icon on colored block */
+}
+
+/* Block color variants */
+.t1-banner--neutral .t1-banner__icon-block { background: $t1-neutral-400; }
+.t1-banner--info    .t1-banner__icon-block { background: $t1-blue-400; }
+.t1-banner--error   .t1-banner__icon-block { background: $t1-red-400; }
+.t1-banner--warning .t1-banner__icon-block { background: $t1-amber-400; }
+.t1-banner--success .t1-banner__icon-block { background: $t1-green-500; }
+
+/* ── Labels: title + description inline (Figma: whitespace-nowrap, flex-row) */
+.t1-banner__labels {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-4;       /* 16px — Figma: notifiction/labelcontainer/gap */
+  flex:        1 1 0;
+  min-width:   0;
+  overflow:    hidden;
+}
+
+/* ── Title — 16px / 600 / lh-24px / colored ─────────────────────────────── */
+.t1-banner__title {
+  font-size:   16px;
+  font-weight: $t1-weight-semibold;  /* 600 */
+  line-height: 24px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Title color variants */
+.t1-banner--neutral .t1-banner__title { color: $t1-neutral-900; }
+.t1-banner--info    .t1-banner__title { color: $t1-blue-400; }
+.t1-banner--error   .t1-banner__title { color: $t1-red-400; }
+.t1-banner--warning .t1-banner__title { color: $t1-amber-400; }
+.t1-banner--success .t1-banner__title { color: $t1-green-500; }
+
+/* ── Description — 14px / 400 / lh-16px / always dark ───────────────────── */
+.t1-banner__desc {
+  font-size:     14px;
+  font-weight:   $t1-weight-regular; /* 400 */
+  line-height:   16px;
+  color:         $t1-neutral-900;    /* #161616 — same for all variants */
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+  flex:          1 1 0;
+  min-width:     0;
+}
+
+/* ── Close button (kit IconButton, optional) ─────────────────────────────── */
+.t1-banner__close {
+  flex-shrink: 0;
+}

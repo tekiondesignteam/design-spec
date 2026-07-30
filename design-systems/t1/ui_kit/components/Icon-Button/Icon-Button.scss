@@ -1,0 +1,198 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   ICON-BUTTON  (Figma: )
+
+   Square icon-only button.
+   color: neutral | inverse
+   style: contained | plain
+   size:  sm (24px) | md (32px) | lg (40px)
+   ========================================================================== */
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+.t1-ibtn {
+  display:         inline-grid;
+  place-items:     center;
+  padding:         0;
+  border:          1px solid transparent;
+  border-radius:   $t1-radius-xs;
+  background:      transparent;
+  cursor:          pointer;
+  flex-shrink:     0;
+  user-select:     none;
+  box-sizing:      border-box;
+  transition:      background 80ms ease, color 80ms ease, border-color 80ms ease;
+  outline:         none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.t1-ibtn:focus-visible {
+  outline:        2px solid $t1-border-focus;
+  outline-offset: 2px;
+}
+
+/* ── Icon slot ────────────────────────────────────────────────────────────── */
+.t1-ibtn__icon {
+  display:     inline-flex;
+  align-items: center;
+  line-height: 1;
+  color:       inherit;
+}
+
+/* ── Sizes ────────────────────────────────────────────────────────────────── */
+.t1-ibtn--sm { width: 24px; height: 24px; }
+.t1-ibtn--md { width: 32px; height: 32px; }
+.t1-ibtn--lg { width: 40px; height: 40px; }
+
+/* ── Loading spinner ──────────────────────────────────────────────────────── */
+@keyframes t1-ibtn-spin {
+  to { transform: rotate(360deg); }
+}
+
+.t1-ibtn__spinner {
+  display:          block;
+  border-radius:    50%;
+  border:           2px solid $t1-neutral-200;
+  border-top-color: $t1-spinner-arc;
+  animation:        t1-ibtn-spin 0.7s linear infinite;
+}
+
+.t1-ibtn--sm .t1-ibtn__spinner { width: 12px; height: 12px; border-width: 1.5px; }
+.t1-ibtn--md .t1-ibtn__spinner { width: 14px; height: 14px; border-width: 2px; }
+.t1-ibtn--lg .t1-ibtn__spinner { width: 18px; height: 18px; border-width: 2px; }
+
+/* ==========================================================================
+   NEUTRAL / CONTAINED
+   default : white bg · neutral-400 border · neutral-700 icon
+   hover   : neutral-100 bg · no border   · neutral-900 icon
+   active  : neutral-150 bg · no border   · neutral-900 icon
+   disabled: neutral-200 bg · no border   · neutral-400 icon
+   ========================================================================== */
+.t1-ibtn--neutral.t1-ibtn--contained {
+  background:   $t1-neutral-0;
+  border-color: $t1-neutral-400;
+  color:        $t1-neutral-700;
+}
+
+.t1-ibtn--neutral.t1-ibtn--contained:hover:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--neutral.t1-ibtn--contained.is-hover:not(.is-disabled):not(.is-loading) {
+  background:   $t1-neutral-100;
+  border-color: transparent;
+  color:        $t1-neutral-900;
+}
+
+.t1-ibtn--neutral.t1-ibtn--contained:active:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--neutral.t1-ibtn--contained.is-active:not(.is-disabled):not(.is-loading) {
+  background:   $t1-neutral-150;
+  border-color: transparent;
+  color:        $t1-neutral-900;
+}
+
+.t1-ibtn--neutral.t1-ibtn--contained:disabled,
+.t1-ibtn--neutral.t1-ibtn--contained.is-disabled {
+  background:   $t1-neutral-200;
+  border-color: transparent;
+  color:        $t1-neutral-400;
+  cursor:       not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   NEUTRAL / PLAIN
+   default : transparent bg · no border  · neutral-600 icon
+   hover   : neutral-100 bg              · neutral-700 icon
+   active  : neutral-150 bg              · neutral-900 icon
+   disabled: transparent bg              · neutral-400 icon
+   ========================================================================== */
+.t1-ibtn--neutral.t1-ibtn--plain {
+  background:   transparent;
+  border-color: transparent;
+  color:        $t1-neutral-600;
+}
+
+.t1-ibtn--neutral.t1-ibtn--plain:hover:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--neutral.t1-ibtn--plain.is-hover:not(.is-disabled):not(.is-loading) {
+  background: $t1-neutral-100;
+  color:      $t1-neutral-700;
+}
+
+.t1-ibtn--neutral.t1-ibtn--plain:active:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--neutral.t1-ibtn--plain.is-active:not(.is-disabled):not(.is-loading) {
+  background: $t1-neutral-150;
+  color:      $t1-neutral-900;
+}
+
+.t1-ibtn--neutral.t1-ibtn--plain:disabled,
+.t1-ibtn--neutral.t1-ibtn--plain.is-disabled {
+  background:   transparent;
+  color:        $t1-neutral-400;
+  cursor:       not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   INVERSE / CONTAINED
+   default : white bg · no border       · neutral-600 icon
+   hover   : neutral-50 bg              · neutral-600 icon
+   active  : neutral-100 bg             · neutral-600 icon
+   disabled: neutral-700 bg             · neutral-400 icon
+   ========================================================================== */
+.t1-ibtn--inverse.t1-ibtn--contained {
+  background:   $t1-neutral-0;
+  border-color: transparent;
+  color:        $t1-neutral-600;
+}
+
+.t1-ibtn--inverse.t1-ibtn--contained:hover:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--inverse.t1-ibtn--contained.is-hover:not(.is-disabled):not(.is-loading) {
+  background: $t1-neutral-50;
+  color:      $t1-neutral-600;
+}
+
+.t1-ibtn--inverse.t1-ibtn--contained:active:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--inverse.t1-ibtn--contained.is-active:not(.is-disabled):not(.is-loading) {
+  background: $t1-neutral-100;
+  color:      $t1-neutral-600;
+}
+
+.t1-ibtn--inverse.t1-ibtn--contained:disabled,
+.t1-ibtn--inverse.t1-ibtn--contained.is-disabled {
+  background:   $t1-neutral-700;
+  border-color: transparent;
+  color:        $t1-neutral-400;
+  cursor:       not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   INVERSE / PLAIN
+   default : transparent bg · no border · neutral-0 (white) icon
+   hover   : neutral-600 bg             · neutral-0 icon
+   active  : iib-inv-plain-active bg    · neutral-0 icon
+   disabled: transparent bg             · neutral-400 icon
+   ========================================================================== */
+.t1-ibtn--inverse.t1-ibtn--plain {
+  background:   transparent;
+  border-color: transparent;
+  color:        $t1-neutral-0;
+}
+
+.t1-ibtn--inverse.t1-ibtn--plain:hover:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--inverse.t1-ibtn--plain.is-hover:not(.is-disabled):not(.is-loading) {
+  background: $t1-neutral-600;
+  color:      $t1-neutral-0;
+}
+
+.t1-ibtn--inverse.t1-ibtn--plain:active:not(:disabled):not(.is-disabled):not(.is-loading),
+.t1-ibtn--inverse.t1-ibtn--plain.is-active:not(.is-disabled):not(.is-loading) {
+  background: $t1-iib-inv-plain-active;
+  color:      $t1-neutral-0;
+}
+
+.t1-ibtn--inverse.t1-ibtn--plain:disabled,
+.t1-ibtn--inverse.t1-ibtn--plain.is-disabled {
+  background:   transparent;
+  color:        $t1-neutral-400;
+  cursor:       not-allowed;
+  pointer-events: none;
+}

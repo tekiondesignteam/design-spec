@@ -1,0 +1,54 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   FAV-BAR-ICON — AI Sidebar Favourite Bar Item
+   Figma: /T1-Components    (aiT1FavBarItem)
+
+   Container   height 56px · padding 6px 12px · flex-column · centred
+   Tile        40×40px · border-radius $t1-radius-sm (4px)
+                background linear-gradient(100.05deg,
+                  $t1-grad-teal 0%, $t1-grad-cyan 50%, $t1-grad-blue 100%)
+   Logo        24×18px white T1 wordmark centred inside tile
+   ========================================================================== */
+
+/* ── Container ────────────────────────────────────────────────────────────── */
+.t1-favbar-icon {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  height:          56px;
+  padding:         6px $t1-space-3;
+  box-sizing:      border-box;
+  flex-shrink:     0;
+  overflow:        hidden;
+
+  &[role="button"] {
+    cursor: pointer;
+    outline: none;
+
+    &:focus-visible .t1-favbar-icon__tile {
+      outline:        2px solid $t1-border-focus;
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* ── Gradient tile ────────────────────────────────────────────────────────── */
+.t1-favbar-icon__tile {
+  display:         inline-grid;
+  place-items:     center;
+  width:           40px;
+  height:          40px;
+  border-radius: $t1-radius-xs;
+  background:      linear-gradient(100.05deg, $t1-grad-teal 0%, $t1-grad-cyan 50%, $t1-grad-blue 100%);
+  flex-shrink:     0;
+}
+
+/* ── White T1 wordmark ────────────────────────────────────────────────────── */
+.t1-favbar-icon__logo {
+  display:     block;
+  width:       24px;
+  height:      18px;
+  flex-shrink: 0;
+}

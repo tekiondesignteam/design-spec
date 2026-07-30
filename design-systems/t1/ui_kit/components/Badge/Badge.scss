@@ -1,0 +1,63 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   BADGE
+   BEM prefix: t1-badge
+
+   Sizes     md = 20×20px · sm = 16×16px · dot = 8×8px
+   Colors    primary (#4285f4) · success (#56bf4d)
+   Variants  number | dot | icon
+   ========================================================================== */
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+.t1-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $t1-font-sans;
+  font-weight: 600;
+  color: #ffffff;
+  border-radius: $t1-radius-pill;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  user-select: none;
+  line-height: 1;
+}
+
+/* ── Size: md — 20×20px, 12px text ──────────────────────────────────────── */
+.t1-badge--md {
+  min-width: 20px;
+  height: 20px;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 2px 4px 0;   /* 2px top = optical vertical alignment */
+}
+
+/* ── Size: sm — 16×16px, 10px text ──────────────────────────────────────── */
+.t1-badge--sm {
+  min-width: 16px;
+  height: 16px;
+  font-size: 10px;
+  line-height: 12px;
+  padding: 2px 3px 0;
+}
+
+/* ── Dot — 8×8px, no content ─────────────────────────────────────────────── */
+.t1-badge--dot {
+  width: 8px;
+  height: 8px;
+  min-width: 0;
+  padding: 0;
+}
+
+/* ── Icon — same footprint as md, no text padding ────────────────────────── */
+.t1-badge--icon {
+  width: 20px;
+  height: 20px;
+  min-width: 0;
+  padding: 0;
+}
+
+/* ── Colors ──────────────────────────────────────────────────────────────── */
+.t1-badge--primary { background: #4285f4; }
+.t1-badge--success { background: #56bf4d; }

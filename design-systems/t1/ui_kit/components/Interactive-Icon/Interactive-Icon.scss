@@ -1,0 +1,119 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   INTERACTIVE-ICON  (Figma: AiT1InteractiveIcon)
+
+   Plain icon button — NO border · NO border-radius.
+   Visual feedback is icon-color change + flat background tint on hover/active.
+
+   SIZE   container   icon
+   xs     16 × 16px   10px
+   sm     20 × 20px   12px
+   md     24 × 24px   14px
+   lg     32 × 32px   16px
+   xl     40 × 40px   20px
+
+   COLORS  (icon color  /  hover bg  /  active bg)
+   neutral   icon $t1-neutral-600          |  hover  bg $t1-neutral-50  icon $t1-neutral-600
+                                           |  active bg $t1-neutral-50  icon $t1-neutral-600
+   primary   icon $t1-blue-400             |  hover  bg $t1-neutral-50  icon $t1-blue-700
+                                           |  active bg $t1-neutral-50  icon $t1-blue-700
+   error     icon $t1-interactive-error-icon  |  hover  bg $t1-neutral-50  icon $t1-red-500
+                                           |  active bg $t1-neutral-50  icon $t1-red-700
+
+   disabled  neutral: icon $t1-neutral-400 · primary/error: icon $t1-neutral-50  bg transparent
+   ========================================================================== */
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+.t1-iicon {
+  display:         inline-grid;
+  place-items:     center;
+  flex-shrink:     0;
+  border:          none;
+  background:      transparent;
+  padding:         0;
+  cursor:          pointer;
+  user-select:     none;
+  box-sizing:      border-box;
+  transition:      background-color 120ms ease, color 120ms ease;
+  outline:         none;
+  -webkit-tap-highlight-color: transparent;
+}
+.t1-iicon:focus-visible {
+  outline:        2px solid $t1-border-focus;
+  outline-offset: 2px;
+}
+
+/* ── Icon slot ────────────────────────────────────────────────────────────── */
+.t1-iicon__icon {
+  display:     inline-flex;
+  align-items: center;
+  line-height: 1;
+  color:       inherit;
+}
+
+/* ── Sizes ────────────────────────────────────────────────────────────────── */
+.t1-iicon--xs { width: 16px; height: 16px; }
+.t1-iicon--sm { width: 20px; height: 20px; }
+.t1-iicon--md { width: 24px; height: 24px; }
+.t1-iicon--lg { width: 32px; height: 32px; }
+.t1-iicon--xl { width: 40px; height: 40px; }
+
+/* ── NEUTRAL ──────────────────────────────────────────────────────────────── */
+.t1-iicon--neutral { color: $t1-neutral-600; }
+
+.t1-iicon--neutral:hover:not(:disabled):not(.is-disabled),
+.t1-iicon--neutral.is-hover:not(.is-disabled) {
+  background: $t1-neutral-50;
+  color:      $t1-neutral-600;
+}
+.t1-iicon--neutral:active:not(:disabled):not(.is-disabled),
+.t1-iicon--neutral.is-active:not(.is-disabled) {
+  background: $t1-neutral-50;
+  color:      $t1-neutral-600;
+}
+
+/* ── PRIMARY ──────────────────────────────────────────────────────────────── */
+.t1-iicon--primary { color: $t1-blue-400; }
+
+.t1-iicon--primary:hover:not(:disabled):not(.is-disabled),
+.t1-iicon--primary.is-hover:not(.is-disabled) {
+  background: $t1-neutral-50;
+  color:      $t1-blue-700;
+}
+.t1-iicon--primary:active:not(:disabled):not(.is-disabled),
+.t1-iicon--primary.is-active:not(.is-disabled) {
+  background: $t1-neutral-50;
+  color:      $t1-blue-700;
+}
+
+/* ── ERROR ────────────────────────────────────────────────────────────────── */
+.t1-iicon--error { color: $t1-interactive-error-icon; }
+
+.t1-iicon--error:hover:not(:disabled):not(.is-disabled),
+.t1-iicon--error.is-hover:not(.is-disabled) {
+  background: $t1-neutral-50;
+  color:      $t1-red-500;
+}
+.t1-iicon--error:active:not(:disabled):not(.is-disabled),
+.t1-iicon--error.is-active:not(.is-disabled) {
+  background: $t1-neutral-50;
+  color:      $t1-red-700;
+}
+
+/* ── Disabled ─────────────────────────────────────────────────────────────── */
+/* Neutral disabled: medium gray icon */
+.t1-iicon:disabled,
+.t1-iicon.is-disabled {
+  background:     transparent;
+  color:          $t1-neutral-400;
+  cursor:         not-allowed;
+  pointer-events: none;
+}
+/* Primary + error disabled: very light icon (Figma: #f4f5f6) */
+.t1-iicon--primary:disabled,
+.t1-iicon--primary.is-disabled,
+.t1-iicon--error:disabled,
+.t1-iicon--error.is-disabled {
+  color: $t1-neutral-50;
+}

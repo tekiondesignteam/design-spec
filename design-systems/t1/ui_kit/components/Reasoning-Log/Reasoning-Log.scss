@@ -1,0 +1,285 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   REASONING-LOG  (Figma: AiT1ReasoningLog)
+
+   Tokens used
+   ─────────────────────────────────────────────────────────────────────────
+   Text 12px / 16px — body3Medium (500) · body3Regular (400)
+   Gradient: #1A6CC4 → #1B90B4 → #25C8A5  (Figma: 121.36°)
+   Step bar default: #d4d5d6 = $t1-neutral-200
+   Step bar active : #4285f4 = $t1-blue-400
+   Step text       : #444f5c = $t1-neutral-600
+   Status muted    : #969aa3 = $t1-neutral-400
+   ========================================================================== */
+
+/* ── Keyframes ────────────────────────────────────────────────────────────── */
+
+/* Logo rotation — 5-dot mark orbits while thinking */
+@keyframes t1-rl-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* "Thinking…" gradient shimmer — background-position slides left */
+@keyframes t1-rl-shimmer {
+  0%   { background-position: 100% center; }
+  100% { background-position:  -100% center; }
+}
+
+/* Step entry — slides in as soon as it enters the DOM (no JS state needed) */
+@keyframes t1-rl-step-in {
+  from { max-height: 0;    opacity: 0; transform: translateY(3px); }
+  to   { max-height: 40px; opacity: 1; transform: translateY(0);   }
+}
+
+/* Typewriter cursor blink */
+@keyframes t1-rl-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Logo pulse — subtle opacity breathe when idle/done */
+@keyframes t1-rl-pulse {
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: 0.55; }
+}
+
+/* ── Outer wrapper ────────────────────────────────────────────────────────── */
+.t1-rl {
+  display:       flex;
+  gap:           8px;
+  min-width:     0;
+  max-width:     480px;
+  width:         100%;
+  align-items:   flex-start;
+  font-family:   $t1-font-sans;
+  margin-bottom: $t1-space-4;    /* 16px — breathing room before the next AI response or card */
+  box-sizing:    border-box;
+}
+
+/* ── Logo column ──────────────────────────────────────────────────────────── */
+.t1-rl__logo-col {
+  flex-shrink: 0;
+  width:       16px;
+  height:      16px;
+  margin-top:  1px; /* optical alignment with first text line */
+}
+
+.t1-rl__logo {
+  display:          block;
+  width:            16px;
+  height:           16px;
+  transform-origin: center;
+}
+
+/* Spinning logo while in-progress */
+.t1-rl__logo--spin {
+  animation: t1-rl-spin 2.4s linear infinite;
+}
+
+/* Faded logo when interrupted */
+.t1-rl--interrupted .t1-rl__logo {
+  opacity: 0.4;
+}
+
+/* ── Main column ──────────────────────────────────────────────────────────── */
+.t1-rl__main {
+  flex:           1 0 0;
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+  min-width:      0;
+}
+
+/* ── Header row (clickable button) ───────────────────────────────────────── */
+.t1-rl__header {
+  display:        flex;
+  align-items:    center;
+  justify-content: space-between;
+  gap:            8px;
+  width:          100%;
+  padding:        0;
+  border:         none;
+  background:     transparent;
+  cursor:         pointer;
+  font-family:    inherit;
+  text-align:     left;
+  -webkit-tap-highlight-color: transparent;
+  outline:        none;
+}
+
+.t1-rl__header:focus-visible {
+  outline:        2px solid $t1-border-focus;
+  outline-offset: 2px;
+  border-radius: $t1-radius-xs;
+}
+
+/* Non-interactive header (interrupted state) */
+.t1-rl__header--static {
+  cursor: default;
+}
+
+.t1-rl__header-left {
+  display:     flex;
+  align-items: center;
+  gap:         4px;
+  min-width:   0;
+}
+
+/* ── Status label ─────────────────────────────────────────────────────────── */
+.t1-rl__status {
+  font-size:   12px;
+  font-weight: $t1-weight-medium;
+  line-height: 16px;
+  flex-shrink: 0;
+}
+
+/* "Thinking…" — animated gradient shimmer */
+.t1-rl__status--thinking {
+  background:             linear-gradient(90deg,
+                            $t1-grad-blue  0%,
+                            $t1-grad-cyan  33%,
+                            $t1-grad-teal  66%,
+                            $t1-grad-cyan  83%,
+                            $t1-grad-blue  100%);
+  background-size:        250% 100%;
+  -webkit-background-clip: text;
+  background-clip:        text;
+  -webkit-text-fill-color: transparent;
+  color:                  transparent;
+  animation:              t1-rl-shimmer 2s linear infinite;
+}
+
+/* "Thought for" — static muted */
+.t1-rl__status--done {
+  color: $t1-neutral-400;
+}
+
+/* "Response stopped by you" */
+.t1-rl__status--interrupted {
+  color: $t1-neutral-400;
+}
+
+/* ── Timer "7.5s" ─────────────────────────────────────────────────────────── */
+.t1-rl__timer {
+  font-size:   12px;
+  font-weight: $t1-weight-regular;
+  line-height: 16px;
+  color:       $t1-neutral-400;
+  flex-shrink: 0;
+  min-width:   28px; /* prevents layout jump as digits change */
+}
+
+/* ── Chevron ──────────────────────────────────────────────────────────────── */
+.t1-rl__chevron {
+  font-size:   16px;
+  color:       $t1-neutral-400;
+  flex-shrink: 0;
+  transition:  transform 220ms cubic-bezier(0.4, 0, 0.2, 1),
+               color    120ms ease;
+  line-height: 1;
+}
+
+.t1-rl__header:hover .t1-rl__chevron {
+  color: $t1-neutral-600;
+}
+
+/* Collapsed: caret-up flips to point down */
+.t1-rl__chevron--collapsed {
+  transform: rotate(180deg);
+}
+
+/* ── Subtitle ─────────────────────────────────────────────────────────────── */
+.t1-rl__subtitle {
+  margin:      0;
+  font-size:   12px;
+  font-weight: $t1-weight-medium;
+  line-height: 16px;
+  color:       $t1-neutral-400;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Steps — expand/collapse via grid-template-rows ─────────────────────── */
+.t1-rl__steps-wrap {
+  display:            grid;
+  grid-template-rows: 0fr;            /* collapsed: 0 height */
+  transition:         grid-template-rows 260ms cubic-bezier(0.4, 0, 0.2, 1),
+                      opacity           200ms ease;
+  opacity:            0;
+}
+
+.t1-rl__steps-wrap.is-open {
+  grid-template-rows: 1fr;            /* expanded: natural height */
+  opacity:            1;
+}
+
+/* Inner must have overflow:hidden for the grid trick to clip */
+.t1-rl__steps-inner {
+  overflow: hidden;
+  display:  flex;
+  flex-direction: column;
+  gap:      4px;
+  padding-top: 2px; /* tiny breathing room at top of list */
+}
+
+/* ── Step entry wrapper — CSS animation fires on DOM insertion, no JS gap ── */
+.t1-rl__step-entry {
+  overflow:  hidden;                     /* clips height during animation      */
+  animation: t1-rl-step-in 280ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Skip animation for already-complete (done-state) steps */
+.t1-rl__step-entry--instant {
+  animation: none;
+}
+
+/* ── Individual step ──────────────────────────────────────────────────────── */
+.t1-rl__step {
+  display:     flex;
+  gap:         8px;
+  align-items: stretch;
+}
+
+.t1-rl__bar {
+  display:       block;
+  flex-shrink:   0;
+  width:         2px;
+  border-radius: $t1-radius-pill;
+  background:    $t1-neutral-200;   /* #d4d5d6 */
+  margin:        2px 0;             /* 4px vertical padding per Figma indicator */
+  transition:    background 200ms ease;
+}
+
+.t1-rl__step-text {
+  flex:          1 0 0;
+  font-size:     12px;
+  font-weight:   $t1-weight-medium;
+  line-height:   16px;
+  color:         $t1-neutral-600;   /* #444f5c */
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+/* Active step (last step while in-progress) */
+.t1-rl__step--active .t1-rl__bar {
+  background: $t1-blue-400;         /* #4285f4 */
+}
+
+.t1-rl__step--active .t1-rl__step-text {
+  color: $t1-neutral-600;           /* same as default per Figma */
+}
+
+/* ── Typewriter cursor ────────────────────────────────────────────────────── */
+.t1-rl__cursor {
+  display:          inline-block;
+  width:            1.5px;
+  height:           11px;
+  background:       $t1-neutral-600;
+  margin-left:      1px;
+  vertical-align:   middle;
+  border-radius: 1px;
+  animation:        t1-rl-cursor-blink 600ms step-end infinite;
+}

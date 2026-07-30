@@ -1,0 +1,344 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   BUTTON  (Figma: aiT1Button)
+   Exact values pulled from Figma variable defs — every hex verified.
+
+   Sizes (Figma: button/{lg|md|sm}/*)
+   ─────────────────────────────────────────────────────────────────────────
+   lg  h:36  padding:0 20  radius:8  border:1  gap:4  font:14/16 600
+   md  h:32  padding:0 16  radius:6  border:1  gap:4  font:14/16 600
+   sm  h:24  padding:0 12  radius:4  border:1  gap:4  font:14/16 600
+
+   Color matrix (Figma variable → hex → token)
+   ─────────────────────────────────────────────────────────────────────────
+   primary / contained
+     default   bg #4285f4 ($t1-blue-400)   text #fff      border transparent
+     hover     bg #0060ff ($t1-blue-700)   text #fff      border transparent
+     active    bg #0060ff ($t1-blue-700)   text #fff      border transparent
+     disabled  bg #f4f5f6 ($t1-neutral-50) text #6d707a ($t1-neutral-500)
+
+   primary / outlined
+     default   bg #fff    text #161616 ($t1-neutral-900)  border #969aa3 ($t1-neutral-400)
+     hover     bg #dbebff ($t1-blue-100) text #0060ff ($t1-blue-700) border #4285f4 ($t1-blue-400)
+     active    bg #dbebff   text #0060ff   border #4285f4
+     disabled  bg #fff    text #969aa3 ($t1-neutral-400)  border #d4d5d6 ($t1-neutral-200)
+
+   primary / text
+     default   text #3373dd ($t1-blue-500)
+     hover     bg #dbebff ($t1-blue-100)  text #0060ff ($t1-blue-700)
+     active    bg #dbebff   text #0060ff
+     disabled  text #969aa3 ($t1-neutral-400)
+
+   neutral / contained
+     default   bg #ffffff ($t1-neutral-0)   text #3f4757 ($t1-neutral-700)  border #969aa3 ($t1-neutral-400)
+     hover     bg #edeef0 ($t1-neutral-100) text #3f4757  border transparent
+     active    bg #e8e9eb ($t1-neutral-150) text #3f4757  border transparent
+     disabled  bg #d4d5d6 ($t1-neutral-200) text #969aa3 ($t1-neutral-400)  border transparent
+
+   neutral / outlined
+     default   bg transparent  text #3f4757  border #e8e9eb ($t1-neutral-150)
+     hover     bg #edeef0 ($t1-neutral-100)  text #3f4757  border #6d707a ($t1-neutral-500)
+     active    bg #e8e9eb ($t1-neutral-150)  text #3f4757  border #444f5c ($t1-neutral-600)
+     disabled  bg transparent  text #969aa3  border #d4d5d6 ($t1-neutral-200)
+
+   neutral / text
+     default   text #161616 ($t1-neutral-900)
+     hover     bg #dbebff ($t1-blue-100)  text #0060ff ($t1-blue-700)
+     active    bg #dbebff   text #0060ff
+     disabled  text #969aa3 ($t1-neutral-400)
+
+   error / contained
+     default   bg #f52f1d ($t1-red-400)  text #fff  border transparent
+     hover     bg #d62508 ($t1-red-500)
+     active    bg #931904 ($t1-red-700)
+     disabled  bg #f4f5f6 ($t1-neutral-50)  text #b7c7d5 ($t1-btn-err-dis-text)
+
+   error / outlined
+     default   bg transparent  text #f52f1d ($t1-red-400)  border #f52f1d
+     hover     bg #f9e2e0 ($t1-btn-err-hov-bg)
+     active    bg #edd0cd ($t1-btn-err-act-bg)
+     disabled  bg transparent  text #6d707a ($t1-neutral-500)  border #d4d5d6 ($t1-neutral-200)
+
+   error / text
+     default   text #f52f1d ($t1-red-400)
+     hover     bg #f9e2e0 ($t1-btn-err-hov-bg)
+     active    bg #edd0cd ($t1-btn-err-act-bg)
+     disabled  text #6d707a ($t1-neutral-500)
+   ========================================================================== */
+
+/* ── Base ─────────────────────────────────────────────────────────────────── */
+.t1-btn {
+  font-family: $t1-font-sans;
+  font-weight: $t1-weight-semibold;
+  font-size:   14px;
+  line-height: 16px;
+  display:     inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap:         4px;
+  border:      1px solid transparent;
+  background:  transparent;
+  cursor:      pointer;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing:  border-box;
+  transition:  background-color .12s ease, border-color .12s ease, color .12s ease;
+  text-decoration: none;
+}
+
+.t1-btn:focus-visible {
+  outline:        2px solid $t1-blue-400;
+  outline-offset: 2px;
+}
+
+/* ── Sizes ────────────────────────────────────────────────────────────────── */
+.t1-btn--lg { height: 36px; padding: 0 20px; border-radius: $t1-radius-xs; }
+.t1-btn--md { height: 32px; padding: 0 16px; border-radius: $t1-radius-xs; }
+.t1-btn--sm { height: 24px; padding: 0 12px; border-radius: $t1-radius-xs; }
+
+/* ── Icon slots ───────────────────────────────────────────────────────────── */
+.t1-btn__icon {
+  display:     inline-flex;
+  align-items: center;
+  justify-content: center;
+  width:  16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.t1-btn--sm .t1-btn__icon { width: 14px; height: 14px; }
+.t1-btn--sm .t1-btn__icon > i { font-size: 14px; }
+
+/* ── PRIMARY / contained ──────────────────────────────────────────────────── */
+.t1-btn--contained.t1-btn--primary {
+  background:   $t1-blue-400;
+  color:        $t1-neutral-0;
+  border-color: transparent;
+}
+.t1-btn--contained.t1-btn--primary:hover,
+.t1-btn--contained.t1-btn--primary.is-hover {
+  background: $t1-blue-700;
+}
+.t1-btn--contained.t1-btn--primary:active,
+.t1-btn--contained.t1-btn--primary.is-active {
+  background: $t1-blue-700;
+}
+.t1-btn--contained.t1-btn--primary.is-disabled,
+.t1-btn--contained.t1-btn--primary:disabled {
+  background:   $t1-neutral-50 !important;
+  color:        $t1-neutral-500 !important;
+  border-color: transparent !important;
+}
+
+/* ── PRIMARY / outlined ───────────────────────────────────────────────────── */
+.t1-btn--outlined.t1-btn--primary {
+  background:   $t1-neutral-0;
+  border-color: $t1-neutral-400;
+  color:        $t1-neutral-900;
+}
+.t1-btn--outlined.t1-btn--primary:hover,
+.t1-btn--outlined.t1-btn--primary.is-hover {
+  background:   $t1-blue-100;
+  border-color: $t1-blue-400;
+  color:        $t1-blue-700;
+}
+.t1-btn--outlined.t1-btn--primary:active,
+.t1-btn--outlined.t1-btn--primary.is-active {
+  background:   $t1-blue-100;
+  border-color: $t1-blue-400;
+  color:        $t1-blue-700;
+}
+.t1-btn--outlined.t1-btn--primary.is-disabled,
+.t1-btn--outlined.t1-btn--primary:disabled {
+  background:   $t1-neutral-0 !important;
+  border-color: $t1-neutral-200 !important;
+  color:        $t1-neutral-400 !important;
+}
+
+/* ── PRIMARY / text ───────────────────────────────────────────────────────── */
+.t1-btn--text.t1-btn--primary {
+  background:   transparent;
+  border-color: transparent;
+  color:        $t1-blue-500;
+}
+.t1-btn--text.t1-btn--primary:hover,
+.t1-btn--text.t1-btn--primary.is-hover {
+  background: $t1-blue-100;
+  color:      $t1-blue-700;
+}
+.t1-btn--text.t1-btn--primary:active,
+.t1-btn--text.t1-btn--primary.is-active {
+  background: $t1-blue-100;
+  color:      $t1-blue-700;
+}
+.t1-btn--text.t1-btn--primary.is-disabled,
+.t1-btn--text.t1-btn--primary:disabled {
+  background: transparent !important;
+  color:      $t1-neutral-400 !important;
+}
+
+/* ── NEUTRAL / contained ──────────────────────────────────────────────────── */
+.t1-btn--contained.t1-btn--neutral {
+  background:   $t1-neutral-0;
+  border-color: $t1-neutral-400;
+  color:        $t1-neutral-700;
+}
+.t1-btn--contained.t1-btn--neutral:hover,
+.t1-btn--contained.t1-btn--neutral.is-hover {
+  background:   $t1-neutral-100;
+  border-color: transparent;
+}
+.t1-btn--contained.t1-btn--neutral:active,
+.t1-btn--contained.t1-btn--neutral.is-active {
+  background:   $t1-neutral-150;
+  border-color: transparent;
+}
+.t1-btn--contained.t1-btn--neutral.is-disabled,
+.t1-btn--contained.t1-btn--neutral:disabled {
+  background:   $t1-neutral-200 !important;
+  border-color: transparent !important;
+  color:        $t1-neutral-400 !important;
+}
+
+/* ── NEUTRAL / outlined ───────────────────────────────────────────────────── */
+.t1-btn--outlined.t1-btn--neutral {
+  background:   transparent;
+  border-color: $t1-neutral-150;
+  color:        $t1-neutral-700;
+}
+.t1-btn--outlined.t1-btn--neutral:hover,
+.t1-btn--outlined.t1-btn--neutral.is-hover {
+  background:   $t1-neutral-100;
+  border-color: $t1-neutral-500;
+}
+.t1-btn--outlined.t1-btn--neutral:active,
+.t1-btn--outlined.t1-btn--neutral.is-active {
+  background:   $t1-neutral-150;
+  border-color: $t1-neutral-600;
+}
+.t1-btn--outlined.t1-btn--neutral.is-disabled,
+.t1-btn--outlined.t1-btn--neutral:disabled {
+  background:   transparent !important;
+  border-color: $t1-neutral-200 !important;
+  color:        $t1-neutral-400 !important;
+}
+
+/* ── NEUTRAL / text ───────────────────────────────────────────────────────── */
+.t1-btn--text.t1-btn--neutral {
+  background:   transparent;
+  border-color: transparent;
+  color:        $t1-neutral-900;
+}
+.t1-btn--text.t1-btn--neutral:hover,
+.t1-btn--text.t1-btn--neutral.is-hover {
+  background: $t1-blue-100;
+  color:      $t1-blue-700;
+}
+.t1-btn--text.t1-btn--neutral:active,
+.t1-btn--text.t1-btn--neutral.is-active {
+  background: $t1-blue-100;
+  color:      $t1-blue-700;
+}
+.t1-btn--text.t1-btn--neutral.is-disabled,
+.t1-btn--text.t1-btn--neutral:disabled {
+  background: transparent !important;
+  color:      $t1-neutral-400 !important;
+}
+
+/* ── ERROR / contained ────────────────────────────────────────────────────── */
+.t1-btn--contained.t1-btn--error {
+  background:   $t1-red-400;
+  border-color: transparent;
+  color:        $t1-neutral-0;
+}
+.t1-btn--contained.t1-btn--error:hover,
+.t1-btn--contained.t1-btn--error.is-hover {
+  background: $t1-red-500;
+}
+.t1-btn--contained.t1-btn--error:active,
+.t1-btn--contained.t1-btn--error.is-active {
+  background: $t1-red-700;
+}
+.t1-btn--contained.t1-btn--error.is-disabled,
+.t1-btn--contained.t1-btn--error:disabled {
+  background:   $t1-neutral-50 !important;
+  border-color: transparent !important;
+  color:        $t1-btn-err-dis-text !important;
+}
+
+/* ── ERROR / outlined ─────────────────────────────────────────────────────── */
+.t1-btn--outlined.t1-btn--error {
+  background:   transparent;
+  border-color: $t1-red-400;
+  color:        $t1-red-400;
+}
+.t1-btn--outlined.t1-btn--error:hover,
+.t1-btn--outlined.t1-btn--error.is-hover {
+  background: $t1-btn-err-hov-bg;
+}
+.t1-btn--outlined.t1-btn--error:active,
+.t1-btn--outlined.t1-btn--error.is-active {
+  background: $t1-btn-err-act-bg;
+}
+.t1-btn--outlined.t1-btn--error.is-disabled,
+.t1-btn--outlined.t1-btn--error:disabled {
+  background:   transparent !important;
+  border-color: $t1-neutral-200 !important;
+  color:        $t1-neutral-500 !important;
+}
+
+/* ── ERROR / text ─────────────────────────────────────────────────────────── */
+.t1-btn--text.t1-btn--error {
+  background:   transparent;
+  border-color: transparent;
+  color:        $t1-red-400;
+}
+.t1-btn--text.t1-btn--error:hover,
+.t1-btn--text.t1-btn--error.is-hover {
+  background: $t1-btn-err-hov-bg;
+}
+.t1-btn--text.t1-btn--error:active,
+.t1-btn--text.t1-btn--error.is-active {
+  background: $t1-btn-err-act-bg;
+}
+.t1-btn--text.t1-btn--error.is-disabled,
+.t1-btn--text.t1-btn--error:disabled {
+  background: transparent !important;
+  color:      $t1-neutral-500 !important;
+}
+
+/* ── Disabled cursor (all variants) ──────────────────────────────────────── */
+.t1-btn.is-disabled,
+.t1-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Loading spinner ──────────────────────────────────────────────────────── */
+.t1-btn__spinner {
+  width:         16px;
+  height:        16px;
+  border:        2px solid $t1-spinner-arc;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation:     t1btn-spin .7s linear infinite;
+  flex-shrink:   0;
+}
+.t1-btn--sm .t1-btn__spinner {
+  width:        12px;
+  height:       12px;
+  border-width: 1.5px;
+}
+
+@keyframes t1btn-spin { to { transform: rotate(360deg); } }
+
+.t1-btn.is-loading { pointer-events: none; }
+.t1-btn.is-loading .t1-btn__label { opacity: 0.7; }
+
+/* Inverse spinner (for dark/colored bg buttons in loading state) */
+.t1-btn--contained.t1-btn--primary .t1-btn__spinner,
+.t1-btn--contained.t1-btn--error .t1-btn__spinner {
+  border-color:     $t1-neutral-0;
+  border-top-color: transparent;
+  opacity:          0.7;
+}

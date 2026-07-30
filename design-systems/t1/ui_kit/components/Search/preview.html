@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Search · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #f5f7f9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 40px; }
+
+    .section       { margin-bottom: 40px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t1-fg-muted); margin-bottom: 16px; }
+
+    .variants-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 260px);
+      gap: 24px 32px;
+      align-items: start;
+    }
+    .variant-col { display: flex; flex-direction: column; gap: 4px; }
+    .variant-name {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--t1-fg-muted); margin-bottom: 6px;
+    }
+
+    .divider { border: none; border-top: 1px solid #e4e5e7; margin: 40px 0; }
+
+    .interactive-row { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
+    .interactive-col { width: 300px; }
+
+    .note {
+      font-size: 12px; color: var(--t1-fg-muted);
+      background: #fff; border: 1px solid #e4e5e7;
+      border-radius: 4px; padding: 8px 12px;
+      margin-top: 16px; display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Search</div>
+  <div id="root"></div>
+
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+
+    /* ── Static shell: renders frozen visual state without interaction ────── */
+    const StaticSearch = ({ size = 'md', stateClass = '', value = '', placeholder = 'Search', label = 'Search', error = '', showDropdown = false }) => {
+      const fieldCls = ['t1-srch__field', stateClass].filter(Boolean).join(' ');
+      const rootCls  = ['t1-srch', `t1-srch--${size}`].join(' ');
+
+      const SAMPLE_OPTIONS = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'];
+
+      return (
+        <div className={rootCls}>
+          {label && <div className="t1-srch__label">{label}</div>}
+          <div className="t1-srch__field-wrap">
+            <div className={fieldCls}>
+              <span className="t1-srch__icon">
+                <Phi name="magnifying-glass" size={16} weight="regular" />
+              </span>
+              <div style={{
+                flex: '1 0 0', minWidth: 0,
+                fontFamily: 'var(--t1-font-sans)', fontSize: 14, lineHeight: '16px',
+                color: value ? '#161616' : '#969aa3',
+                overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+              }}>
+                {value || placeholder}
+              </div>
+            </div>
+            {showDropdown && (
+              <div className="t1-srch__dropdown">
+                {SAMPLE_OPTIONS.map((o, i) => (
+                  <div key={i} className="t1-srch__option">{o}</div>
+                ))}
+              </div>
+            )}
+          </div>
+          {error && <div className="t1-srch__assist">{error}</div>}
+        </div>
+      );
+    };
+
+    const DEMO_OPTIONS = ['Acura MDX', 'BMW 5 Series', 'Chevrolet Silverado', 'Ford F-150', 'Honda Accord', 'Toyota Camry'];
+
+    const App = () => (
+      <div>
+
+        {/* ── md size — all states ── */}
+        <div className="section">
+          <div className="section-label">Size=md — all states — node 8:48016</div>
+          <div className="variants-grid">
+            <div className="variant-col">
+              <div className="variant-name">Default</div>
+              <StaticSearch size="md" stateClass="" value="" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Hover</div>
+              <StaticSearch size="md" stateClass="t1-srch__field--hover" value="" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Active</div>
+              <StaticSearch size="md" stateClass="t1-srch__field--active" value="Value" showDropdown={true} />
+            </div>
+            <div className="variant-col" style={{ paddingBottom: 180 }}>
+              {/* extra bottom space to show dropdown */}
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Error</div>
+              <StaticSearch size="md" stateClass="t1-srch__field--error" value="" error="Assistive Text" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Disabled</div>
+              <StaticSearch size="md" stateClass="t1-srch__field--disabled" value="" />
+            </div>
+          </div>
+        </div>
+
+        {/* ── md — with typed value ── */}
+        <div className="section">
+          <div className="section-label">Size=md — with value</div>
+          <div className="variants-grid">
+            <div className="variant-col">
+              <div className="variant-name">Default + value</div>
+              <StaticSearch size="md" stateClass="" value="Ford F-150" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Active + value</div>
+              <StaticSearch size="md" stateClass="t1-srch__field--active" value="Ford F-150" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Error + value</div>
+              <StaticSearch size="md" stateClass="t1-srch__field--error" value="Ford F-150" error="No results found" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Disabled + value</div>
+              <StaticSearch size="md" stateClass="t1-srch__field--disabled" value="Ford F-150" />
+            </div>
+          </div>
+        </div>
+
+        <hr className="divider" />
+
+        {/* ── lg size — all states ── */}
+        <div className="section">
+          <div className="section-label">Size=lg — all states</div>
+          <div className="variants-grid">
+            <div className="variant-col">
+              <div className="variant-name">Default</div>
+              <StaticSearch size="lg" stateClass="" value="" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Hover</div>
+              <StaticSearch size="lg" stateClass="t1-srch__field--hover" value="" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Active</div>
+              <StaticSearch size="lg" stateClass="t1-srch__field--active" value="Value" showDropdown={true} />
+            </div>
+            <div className="variant-col" style={{ paddingBottom: 200 }}>
+              {/* extra bottom space to show dropdown */}
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Error</div>
+              <StaticSearch size="lg" stateClass="t1-srch__field--error" value="" error="Assistive Text" />
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">Disabled</div>
+              <StaticSearch size="lg" stateClass="t1-srch__field--disabled" value="" />
+            </div>
+          </div>
+        </div>
+
+        <hr className="divider" />
+
+        {/* ── Interactive — live ── */}
+        <div className="section">
+          <div className="section-label">Interactive — type to filter options, blur to close</div>
+          <div className="interactive-row">
+            <div className="interactive-col">
+              <Search
+                size="md"
+                label="Search"
+                placeholder="Search vehicles..."
+                options={DEMO_OPTIONS}
+                onSelect={v => console.log('Selected:', v)}
+              />
+            </div>
+            <div className="interactive-col">
+              <Search
+                size="lg"
+                label="Search"
+                placeholder="Search vehicles..."
+                options={DEMO_OPTIONS}
+                onSelect={v => console.log('Selected:', v)}
+              />
+            </div>
+            <div className="interactive-col">
+              <Search
+                size="md"
+                label="Search"
+                placeholder="Search..."
+                error="Something went wrong"
+              />
+            </div>
+            <div className="interactive-col">
+              <Search
+                size="md"
+                label="Search"
+                placeholder="Disabled"
+                disabled={true}
+              />
+            </div>
+          </div>
+          <div className="note">Hover for blue border · Click to focus (active state) · Type to filter dropdown · Error prop shows assistive text</div>
+        </div>
+
+        {/* ── No label variant ── */}
+        <div className="section">
+          <div className="section-label">Without label</div>
+          <div className="interactive-row">
+            <div className="interactive-col">
+              <Search size="md" placeholder="Search..." options={DEMO_OPTIONS} />
+            </div>
+            <div className="interactive-col">
+              <Search size="lg" placeholder="Search..." options={DEMO_OPTIONS} />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
+
+    (function waitForComponents() {
+      if (!window.Search || !window.Phi) {
+        setTimeout(waitForComponents, 50);
+        return;
+      }
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    })();
+  </script>
+</body>
+</html>

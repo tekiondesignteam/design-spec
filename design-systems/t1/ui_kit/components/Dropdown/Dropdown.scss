@@ -1,0 +1,248 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   DROPDOWN  (Figma: AiT1DropdownList)
+   BEM prefix: t1-dropdown
+
+   Interaction: click DropdownHeader → open/close panel below.
+   Header title stays fixed; description slot shows selected value or hint.
+
+   Design tokens (Figma → SCSS)
+   ─────────────────────────────────────────────────────────────────────────
+   Header bg          : #ffffff              → $t1-neutral-0
+   Header border      : 1px solid #d4d5d6    → $t1-neutral-200 (bottom only)
+   Header hover bg    : #edeef0              → $t1-neutral-100
+   Header open bg     : #ffffff              → $t1-neutral-0
+   Header padding     : 16px                 → $t1-space-4
+   Header gap         : 8px (text col + caret) → $t1-space-2
+
+   Header title       : 14px / 400 / lh-16px  $t1-neutral-900  (#161616)
+   Header desc        : 12px / 400 / lh-16px  $t1-neutral-600  (#444f5c)
+   Header desc (placeholder): $t1-neutral-400 (#969aa3)
+   Header caret       : $t1-neutral-500       (#6d707a)
+   Header open caret  : $t1-blue-400          (#4285f4) + rotated 180°
+
+   Panel bg           : #ffffff              → $t1-neutral-0
+   Panel border       : 1px solid #d4d5d6    → $t1-neutral-200
+   Panel radius bot   : 2px                  → $t1-radius-xs
+   Panel shadow       : $t1-shadow-float
+   Panel max-height   : 320px + overflow-y auto
+
+   Search bar         : padding 8px 16px, border-bottom $t1-neutral-100
+
+   Section padding    : 8px 0                → $t1-space-2
+   Sub-header         : 12px / $t1-neutral-600  pad: 12px 16px 4px
+   Item               : 14px / $t1-neutral-600  pad: 8px 16px
+   Item hover         : bg $t1-neutral-100
+   Item selected      : bg $t1-blue-100 · text $t1-blue-700 · weight medium
+   Divider            : 1px $t1-neutral-200
+   Empty              : 14px italic $t1-neutral-500
+   ========================================================================== */
+
+/* ── Wrapper ──────────────────────────────────────────────────────────────── */
+.t1-dropdown {
+  position:    relative;
+  display:     block;           /* fluid — fills its container by default */
+  width:       100%;
+  min-width:   120px;           /* prevents total collapse on very small containers */
+  font-family: $t1-font-sans;
+  box-sizing:  border-box;
+}
+
+/* ── Header (the trigger) ────────────────────────────────────────────────── */
+.t1-dropdown__header {
+  display:        flex;
+  align-items:    flex-start;
+  gap:            $t1-space-2;               /* 8px */
+  padding:        $t1-space-4;               /* 16px */
+  background:     $t1-neutral-0;
+  border:         none;
+  border-bottom:  1px solid $t1-neutral-200; /* Figma: bottom border only */
+  border-radius:  $t1-radius-xs;             /* 2px — closed state: all corners */
+  cursor:         pointer;
+  box-sizing:     border-box;
+  user-select:    none;
+  transition:     background 100ms ease;
+}
+
+.t1-dropdown__header:hover {
+  background: $t1-neutral-100;
+}
+
+/* When panel is open: full border in neutral, square off bottom corners */
+.t1-dropdown--open .t1-dropdown__header {
+  background:                  $t1-neutral-0;
+  border-top:                  1px solid $t1-neutral-200;
+  border-left:                 1px solid $t1-neutral-200;
+  border-right:                1px solid $t1-neutral-200;
+  border-bottom:               1px solid $t1-neutral-200;
+  border-bottom-left-radius:   0;
+  border-bottom-right-radius:  0;
+}
+
+/* Title + description column */
+.t1-dropdown__header-content {
+  flex:           1 0 0;
+  min-width:      0;
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;
+}
+
+/* Header title — 14px / 400 / lh-16px */
+.t1-dropdown__header-title {
+  font-size:     14px;
+  font-weight:   $t1-weight-regular;
+  line-height:   16px;
+  color:         $t1-neutral-900;
+  margin:        0;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+/* Header description / selected value — 12px / 400 / lh-16px */
+.t1-dropdown__header-desc {
+  font-size:     12px;
+  font-weight:   $t1-weight-regular;
+  line-height:   16px;
+  color:         $t1-neutral-600;
+  margin:        0;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+.t1-dropdown__header-desc--placeholder {
+  color: $t1-neutral-400;
+}
+
+/* Caret icon */
+.t1-dropdown__header-caret {
+  flex-shrink:  0;
+  margin-top:   2px;                         /* optical alignment with title cap-height */
+  color:        $t1-neutral-500;
+  display:      flex;
+  align-items:  center;
+  line-height:  0;
+  transition:   transform .15s ease, color .1s ease;
+}
+
+.t1-dropdown--open .t1-dropdown__header-caret {
+  transform: rotate(180deg);
+}
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+.t1-dropdown__panel {
+  position:       absolute;
+  top:            100%;
+  left:           0;
+  right:          0;
+  z-index:        200;
+  background:     $t1-neutral-0;
+  border:         1px solid $t1-neutral-200; /* matches header border color */
+  border-top:     none;                      /* header provides the top edge */
+  border-bottom-left-radius:  $t1-radius-xs;
+  border-bottom-right-radius: $t1-radius-xs;
+  box-shadow:     $t1-shadow-float;
+  overflow:       hidden;
+  display:        flex;
+  flex-direction: column;
+  max-height:     320px;
+  overflow-y:     auto;
+  box-sizing:     border-box;
+}
+
+/* ── Search bar ──────────────────────────────────────────────────────────── */
+.t1-dropdown__search-bar {
+  padding:       $t1-space-2 $t1-space-4;    /* 8px 16px */
+  flex-shrink:   0;
+  border-bottom: 1px solid $t1-neutral-100;
+  box-sizing:    border-box;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────────── */
+.t1-dropdown__section {
+  display:        flex;
+  flex-direction: column;
+  padding:        $t1-space-2 0;
+  box-sizing:     border-box;
+}
+
+/* ── Sub-header ──────────────────────────────────────────────────────────── */
+.t1-dropdown__subheader {
+  padding:   12px $t1-space-4 4px;
+  box-sizing: border-box;
+}
+
+.t1-dropdown__subheader-label {
+  font-size:   12px;
+  font-weight: $t1-weight-regular;
+  line-height: 16px;
+  color:       $t1-neutral-600;
+  white-space: nowrap;
+}
+
+/* ── Item ────────────────────────────────────────────────────────────────── */
+.t1-dropdown__item {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-2;
+  padding:     $t1-space-2 $t1-space-4;
+  cursor:      pointer;
+  background:  $t1-neutral-0;
+  box-sizing:  border-box;
+  transition:  background 80ms ease;
+  user-select: none;
+}
+
+.t1-dropdown__item:hover {
+  background: $t1-neutral-100;
+}
+
+.t1-dropdown__item--selected,
+.t1-dropdown__item--selected:hover {
+  background: $t1-blue-100;
+}
+
+.t1-dropdown__item-label {
+  flex:          1 0 0;
+  min-width:     0;
+  font-size:     14px;
+  font-weight:   $t1-weight-regular;
+  line-height:   16px;
+  color:         $t1-neutral-600;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+.t1-dropdown__item--selected .t1-dropdown__item-label {
+  color:       $t1-blue-700;
+  font-weight: $t1-weight-medium;
+}
+
+.t1-dropdown__item-check {
+  flex-shrink: 0;
+  color:       $t1-blue-400;
+  display:     flex;
+  align-items: center;
+  line-height: 0;
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────────── */
+.t1-dropdown__divider {
+  height:      1px;
+  background:  $t1-neutral-200;
+  width:       100%;
+  flex-shrink: 0;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.t1-dropdown__empty {
+  padding:    $t1-space-3 $t1-space-4;
+  font-size:  14px;
+  color:      $t1-neutral-500;
+  font-style: italic;
+  text-align: center;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Fav-Bar-Icon · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-stage { display: inline-block; }
+    .section       { margin-bottom: 40px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--t1-fg-muted); margin-bottom: 16px; }
+    .row           { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px; }
+    .item          { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .item-label    { font-size: 11px; color: var(--t1-fg-muted); }
+    .sidebar-strip { display: inline-flex; flex-direction: column; width: 64px; background: var(--t1-bg); border: 1px solid var(--t1-border); border-radius: 2px; padding: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Fav-Bar-Icon</div>
+  <div id="root" class="preview-stage"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.FavBarIcon) { setTimeout(waitForComponents, 50); return; }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <>
+          {/* Standalone */}
+          <div className="section">
+            <div className="section-label">Component — standalone</div>
+            <div className="row">
+              <div className="item">
+                <FavBarIcon />
+                <span className="item-label">default</span>
+              </div>
+              <div className="item">
+                <FavBarIcon onClick={() => alert('clicked')} />
+                <span className="item-label">interactive</span>
+              </div>
+            </div>
+          </div>
+
+          {/* In context — sidebar strip */}
+          <div className="section">
+            <div className="section-label">In context — sidebar strip</div>
+            <div className="row">
+              <div className="sidebar-strip">
+                <FavBarIcon onClick={() => {}} />
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    })();
+  </script>
+</body>
+</html>

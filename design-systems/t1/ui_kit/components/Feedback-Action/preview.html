@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Feedback-Action · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-stage { display: inline-block; }
+    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--t1-fg-muted); margin-bottom: 12px; }
+    .preview-row   { margin-bottom: 48px; }
+    .log           { margin-top: 12px; font-size: 12px; color: var(--t1-fg-muted); min-height: 18px; font-family: ui-monospace, monospace; }
+    .note          { font-size: 12px; color: var(--t1-fg-muted); font-style: italic; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Feedback-Action</div>
+  <p class="note">Click the "Filters Applied" or "Sources" chips to open the built-in modal. Thumbs toggle, copy shows a 2-second check state.</p>
+  <div id="root" class="preview-stage"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.FeedbackAction || !window.Modal) { setTimeout(waitForComponents, 50); return; }
+
+      const Demo = () => {
+        const [log, setLog] = React.useState('');
+
+        return (
+          <div>
+
+            {/* ── Interactive: built-in modals ── */}
+            <div className="preview-row">
+              <div className="section-label">Interactive · click chips to open modal · all buttons active</div>
+              <FeedbackAction
+                filterCount={3}
+                sourceCount={5}
+                filterItems={[
+                  'Date range: Last 30 days',
+                  'Region: North America',
+                  'Stage: Negotiation & Closed Won',
+                ]}
+                sourceItems={[
+                  'CRM Deal Records — Apr 2026',
+                  'Pipeline Activity Log',
+                  'Sales Forecast Model v3',
+                  'Lead Scoring Engine',
+                  'Conversion Rate Analytics',
+                ]}
+                onCopy={()       => setLog('→ Copied to clipboard')}
+                onThumbUp={v     => setLog(v ? '→ 👍 Marked helpful' : '→ Helpful rating removed')}
+                onThumbDown={v   => setLog(v ? '→ 👎 Marked not helpful' : '→ Not-helpful rating removed')}
+                onMore={()       => setLog('→ More options clicked')}
+                onRegenerate={() => setLog('→ Regenerating response…')}
+              />
+              <div className="log">{log || 'Click any action or chip above'}</div>
+            </div>
+
+            {/* ── External callback override ── */}
+            <div className="preview-row">
+              <div className="section-label">External callback override (onFilterClick / onSourceClick)</div>
+              <FeedbackAction
+                filterCount={2}
+                sourceCount={3}
+                onFilterClick={() => setLog('→ onFilterClick fired (consumer handles modal)')}
+                onSourceClick={() => setLog('→ onSourceClick fired (consumer handles modal)')}
+              />
+              <div className="log">{log || 'Click chips — consumer callback fires instead of built-in modal'}</div>
+            </div>
+
+            {/* ── Without chips ── */}
+            <div className="preview-row">
+              <div className="section-label">Without chips</div>
+              <FeedbackAction showFilter={false} showSource={false} />
+            </div>
+
+            {/* ── Filter chip only ── */}
+            <div className="preview-row">
+              <div className="section-label">Filter chip only</div>
+              <FeedbackAction
+                showSource={false}
+                filterCount={2}
+                filterItems={['Status: Active Deals', 'Owner: Current User']}
+              />
+            </div>
+
+            {/* ── Default Figma reference ── */}
+            <div className="preview-row">
+              <div className="section-label">Default (Figma reference — 2 filters / 2 sources)</div>
+              <FeedbackAction />
+            </div>
+
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+    })();
+  </script>
+</body>
+</html>

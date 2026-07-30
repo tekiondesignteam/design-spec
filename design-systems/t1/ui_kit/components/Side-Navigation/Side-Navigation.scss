@@ -1,0 +1,423 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   SIDE-NAVIGATION  (Figma: aiT1SideNavUpdated)
+   BEM prefix: t1-sn
+
+   Design tokens
+   ─────────────────────────────────────────────────────────────────────────
+   Container         width 280px · bg #ffffff · border-right 1px #d4d5d6
+   Search container  sticky top · padding 16px · gap 16px (search ↔ button)
+   Search field      h 32px · border 1px #969aa3 · radius 2px · px 10px
+   Body              flex-1 · overflow-y auto
+   Primary nav       px 16px · pb 16px · no top-padding
+   Nav item          px 8px · py 8px · gap 12px · radius 8px
+                     default: bg #ffffff · body2Bold 14/600/16 · #161616
+                     active:  bg #edeef0 · body2Bold 14/600/16 · #161616
+   Nav icon          24px square
+   Sections          flex-col · gap 20px · pb 16px
+   Section header    px 16px · gap 8px · cursor pointer
+   Section label     body2Medium 14/500/16 · color #969aa3
+   Section chevron   caret-down/right 16px
+   Section body      px 8px
+   Chat item         pl 32px · pr 12px · py 12px · radius 4px
+                     body2Medium 14/500/16 · #161616 · truncated
+   Task item icon    16px · #161616
+   View all          pl 32px · pr 12px · neutral link underlined
+   ========================================================================== */
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+.t1-sn {
+  display:        flex;
+  flex-direction: column;
+  width:          280px;
+  max-width:      100%;
+  height:         100%;
+  background:     $t1-neutral-0;
+  border-right:   1px solid $t1-neutral-200;   /* #d4d5d6 */
+  box-sizing:     border-box;
+  overflow:       hidden;
+}
+
+/* ── Body wrapper (fills height, stacks search-container + list) ─────────── */
+.t1-sn__body {
+  display:        flex;
+  flex-direction: column;
+  flex:           1;
+  min-height:     0;
+  overflow:       hidden;
+}
+
+/* ── Sticky search container ─────────────────────────────────────────────── */
+/* Figma: searchContainer — padding 16px, gap 16px, sticky top-0            */
+.t1-sn__search-container {
+  display:        flex;
+  flex-direction: column;
+  gap:            16px;
+  padding:        16px;
+  flex-shrink:    0;
+  position:       sticky;
+  top:            0;
+  background:     $t1-neutral-0;
+  z-index:        1;
+}
+
+/* ── Search field ────────────────────────────────────────────────────────── */
+/* h 32px · border 1px #969aa3 · radius 2px · px 10px · gap 8px             */
+.t1-sn__search-field {
+  display:        flex;
+  align-items:    center;
+  gap:            8px;
+  height:         32px;
+  padding:        0 10px;
+  background:     $t1-neutral-0;
+  border:         1px solid $t1-neutral-400;   /* #969aa3 */
+  border-radius: $t1-radius-xs;
+  box-sizing:     border-box;
+  transition:     border-color 120ms ease;
+}
+
+.t1-sn__search-field:focus-within {
+  border-color: $t1-blue-500;                  /* #0060ff */
+}
+
+.t1-sn__search-icon {
+  display:    flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       $t1-neutral-400;               /* #969aa3 */
+  transition:  color 120ms ease;
+}
+
+.t1-sn__search-field:focus-within .t1-sn__search-icon {
+  color: $t1-neutral-600;                     /* #444f5c */
+}
+
+.t1-sn__search-input {
+  flex:       1;
+  min-width:  0;
+  border:     none;
+  outline:    none;
+  background: transparent;
+  font-family:    $t1-font-sans;
+  font-size:      14px;
+  font-weight:    $t1-weight-regular;
+  line-height:    16px;
+  color:          $t1-neutral-900;             /* #161616 */
+
+  &::placeholder {
+    color: $t1-neutral-400;                   /* #969aa3 */
+  }
+
+  /* Hide browser search-clear button */
+  &::-webkit-search-cancel-button { display: none; }
+}
+
+/* ── "Start a New Chat" button — full width ──────────────────────────────── */
+.t1-sn__new-chat-btn,
+.t1-sn__search-container .t1-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── Scrollable list ─────────────────────────────────────────────────────── */
+.t1-sn__list {
+  flex:           1;
+  overflow-y:     auto;
+  display:        flex;
+  flex-direction: column;
+  min-height:     0;
+
+  scrollbar-width: thin;
+  scrollbar-color: $t1-neutral-200 transparent;
+
+  &::-webkit-scrollbar       { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: $t1-neutral-200; border-radius: $t1-radius-sm; }
+}
+
+/* ── Primary navigation area ─────────────────────────────────────────────── */
+/* Figma: "Menu items" container — px 16px · pb 16px                        */
+.t1-sn__primary-nav {
+  flex-shrink: 0;
+  padding:     0 16px 16px;
+}
+
+/* Actions wrapper — flex-col · radius 8px for each item */
+.t1-sn__nav-actions {
+  display:        flex;
+  flex-direction: column;
+}
+
+/* ── Primary nav item ────────────────────────────────────────────────────── */
+/* px 8px · py 8px · gap 12px · radius 8px · body2Bold 14/600/16            */
+.t1-sn__nav-item {
+  display:        flex;
+  align-items:    center;
+  gap:            12px;
+  padding:        8px;
+  border-radius: $t1-radius-xs;
+  background:     $t1-neutral-0;              /* #ffffff default */
+  cursor:         pointer;
+  user-select:    none;
+  transition:     background 100ms ease;
+
+  &:hover:not(.is-active) {
+    background: $t1-neutral-50;              /* subtle hover */
+  }
+
+  &:focus-visible {
+    outline:        2px solid $t1-blue-500;
+    outline-offset: -2px;
+  }
+}
+
+/* Active state — bg #edeef0 */
+.t1-sn__nav-item.is-active {
+  background: $t1-neutral-100;              /* #edeef0 */
+}
+
+/* Nav icon — 24px flex container */
+.t1-sn__nav-icon {
+  display:    flex;
+  align-items: center;
+  flex-shrink: 0;
+  width:       24px;
+  height:      24px;
+  color:       $t1-neutral-900;             /* #161616 */
+}
+
+/* Nav label — body2Bold: 14px / 600 / 16px */
+.t1-sn__nav-label {
+  font-family:  $t1-font-sans;
+  font-size:    14px;
+  font-weight:  $t1-weight-semibold;        /* 600 */
+  line-height:  16px;
+  color:        $t1-neutral-900;            /* #161616 */
+  flex:         1;
+  min-width:    0;
+  overflow:     hidden;
+  text-overflow: ellipsis;
+  white-space:  nowrap;
+}
+
+/* ── Task expanded sub-list (task="Expanded") ────────────────────────────── */
+/* Appears below the Tasks nav item in the primary nav area */
+.t1-sn__task-expanded-list {
+  display:        flex;
+  flex-direction: column;
+  padding-bottom: 4px;
+}
+
+.t1-sn__task-sub-item {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  padding:     8px 12px 8px 32px;
+  border-radius: $t1-radius-xs;
+  cursor:      pointer;
+  transition:  background 100ms ease;
+
+  &:hover {
+    background: $t1-neutral-50;
+  }
+}
+
+.t1-sn__task-sub-icon {
+  display:    flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       $t1-neutral-900;
+}
+
+.t1-sn__task-sub-label {
+  font-family:  $t1-font-sans;
+  font-size:    14px;
+  font-weight:  $t1-weight-medium;          /* 500 */
+  line-height:  16px;
+  color:        $t1-neutral-900;            /* #161616 */
+  flex:         1;
+  min-width:    0;
+  overflow:     hidden;
+  text-overflow: ellipsis;
+  white-space:  nowrap;
+}
+
+/* ── Sections (Pinned Chats / Recent Tasks / Recent Chats) ───────────────── */
+/* Figma: "chat list" — gap 20px between sections                           */
+.t1-sn__sections {
+  display:        flex;
+  flex-direction: column;
+  gap:            20px;
+  flex-shrink:    0;
+  padding-bottom: 16px;
+}
+
+/* ── Single section ──────────────────────────────────────────────────────── */
+.t1-sn__section {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+}
+
+/* ── Section header row ──────────────────────────────────────────────────── */
+/* Figma: "header" — px 16px · gap 8px · full width                         */
+.t1-sn__section-header {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  padding:     0 16px;
+  min-height:  32px;
+  cursor:      pointer;
+  user-select: none;
+}
+
+/* Chevron icon — caret-down or caret-right */
+.t1-sn__section-chevron {
+  display:    flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       $t1-neutral-400;            /* #969aa3 */
+}
+
+/* Section label — body2Medium: 14px / 500 / 16px / #969aa3 */
+.t1-sn__section-label {
+  font-family:  $t1-font-sans;
+  font-size:    14px;
+  font-weight:  $t1-weight-medium;         /* 500 */
+  line-height:  16px;
+  color:        $t1-neutral-400;           /* #969aa3 — tertiary text */
+  flex:         1;
+}
+
+/* ── Section body (items list) ───────────────────────────────────────────── */
+/* Figma: .aiT1SideNavMenu — px 8px                                          */
+.t1-sn__section-body {
+  display:        flex;
+  flex-direction: column;
+  padding:        0 8px;
+}
+
+/* ── Chat item ───────────────────────────────────────────────────────────── */
+/* Figma: .aiT1SideNavMenuitem — pl 32px · pr 12px · py 12px · radius 4px   */
+.t1-sn__chat-item {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  padding:     12px 12px 12px 32px;
+  border-radius: $t1-radius-xs;
+  cursor:      pointer;
+  transition:  background 100ms ease;
+
+  &:hover {
+    background: $t1-neutral-50;
+  }
+}
+
+/* Task item icon — 16px */
+.t1-sn__chat-icon {
+  display:    flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       $t1-neutral-900;
+}
+
+/* Selected chat item */
+.t1-sn__chat-item.is-selected {
+  background: $t1-neutral-50;
+}
+
+/* Chat label — body2Medium: 14px / 500 / 16px / #161616 — truncated */
+.t1-sn__chat-label {
+  font-family:  $t1-font-sans;
+  font-size:    14px;
+  font-weight:  $t1-weight-medium;         /* 500 */
+  line-height:  16px;
+  color:        $t1-neutral-900;           /* #161616 */
+  flex:         1;
+  min-width:    0;
+  overflow:     hidden;
+  text-overflow: ellipsis;
+  white-space:  nowrap;
+}
+
+/* ── Task item — caret + optional status dot + label ─────────────────────── */
+/* Figma : [caret-right/down] [status-dot?] [label]            */
+.t1-sn__task-group {
+  display:        flex;
+  flex-direction: column;
+}
+
+.t1-sn__task-item {
+  display:      flex;
+  align-items:  center;
+  gap:          8px;
+  padding:      12px 12px 12px 32px;
+  border-radius: $t1-radius-xs;
+  transition:   background 100ms ease;
+
+  &:hover {
+    background: $t1-neutral-50;
+  }
+}
+
+/* Caret toggle icon — caret-right (collapsed) / caret-down (expanded) */
+.t1-sn__task-caret {
+  display:    flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       $t1-neutral-600;              /* #444f5c — matches Figma */
+}
+
+/* ── Sub-items (expanded task run list) ──────────────────────────────────── */
+/* Indented beneath the parent task row                                       */
+.t1-sn__task-subitems {
+  display:        flex;
+  flex-direction: column;
+}
+
+/* Individual sub-item — Figma 395:45063–45065
+   pl 56px · pr 12px · py 12px · radius 4px · gap 8px
+   Same py as parent task items (--ait1sidenavmenuitem/padding = 12px)          */
+.t1-sn__task-subitem {
+  display:      flex;
+  align-items:  center;
+  gap:          8px;
+  padding:      12px 12px 12px 56px;
+  border-radius: $t1-radius-xs;
+  cursor:       pointer;
+  transition:   background 100ms ease;
+
+  &:hover {
+    background: $t1-neutral-50;
+  }
+
+  /* Sub-item label — secondary text color #444f5c (Figma) */
+  .t1-sn__chat-label {
+    color: $t1-neutral-600;                 /* #444f5c */
+  }
+}
+
+/* Sub-item "View all" link — same secondary color as sub-item labels */
+.t1-sn__view-all--sub .t1-link {
+  color: $t1-neutral-600 !important;        /* #444f5c — matches sub-item text */
+}
+
+/* ── "View all" row ──────────────────────────────────────────────────────── */
+/* Outer (section-level): pl 32px                                             */
+.t1-sn__view-all {
+  display:     flex;
+  align-items: center;
+  padding:     12px 12px 12px 32px;
+  min-height:  40px;
+}
+
+/* Sub-item level "View all": pl 56px to align with sub-items (Figma 395:45066) */
+.t1-sn__view-all--sub {
+  padding-left: 56px;
+}
+
+/* Ensure "View all" link is always underlined (overrides kit default) */
+.t1-sn__view-all .t1-link {
+  text-decoration: underline;
+}

@@ -1,0 +1,159 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   CREDIT-SCORE-CARD  (Figma: )
+   BEM prefix: t1-csc
+
+   Layout
+   ─────────────────────────────────────────────────────────────────────────
+   .t1-csc                   — 328px white card, border 1px #d4d5d6, 6px radius
+     .t1-csc__header         — gray header "CREDIT PRE-QUALIFICATION"
+     .t1-csc__body           — white body, padding 16px, gap 24px
+       .t1-csc__est-label    — "SCORE ESTIMATE" muted uppercase
+       .t1-csc__gauge        — 270px centered gauge wrapper
+         svg.t1-csc__arc     — SVG arc + handle + text labels
+         .t1-csc__qual-chip  — "Tier 1 Qualified" success chip (fade-in)
+       .t1-csc__stats        — 2 equal stat mini-cards
+         .t1-csc__stat
+           .t1-csc__stat-label
+           .t1-csc__stat-value [--apr modifier for blue]
+     .t1-csc__footer         — gray footer, Download + Apply to Deal buttons
+   ========================================================================== */
+
+/* ── Card shell ──────────────────────────────────────────────────────────── */
+.t1-csc {
+  width:     100%;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #d4d5d6;
+  border-radius: $t1-radius-xs;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: $t1-font-sans;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.t1-csc__header {
+  background: #f4f5f6;
+  border-bottom: 1px solid #d4d5d6;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #161616;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Body ────────────────────────────────────────────────────────────────── */
+.t1-csc__body {
+  background: #ffffff;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── "SCORE ESTIMATE" label ──────────────────────────────────────────────── */
+.t1-csc__est-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #969aa3;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Gauge container ─────────────────────────────────────────────────────── */
+.t1-csc__gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+/* SVG arc inherits font for <text> elements */
+.t1-csc__arc {
+  display: block;
+  width: 270px;
+  height: 145px;
+  font-family: $t1-font-sans;
+  overflow: visible;
+}
+
+/* ── "Tier 1 Qualified" success chip ─────────────────────────────────────── */
+.t1-csc__qual-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 6px;
+  border: 1px solid #06bc75;
+  border-radius: $t1-radius-pill;
+  background: #e1faf0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #06bc75;
+  line-height: 16px;
+  white-space: nowrap;
+  transition: opacity 0.4s ease 1.2s, transform 0.4s ease 1.2s;
+}
+
+.t1-csc__qual-chip--hidden {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+/* ── Stats row ───────────────────────────────────────────────────────────── */
+.t1-csc__stats {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.t1-csc__stat {
+  flex: 1;
+  min-width: 0;
+  background: #f4f5f6;
+  border: 1px solid #d4d5d6;
+  border-radius: $t1-radius-xs;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.t1-csc__stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #969aa3;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.t1-csc__stat-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #161616;
+  line-height: 32px;
+}
+
+.t1-csc__stat-value--apr {
+  color: #3373dd;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.t1-csc__footer {
+  background: #f4f5f6;
+  border-top: 1px solid #d4d5d6;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}

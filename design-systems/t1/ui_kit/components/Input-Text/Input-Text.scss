@@ -1,0 +1,164 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   INPUT-TEXT — 1:1 Figma /Input-Text
+
+   container gap     $t1-space-1 (4px)
+   label             $t1-text-14 / $t1-weight-regular / $t1-neutral-600
+   box               $t1-space-8 h · 1px border · $t1-radius-xs · outer-pad 1px
+   text-field        inner h-pad 10px · gap 8px (for prefix/suffix icon slots)
+   input text        $t1-text-14 / $t1-weight-regular / $t1-neutral-900
+   assistive row     flex row — error/helper text left, character counter right
+   assistive text    $t1-text-12 / $t1-weight-regular / $t1-red-600 (error)
+   counter           $t1-text-12 / $t1-weight-regular / $t1-neutral-400 (default) · $t1-red-600 (error)
+
+   State borders:  default $t1-neutral-400 · hover $t1-neutral-400
+                   active  $t1-blue-400    · error $t1-red-400
+   State bgs:      default/hover/active/error $t1-neutral-0
+                   disabled $t1-neutral-100
+   ========================================================================== */
+
+/* ---- Root ----------------------------------------------------------------- */
+.t1-input {
+  display: flex;
+  flex-direction: column;
+  gap: $t1-space-1;           /* --input/md/gap: 4px                         */
+}
+
+/* ---- Label ---------------------------------------------------------------- */
+/* Figma: 14px / 400 / 16px lh / $t1-neutral-600  (--inputlabel/label/default/text) */
+.t1-input__label {
+  font-family: var(--t1-font-sans);
+  font-size: var(--t1-text-14);
+  font-weight: $t1-weight-regular;
+  line-height: var(--t1-leading-14);
+  letter-spacing: 0;
+  color: $t1-neutral-600;     /* $t1-neutral-600                                      */
+}
+
+/* ---- Box ------------------------------------------------------------------ */
+/* Figma: prefix-suffix-container — h 32px · border 1px · radius 2px        */
+/*   outer padding: 1px all sides  (--input/md/prefixsuffixcontainer/*)     */
+.t1-input__box {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: $t1-space-8;        /* 32px                                        */
+  padding: 1px;               /* --input/md/prefixsuffixcontainer/padding     */
+  border: 1px solid $t1-neutral-400; /* --input/container/default/border     */
+  border-radius: $t1-radius-xs;      /* 2px                                  */
+  background: $t1-neutral-0;         /* --input/container/default/background */
+  box-sizing: border-box;
+  transition: border-color .1s ease;
+}
+
+/* Hover — same border as default */
+.t1-input__box:hover {
+  border-color: $t1-neutral-400; /* --input/container/hover/border           */
+}
+
+/* Active / focus — blue border */
+.t1-input__box:focus-within {
+  border-color: $t1-blue-400; /* --input/container/active/border             */
+  outline: none;
+}
+
+/* ---- text-field-container ------------------------------------------------ */
+/* Figma: h-full · items-center · pl 10px pr 10px · gap 8px                 */
+/*   gap separates prefix icon, input text, and suffix icon                  */
+.t1-input__ctrl-wrap {
+  display: flex;
+  align-items: center;
+  flex: 1 0 0;
+  min-width: 0;
+  gap: $t1-space-2;           /* --input/md/textfieldcontainer/gap: 8px      */
+  padding: 0 10px;            /* --input/md/textfieldcontainer/horizontalpadding */
+}
+
+/* ---- Prefix / suffix icon slots ------------------------------------------ */
+/* Figma: inline icon or IconButton slotted left / right of the text         */
+.t1-input__prefix,
+.t1-input__suffix {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: $t1-neutral-600;     /* icon muted colour                           */
+}
+
+/* ---- Input element -------------------------------------------------------- */
+/* Figma: $t1-text-14 / $t1-weight-regular / $t1-neutral-900                */
+.t1-input__ctrl {
+  flex: 1 0 0;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--t1-font-sans);
+  font-size: var(--t1-text-14);
+  font-weight: $t1-weight-regular;
+  line-height: var(--t1-leading-14);
+  letter-spacing: 0;
+  color: $t1-neutral-900;     /* --input/container/default/text              */
+}
+.t1-input__ctrl::placeholder {
+  color: $t1-neutral-400;     /* --input/container/default/placeholder       */
+}
+
+/* ---- Error state ---------------------------------------------------------- */
+.t1-input.is-error .t1-input__box {
+  border-color: $t1-red-400;  /* --input/container/error/border  $t1-red-400     */
+  background: $t1-neutral-0;
+}
+
+/* ---- Disabled state ------------------------------------------------------- */
+.t1-input.is-disabled .t1-input__box {
+  background: $t1-neutral-100; /* --input/container/disabled/background $t1-neutral-100 */
+  border-color: $t1-neutral-200; /* --input/container/disabled/border $t1-neutral-200  */
+}
+.t1-input.is-disabled .t1-input__ctrl {
+  color: $t1-neutral-500;     /* --input/container/disabled/text  $t1-neutral-500    */
+}
+.t1-input.is-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---- Assistive row ------------------------------------------------------- */
+/* Figma: flex row · error/helper left · character counter right             */
+.t1-input__assist-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $t1-space-2;
+}
+
+/* ---- Assistive / error text ----------------------------------------------- */
+/* Figma: $t1-text-12 / $t1-weight-regular / $t1-neutral-400 (helper)       */
+.t1-input__assist {
+  font-family: var(--t1-font-sans);
+  font-size: var(--t1-text-12);
+  font-weight: $t1-weight-regular;
+  line-height: var(--t1-leading-12);
+  letter-spacing: 0;
+  color: $t1-neutral-400;     /* neutral helper text                         */
+  min-width: 0;
+}
+.t1-input__assist.is-error {
+  color: $t1-red-600;         /* --assistivetext/error/text  #a01b05         */
+}
+
+/* ---- Character counter ---------------------------------------------------- */
+/* Figma: same type spec as assistive · right-aligned · flexes to right      */
+.t1-input__counter {
+  font-family: var(--t1-font-sans);
+  font-size: var(--t1-text-12);
+  font-weight: $t1-weight-regular;
+  line-height: var(--t1-leading-12);
+  letter-spacing: 0;
+  color: $t1-neutral-400;     /* default counter colour                      */
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.t1-input__counter.is-error {
+  color: $t1-red-600;         /* --assistivetext/error/text  #a01b05         */
+}

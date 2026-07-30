@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Side-Navigation · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #e8eaed; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: .04em; color: #888; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: #161616; margin-bottom: 32px; }
+
+    /* Row of variant panels */
+    .preview-panels {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .preview-panel {
+      display: flex;
+      flex-direction: column;
+    }
+    .preview-panel-label {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    /* Give the sidenav panels a bounded height so they look like a real sidebar */
+    .preview-panel .t1-sn {
+      height: 600px;
+    }
+
+    .preview-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #161616;
+      margin-bottom: 16px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Side-Navigation</div>
+  <div id="root"></div>
+
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.SideNavigation) { setTimeout(waitForComponents, 50); return; }
+
+      /* ─── Shared sample data (mirrors Figma canvas content) ─────────────── */
+      const PINNED_CHATS = [
+        { id: 'pc1', label: 'Monthly Sales Review' },
+        { id: 'pc2', label: 'Summarize recent hot leads' },
+        { id: 'pc3', label: 'Draft quote for Model X' },
+      ];
+      const RECENT_TASKS = [
+        {
+          id: 'rt1',
+          label: 'Daily Sales Report',
+          status: 'active',
+          subItems: [
+            { id: 'rt1-1', label: 'Apr 8 - Daily Sales Report', status: 'active' },
+            { id: 'rt1-2', label: 'Apr 7 - Daily Sales Report' },
+            { id: 'rt1-3', label: 'Apr 6 - Daily Sales Report' },
+            { id: 'rt1-4', label: 'Apr 5 - Daily Sales Report' },
+          ],
+        },
+        { id: 'rt2', label: 'Prepare monthly performance reports' },
+        { id: 'rt3', label: 'Analyze quarterly revenue trends', status: 'error' },
+        { id: 'rt4', label: 'Sales Leaderboard Update', status: 'warning' },
+        { id: 'rt5', label: 'Daily pipeline summary' },
+      ];
+      const RECENT_CHATS = [
+        { id: 'rc1', label: 'Monthly Sales Review' },
+        { id: 'rc2', label: 'Summarize recent hot leads' },
+        { id: 'rc3', label: 'Draft quote for Model X' },
+        { id: 'rc4', label: 'Last high-priority test drives' },
+        { id: 'rc5', label: 'Coordinate follow-up calls with prospects' },
+        { id: 'rc6', label: 'Schedule follow-up meetings' },
+        { id: 'rc7', label: 'Prepare presentation for upcoming trade show' },
+        { id: 'rc8', label: 'Update inventory status for shipment' },
+      ];
+
+      /* ─── Static variant showcase ──────────────────────────────────────── */
+      function StaticPanels() {
+        return (
+          <div style={{ marginBottom: 48 }}>
+            <div className="preview-section-title">
+              Figma variants (node 190:24914) · width 280px
+            </div>
+            <div className="preview-panels">
+
+              {/* Variant 1 — Default (190:24915) */}
+              {/* scheduledTask=false · task=Default · sections=Expanded */}
+              <div className="preview-panel">
+                <div className="preview-panel-label">Default — Sections Expanded (190:24915)</div>
+                <SideNavigation
+                  scheduledTask={false}
+                  sections="Expanded"
+                  task="Default"
+                  activeNav="tasks"
+                  pinnedChats={PINNED_CHATS}
+                  recentChats={RECENT_CHATS}
+                />
+              </div>
+
+              {/* Variant 2 — Scheduled Task · Sections Expanded */}
+              {/* scheduledTask=true · task=Default · sections=Expanded */}
+              <div className="preview-panel">
+                <div className="preview-panel-label">Scheduled Task — Sections Expanded</div>
+                <SideNavigation
+                  scheduledTask={true}
+                  sections="Expanded"
+                  task="Default"
+                  activeNav="tasks"
+                  pinnedChats={PINNED_CHATS}
+                  recentTasks={RECENT_TASKS}
+                  recentChats={RECENT_CHATS}
+                />
+              </div>
+
+              {/* Variant 3 — Sections Collapsed (190:25007) */}
+              {/* scheduledTask=true · task=Collapsed · sections=Collapsed */}
+              <div className="preview-panel">
+                <div className="preview-panel-label">Sections Collapsed (190:25007)</div>
+                <SideNavigation
+                  scheduledTask={true}
+                  sections="Collapsed"
+                  task="Collapsed"
+                  activeNav="tasks"
+                  pinnedChats={PINNED_CHATS}
+                  recentTasks={RECENT_TASKS}
+                  recentChats={RECENT_CHATS}
+                />
+              </div>
+
+              {/* Variant 4 — Task Expanded (190:25049) */}
+              {/* scheduledTask=true · task=Expanded · sections=Expanded */}
+              <div className="preview-panel">
+                <div className="preview-panel-label">Task Expanded (190:25049)</div>
+                <SideNavigation
+                  scheduledTask={true}
+                  sections="Expanded"
+                  task="Expanded"
+                  activeNav="tasks"
+                  pinnedChats={PINNED_CHATS}
+                  recentTasks={RECENT_TASKS}
+                  recentChats={RECENT_CHATS}
+                />
+              </div>
+
+            </div>
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div>
+            <StaticPanels />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    })();
+  </script>
+</body>
+</html>

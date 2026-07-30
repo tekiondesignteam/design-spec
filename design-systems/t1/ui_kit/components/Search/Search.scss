@@ -1,0 +1,226 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   SEARCH  (Figma: )
+   T1 search input — label + icon prefix + text field + optional dropdown
+
+   BEM prefix: t1-srch
+
+   Figma variants
+   ─────────────────────────────────────────────────────────────────────────
+   size:  lg (40px) | md (32px)
+   state: default | hover | active | error | disabled
+
+   Design tokens (Figma → SCSS token)
+   ─────────────────────────────────────────────────────────────────────────
+   Label text           : #444f5c  → $t1-neutral-600
+   Field border default : #969aa3  → $t1-neutral-400
+   Field border hover   : #4285f4  → $t1-blue-400
+   Field border active  : #0060ff  → $t1-blue-700
+   Field border error   : #f52f1d  → $t1-red-400
+   Disabled bg          : #f4f5f6  → $t1-neutral-50
+   Disabled border      : #d4d5d6  → $t1-neutral-200
+   Placeholder text     : #969aa3  → $t1-neutral-400
+   Value text           : #161616  → $t1-neutral-900
+   Disabled text        : #6d707a  → $t1-neutral-500
+   Disabled placeholder : #d4d5d6  → $t1-neutral-200
+   Assistive error text : #a01b05  → $t1-red-600
+   ========================================================================== */
+
+/* ── Root ─────────────────────────────────────────────────────────────────── */
+.t1-srch {
+  display:        flex;
+  flex-direction: column;
+  width:          100%;
+}
+
+/* ── Label ────────────────────────────────────────────────────────────────── */
+.t1-srch__label {
+  font-family:   $t1-font-sans;
+  font-size:     14px;
+  font-weight:   $t1-weight-regular;
+  line-height:   20px;
+  color:         $t1-neutral-600;    /* #444f5c */
+  margin-bottom: $t1-space-1;        /* 4px */
+}
+
+/* ── Field wrapper — anchor for absolute-positioned dropdown ─────────────── */
+.t1-srch__field-wrap {
+  position: relative;
+}
+
+/* ── Field container ──────────────────────────────────────────────────────── */
+.t1-srch__field {
+  display:       flex;
+  align-items:   center;
+  background:    $t1-neutral-0;
+  border:        1px solid $t1-neutral-400;   /* default #969aa3 */
+  border-radius: $t1-radius-xs;               /* 2px */
+  box-sizing:    border-box;
+  gap:           $t1-space-2;                 /* 8px — Figma: icon ↔ input gap */
+  transition:    border-color 150ms ease, background 150ms ease;
+  cursor:        text;
+}
+
+/* Size: lg — Figma: height 40px, horizontal padding 12px */
+.t1-srch--lg .t1-srch__field {
+  height:  40px;
+  padding: 0 $t1-space-3;   /* 12px */
+}
+
+/* Size: md — Figma: height 32px, horizontal padding 10px */
+.t1-srch--md .t1-srch__field {
+  height:  32px;
+  padding: 0 10px;
+}
+
+/* Hover — only when not in active / error / disabled state */
+.t1-srch__field:hover:not(.t1-srch__field--active):not(.t1-srch__field--error):not(.t1-srch__field--disabled) {
+  border-color: $t1-blue-400;    /* #4285f4 */
+}
+
+/* Static hover modifier (used by preview static shells) */
+.t1-srch__field--hover {
+  border-color: $t1-blue-400;
+}
+
+/* Active / focused */
+.t1-srch__field--active {
+  border-color: $t1-blue-700;    /* #0060ff */
+}
+
+/* Error */
+.t1-srch__field--error {
+  border-color: $t1-red-400;     /* #f52f1d */
+}
+
+/* Disabled */
+.t1-srch__field--disabled {
+  background:     $t1-neutral-50;   /* #f4f5f6 */
+  border-color:   $t1-neutral-200;  /* #d4d5d6 */
+  cursor:         not-allowed;
+  pointer-events: none;
+}
+
+/* ── Icon slot ────────────────────────────────────────────────────────────── */
+.t1-srch__icon {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+  color:       $t1-neutral-400;   /* matches placeholder tone */
+
+  .t1-srch__field--disabled & {
+    color: $t1-neutral-200;
+  }
+}
+
+/* ── Text input ───────────────────────────────────────────────────────────── */
+.t1-srch__input {
+  flex:        1 0 0;
+  min-width:   0;
+  height:      100%;
+  border:      none;
+  outline:     none;
+  background:  transparent;
+  font-family: $t1-font-sans;
+  font-size:   14px;
+  font-weight: $t1-weight-regular;
+  line-height: 16px;
+  color:       $t1-neutral-900;   /* #161616 */
+  padding:     0;
+  cursor:      inherit;
+
+  &::placeholder {
+    color: $t1-neutral-400;       /* #969aa3 */
+  }
+
+  &:disabled {
+    color: $t1-neutral-500;       /* #6d707a */
+
+    &::placeholder {
+      color: $t1-neutral-200;     /* #d4d5d6 */
+    }
+  }
+}
+
+/* ── Assistive / error text ───────────────────────────────────────────────── */
+.t1-srch__assist {
+  font-family: $t1-font-sans;
+  font-size:   12px;
+  font-weight: $t1-weight-regular;
+  line-height: 16px;
+  color:       $t1-red-600;       /* #a01b05 */
+  margin-top:  $t1-space-1;       /* 4px */
+}
+
+/* ── Dropdown ─────────────────────────────────────────────────────────────── */
+.t1-srch__dropdown {
+  position:   absolute;
+  top:        100%;
+  left:       0;
+  right:      0;
+  margin-top: 4px;
+  background: $t1-neutral-0;
+  border:        1px solid $t1-neutral-200;
+  border-radius: $t1-radius-xs;   /* 2px */
+  box-shadow:    $t1-shadow-soft;
+  z-index:       200;
+  overflow-y:    auto;
+  max-height:    240px;           /* prevents dropdown running off screen */
+}
+
+/* ── Responsive — narrow viewport ───────────────────────────────────────── */
+@media (max-width: 480px) {
+  .t1-srch--lg .t1-srch__field {
+    height:  36px;
+    padding: 0 10px;
+  }
+  .t1-srch__label {
+    white-space: normal;
+  }
+  .t1-srch__dropdown {
+    max-height: 180px;
+  }
+}
+
+/* ── Responsive — narrow container (panel context) ───────────────────────── */
+@container (max-width: 480px) {
+  .t1-srch--lg .t1-srch__field {
+    height:  36px;
+    padding: 0 10px;
+  }
+  .t1-srch__label {
+    white-space: normal;
+  }
+  .t1-srch__dropdown {
+    max-height: 180px;
+  }
+}
+
+/* ── Dropdown option ──────────────────────────────────────────────────────── */
+.t1-srch__option {
+  display:     flex;
+  align-items: center;
+  height:      40px;
+  padding:     0 $t1-space-3;     /* 12px */
+  font-family: $t1-font-sans;
+  font-size:   14px;
+  font-weight: $t1-weight-regular;
+  color:       $t1-neutral-900;
+  cursor:      pointer;
+  transition:  background 100ms ease;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $t1-neutral-100;
+  }
+
+  &:hover {
+    background: $t1-neutral-50;
+  }
+
+  &--selected {
+    background:  $t1-bg-brand-soft;
+    color:       $t1-fg-brand;
+    font-weight: $t1-weight-medium;
+  }
+}

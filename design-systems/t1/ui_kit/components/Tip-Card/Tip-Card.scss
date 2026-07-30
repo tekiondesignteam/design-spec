@@ -1,0 +1,37 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ---------- TIP CARD ---------- */
+.t1-tip {
+  display: flex; gap: 10px;
+  padding: 10px 12px;
+  background: var(--t1-bg-brand-soft);
+  border-radius: $t1-radius-xs;
+  max-width: 380px;
+}
+.t1-tip__icon {
+  width: 24px; height: 24px; border-radius: $t1-radius-xs;
+  background: var(--t1-gradient-brand-diag);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.t1-tip__title { font-weight: 600; font-size: 13px; color: var(--t1-fg); }
+.t1-tip__text { font-size: 12px; color: var(--t1-neutral-700); line-height: 16px; }
+
+
+/* ----- TIP / INSIGHT (Figma  & 4:427) ----- */
+.t1-tip-v2 {
+  display: flex;
+  gap: 4px;
+  padding: 16px;
+  width: 320px;
+  background: $t1-green-25;
+  border: 1px solid $t1-green-500;
+  border-radius: $t1-radius-xs;
+  font-family: var(--t1-font-sans);
+  font-size: 14px;
+  line-height: 16px;
+  color: $t1-green-500;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+.t1-tip-v2__label { font-weight: 600; flex-shrink: 0; }
+.t1-tip-v2__body { font-weight: 400; }

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Empty · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #f4f5f6; }
+    body { padding: 48px 32px; min-height: 100vh; font-family: "Proxima Nova", sans-serif; }
+    .preview-head  { font-size: 11px; letter-spacing: 0.08em; color: #6d707a; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+    .preview-title { font-size: 22px; font-weight: 700; color: #161616; margin-bottom: 40px; }
+    .preview-label { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #969aa3; font-weight: 600; margin: 0 0 12px; }
+    .preview-grid  { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+    .preview-card  {
+      background: #fff;
+      border: 1px solid #d4d5d6;
+      border-radius: 12px;
+      padding: 24px;
+      width: 260px;
+      box-sizing: border-box;
+    }
+    .preview-section { margin-bottom: 48px; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Empty</div>
+  <div id="root"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.Empty) { setTimeout(waitForComponents, 50); return; }
+
+      function Demo() {
+        return (
+          <div>
+
+            {/* ── Figma default — full variant ────────────────────────── */}
+            <div className="preview-section">
+              <p className="preview-label">Full — title + description + buttons + link</p>
+              <div className="preview-grid">
+                <div className="preview-card">
+                  <Empty
+                    icon="image-broken"
+                    title="Title"
+                    description="Placeholder text describing the purpose of this empty state."
+                    secondaryLabel="Button"
+                    primaryLabel="Button"
+                    helpText="Need help?"
+                    linkText="Contact support"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* ── Title + description only ─────────────────────────────── */}
+            <div className="preview-section">
+              <p className="preview-label">Title + Description</p>
+              <div className="preview-grid">
+                <div className="preview-card">
+                  <Empty
+                    icon="magnifying-glass"
+                    title="No results found"
+                    description="Try adjusting your search or filters to find what you're looking for."
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* ── Title only ───────────────────────────────────────────── */}
+            <div className="preview-section">
+              <p className="preview-label">Title only</p>
+              <div className="preview-grid">
+                <div className="preview-card">
+                  <Empty
+                    icon="folder-open"
+                    title="Nothing here yet"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* ── With primary action only ─────────────────────────────── */}
+            <div className="preview-section">
+              <p className="preview-label">With primary action</p>
+              <div className="preview-grid">
+                <div className="preview-card">
+                  <Empty
+                    icon="plus-circle"
+                    title="No items yet"
+                    description="Get started by creating your first item."
+                    primaryLabel="Create item"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* ── With both actions, no link ───────────────────────────── */}
+            <div className="preview-section">
+              <p className="preview-label">Both actions, no link</p>
+              <div className="preview-grid">
+                <div className="preview-card">
+                  <Empty
+                    icon="cloud-slash"
+                    title="Connection lost"
+                    description="We couldn't load your data. Please try again."
+                    secondaryLabel="Dismiss"
+                    primaryLabel="Retry"
+                    linkText=""
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   PROGRESS-BAR  (Figma: aiT1ProgressBarStraight)
+   BEM prefix: t1-pb
+
+   Props
+   ─────────────────────────────────────────────────────────────────────────
+   value       number 0–100                             default: 0
+   color       'brand' | 'success'                      default: 'brand'
+   label       string                                   optional
+   determinate boolean                                  default: true
+
+   Figma tokens
+   ─────────────────────────────────────────────────────────────────────────
+   track height     4px
+   track radius     9999px (pill)
+   track bg         $t1-neutral-200  (#d4d5d6)
+   fill brand       $t1-blue-400     (#4285f4)
+   fill success     $t1-green-600    (#3c8635)
+   label/value      14px / 16px / 400 / $t1-neutral-900
+   label row gap    8px
+   ========================================================================== */
+
+/* ── Wrapper ─────────────────────────────────────────────────────────────── */
+.t1-pb {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+/* ── Label row ───────────────────────────────────────────────────────────── */
+.t1-pb__labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.t1-pb__label {
+  font-family: $t1-font-sans;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: $t1-weight-regular;
+  color: $t1-neutral-900;
+}
+
+.t1-pb__value {
+  font-family: $t1-font-sans;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: $t1-weight-regular;
+  color: $t1-neutral-900;
+}
+
+/* ── Track ───────────────────────────────────────────────────────────────── */
+.t1-pb__track {
+  width: 100%;
+  height: 4px;
+  background: $t1-neutral-200;
+  border-radius: $t1-radius-pill;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Fill (brand — default) ──────────────────────────────────────────────── */
+.t1-pb__fill {
+  height: 100%;
+  background: $t1-blue-400;
+  border-radius: $t1-radius-pill;
+  transition: width 400ms ease;
+  will-change: width;
+}
+
+/* ── Fill (success) ──────────────────────────────────────────────────────── */
+.t1-pb--success .t1-pb__fill {
+  background: $t1-green-600;
+}
+
+/* ── Indeterminate ───────────────────────────────────────────────────────── */
+.t1-pb.is-indeterminate .t1-pb__fill {
+  width: 30% !important;
+  animation: t1pb-slide 1.4s ease-in-out infinite;
+}
+
+@keyframes t1pb-slide {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(420%); }
+}

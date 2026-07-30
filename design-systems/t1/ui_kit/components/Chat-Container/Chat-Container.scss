@@ -1,0 +1,56 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   CHAT-CONTAINER
+   BEM prefix: t1-chat
+
+   Layout
+   ─────────────────────────────────────────────────────────────────────────
+   .t1-chat                    — scroll column, max-width 720px
+     .t1-chat__row             — one message turn
+       .t1-chat__row--user     — flex-end (right)  → ChatBubble
+       .t1-chat__row--assistant— flex-start (left) → Response (no avatar)
+   ========================================================================== */
+
+/* ── Container ────────────────────────────────────────────────────────────── */
+.t1-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+
+@media (max-width: 480px) {
+  .t1-chat {
+    gap: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+/* ── Message row ─────────────────────────────────────────────────────────── */
+.t1-chat__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.t1-chat__row--user {
+  justify-content: flex-end;
+}
+
+.t1-chat__row--assistant {
+  justify-content: flex-start;
+}
+
+/* ── Response inside assistant row ──────────────────────────────────────── */
+.t1-chat__row--assistant .t1-response {
+  min-width: 0;
+  flex: 1;
+}

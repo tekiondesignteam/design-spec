@@ -1,0 +1,154 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   CHAT-BUBBLE  (Figma: AiT1ChatBubble)
+   User message bubble only. Assistant replies use the Response component.
+
+   Hover pattern — normal flow, no layout shift
+   ──────────────────────────────────────────────────────────────────────────
+   The action row is conditionally rendered (removed from DOM while editing)
+   so no height reservation is needed in edit mode.
+
+   Edit mode
+   ──────────────────────────────────────────────────────────────────────────
+   Bubble body gets a focus border and white background.
+   The textarea grows to fit its content via JS (scrollHeight trick).
+   Cancel + Send buttons render below the textarea inside the body.
+   ========================================================================== */
+
+/* ── Outer wrapper ────────────────────────────────────────────────────────── */
+.t1-bubble {
+  display:        flex;
+  flex-direction: column;
+  gap:            8px;
+  width:          fit-content;
+  max-width:      min(480px, 85%);
+  align-self:     flex-end;
+  align-items:    flex-end;
+}
+
+@media (max-width: 480px) {
+  .t1-bubble {
+    max-width: 88%;
+  }
+}
+
+/* Expand to fill width in edit mode so textarea has room */
+.t1-bubble.is-editing {
+  width: 100%;
+}
+
+/* ── Bubble body ──────────────────────────────────────────────────────────── */
+.t1-bubble__body {
+  padding:       12px;
+  background:    $t1-neutral-100;
+  border-radius: $t1-radius-xs $t1-radius-xs 0 $t1-radius-xs;
+  box-sizing:    border-box;
+  width:         100%;
+}
+
+/* Edit state: white bg + blue focus border + full width */
+.t1-bubble__body--editing {
+  background:    $t1-neutral-0;
+  border:        1.5px solid $t1-border-focus;
+  border-radius: $t1-radius-xs;
+}
+
+/* ── Text (normal display) ────────────────────────────────────────────────── */
+.t1-bubble__text {
+  margin:      0;
+  padding:     0;
+  font-family: $t1-font-sans;
+  font-size:   14px;
+  line-height: 20px;
+  font-weight: $t1-weight-regular;
+  color:       $t1-neutral-900;
+  word-break:  break-word;
+  white-space: pre-wrap;
+}
+
+/* ── Textarea (edit mode) ─────────────────────────────────────────────────── */
+.t1-bubble__textarea {
+  display:     block;
+  width:       100%;
+  min-height:  20px;
+  border:      none;
+  background:  transparent;
+  font-family: $t1-font-sans;
+  font-size:   14px;
+  line-height: 20px;
+  font-weight: $t1-weight-regular;
+  color:       $t1-neutral-900;
+  resize:      none;
+  overflow:    hidden;
+  padding:     0;
+  outline:     none;
+  word-break:  break-word;
+  box-sizing:  border-box;
+}
+
+/* ── Edit actions (Cancel + Send) ─────────────────────────────────────────── */
+.t1-bubble__edit-actions {
+  display:         flex;
+  align-items:     center;
+  justify-content: flex-end;
+  gap:             8px;
+  margin-top:      10px;
+}
+
+/* ── Action row (copy + edit on hover) ────────────────────────────────────── */
+.t1-bubble__actions {
+  display:        flex;
+  gap:            8px;
+  height:         24px;
+  align-items:    center;
+  flex-shrink:    0;
+  opacity:        0;
+  pointer-events: none;
+  transition:     opacity 120ms ease;
+}
+
+.t1-bubble__action-icon {
+  font-size:      14px;
+  line-height:    1;
+  pointer-events: none;
+}
+
+/* Fade in on hover or frozen state="hover" */
+.t1-bubble:hover .t1-bubble__actions,
+.t1-bubble.is-hover .t1-bubble__actions {
+  opacity:        1;
+  pointer-events: auto;
+}
+
+/* ── Tooltip wrapper ──────────────────────────────────────────────────────── */
+.t1-bubble__tip {
+  position: relative;
+  display:  inline-flex;
+}
+
+.t1-bubble__tip::after {
+  content:        attr(data-tip);
+  position:       absolute;
+  bottom:         calc(100% + 6px);
+  left:           50%;
+  transform:      translateX(-50%);
+  background:     $t1-neutral-900;
+  color:          $t1-neutral-0;
+  font-family:    $t1-font-sans;
+  font-size:      11px;
+  line-height:    16px;
+  font-weight:    400;
+  padding:        3px 8px;
+  border-radius: $t1-radius-xs;
+  white-space:    nowrap;
+  pointer-events: none;
+  opacity:        0;
+  transition:     opacity 120ms ease;
+  z-index:        50;
+}
+
+.t1-bubble__tip:hover::after,
+.t1-bubble__tip:focus-within::after {
+  opacity: 1;
+}

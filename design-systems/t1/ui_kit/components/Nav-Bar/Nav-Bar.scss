@@ -1,0 +1,121 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   NAV-BAR  (Figma: aiT1NavBar)
+   Top navigation bar — responsive mobile + desktop content variants
+
+   Figma refs
+   ─────────────────────────────────────────────────────────────────────────
+   Mobile  : T1-Components
+   Desktop : Tasks file
+
+   BEM prefix: t1-nb
+
+   Design tokens
+   ─────────────────────────────────────────────────────────────────────────
+   Container   w-full · min-height 48px · bg white
+               border-bottom 1px #d4d5d6 · px 16px · py 4px
+   Inner row   flex · items-center · gap 8px
+   Prefix      40×40 flex-shrink-0 (hamburger icon or empty balance spacer)
+   Title       flex-1 · body1Bold 16px/600/24px/#161616 · center · truncated
+   Suffix      flex-shrink-0 · flex · gap 8px (icon btns or action btn)
+   Icon btn    40×40 · transparent bg · radius 2px · hover bg neutral-50
+   Action btn  kit Button · variant=contained · color=primary · size=md (h-32px)
+   ========================================================================== */
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+.t1-nb {
+  display:        flex;
+  align-items:    center;
+  width:          100%;
+  min-height:     48px;
+  padding:        4px 16px;
+  background:     $t1-neutral-0;
+  border-bottom:  1px solid $t1-neutral-200;   /* #d4d5d6 */
+  box-sizing:     border-box;
+  font-family:    $t1-font-sans;
+  flex-shrink:    0;
+  container-type: inline-size;
+  container-name: t1-nb;
+}
+
+/* ── Inner row ───────────────────────────────────────────────────────────── */
+.t1-nb__inner {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  width:       100%;
+}
+
+/* Compact layout at very narrow panel widths (< 320px) */
+@container t1-nb (max-width: 320px) {
+  .t1-nb__inner { gap: 4px; }
+  .t1-nb__title { font-size: 14px; }
+}
+
+/* ── Prefix — hamburger slot (always 40px wide for title balance) ─────────── */
+.t1-nb__prefix {
+  display:     flex;
+  align-items: center;
+  width:       40px;
+  flex-shrink: 0;
+}
+
+/* ── Title — body1Bold: 16px / 600 / 24px lh / #161616 ──────────────────── */
+.t1-nb__title {
+  flex:          1 0 0;
+  min-width:     0;
+  text-align:    center;
+  font-size:     16px;
+  font-weight:   $t1-weight-semibold;   /* 600 */
+  line-height:   24px;
+  color:         $t1-neutral-900;       /* #161616 */
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+  margin:        0;
+}
+
+/* ── Suffix — icon buttons or action button ──────────────────────────────── */
+.t1-nb__suffix {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+  flex-shrink: 0;
+}
+
+/* ── Balance spacer — mirrors prefix width when action button is shown ───── */
+.t1-nb__balance {
+  width:       40px;
+  flex-shrink: 0;
+}
+
+/* ── Icon button (hamburger ≡, more ⋮, new-chat ✏) ──────────────────────── */
+/* Figma: iconButton / lg / inverse-contained — 40×40 · radius 2px           */
+.t1-nb__icon-btn {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           40px;
+  height:          40px;
+  padding:         0;
+  border:          none;
+  border-radius:   $t1-radius-xs;       /* 2px */
+  background:      transparent;
+  color:           $t1-neutral-900;
+  cursor:          pointer;
+  flex-shrink:     0;
+  transition:      background 100ms ease;
+
+  &:hover {
+    background: $t1-neutral-50;
+  }
+
+  &:focus-visible {
+    outline:        2px solid $t1-blue-500;
+    outline-offset: -2px;
+  }
+}
+
+/* Action button uses the kit Button component (variant=contained color=primary size=md) */
+/* No custom styles needed — kit .t1-btn--md provides h:32px which matches Figma         */

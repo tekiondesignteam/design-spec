@@ -2,9 +2,10 @@
 #
 # Pre-commit guardrail for the shared design repo.
 #
-# Blocks any commit that adds, modifies, renames, or deletes files under
-# design-system/. That folder is the read-only source of truth — designers
-# work only inside their own projects/<name>/ folder.
+#   1. Blocks any commit that touches a read-only design-systems/ folder.
+#   2. Auto-stamps the "Last updated" header on changed projects/<name>/*.md
+#      files (and fills any lingering {{DESIGNER_NAME}}/{{DATE}} placeholders),
+#      so artifacts stay current without anyone hand-editing dates.
 #
 # Install (from the repo root):
 #   cp hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
@@ -12,15 +13,15 @@
 # Bypass (maintainers only, when intentionally editing the design system):
 #   git commit --no-verify
 
-# Staged paths (added/copied/modified/renamed/deleted), NUL-safe.
+# --- 1. Block edits to the read-only design system -------------------------
 blocked=$(git diff --cached --name-only --diff-filter=ACMRD -z \
   | tr '\0' '\n' \
-  | grep -E '^design-system/' )
+  | grep -E '^design-systems/' )
 
 if [ -n "$blocked" ]; then
-  echo "✋  Commit blocked: this change touches the read-only design-system/ folder."
+  echo "✋  Commit blocked: this change touches a read-only design-systems/ folder."
   echo ""
-  echo "    The design system is the shared source of truth. Designers work only"
+  echo "    Design systems are the shared source of truth. Designers work only"
   echo "    inside their own projects/<name>/ folder."
   echo ""
   echo "    Offending files:"
@@ -30,5 +31,29 @@ if [ -n "$blocked" ]; then
   echo "    bypass with:  git commit --no-verify"
   exit 1
 fi
+
+# --- 2. Auto-stamp project artifacts ---------------------------------------
+today=$(date +%Y-%m-%d)
+name=$(git config user.name)
+[ -n "$name" ] || name=$(git config user.email | sed 's/@.*//')
+
+git diff --cached --name-only --diff-filter=ACM -z \
+  | tr '\0' '\n' \
+  | grep -E '^projects/.*\.md$' \
+  | while IFS= read -r f; do
+      [ -f "$f" ] || continue
+      grep -q '\*\*Last updated:\*\*' "$f" || continue
+      tmp="$f.stamp.$$"
+      # Refresh the "Last updated:" field to today; fill any leftover
+      # DESIGNER_NAME / DATE placeholders with the committer + today.
+      sed -E \
+        -e "s|\{\{DESIGNER_NAME\}\}|${name}|g" \
+        -e "s|\{\{DATE\}\}|${today}|g" \
+        -e "s|(\*\*Last updated:\*\* ).*|\1${today}|" \
+        "$f" > "$tmp" && mv "$tmp" "$f"
+      # Re-stage so the stamped date is part of this commit.
+      # Note: this stages the whole file — if you used `git add -p`, review first.
+      git add "$f"
+    done
 
 exit 0

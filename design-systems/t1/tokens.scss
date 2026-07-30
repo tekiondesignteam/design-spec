@@ -1,0 +1,160 @@
+// T1 tokens — SCSS mirror of colors_and_type.css.
+// Source of truth is the CSS custom properties; these are read-only copies
+// for use inside component SCSS where `var(--t1-*)` is awkward.
+// If a token changes in colors_and_type.css, update both files.
+
+// ---- Color primitives -----------------------------------------------------
+$t1-neutral-0:    rgb(255,255,255);
+$t1-neutral-25:   rgb(247,248,249);  // subtle bg — button neutral outlined hover
+$t1-neutral-50:   rgb(244,245,246);
+$t1-neutral-100:  rgb(237,238,240);
+$t1-neutral-150:  rgb(232,233,235);
+$t1-neutral-200:  rgb(212,213,214);
+$t1-neutral-400:  rgb(150,154,163);
+$t1-neutral-500:  rgb(109,112,122);
+$t1-neutral-600:  rgb(68,79,92);
+$t1-neutral-700:  rgb(63,71,87);
+$t1-neutral-900:  rgb(22,22,22);
+$t1-neutral-1000: rgb(0,0,0);
+$t1-neutral-ink:  rgb(10,10,10);
+
+$t1-blue-50:   rgb(235,244,255);
+$t1-blue-100:  rgb(219,235,255);
+$t1-blue-400:  rgb(66,133,244);
+$t1-blue-500:  rgb(51,115,221);
+$t1-blue-600:  rgb(26,108,196);
+$t1-blue-700:  rgb(0,96,255);
+
+$t1-violet-500: rgb(138,56,245);
+$t1-violet-600: rgb(151,71,255);
+
+$t1-green-25:  rgb(239,250,238);  // very light green — success card header bg
+$t1-green-50:  rgb(225,250,240);
+$t1-green-100: rgb(207,245,235);
+$t1-green-400: rgb(86,191,77);
+$t1-green-500: rgb(6,188,117);
+$t1-green-600: rgb(60,134,53);    // #3c8635 — Figma: color/light/background/support/success/default — progress bar success fill
+$t1-green-700: rgb(5,122,76);
+
+$t1-teal-400: rgb(207,212,220); // #cfd4dc — switch/unselected/default/track/background
+$t1-teal-500: rgb(0,191,165);  // #00bfa5 — switch/selected/default/track/background
+
+$t1-red-25:   rgb(250,227,225);  // #fae3e1 — error alert bg (Figma: aiT1MessageDraftAlert/error/background)
+$t1-red-400:  rgb(245,47,29);
+$t1-red-500:  rgb(214,37,8);
+$t1-red-600:  rgb(160,27,5);   // #a01b05 — assistivetext/error/text
+$t1-red-700:  rgb(147,25,4);
+
+$t1-amber-50:  rgb(255,243,220); // warning light bg
+$t1-amber-400: rgb(255,178,60);
+$t1-amber-700: rgb(138,87,0);   // warning text
+
+$t1-grad-teal: rgb(37,200,165);
+$t1-grad-cyan: rgb(27,144,180);
+$t1-grad-blue: rgb(26,108,196);
+
+// ---- Semantic -------------------------------------------------------------
+$t1-fg:            $t1-neutral-900;
+$t1-fg-muted:      $t1-neutral-500;
+$t1-fg-subtle:     $t1-neutral-400;
+$t1-fg-on-primary: $t1-neutral-0;
+$t1-fg-brand:      $t1-blue-500;
+$t1-fg-icon:       $t1-neutral-ink;
+$t1-fg-icon-muted: $t1-neutral-500;
+
+$t1-bg:              $t1-neutral-0;
+$t1-bg-canvas:       $t1-neutral-50;
+$t1-bg-muted:        $t1-neutral-100;
+$t1-bg-brand:        $t1-blue-400;
+$t1-bg-brand-soft:   $t1-blue-50;
+$t1-bg-success-soft: $t1-green-50;
+$t1-bg-danger-soft:  rgb(253,232,229); // light error bg — button/badge error hover
+
+$t1-border:        $t1-neutral-200;
+$t1-border-subtle: $t1-neutral-150;
+$t1-border-strong: $t1-neutral-400;
+$t1-border-focus:  $t1-blue-400;
+
+// ---- Radius ---------------------------------------------------------------
+$t1-radius-xs: 2px;
+$t1-radius-sm: 4px;
+$t1-radius-md: 8px;
+$t1-radius-lg: 12px;
+$t1-radius-xl: 16px;
+$t1-radius-pill: 9999px;
+
+// ---- Spacing --------------------------------------------------------------
+$t1-space-1: 4px;
+$t1-space-2: 8px;
+$t1-space-3: 12px;
+$t1-space-4: 16px;
+$t1-space-5: 20px;
+$t1-space-6: 24px;
+$t1-space-8: 32px;
+
+// ---- Type -----------------------------------------------------------------
+$t1-font-sans: "Proxima Nova", -apple-system, BlinkMacSystemFont, sans-serif;
+
+$t1-weight-light:    300;
+$t1-weight-regular:  400;
+$t1-weight-medium:   500;
+$t1-weight-semibold: 600;
+
+// ---- Interactive-Icon tokens ----------------------------------------------
+// inverse/plain active bg — between neutral-600 and neutral-700 (Figma: #525c69)
+$t1-iib-inv-plain-active: rgb(82,92,105);
+// error default icon — Figma: interactiveIcon/error/default/icon (#c42106)
+$t1-interactive-error-icon: rgb(196,33,6);
+
+// ---- Button tokens --------------------------------------------------------
+// error/contained disabled text  (#b7c7d5 — Figma: button/error/contained/disabled/text)
+$t1-btn-err-dis-text: rgb(183,199,213);
+// error outlined/text hover bg   (#f9e2e0 — Figma: button/error/outlined|text/hover/background)
+$t1-btn-err-hov-bg: rgb(249,226,224);
+// error outlined/text active bg  (#edd0cd — Figma: button/error/outlined|text/active/background)
+$t1-btn-err-act-bg: rgb(237,208,205);
+
+// ---- Icon-Button tokens ---------------------------------------------------
+// loading spinner arc color (Figma: #737373)
+$t1-spinner-arc: rgb(115,115,115);
+
+// ---- Prompt-Input tokens --------------------------------------------------
+// templates description [bracketed slot] color
+// Figma: aiT1PromptInputVariables/true/text (#7a64c1)
+$t1-pi-slot-violet: rgb(122,100,193);
+
+// ---- Shadows --------------------------------------------------------------
+$t1-shadow-soft: 0 1px 2px rgba(25,40,57,0.09), 0 2px 8px rgba(25,40,57,0.06);
+$t1-shadow-card: 0 4px 16px rgba(25,40,57,0.09);
+$t1-shadow-pop:  0 12px 32px rgba(25,40,57,0.14);
+// elevation/6 — Toast material shadow (Figma: aiT1Toast)
+$t1-shadow-toast: 0px 1px 18px 0px rgba(0,0,0,0.12), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 3px 5px -1px rgba(0,0,0,0.20);
+// elevation/8 — FAB material shadow (Figma: aiT1ChatFab)
+$t1-shadow-fab: 0 5px 5px -3px rgba(0,0,0,0.20), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
+
+// ---- Global-Search --------------------------------------------------------
+// Segment switch logo-slot active background (Figma: ait1chatsegmentswitchlogo/active)
+$t1-gs-logo-grad: linear-gradient(-44.62deg, rgb(33,87,245) 2.91%, rgb(37,141,255) 40.71%, rgb(134,255,187) 106.85%);
+
+// ---- Gradient -------------------------------------------------------------
+$t1-gradient-brand: linear-gradient(180deg, $t1-grad-teal 0%, $t1-grad-cyan 50%, $t1-grad-blue 100%);
+
+// Gradient-Icon-Button hover — darkened brand gradient (Figma: aiT1/background/secondary/hover)
+$t1-grad-btn-hov-teal: rgb(30,159,131);
+$t1-grad-btn-hov-cyan: rgb(21,110,137);
+$t1-grad-btn-hov-blue: rgb(19,82,149);
+
+// Gradient-Icon-Button active — darkest brand gradient (Figma: aiT1/background/secondary/active)
+$t1-grad-btn-act-teal: rgb(22,116,96);
+$t1-grad-btn-act-cyan: rgb(14,75,93);
+$t1-grad-btn-act-blue: rgb(14,57,104);
+
+// ---- FAB-Icon background gradients (Figma: aiT1/background/primary/*)  ----
+// 3-state light gradient: pale teal → warm white (default/hover/active)
+$t1-fab-grad-angle:      98.52deg;
+$t1-fab-def-start:       rgb(231, 247, 249);  // default  start
+$t1-fab-def-end:         rgb(251, 248, 242);  // default  end
+$t1-fab-hov-start:       rgb(231, 252, 255);  // hover    start
+$t1-fab-hov-end:         rgb(243, 231, 205);  // hover    end
+$t1-fab-act-start:       rgb(189, 247, 255);  // active   start
+$t1-fab-act-end:         rgb(245, 237, 201);  // active   end

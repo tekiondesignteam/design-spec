@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Listing-Card · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #f5f7f9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 40px; }
+    .section       { margin-bottom: 48px; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t1-fg-muted); margin-bottom: 16px; }
+    .variants-row  { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+    .variant-col   { display: flex; flex-direction: column; gap: 6px; }
+    .variant-name  { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--t1-fg-muted); }
+    .divider { border: none; border-top: 1px solid #e4e5e7; margin: 40px 0; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Listing-Card</div>
+  <div id="root"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    const ITEMS = [
+      { initials: 'MW', title: 'Marcus Webb',  id: '#DL-2841', chip: 'Hot Lead',
+        subtitle1: 'Sales Consultant', subtitle2: 'Downtown Toyota',
+        description: 'marcus.webb@tekion.com', suffixLabel: 'Last contact', suffixDetail: '2h ago' },
+      { initials: 'AS', title: 'Anna Stone',   id: '#DL-2842',
+        subtitle1: 'Finance Manager',  subtitle2: 'Bay Honda',
+        description: 'anna.stone@bayhonda.com', suffixLabel: 'Last contact', suffixDetail: 'Yesterday' },
+      { initials: 'TK', title: 'Tom Kim',      id: '#DL-2843', chip: 'New',
+        subtitle1: 'GM',               subtitle2: 'Sunrise Ford',
+        description: 'tom.kim@sunriseford.com', suffixLabel: 'Last contact', suffixDetail: '3 days' },
+      { initials: 'SL', title: 'Sarah Lee',    id: '#DL-2844', chip: 'Hot',
+        subtitle1: 'Sales Consultant', subtitle2: 'Metro Chevy',
+        description: 'sarah.lee@metrochevy.com', suffixLabel: 'Last contact', suffixDetail: '1h ago' },
+      { initials: 'RP', title: 'Ryan Park',    id: '#DL-2845',
+        subtitle1: 'BDC Manager',     subtitle2: 'Eastside Nissan',
+        description: 'ryan.park@eastnissan.com', suffixLabel: 'Last contact', suffixDetail: '4 days' },
+    ];
+
+    const App = () => (
+      <div>
+
+        <div className="section">
+          <div className="section-label">expanded=true — avatar prefix · dynamic item list</div>
+          <div style={{ maxWidth: 780 }}>
+            <ListingCard expanded={true} onItemClick={(item) => alert('Clicked: ' + item.title)} items={ITEMS} />
+          </div>
+        </div>
+
+        <hr className="divider" />
+
+        <div className="section">
+          <div className="section-label">expanded=false — compact · no avatar</div>
+          <div style={{ maxWidth: 360 }}>
+            <ListingCard expanded={false} items={ITEMS} />
+          </div>
+        </div>
+
+        <hr className="divider" />
+
+        <div className="section">
+          <div className="section-label">Suffix nested properties — label / detail toggles</div>
+          <div className="variants-row">
+            {[
+              { name: 'label + detail', suffixLabel: 'Label',      suffixDetail: 'Detail'  },
+              { name: 'detail only',    suffixLabel: undefined,    suffixDetail: '$42,500' },
+              { name: 'label only',     suffixLabel: '2 days ago', suffixDetail: undefined },
+              { name: 'no suffix',      suffixLabel: undefined,    suffixDetail: undefined },
+            ].map(({ name, suffixLabel, suffixDetail }) => (
+              <div className="variant-col" key={name}>
+                <div className="variant-name">{name}</div>
+                <div style={{ width: 340 }}>
+                  <ListingCard expanded={false} items={[{
+                    initials:'CN', title:'Title', id:'#123', chip:'Chip',
+                    subtitle1:'Subtitle1', subtitle2:'Subtitle2', description:'Description1',
+                    suffixLabel, suffixDetail,
+                  }]} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <hr className="divider" />
+
+        <div className="section">
+          <div className="section-label">Chip prop — present / absent</div>
+          <div className="variants-row">
+            <div className="variant-col">
+              <div className="variant-name">with chip</div>
+              <div style={{ width: 500 }}>
+                <ListingCard expanded={true} items={[{
+                  initials:'JD', title:'John Doe', id:'#456', chip:'New',
+                  subtitle1:'2024 Honda Accord', subtitle2:'Silver',
+                  description:'john.doe@tekion.com', suffixLabel:'1h ago', suffixDetail:'$42,500',
+                }]} />
+              </div>
+            </div>
+            <div className="variant-col">
+              <div className="variant-name">no chip</div>
+              <div style={{ width: 500 }}>
+                <ListingCard expanded={true} items={[{
+                  initials:'JD', title:'John Doe', id:'#456',
+                  subtitle1:'2024 Honda Accord', subtitle2:'Silver',
+                  description:'john.doe@tekion.com', suffixLabel:'1h ago', suffixDetail:'$42,500',
+                }]} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    );
+
+    (function waitForComponents() {
+      if (!window.ListingCard || !window.Avatar || !window.Chip) { setTimeout(waitForComponents, 50); return; }
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    })();
+  </script>
+</body>
+</html>

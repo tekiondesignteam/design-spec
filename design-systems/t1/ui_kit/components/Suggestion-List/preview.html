@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Suggestion-List · T1 UI Kit</title>
+  <link rel="stylesheet" href="../../../colors_and_type.css">
+  <link rel="stylesheet" href="../../kit.css">
+  <link rel="stylesheet" href="../../components.css">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #F5F7F9; }
+    body { padding: 48px; min-height: 100vh; font-family: var(--t1-font-sans); }
+    .preview-head  { font-size: 12px; letter-spacing: 0.04em; color: var(--t1-fg-muted); text-transform: uppercase; margin-bottom: 16px; font-weight: 600; }
+    .preview-title { font-size: 20px; font-weight: 700; color: var(--t1-fg); margin-bottom: 32px; }
+    .preview-label { font-size: 11px; color: var(--t1-fg-muted); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; margin-bottom: 12px; }
+    .preview-section { margin-bottom: 40px; }
+    .preview-row { display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start; }
+    .preview-col { display: flex; flex-direction: column; gap: 4px; }
+    .preview-col-label { font-size: 10px; color: var(--t1-fg-muted); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="preview-head">T1 UI Kit · preview</div>
+  <div class="preview-title">Suggestion-List</div>
+  <div id="root"></div>
+  <script src="../../components/manifest.js"></script>
+  <script src="../../loader.js" data-base="../../"></script>
+  <script type="text/babel">
+    (function waitForComponents() {
+      if (!window.SuggestionList) { setTimeout(waitForComponents, 50); return; }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <div>
+
+          {/* ── Item states (frozen / Figma match) ── */}
+          <div className="preview-section">
+            <div className="preview-label">Item states — all four from Figma node 4:3471</div>
+            <div className="preview-row">
+              <div className="preview-col">
+                <div className="preview-col-label">Default</div>
+                <SuggestionList items={[
+                  { label: 'Label', icon: 'chat-circle-text', state: 'default' },
+                ]} />
+              </div>
+              <div className="preview-col">
+                <div className="preview-col-label">Hover (frozen)</div>
+                <SuggestionList items={[
+                  { label: 'Label', icon: 'chat-circle-text', state: 'hover' },
+                ]} />
+              </div>
+              <div className="preview-col">
+                <div className="preview-col-label">Active (frozen)</div>
+                <SuggestionList items={[
+                  { label: 'Label', icon: 'chat-circle-text', state: 'active' },
+                ]} />
+              </div>
+              <div className="preview-col">
+                <div className="preview-col-label">Disabled</div>
+                <SuggestionList items={[
+                  { label: 'Label', icon: 'chat-circle-text', disabled: true },
+                ]} />
+              </div>
+            </div>
+          </div>
+
+          {/* ── States in context (Figma screenshot: default / hover / active / disabled stacked) ── */}
+          <div className="preview-section">
+            <div className="preview-label">All states in one list (Figma node 4:3471 layout)</div>
+            <SuggestionList items={[
+              { label: 'Label', icon: 'chat-circle-text', state: 'default'  },
+              { label: 'Label', icon: 'chat-circle-text', state: 'hover'    },
+              { label: 'Label', icon: 'chat-circle-text', state: 'active'   },
+              { label: 'Label', icon: 'chat-circle-text', disabled: true     },
+            ]} />
+          </div>
+
+          {/* ── Count variants ── */}
+          <div className="preview-section">
+            <div className="preview-label">Count variants (1 – 5 – 10)</div>
+            <div className="preview-row">
+              <div className="preview-col">
+                <div className="preview-col-label">Count = 1</div>
+                <SuggestionList items={[
+                  { label: 'What are my open deals?', icon: 'chat-circle-text' },
+                ]} />
+              </div>
+              <div className="preview-col">
+                <div className="preview-col-label">Count = 5</div>
+                <SuggestionList items={[
+                  { label: 'What are my open deals?',                   icon: 'chat-circle-text' },
+                  { label: 'Show deals closing this week',               icon: 'chat-circle-text' },
+                  { label: 'Find customers not contacted in 30 days',    icon: 'chat-circle-text' },
+                  { label: 'Draft a follow-up for the Accord deal',      icon: 'chat-circle-text' },
+                  { label: "Summarize today's test drives",              icon: 'chat-circle-text' },
+                ]} onSelect={(item, i) => console.log('selected', i, item)} />
+              </div>
+              <div className="preview-col">
+                <div className="preview-col-label">Count = 10</div>
+                <SuggestionList items={[
+                  { label: 'What are my open deals?',                    icon: 'chat-circle-text' },
+                  { label: 'Show deals closing this week',               icon: 'chat-circle-text' },
+                  { label: 'Find customers not contacted in 30 days',    icon: 'chat-circle-text' },
+                  { label: 'Draft a follow-up for the Accord deal',      icon: 'chat-circle-text' },
+                  { label: "Summarize today's test drives",              icon: 'chat-circle-text' },
+                  { label: 'Check inventory availability',               icon: 'chat-circle-text' },
+                  { label: 'Schedule a customer callback',               icon: 'chat-circle-text' },
+                  { label: "Pull up Sarah Chen's open deals",            icon: 'chat-circle-text' },
+                  { label: 'Which deals are in negotiation stage?',      icon: 'chat-circle-text' },
+                  { label: 'Send a service reminder to lapsed customers',icon: 'chat-circle-text' },
+                ]} onSelect={(item, i) => console.log('selected', i, item)} />
+              </div>
+            </div>
+          </div>
+
+          {/* ── Long labels (truncation) ── */}
+          <div className="preview-section">
+            <div className="preview-label">Long labels (truncated at 240px)</div>
+            <SuggestionList items={[
+              { label: 'I need a complete summary of all active deals in the negotiation stage', icon: 'chat-circle-text' },
+              { label: 'Find all customers who purchased a vehicle in the last 12 months',       icon: 'chat-circle-text' },
+            ]} />
+          </div>
+
+          {/* ── String shorthand ── */}
+          <div className="preview-section">
+            <div className="preview-label">String shorthand API</div>
+            <SuggestionList items={[
+              "Can you pull up the open deals for Sarah Chen?",
+              "Draft a follow-up for the Accord deal.",
+              "Which deals are closing this week?",
+            ]} />
+          </div>
+
+        </div>
+      );
+    })();
+  </script>
+</body>
+</html>

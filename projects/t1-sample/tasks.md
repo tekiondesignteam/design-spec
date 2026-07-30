@@ -11,7 +11,7 @@
 Before checking off a task, ask:
 
 - Does what I built match the **spec's acceptance criteria** for it, word for word?
-- Does it use **only design-system tokens/components** (constitution §3)?
+- Does it use **only t1 tokens/components** (constitution §3)?
 - Did I touch **anything outside `projects/t1-sample/`**? (If yes — that's a violation, revert it.)
 - Did any decision quietly change since the spec was written? If so, **update the spec first**, then continue.
 

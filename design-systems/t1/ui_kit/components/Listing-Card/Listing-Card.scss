@@ -1,0 +1,253 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   LISTING-CARD  (Figma: aiT1ListingCard)
+   Vertical list of item rows — each row has an optional avatar prefix,
+   primary info column (title · id · chip · subtitles · description) and a
+   right-aligned suffix column (label + detail).
+
+   BEM prefix: t1-lc
+
+   Figma variants
+   ─────────────────────────────────────────────────────────────────────────
+   expanded: true     Full width — shows 40×40 avatar prefix per row
+   expanded: false    Compact — no avatar prefix
+   items[]            Any length — N rows rendered dynamically, no fixed count
+
+   Responsive behaviour
+   ─────────────────────────────────────────────────────────────────────────
+   ≥ 480px  Default Figma layout — info left, suffix right-aligned
+   < 480px  Suffix drops below info, inline label + detail, text can wrap
+
+   Design tokens (Figma → SCSS)
+   ─────────────────────────────────────────────────────────────────────────
+   Card border        : #d4d5d6  → $t1-neutral-200
+   Card radius        : 8px      → $t1-radius-md
+   Item padding       : 16px     → $t1-space-4
+   Item gap           : 16px     → $t1-space-4     (avatar ↔ body)
+   Body gap           : 16px     → $t1-space-4     (info ↔ suffix)
+   Info gap (vert)    : 2px
+   nameId gap         : 6px
+   subtitle gap       : 8px
+   suffix gap (vert)  : 6px
+   Row divider        : #d4d4d4  → $t1-neutral-200
+
+   Title text         : #161616  → $t1-neutral-900   14px 600 (body2Bold)
+   ID text            : #969aa3  → $t1-neutral-400   12px 400 (body3Regular)
+   Subtitle/desc text : #444f5c  → $t1-neutral-600   14px 500 (body2Medium)
+   Dot separator      : #d4d4d4  → $t1-neutral-200   4px circle
+   Suffix label       : #969aa3  → $t1-neutral-400   12px 400
+   Suffix detail      : #444f5c  → $t1-neutral-600   12px 600 (body3Bold)
+   Avatar bg          : #edeef0  → $t1-neutral-100   (handled by kit Avatar)
+   Avatar text        : #6d707a  → $t1-neutral-500   (handled by kit Avatar)
+   ========================================================================== */
+
+/* ── Root card shell ──────────────────────────────────────────────────────── */
+.t1-lc {
+  display:        flex;
+  flex-direction: column;
+  background:     $t1-neutral-0;
+  border:         1px solid $t1-neutral-200;    /* #d4d5d6 */
+  border-radius: $t1-radius-xs;                /* 2px */
+  width:          100%;
+  box-sizing:     border-box;
+  overflow:       hidden;
+}
+
+/* ── Item row ─────────────────────────────────────────────────────────────── */
+.t1-lc__item {
+  display:     flex;
+  align-items: flex-start;
+  gap:         $t1-space-4;    /* 16px — Figma: ait1listingcard/gap */
+  padding:     $t1-space-4;    /* 16px — Figma: ait1listingcard/padding */
+  background:  $t1-neutral-0;
+  box-sizing:  border-box;
+  width:       100%;
+  cursor:      default;
+  transition:  background 120ms ease;
+
+  &:hover {
+    background: $t1-neutral-25;
+  }
+}
+
+/* ── Horizontal divider between item rows ─────────────────────────────────── */
+.t1-lc__divider {
+  height:      1px;
+  width:       100%;
+  background:  $t1-neutral-200;    /* #d4d4d4 — pipe separator */
+  flex-shrink: 0;
+}
+
+/* ── Avatar wrapper (expanded only) ──────────────────────────────────────── */
+.t1-lc__avatar {
+  flex-shrink: 0;
+  /* Kit Avatar handles size/color — lg = 40×40, square variant, letter type */
+}
+
+/* ── Body: info + suffix ──────────────────────────────────────────────────── */
+.t1-lc__body {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-4;    /* 16px — Figma: ait1listingcard/customer/gap */
+  flex:        1 1 0;
+  min-width:   0;
+}
+
+/* ── Info column: nameId · subtitles · description ───────────────────────── */
+.t1-lc__info {
+  display:        flex;
+  flex-direction: column;
+  gap:            2px;          /* Figma: ait1listingcard/customerdetails/gap = 2px */
+  flex:           1 1 0;
+  min-width:      0;
+}
+
+/* ── nameId row ───────────────────────────────────────────────────────────── */
+.t1-lc__nameid {
+  display:     flex;
+  align-items: center;
+  gap:         6px;             /* Figma: ait1listingcard/nameid/gap */
+  width:       100%;
+  min-width:   0;
+}
+
+.t1-lc__title {
+  font-family:  $t1-font-sans;
+  font-size:    14px;
+  font-weight:  $t1-weight-semibold;   /* 600 — body2Bold */
+  line-height:  16px;
+  color:        $t1-neutral-900;       /* #161616 */
+  white-space:  nowrap;
+  flex-shrink:  0;
+}
+
+.t1-lc__id {
+  font-family:  $t1-font-sans;
+  font-size:    12px;
+  font-weight:  $t1-weight-regular;    /* 400 — body3Regular */
+  line-height:  16px;
+  color:        $t1-neutral-400;       /* #969aa3 */
+  white-space:  nowrap;
+  flex-shrink:  0;
+}
+
+/* ── Subtitle row ─────────────────────────────────────────────────────────── */
+.t1-lc__subtitles {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-2;    /* 8px — Figma: subtitle row gap */
+  width:       100%;
+  min-width:   0;
+}
+
+/* subtitle group = text + trailing dot separator */
+.t1-lc__subtitle-group {
+  display:     flex;
+  align-items: center;
+  gap:         6px;            /* Figma: subtitle1 inner gap */
+  flex-shrink: 0;
+  min-width:   0;
+}
+
+.t1-lc__sub {
+  font-family:   $t1-font-sans;
+  font-size:     14px;
+  font-weight:   $t1-weight-medium;   /* 500 — body2Medium */
+  line-height:   16px;
+  color:         $t1-neutral-600;     /* #444f5c */
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  flex-shrink:   0;
+}
+
+/* 4px dot separator between subtitle1 and subtitle2 */
+.t1-lc__dot {
+  display:       inline-block;
+  flex-shrink:   0;
+  width:         4px;
+  height:        4px;
+  border-radius: $t1-radius-pill;
+  background:    $t1-neutral-200;    /* #d4d4d4 */
+}
+
+/* ── Description row ──────────────────────────────────────────────────────── */
+.t1-lc__desc {
+  font-family:   $t1-font-sans;
+  font-size:     14px;
+  font-weight:   $t1-weight-medium;   /* 500 — body2Medium */
+  line-height:   16px;
+  color:         $t1-neutral-600;     /* #444f5c */
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  width:         100%;
+}
+
+/* ── Suffix column: label + detail ───────────────────────────────────────── */
+.t1-lc__suffix {
+  display:        flex;
+  flex-direction: column;
+  align-items:    flex-end;
+  gap:            6px;              /* Figma: ait1listingcard/timedeals/gap */
+  flex-shrink:    0;
+  min-width:      56px;
+}
+
+.t1-lc__suffix-label {
+  font-family:  $t1-font-sans;
+  font-size:    12px;
+  font-weight:  $t1-weight-regular;   /* 400 — body3Regular */
+  line-height:  16px;
+  color:        $t1-neutral-400;      /* #969aa3 */
+  text-align:   right;
+  white-space:  nowrap;
+}
+
+.t1-lc__suffix-detail {
+  font-family:  $t1-font-sans;
+  font-size:    12px;
+  font-weight:  $t1-weight-semibold;  /* 600 — body3Bold */
+  line-height:  16px;
+  color:        $t1-neutral-600;      /* #444f5c */
+  text-align:   right;
+  white-space:  nowrap;
+  padding:      2px 0;               /* Figma: suffix detail py-[2px] */
+}
+
+/* ── Responsive — narrow containers (< 480px) ────────────────────────────── */
+/*
+   Below 480px the suffix column drops below the info column.
+   Label + detail flip to inline-row, left-aligned.
+   Text truncation is relaxed so content wraps instead of clipping.
+*/
+/* ── Responsive — narrow viewport (true mobile) ──────────────────────────── */
+@media (max-width: 479px) {
+  .t1-lc__avatar { display: none; }
+  .t1-lc__item { padding: $t1-space-3; }
+  .t1-lc__body { flex-wrap: wrap; align-items: flex-start; }
+  .t1-lc__info { width: 100%; }
+  .t1-lc__subtitles { flex-wrap: wrap; }
+  .t1-lc__subtitle-group { flex-shrink: 1; min-width: 0; }
+  .t1-lc__suffix { flex-direction: row; align-items: center; justify-content: flex-start; gap: $t1-space-2; width: 100%; min-width: 0; }
+  .t1-lc__suffix-label, .t1-lc__suffix-detail { text-align: left; white-space: normal; padding: 0; }
+  .t1-lc__suffix-label::after { content: '·'; margin-left: $t1-space-2; color: $t1-neutral-300; }
+  .t1-lc__title, .t1-lc__sub, .t1-lc__desc { white-space: normal; word-break: break-word; }
+  .t1-lc__nameid { flex-wrap: wrap; }
+}
+
+/* ── Responsive — narrow panel container (popover / docked on desktop) ────── */
+@container t1-response (max-width: 500px) {
+  .t1-lc__avatar { display: none; }
+  .t1-lc__item { padding: $t1-space-3; }
+  .t1-lc__body { flex-wrap: wrap; align-items: flex-start; }
+  .t1-lc__info { width: 100%; }
+  .t1-lc__subtitles { flex-wrap: wrap; }
+  .t1-lc__subtitle-group { flex-shrink: 1; min-width: 0; }
+  .t1-lc__suffix { flex-direction: row; align-items: center; justify-content: flex-start; gap: $t1-space-2; width: 100%; min-width: 0; }
+  .t1-lc__suffix-label, .t1-lc__suffix-detail { text-align: left; white-space: normal; padding: 0; }
+  .t1-lc__suffix-label::after { content: '·'; margin-left: $t1-space-2; color: $t1-neutral-300; }
+  .t1-lc__title, .t1-lc__sub, .t1-lc__desc { white-space: normal; word-break: break-word; }
+  .t1-lc__nameid { flex-wrap: wrap; }
+}

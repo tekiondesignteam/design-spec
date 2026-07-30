@@ -1,0 +1,175 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   CHECKBOX  (Figma: Checkbox)
+   BEM prefix: t1-chk
+
+   Size: 16×16 px fixed (single size from Figma)
+   Square radius: 2px  |  Circle radius: 9999px
+
+   Props
+   ─────────────────────────────────────────────────────────────────────────
+   shape          'square' | 'circle'                  default: 'square'
+   color          'brand'  | 'success'                 default: 'brand'
+   state          'default' | 'hover' | 'active'       (showcase only)
+   checked        boolean
+   indeterminate  boolean
+   disabled       boolean
+
+   Color matrix
+   ─────────────────────────────────────────────────────────────────────────
+   unchecked / default   bg transparent          border $t1-neutral-400
+   unchecked / hover     bg transparent          border $t1-blue-400
+   unchecked / active    bg transparent          border $t1-blue-700
+   unchecked / disabled  bg $t1-neutral-50       border $t1-neutral-200
+
+   brand checked/indet / default   bg $t1-blue-400    border transparent
+   brand checked/indet / hover     bg $t1-blue-700    border transparent
+   brand checked/indet / active    bg $t1-blue-700    border transparent
+   brand checked/indet / disabled  bg $t1-neutral-50  border $t1-neutral-200
+
+   success checked / all states  bg $t1-green-500   border transparent
+   success checked / disabled    bg $t1-neutral-50  border $t1-neutral-200
+   (success has no indeterminate state — Figma)
+   ========================================================================== */
+
+/* ── Wrapper ─────────────────────────────────────────────────────────────── */
+.t1-chk {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ── Box ─────────────────────────────────────────────────────────────────── */
+.t1-chk__box {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid $t1-neutral-400;
+  background: transparent;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  transition: background 80ms ease, border-color 80ms ease;
+  outline: none;
+}
+
+/* ── Shapes ──────────────────────────────────────────────────────────────── */
+.t1-chk--square .t1-chk__box { border-radius: $t1-radius-xs; }
+.t1-chk--circle .t1-chk__box { border-radius: $t1-radius-pill; }
+
+/* ── Icon (Phosphor bold) ────────────────────────────────────────────────── */
+.t1-chk__icon {
+  font-size: 9px;
+  line-height: 1;
+  color: $t1-neutral-0;
+  pointer-events: none;
+  display: block;
+}
+
+/* ── Focus ring ──────────────────────────────────────────────────────────── */
+.t1-chk__box:focus-visible {
+  outline: 2px solid $t1-blue-400;
+  outline-offset: 2px;
+}
+
+/* ── UNCHECKED — hover / active
+     (Simple selectors. Checked variant rules below have higher specificity
+      or appear later in the cascade, so they override these.) ──────────── */
+.t1-chk:hover .t1-chk__box,
+.t1-chk.is-hover .t1-chk__box {
+  border-color: $t1-blue-400;
+}
+.t1-chk:active .t1-chk__box,
+.t1-chk.is-active .t1-chk__box {
+  border-color: $t1-blue-700;
+}
+
+/* ── BRAND — checked / indeterminate ────────────────────────────────────── */
+.t1-chk--brand.is-checked .t1-chk__box,
+.t1-chk--brand.is-indeterminate .t1-chk__box {
+  background: $t1-blue-400;
+  border-color: transparent;
+}
+
+/* brand hover (higher specificity 0,4,0 — overrides unchecked hover 0,3,0) */
+.t1-chk--brand.is-checked:hover .t1-chk__box,
+.t1-chk--brand.is-checked.is-hover .t1-chk__box,
+.t1-chk--brand.is-indeterminate:hover .t1-chk__box,
+.t1-chk--brand.is-indeterminate.is-hover .t1-chk__box {
+  background: $t1-blue-700;
+  border-color: transparent;
+}
+
+/* brand active */
+.t1-chk--brand.is-checked:active .t1-chk__box,
+.t1-chk--brand.is-checked.is-active .t1-chk__box,
+.t1-chk--brand.is-indeterminate:active .t1-chk__box,
+.t1-chk--brand.is-indeterminate.is-active .t1-chk__box {
+  background: $t1-blue-700;
+  border-color: transparent;
+}
+
+/* ── SUCCESS — checked only (no indeterminate state in Figma) ───────────── */
+/* Comes after unchecked hover (same specificity 0,3,0) so wins by cascade. */
+.t1-chk--success.is-checked .t1-chk__box {
+  background: $t1-green-500;
+  border-color: transparent;
+}
+
+/* success hover (same bg — Figma has no hover change for success) */
+.t1-chk--success.is-checked:hover .t1-chk__box,
+.t1-chk--success.is-checked.is-hover .t1-chk__box {
+  background: $t1-green-500;
+  border-color: transparent;
+}
+
+/* ── DISABLED — must come last to win cascade ────────────────────────────── */
+.t1-chk.is-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.t1-chk.is-disabled .t1-chk__box {
+  background: $t1-neutral-50;
+  border-color: $t1-neutral-200;
+}
+
+/* checked/indeterminate when disabled — explicit overrides */
+.t1-chk--brand.is-checked.is-disabled .t1-chk__box,
+.t1-chk--brand.is-indeterminate.is-disabled .t1-chk__box,
+.t1-chk--success.is-checked.is-disabled .t1-chk__box {
+  background: $t1-neutral-50;
+  border-color: $t1-neutral-200;
+}
+
+/* icon fades on disabled checked */
+.t1-chk.is-disabled .t1-chk__icon {
+  color: $t1-neutral-400;
+}
+
+/* ── Label text ──────────────────────────────────────────────────────────── */
+.t1-chk__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.t1-chk__label {
+  font-size: 13px;
+  line-height: 20px;
+  color: $t1-neutral-900;
+}
+
+.t1-chk__desc {
+  font-size: 12px;
+  line-height: 16px;
+  color: $t1-neutral-500;
+}
+
+.t1-chk.is-disabled .t1-chk__label,
+.t1-chk.is-disabled .t1-chk__desc {
+  color: $t1-neutral-400;
+}

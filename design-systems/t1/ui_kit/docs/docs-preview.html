@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T1 Design System — Docs</title>
+
+  <!-- Proxima Nova — absolute paths so they resolve from any URL depth -->
+  <style>
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Light.otf') format('opentype'); font-weight:300; font-style:normal; }
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Light-Italic.otf') format('opentype'); font-weight:300; font-style:italic; }
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Regular.otf') format('opentype'); font-weight:400; font-style:normal; }
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Regular-Italic.otf') format('opentype'); font-weight:400; font-style:italic; }
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Medium.otf') format('opentype'); font-weight:500; font-style:normal; }
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Medium-It.otf') format('opentype'); font-weight:500; font-style:italic; }
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Semibold.otf') format('opentype'); font-weight:600; font-style:normal; }
+    @font-face { font-family:'Proxima Nova'; src:url('/fonts/Proxima-Nova-Semibold-Italic.otf') format('opentype'); font-weight:600; font-style:italic; }
+  </style>
+
+  <!-- highlight.js — code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- marked.js — markdown parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.2.0/marked.min.js"></script>
+
+  <style>
+    /* =========================================================
+       DESIGN TOKENS (mirrors tokens.scss as CSS custom props)
+       ========================================================= */
+    :root {
+      --c-neutral-0:   rgb(255,255,255);
+      --c-neutral-25:  rgb(247,248,249);
+      --c-neutral-50:  rgb(244,245,246);
+      --c-neutral-100: rgb(237,238,240);
+      --c-neutral-150: rgb(232,233,235);
+      --c-neutral-200: rgb(212,213,214);
+      --c-neutral-400: rgb(150,154,163);
+      --c-neutral-500: rgb(109,112,122);
+      --c-neutral-600: rgb(68,79,92);
+      --c-neutral-900: rgb(22,22,22);
+
+      --c-blue-50:  rgb(235,244,255);
+      --c-blue-100: rgb(219,235,255);
+      --c-blue-400: rgb(66,133,244);
+      --c-blue-500: rgb(51,115,221);
+      --c-blue-600: rgb(26,108,196);
+
+      --c-green-50:  rgb(225,250,240);
+      --c-green-100: rgb(207,245,235);
+      --c-green-500: rgb(6,188,117);
+      --c-green-700: rgb(5,122,76);
+
+      --c-red-25:  rgb(250,227,225);
+      --c-red-400: rgb(245,47,29);
+      --c-red-600: rgb(160,27,5);
+
+      --c-amber-50:  rgb(255,243,220);
+      --c-amber-700: rgb(138,87,0);
+
+      --c-violet-500: rgb(138,56,245);
+
+      --fg:         rgb(22,22,22);
+      --fg-muted:   rgb(109,112,122);
+      --fg-subtle:  rgb(150,154,163);
+      --fg-brand:   rgb(51,115,221);
+
+      --bg:        rgb(255,255,255);
+      --bg-canvas: rgb(244,245,246);
+      --bg-muted:  rgb(237,238,240);
+
+      --border:        rgb(212,213,214);
+      --border-subtle: rgb(232,233,235);
+      --border-focus:  rgb(66,133,244);
+
+      --shadow-soft: 0 1px 2px rgba(25,40,57,.09), 0 2px 8px rgba(25,40,57,.06);
+      --shadow-card: 0 4px 16px rgba(25,40,57,.09);
+
+      --radius-xs:   2px;
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-pill: 9999px;
+
+      --sidebar-w:    252px;
+      --topbar-h:     52px;
+      --font:         "Proxima Nova", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono:    "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+
+      --grad-brand: linear-gradient(90deg, rgb(37,200,165) 0%, rgb(27,144,180) 50%, rgb(26,108,196) 100%);
+    }
+
+    /* =========================================================
+       RESET
+       ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--fg);
+      background: var(--bg-canvas);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =========================================================
+       LAYOUT
+       ========================================================= */
+    .layout { display: flex; height: 100vh; overflow: hidden; }
+
+    /* =========================================================
+       SIDEBAR
+       ========================================================= */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--bg);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .sb-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+    .sb-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-md);
+      background: var(--grad-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .sb-logo svg { display: block; }
+    .sb-titles { min-width: 0; }
+    .sb-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sb-sub {
+      font-size: 11px;
+      color: var(--fg-subtle);
+      font-weight: 400;
+    }
+
+    /* Search */
+    .sb-search {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+    .sb-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .sb-search-icon {
+      position: absolute;
+      left: 8px;
+      color: var(--fg-subtle);
+      pointer-events: none;
+      line-height: 0;
+    }
+    .sb-search-input {
+      width: 100%;
+      height: 30px;
+      padding: 0 8px 0 28px;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 12.5px;
+      color: var(--fg);
+      outline: none;
+      transition: border-color .12s ease, box-shadow .12s ease;
+    }
+    .sb-search-input::placeholder { color: var(--fg-subtle); }
+    .sb-search-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(66,133,244,.15);
+    }
+    .sb-search-kbd {
+      position: absolute;
+      right: 8px;
+      font-size: 10px;
+      color: var(--fg-subtle);
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      padding: 0 4px;
+      line-height: 16px;
+      pointer-events: none;
+    }
+    .sb-search-input:focus ~ .sb-search-kbd { display: none; }
+
+    /* Nav */
+    .sb-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 0 20px;
+    }
+    .sb-nav::-webkit-scrollbar { width: 3px; }
+    .sb-nav::-webkit-scrollbar-thumb { background: var(--c-neutral-200); border-radius: 2px; }
+
+    .sb-group { margin-bottom: 2px; }
+
+    .sb-group-label {
+      padding: 8px 16px 3px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--fg-subtle);
+    }
+
+    .sb-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 16px 5px 14px;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--fg-muted);
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: background .1s, color .1s, border-color .1s;
+      user-select: none;
+    }
+    .sb-item:hover { background: var(--c-neutral-50); color: var(--fg); }
+    .sb-item.is-active {
+      background: var(--c-blue-50);
+      color: var(--c-blue-500);
+      font-weight: 500;
+      border-left-color: var(--c-blue-400);
+    }
+    .sb-item.is-hidden { display: none; }
+
+    .sb-item-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--c-neutral-200);
+      flex-shrink: 0;
+      transition: background .1s;
+    }
+    .sb-item.is-active .sb-item-dot { background: var(--c-blue-400); }
+
+    .sb-no-results {
+      padding: 12px 16px;
+      font-size: 12.5px;
+      color: var(--fg-subtle);
+      text-align: center;
+    }
+
+    /* =========================================================
+       MAIN COLUMN
+       ========================================================= */
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+
+    /* Topbar */
+    .topbar {
+      height: var(--topbar-h);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      flex-shrink: 0;
+      gap: 16px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--fg-muted);
+      min-width: 0;
+      overflow: hidden;
+    }
+    .bc-sep { color: var(--fg-subtle); flex-shrink: 0; }
+    .bc-cur {
+      font-weight: 500;
+      color: var(--fg);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .doc-count { font-size: 12px; color: var(--fg-subtle); }
+
+    /* Live badge */
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid var(--c-green-100);
+      background: var(--c-green-50);
+      color: var(--c-green-700);
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .live-badge.off {
+      background: var(--c-neutral-50);
+      color: var(--fg-subtle);
+      border-color: var(--border);
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--c-green-500);
+      animation: blink 2s ease-in-out infinite;
+    }
+    .live-badge.off .live-dot { background: var(--c-neutral-400); animation: none; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+    /* Content area */
+    .content-wrap {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0;
+      background: var(--bg-canvas);
+    }
+    .content-wrap::-webkit-scrollbar { width: 6px; }
+    .content-wrap::-webkit-scrollbar-thumb { background: var(--c-neutral-200); border-radius: 3px; }
+
+    .content-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 36px 40px 60px;
+    }
+
+    /* =========================================================
+       WELCOME SCREEN
+       ========================================================= */
+    .welcome { text-align: center; padding: 64px 24px 32px; }
+    .welcome-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-lg);
+      background: var(--grad-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .welcome h1 { font-size: 26px; font-weight: 600; color: var(--fg); margin-bottom: 8px; letter-spacing: -.02em; }
+    .welcome p  { font-size: 14.5px; color: var(--fg-muted); line-height: 1.65; max-width: 380px; margin: 0 auto 36px; }
+
+    .welcome-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; text-align: left; }
+    .welcome-cat-card {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color .12s, box-shadow .12s;
+    }
+    .welcome-cat-card:hover {
+      border-color: var(--c-blue-400);
+      box-shadow: var(--shadow-soft);
+    }
+    .wcc-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--fg-subtle);
+      margin-bottom: 4px;
+    }
+    .wcc-count { font-size: 13px; font-weight: 500; color: var(--fg); }
+
+    /* =========================================================
+       LOADING / ERROR STATES
+       ========================================================= */
+    .state-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 80px 40px;
+      color: var(--fg-muted);
+      font-size: 14px;
+      text-align: center;
+    }
+    .state-screen h2 { font-size: 18px; font-weight: 600; color: var(--fg); }
+    .state-screen p  { line-height: 1.65; max-width: 420px; }
+    .state-screen code {
+      display: inline-block;
+      margin-top: 4px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+      color: var(--fg);
+    }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid var(--c-neutral-200);
+      border-top-color: var(--c-blue-400);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* =========================================================
+       MARKDOWN STYLES
+       ========================================================= */
+    .md { line-height: 1.7; }
+
+    /* Heading 1 — component name */
+    .md h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.2;
+      letter-spacing: -.025em;
+      margin-bottom: 8px;
+    }
+
+    /* First blockquote immediately after h1 = subtitle */
+    .md .doc-lead {
+      font-size: 15px;
+      color: var(--fg-muted);
+      font-weight: 400;
+      line-height: 1.65;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* h2 — major sections */
+    .md h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--fg);
+      margin: 36px 0 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-subtle);
+      line-height: 1.3;
+      letter-spacing: -.01em;
+    }
+    .md h2:first-of-type { margin-top: 8px; }
+
+    /* h3 — sub-sections */
+    .md h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--fg);
+      margin: 24px 0 8px;
+    }
+
+    /* h4 — small labels */
+    .md h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin: 16px 0 6px;
+    }
+
+    .md p {
+      font-size: 14px;
+      color: var(--fg);
+      margin-bottom: 12px;
+    }
+
+    .md ul, .md ol {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    .md li {
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 4px;
+    }
+    .md li > ul, .md li > ol { margin-top: 4px; margin-bottom: 4px; }
+
+    /* Inline code */
+    .md code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--c-neutral-50);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xs);
+      padding: 1px 5px;
+      color: var(--c-violet-500);
+    }
+
+    /* Code blocks */
+    .md pre {
+      margin: 16px 0;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+    }
+    .md pre code {
+      display: block;
+      padding: 16px 18px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      background: var(--c-neutral-25);
+      color: var(--fg);
+      border: none;
+      border-radius: 0;
+      overflow-x: auto;
+    }
+
+    /* Blockquotes (generic) */
+    .md blockquote {
+      margin: 12px 0;
+      padding: 10px 16px;
+      background: var(--c-blue-50);
+      border-left: 3px solid var(--c-blue-400);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .md blockquote p { font-size: 14px; color: var(--c-blue-600); margin-bottom: 0; }
+
+    /* Tables */
+    .md table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .md thead { background: var(--c-neutral-50); }
+    .md th {
+      text-align: left;
+      padding: 9px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--fg-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .md td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: top;
+    }
+    .md tr:last-child td { border-bottom: none; }
+    .md tr:hover td { background: var(--c-neutral-25); }
+
+    .md a { color: var(--fg-brand); text-decoration: none; }
+    .md a:hover { text-decoration: underline; }
+
+    .md hr { border: none; border-top: 1px solid var(--border-subtle); margin: 28px 0; }
+    .md strong { font-weight: 600; }
+    .md em { font-style: italic; color: var(--fg-muted); }
+
+    /* Inline highlight.js overrides */
+    .hljs { background: var(--c-neutral-25) !important; padding: 0 !important; }
+
+    /* Updated-at footer */
+    .doc-footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--fg-subtle);
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ════════════════ SIDEBAR ════════════════ -->
+  <aside class="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo">
+        <!-- T1 wordmark (white on gradient) -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6h16M4 12h8M4 18h6" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="sb-titles">
+        <div class="sb-title">T1 Design System</div>
+        <div class="sb-sub">Component Docs</div>
+      </div>
+    </div>
+
+    <div class="sb-search">
+      <div class="sb-search-wrap">
+        <span class="sb-search-icon">
+          <svg width="13" height="13" viewBox="0 0 256 256" fill="currentColor">
+            <path d="M229.66 218.34l-50.07-50.07a88 88 0 1 0-11.31 11.31l50.06 50.07a8 8 0 0 0 11.32-11.31ZM40 112a72 72 0 1 1 72 72A72.08 72.08 0 0 1 40 112Z"/>
+          </svg>
+        </span>
+        <input id="searchInput" class="sb-search-input" type="search" placeholder="Search components…" autocomplete="off" spellcheck="false" />
+        <span class="sb-search-kbd">/</span>
+      </div>
+    </div>
+
+    <nav class="sb-nav" id="sbNav"></nav>
+  </aside>
+
+  <!-- ════════════════ MAIN ════════════════ -->
+  <main class="main">
+    <div class="topbar">
+      <div class="breadcrumb" id="breadcrumb">
+        <span>T1 Design System</span>
+      </div>
+      <div class="topbar-right">
+        <span class="doc-count" id="docCount"></span>
+        <div class="live-badge off" id="liveBadge">
+          <div class="live-dot"></div>
+          <span id="liveLabel">Connecting…</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-wrap" id="contentWrap">
+      <div class="content-inner" id="contentInner">
+        <!-- Welcome screen rendered by JS -->
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   CATEGORY MAP — mirrors manifest order and doc structure
+   ============================================================ */
+const CATEGORIES = {
+  'Meta':              ['SYSTEM', 'INDEX', 'README'],
+  'Chat Core':         ['Response', 'Chat-Bubble', 'Chat-Container', 'Prompt-Input', 'Feedback-Action', 'Reasoning-Log', 'Welcome', 'Suggestion-List'],
+  'Shell & Layout':    ['Side-Navigation', 'Nav-Bar', 'App-Bar', 'Global-Search'],
+  'AI Output Cards':   ['Planner-Card', 'Message-Draft', 'Document-Card', 'Completion-Card', 'Tip-Card', 'Notify-My-Card', 'Conversation-History-Card', 'Quote'],
+  'Domain Cards':      ['Deal-Card', 'Task-Card', 'Listing-Card', 'Credit-Score-Card'],
+  'Forms & Inputs':    ['Dropdown', 'Input-Text', 'Search', 'Checkbox', 'Switch'],
+  'Buttons & Actions': ['Button', 'Icon-Button', 'Link', 'Interactive-Icon', 'FAB-Icon', 'Gradient-Icon-Button', 'Fav-Bar-Icon'],
+  'Status & Data':     ['Avatar', 'Badge', 'Chip', 'Progress-Bar'],
+  'Notifications':     ['Notification-Banner-Toast', 'Modal', 'Empty'],
+  'Primitives':        ['Phi', 'Separator'],
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let allFiles    = [];
+let activeFile  = null;
+let activeGroup = null;
+
+/* ============================================================
+   STATIC DOC LIST — embedded so the page works without a server
+   ============================================================ */
+const STATIC_DOC_LIST = [
+  'App-Bar.md','Avatar.md','Badge.md','Button.md','Chat-Bubble.md',
+  'Chat-Container.md','Checkbox.md','Chip.md','Completion-Card.md',
+  'Conversation-History-Card.md','Credit-Score-Card.md','Deal-Card.md',
+  'Document-Card.md','Dropdown.md','Empty.md','FAB-Icon.md',
+  'Fav-Bar-Icon.md','Feedback-Action.md','Global-Search.md',
+  'Gradient-Icon-Button.md','INDEX.md','Icon-Button.md','Input-Text.md',
+  'Interactive-Icon.md','Link.md','Listing-Card.md','Message-Draft.md',
+  'Modal.md','Nav-Bar.md','Notification-Banner-Toast.md',
+  'Notify-My-Card.md','Phi.md','Planner-Card.md','Progress-Bar.md',
+  'Prompt-Input.md','Quote.md','README.md','Reasoning-Log.md',
+  'Response.md','SYSTEM.md','Search.md','Separator.md',
+  'Side-Navigation.md','Suggestion-List.md','Switch.md','Task-Card.md',
+  'Tip-Card.md','Welcome.md'
+];
+
+/* ============================================================
+   FETCH HELPERS
+   ============================================================ */
+async function fetchDocList() {
+  // Try the dev server first; fall back to embedded static list.
+  try {
+    const r = await fetch('/api/docs');
+    if (r.ok) return await r.json();
+  } catch {}
+  return STATIC_DOC_LIST;
+}
+
+async function fetchDoc(filename) {
+  // Try the dev-server route first, then fall back to a relative URL
+  // (works when the page is opened directly from the filesystem).
+  const safe = encodeURIComponent(filename);
+  try {
+    const r = await fetch(`/docs/${safe}`);
+    if (r.ok) return await r.text();
+  } catch {}
+  const r2 = await fetch(`./${safe}`);
+  if (!r2.ok) throw new Error(`${filename} not found`);
+  return r2.text();
+}
+
+/* ============================================================
+   MARKDOWN RENDERER
+   ============================================================ */
+function renderMd(text) {
+  marked.setOptions({ breaks: false, gfm: true });
+
+  const rawHtml = marked.parse(text);
+
+  // Post-process: wrap the first blockquote immediately after h1 with .doc-lead
+  return rawHtml.replace(
+    /(<\/h1>\s*)(<blockquote>[\s\S]*?<\/blockquote>)/,
+    (_, h1close, bq) => {
+      const inner = bq.replace(/<\/?blockquote>/g, '').replace(/<p>([\s\S]*?)<\/p>/, '$1');
+      return `${h1close}<p class="doc-lead">${inner.trim()}</p>`;
+    }
+  );
+}
+
+/* ============================================================
+   SIDEBAR — BUILD NAV
+   ============================================================ */
+function buildNav(files) {
+  const nav      = document.getElementById('sbNav');
+  const fileSet  = new Set(files.map(f => f.replace('.md', '')));
+  const catNames = new Set(Object.values(CATEGORIES).flat());
+
+  nav.innerHTML = '';
+
+  for (const [group, items] of Object.entries(CATEGORIES)) {
+    const inGroup = items.filter(i => fileSet.has(i));
+    if (!inGroup.length) continue;
+
+    const grpEl = document.createElement('div');
+    grpEl.className = 'sb-group';
+    grpEl.dataset.group = group;
+
+    const label = document.createElement('div');
+    label.className = 'sb-group-label';
+    label.textContent = group;
+    grpEl.appendChild(label);
+
+    for (const name of inGroup) {
+      grpEl.appendChild(makeNavItem(name + '.md', name, group));
+    }
+    nav.appendChild(grpEl);
+  }
+
+  // Any file not in a known category
+  const uncategorised = files.filter(f => !catNames.has(f.replace('.md', '')));
+  if (uncategorised.length) {
+    const grpEl = document.createElement('div');
+    grpEl.className = 'sb-group';
+    grpEl.dataset.group = 'Other';
+
+    const label = document.createElement('div');
+    label.className = 'sb-group-label';
+    label.textContent = 'Other';
+    grpEl.appendChild(label);
+
+    for (const f of uncategorised) {
+      const name = f.replace('.md', '');
+      grpEl.appendChild(makeNavItem(f, name, 'Other'));
+    }
+    nav.appendChild(grpEl);
+  }
+}
+
+function makeNavItem(filename, name, group) {
+  const el = document.createElement('div');
+  el.className = 'sb-item';
+  el.dataset.file  = filename;
+  el.dataset.name  = name;
+  el.dataset.group = group;
+  el.innerHTML = `<span class="sb-item-dot"></span>${name}`;
+  el.addEventListener('click', () => loadDoc(filename, group));
+  return el;
+}
+
+function syncActiveNav() {
+  document.querySelectorAll('.sb-item').forEach(el => {
+    el.classList.toggle('is-active', el.dataset.file === activeFile);
+  });
+}
+
+/* ============================================================
+   WELCOME SCREEN
+   ============================================================ */
+function showWelcome(files) {
+  const fileSet = new Set(files.map(f => f.replace('.md', '')));
+
+  // Count per category
+  const cards = Object.entries(CATEGORIES)
+    .map(([group, items]) => {
+      const count = items.filter(i => fileSet.has(i)).length;
+      return count > 0 ? `
+        <div class="welcome-cat-card" onclick="loadFirstInGroup('${group}')">
+          <div class="wcc-label">${group}</div>
+          <div class="wcc-count">${count} doc${count !== 1 ? 's' : ''}</div>
+        </div>` : '';
+    }).join('');
+
+  document.getElementById('contentInner').innerHTML = `
+    <div class="welcome">
+      <div class="welcome-logo">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6h16M4 12h8M4 18h6" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1>T1 Design System</h1>
+      <p>Select a component from the sidebar to view its full specification, or pick a category below.</p>
+      <div class="welcome-cats">${cards}</div>
+    </div>`;
+}
+
+window.loadFirstInGroup = function(group) {
+  const items = CATEGORIES[group] || [];
+  if (!items.length) return;
+  const first = items.find(i => allFiles.includes(i + '.md'));
+  if (first) loadDoc(first + '.md', group);
+};
+
+/* ============================================================
+   LOAD & RENDER A DOC
+   ============================================================ */
+async function loadDoc(filename, group) {
+  activeFile  = filename;
+  activeGroup = group || '';
+  syncActiveNav();
+
+  const name = filename.replace('.md', '');
+
+  // Breadcrumb
+  document.getElementById('breadcrumb').innerHTML =
+    `<span>T1 Design System</span>
+     <span class="bc-sep">/</span>
+     <span>${activeGroup}</span>
+     <span class="bc-sep">/</span>
+     <span class="bc-cur">${name}</span>`;
+
+  // Loading state
+  document.getElementById('contentInner').innerHTML =
+    `<div class="state-screen"><div class="spinner"></div><span>Loading ${name}…</span></div>`;
+
+  // Scroll to top
+  document.getElementById('contentWrap').scrollTop = 0;
+
+  try {
+    const text = await fetchDoc(filename);
+    const html = renderMd(text);
+    const now  = new Date().toLocaleTimeString();
+
+    document.getElementById('contentInner').innerHTML =
+      `<div class="md">${html}</div>
+       <div class="doc-footer">
+         <span>${filename}</span>
+         <span>Last loaded ${now}</span>
+       </div>`;
+
+    // Syntax highlight all code blocks
+    document.querySelectorAll('.md pre code').forEach(el => hljs.highlightElement(el));
+
+    document.title = `${name} — T1 Design System Docs`;
+  } catch (err) {
+    document.getElementById('contentInner').innerHTML =
+      `<div class="state-screen" style="color:rgb(245,47,29)">
+         <h2>Could not load ${name}</h2>
+         <p>${err.message}</p>
+       </div>`;
+  }
+}
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+document.getElementById('searchInput').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase().trim();
+
+  document.querySelectorAll('.sb-group').forEach(grpEl => {
+    const items = grpEl.querySelectorAll('.sb-item');
+    let visible = 0;
+    items.forEach(item => {
+      const match = !q || item.dataset.name.toLowerCase().includes(q);
+      item.classList.toggle('is-hidden', !match);
+      if (match) visible++;
+    });
+    grpEl.style.display = visible ? '' : 'none';
+  });
+
+  // No results message
+  const nav = document.getElementById('sbNav');
+  nav.querySelector('.sb-no-results')?.remove();
+  const anyVisible = [...nav.querySelectorAll('.sb-group')].some(el => el.style.display !== 'none');
+  if (q && !anyVisible) {
+    const el = document.createElement('div');
+    el.className = 'sb-no-results';
+    el.textContent = `No match for "${e.target.value}"`;
+    nav.appendChild(el);
+  }
+});
+
+// '/' shortcut focuses search; Escape clears it
+document.addEventListener('keydown', e => {
+  const inp = document.getElementById('searchInput');
+  if (e.key === '/' && document.activeElement !== inp) { e.preventDefault(); inp.focus(); }
+  if (e.key === 'Escape' && document.activeElement === inp) {
+    inp.value = '';
+    inp.dispatchEvent(new Event('input'));
+    inp.blur();
+  }
+});
+
+/* ============================================================
+   LIVE RELOAD — SSE
+   ============================================================ */
+function connectSSE() {
+  const badge = document.getElementById('liveBadge');
+  const label = document.getElementById('liveLabel');
+
+  // Probe for the dev server before opening EventSource — avoids the
+  // noisy auto-reconnect loop when running statically.
+  fetch('/events', { method: 'HEAD' }).catch(() => {
+    badge.classList.add('off');
+    label.textContent = 'Static';
+  });
+
+  let es;
+  try { es = new EventSource('/events'); }
+  catch { return; }
+
+  es.onopen = () => {
+    badge.classList.remove('off');
+    label.textContent = 'Live';
+  };
+
+  es.onmessage = async e => {
+    if (!e.data || e.data === '"connected"') return;
+    let payload;
+    try { payload = JSON.parse(e.data); } catch { return; }
+
+    const { file: changedFile } = payload;
+
+    // Reload the currently viewed doc if it changed
+    if (activeFile && changedFile === activeFile) {
+      loadDoc(activeFile, activeGroup);
+    }
+
+    // Refresh the file list (handles additions / deletions)
+    try {
+      allFiles = await fetchDocList();
+      buildNav(allFiles);
+      syncActiveNav();
+      document.getElementById('docCount').textContent = `${allFiles.length} docs`;
+    } catch {}
+  };
+
+  es.onerror = () => {
+    badge.classList.add('off');
+    label.textContent = 'Reconnecting…';
+    es.close();
+    setTimeout(connectSSE, 3000);
+  };
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+async function init() {
+  try {
+    allFiles = await fetchDocList();
+    buildNav(allFiles);
+    showWelcome(allFiles);
+    document.getElementById('docCount').textContent = `${allFiles.length} docs`;
+    connectSSE();
+  } catch (err) {
+    document.getElementById('contentInner').innerHTML = `
+      <div class="state-screen" style="color:rgb(245,47,29)">
+        <h2>Could not load doc list</h2>
+        <p>${err.message}</p>
+      </div>`;
+    document.getElementById('liveBadge').classList.add('off');
+    document.getElementById('liveLabel').textContent = 'Offline';
+  }
+}
+
+init();
+</script>
+</body>
+</html>

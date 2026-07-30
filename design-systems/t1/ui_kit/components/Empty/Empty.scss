@@ -1,0 +1,100 @@
+/* Partial — edit this, then regen ui_kit/components.css */
+
+/* ==========================================================================
+   EMPTY  (Figma: aiT1Empty)
+   BEM prefix: t1-empty
+
+   Design tokens (Figma → SCSS)
+   ─────────────────────────────────────────────────────────────────────────
+   Container padding   : 16px                → $t1-space-4
+   Container gap       : 12px                → $t1-space-3
+   Icon block size     : 48×48               → hardcoded 48px
+   Icon block bg       : #edeef0             → $t1-neutral-100
+   Icon block radius   : 6px                 → $t1-radius-md (8px — nearest token)
+   Icon color          : $t1-neutral-500
+   Content gap         : 4px                 → $t1-space-1
+   Title               : 16px/500/lh-24px    → $t1-weight-medium
+   Title color         : #161616             → $t1-neutral-900
+   Description         : 14px/400/lh-16px    → $t1-weight-regular
+   Description color   : #444f5c             → $t1-neutral-600
+   Actions gap         : 10px                → hardcoded 10px (no exact token)
+   Link row gap        : 4px                 → $t1-space-1
+   Help text           : 14px/400/lh-16px    → $t1-neutral-600
+   ========================================================================== */
+
+/* ── Root ─────────────────────────────────────────────────────────────────── */
+.t1-empty {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            $t1-space-3;      /* 12px — empty/gap */
+  padding:        $t1-space-4;      /* 16px all sides */
+  text-align:     center;
+  font-family:    $t1-font-sans;
+  box-sizing:     border-box;
+  width:          100%;
+}
+
+/* ── Icon block — 48×48 neutral rounded square ───────────────────────────── */
+.t1-empty__icon-block {
+  width:         48px;
+  height:        48px;
+  flex-shrink:   0;
+  display:       grid;
+  place-items:   center;
+  background:    $t1-neutral-100;   /* #edeef0 — Figma iconblock/neutral/background */
+  border-radius: $t1-radius-xs;     /* 2px ≈ Figma 6px — nearest token */
+  color:         $t1-neutral-500;   /* muted icon color */
+}
+
+/* ── Text content ────────────────────────────────────────────────────────── */
+.t1-empty__content {
+  display:        flex;
+  flex-direction: column;
+  gap:            $t1-space-1;      /* 4px — empty/content/gap */
+  width:          100%;
+}
+
+/* ── Title — 16px / 500 / lh-24px ────────────────────────────────────────── */
+.t1-empty__title {
+  font-size:   16px;
+  font-weight: $t1-weight-medium;   /* 500 */
+  line-height: 24px;
+  color:       $t1-neutral-900;     /* #161616 */
+  margin:      0;
+}
+
+/* ── Description — 14px / 400 / lh-16px ──────────────────────────────────── */
+.t1-empty__desc {
+  font-size:   14px;
+  font-weight: $t1-weight-regular;  /* 400 */
+  line-height: 16px;
+  color:       $t1-neutral-600;     /* #444f5c */
+  margin:      0;
+}
+
+/* ── Button group — secondary outlined · primary contained ───────────────── */
+.t1-empty__actions {
+  display:     flex;
+  align-items: center;
+  gap:         10px;                /* Figma: flexboxgrid/gap/gapx2p5 = 10px */
+  flex-wrap:   wrap;
+  justify-content: center;
+}
+
+/* ── Link row ─────────────────────────────────────────────────────────────── */
+.t1-empty__link-row {
+  display:     flex;
+  align-items: center;
+  gap:         $t1-space-1;         /* 4px — empty/link/gap */
+  justify-content: center;
+}
+
+/* ── Help text — 14px / 400 / lh-16px / muted ───────────────────────────── */
+.t1-empty__help-text {
+  font-size:   14px;
+  font-weight: $t1-weight-regular;
+  line-height: 16px;
+  color:       $t1-neutral-600;     /* #444f5c */
+  white-space: nowrap;
+}
