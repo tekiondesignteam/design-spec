@@ -10,7 +10,7 @@
 
 Before checking off a task, ask:
 
-- Does what I built match the **spec's acceptance criteria** for it, word for word?
+- Does this task cite a real spec criterion (`[AC-n]`), and does what I built satisfy **that exact criterion**, word for word?
 - Does it use **only {{DESIGN_SYSTEM}} tokens/components** (constitution §3)?
 - Is it a **single browser-openable HTML file with no build step** (plain HTML/CSS/JS, or React/JSX via Babel Standalone), using {{DESIGN_SYSTEM}}'s tokens/CSS per its `CLAUDE.md`?
 - Did I touch **anything outside `projects/{{PROJECT_NAME}}/`**? (If yes — that's a violation, revert it.)
@@ -22,21 +22,26 @@ If any answer is wrong, log it under "Drift log" below instead of checking the b
 
 ## Tasks
 
-Grouped by plan step. One behavior per line.
+Grouped by plan step. **One behavior per line, each citing the spec acceptance criterion it satisfies** — format: `- [ ] [AC-n] behavior`. A task with no `[AC-n]` means either the spec is missing that criterion (add it to `spec.md`) or the task is out of scope (drop it). A box is only ticked once the cited AC is demonstrably true in the browser and the drift check passes.
 
 ### Step 1 — {{Shell / layout}}
-- [ ] {{behavior}}
-- [ ] {{behavior}}
+- [ ] [AC-_] {{behavior}}
+- [ ] [AC-_] {{behavior}}
 
 ### Step 2 — {{First section}}
-- [ ] {{behavior}}
-- [ ] {{behavior}}
+- [ ] [AC-_] {{behavior}}
+- [ ] [AC-_] {{behavior}}
 
 ### Step 3 — {{States}}
-- [ ] Empty state: {{}}
-- [ ] Loading state: {{}}
-- [ ] Error state: {{}}
-- [ ] Success state: {{}}
+- [ ] [AC-_] Empty state: {{}}
+- [ ] [AC-_] Loading state: {{}}
+- [ ] [AC-_] Error state: {{}}
+- [ ] [AC-_] Success state: {{}}
+
+## Coverage (check at the final checkpoint)
+
+- [ ] Every `AC-n` in `spec.md` is cited by at least one task above (no orphaned criteria).
+- [ ] Every task cites a real `AC-n` (no tasks without a source criterion).
 
 ---
 

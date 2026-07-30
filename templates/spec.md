@@ -63,8 +63,10 @@ For every component/screen, define all four states. Missing states are the #1 ca
 
 ## Acceptance criteria
 
-Concrete, checkable statements. These become the tasks. Write them the way the team's shipped specs do — one behavior per bullet.
+Concrete, checkable statements, each with a **stable ID** (`AC-1`, `AC-2`, …) so every task in `tasks.md` can trace back to the exact criterion it satisfies. One behavior per line, the way the team's shipped specs read.
 
-- {{The page displays ...}}
-- {{On click of X, ...}}
-- {{When data is unavailable, ...}}
+- **AC-1** — {{The page displays ...}}
+- **AC-2** — {{On click of X, ...}}
+- **AC-3** — {{When data is unavailable, ...}}
+
+> IDs are **stable**: never renumber or reuse them. Add new criteria at the end with the next number. Every AC must be covered by at least one task; every task must cite an AC.

@@ -28,7 +28,8 @@ Order steps so each produces something reviewable. Layout/shell first, then sect
 
 ### Step 1: {{Shell / layout}}
 - **Builds:** {{}}
-- **Done when:** {{acceptance criteria from spec}}
+- **Satisfies:** {{AC-IDs from spec, e.g. AC-1, AC-2}}
+- **Done when:** {{those ACs are demonstrably true in the browser}}
 - **Re-read spec:** ☐ (check before starting)
 
 ### Step 2: {{First section / component}}

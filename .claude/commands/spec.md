@@ -41,7 +41,7 @@ Parse the arguments as: **first token = project name**; **everything after = the
    - **User Flows** — one sentence + a `mermaid flowchart TD` each; cover unhappy paths.
    - **Components** — table mapping each to its design-system component (or a flagged gap).
    - **States** — the four-state table per screen/component.
-   - **Acceptance criteria** — one checkable behavior per line.
+   - **Acceptance criteria** — one checkable behavior per line, each with a **stable ID** (`AC-1`, `AC-2`, …) so `tasks.md` can trace to it. Never renumber; add new ones at the end.
    Every component/flow references the real design system from step 1. Add a short header line noting the source (`brief.md` origin) and the completeness score.
 
 5. **Report** the path written, the completeness score, which parts were inferred vs. asked, and any `{{TODO}}` gaps left. Then point the designer to the next step: review `spec.md`, then `plan.md`.
