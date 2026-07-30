@@ -1,9 +1,9 @@
 # Constitution.md — T1 Design System
 ### System-wide requirements doc, populated from the T1 source of truth
 
-This file is inherited by every project built on T1. It records only values that are true system-wide. Every field below is an exact value, file path, or named rule pulled from the T1 sources (`tokens.scss`, `colors_and_type.css`, `CLAUDE.md`, `README.md`, `ui_kit/docs/`). Where T1 genuinely does not define something yet, the field says **"not yet defined"** so downstream teams flag it rather than assume.
+This file is inherited by every project built on T1. It records only values that are true system-wide. Fields are either an exact value/path/rule pulled from the T1 sources (`tokens.scss`, `colors_and_type.css`, `CLAUDE.md`, `README.md`, `ui_kit/docs/`), or a governance decision made by the design-system owner.
 
-**Populated:** 2026-07-30, from `design-systems/t1/`.
+**Populated:** 2026-07-30 from `design-systems/t1/`; the previously-undefined fields (grid, breakpoints, theming, accessibility, i18n, motion scale, versioning, governance) were resolved by owner decision on the same date.
 
 ---
 
@@ -26,22 +26,22 @@ This file is inherited by every project built on T1. It records only values that
 
 ## 3. Layout & Grid
 
-- Grid system (columns, gutters): **not yet defined** — T1 has no column-grid system. Layout is spacing-driven on the 4px base grid: card padding 12px (`$t1-space-3`), section padding 16–24px, inter-card gutters 8–16px (`README.md` §Spacing).
-- Breakpoints: **not yet defined** — no breakpoint tokens exist in the system.
+- Grid system (columns, gutters): **12-column grid.** Gutters use the 4px spacing scale — default column gutter 16px (`$t1-space-4`); card padding 12px (`$t1-space-3`), section padding 16–24px, inter-card gutters 8–16px (`README.md` §Spacing).
+- Breakpoints: **Panel-relative — no viewport breakpoints.** The AI panel has fixed dock states (closed / popover / left / right / fullscreen / minimized) and content adapts to the panel's width, not the screen's. Layout responds to the dock state, not to CSS media-query breakpoints.
 - Density rules: **Compact / data-dense by default.** No separate comfortable/spacious mode is defined; density is expressed through the tight spacing scale and 2px radii above.
 
 ## 4. Color & Theming
 
 - Light mode palette - file/path: `design-systems/t1/tokens.scss` §Color primitives + §Semantic; `colors_and_type.css`.
-- Dark mode palette - file/path: **not yet defined** — T1 is light-only (white / light-grey canvases). The only dark surface is the locked 64px `.ts-menubar` platform chrome, which is not themeable.
+- Dark mode palette - file/path: **None — T1 is intentionally light-only** (white / light-grey canvases, inside the Tekion platform's light shell). No dark theme is planned; do not build dark-mode variants. The only dark surface is the locked 64px `.ts-menubar` platform chrome, which is not themeable.
 - Semantic color rules: Prefer semantic aliases over primitives (`$t1-fg*`, `$t1-bg*`, `$t1-border*`). Status colors are semantic: success `$t1-green-500`, warning `$t1-amber-400`, error `$t1-red-400` (pressed `-500`, assistive error text `-600`). **Violet (`$t1-violet-*`) is the T1 brand mark only — never a status or general accent.** Exactly one gradient, `$t1-gradient-brand`, used on the AI send/generate button only. Never hardcode hex/rgb (`CLAUDE.md` Rule 4).
-- Minimum contrast ratio required: **not yet defined** — no WCAG contrast target is documented.
+- Minimum contrast ratio required: **WCAG AA — 4.5:1** for normal text, **3:1** for large text (≥24px, or ≥18.66px bold) and for UI components / graphical objects. Verify muted greys used for secondary text (`$t1-fg-muted`, `$t1-fg-subtle`) meet 4.5:1 on their intended backgrounds.
 
 ## 5. Typography
 
 - Type scale (all sizes, tagged with usage): from `colors_and_type.css` — **10px / 12** (tiny labels, overline) · **12px / 14** (assistive text, badge) · **14px / 16** (body default; Regular = body, Medium = body-strong, Semibold = label) · **16px / 24** (prompt input, H5) · **24px / 30** (welcome greeting, H3) · **32px / 40** (display / H1). Monospace (`--t1-font-mono`) at **12px / 14** for code.
 - Allowed weights: **300 Light · 400 Regular · 500 Medium · 600 Semibold** (Proxima Nova; matching italics available in `fonts/`). Active UI uses 400 / 500 / 600. No system fonts.
-- Line height / letter spacing rules: Line heights are paired per size (`--t1-leading-10..32` = 12 / 14 / 16 / 24 / 30 / 40). Letter spacing: **not defined** (browser default / normal).
+- Line height / letter spacing rules: Line heights are paired per size (`--t1-leading-10..32` = 12 / 14 / 16 / 24 / 30 / 40). Letter spacing: **default (normal)** — no custom tracking applied.
 
 ## 6. Iconography & Assets
 
@@ -52,18 +52,18 @@ This file is inherited by every project built on T1. It records only values that
 
 ## 7. Accessibility
 
-- Minimum tap/click target size: **not yet defined** — no documented minimum.
-- Target WCAG compliance level (e.g. AA or AAA): **not yet defined** — no WCAG level is declared in the system.
-- Keyboard navigation requirement: **Partially addressed, not system-guaranteed.** Icon-only controls require an `aria-label` (`<IconButton aria-label="…">`), and components expose focus states, but there is no documented system-wide keyboard-accessibility guarantee. Adopt "all interactive elements must be keyboard-accessible" as a target — currently aspirational, not enforced.
+- Minimum tap/click target size: **32×32px** (`$t1-space-8`). Fits T1's dense, mouse-first UI; interactive controls smaller than 32px should reserve hit area via padding to reach it.
+- Target WCAG compliance level (e.g. AA or AAA): **WCAG 2.1 AA** (matches the 4.5:1 contrast target in §4).
+- Keyboard navigation requirement: **Aspirational target, not enforced.** "All interactive elements should be keyboard-accessible" is the goal, but it is not a release gate. Today: icon-only controls require an `aria-label` (`<IconButton aria-label="…">`) and components expose focus states; there is no system-wide keyboard-accessibility guarantee.
 
 ## 8. Internationalization (i18n) & Localization
 
-- RTL (Right-to-Left) support required? **not yet defined** — no RTL support in the system.
-- Text expansion rule: **not yet defined.**
+- RTL (Right-to-Left) support required? **No — LTR only.** RTL is out of scope for T1's current markets; components are not required to mirror.
+- Text expansion rule: **Containers must handle 1.3x text length without breaking layout.** No fixed-width labels; text wraps or truncates gracefully rather than overflowing or clipping the container.
 
 ## 9. Motion
 
-- Standard durations (fast/medium/slow, in ms): **150ms** (hover) · **200ms** (modal / sheet enter). No formal fast/medium/slow token scale — these two are the only documented durations (`CLAUDE.md` §Brand essentials). Other durations: not yet defined.
+- Standard durations (fast/medium/slow, in ms): **Fast 100ms** (micro-feedback) · **Medium 150ms** (hover, most transitions) · **Slow 200ms** (modal / sheet enter). These anchor to T1's existing documented values (150ms hover, 200ms modal, per `CLAUDE.md` §Brand essentials); add as motion tokens in `tokens.scss` / `colors_and_type.css`.
 - Standard easing curves: **ease-out** (hover) · **ease-in-out** (modal / sheet enter). **No bounce, no spring.**
 - Rule for when motion is/isn't appropriate: Functional only — hover feedback, modal/sheet enter, `<Button loading>` spinners, and the `<CreditScoreCard>` gauge animation. No decorative motion; no bounce/spring; no full-bleed or ambient animation.
 
@@ -80,15 +80,25 @@ This file is inherited by every project built on T1. It records only values that
 
 ## 12. Versioning & Upgrades
 
-- Versioning strategy: **not yet defined** — no SemVer. Distribution and upgrades run through the **"pull latest" procedure** in `CLAUDE.md` Rule 12 (sync kit assets into the downstream project, then preserve-and-rebuild each fork).
-- Breaking change communication (migration guides): **not yet defined** — no migration-guide location. Upgrade behavior is specified in `CLAUDE.md` Rule 12; `ui_kit/components/REGEN.md` covers bundle regeneration.
+- Versioning strategy: **Date-based (CalVer)** — `YYYY.MM` (e.g. `2026.07`), communicating recency rather than a SemVer breaking-change contract. Distribution and upgrades still run through the **"pull latest" procedure** in `CLAUDE.md` Rule 12 (sync kit assets into the downstream project, then preserve-and-rebuild each fork).
+- Breaking change communication (migration guides): **`design-systems/t1/CHANGELOG.md`** — one entry per CalVer release, with breaking changes and migration steps inline. (Upgrade mechanics live in `CLAUDE.md` Rule 12; bundle regeneration in `ui_kit/components/REGEN.md`.)
 
 ## 13. Governance
 
-- Who approves exceptions/deviations to this file: **not yet defined** — no named owner recorded in-repo. (Owner = the T1 design-system maintainer; the Figma "T1 Components" file is the design source of truth.)
-- Where exceptions get logged: **Per project** — in that project's `constitution.md` §5 "Project-specific deviations" under the spec-driven workflow. A system-wide exceptions log is **not yet defined**.
-- Review cadence for this document: **not yet defined.**
+- Who approves exceptions/deviations to this file: **The T1 design-system owner/maintainer** signs off on any deviation. (Role recorded; add the specific person's name here.) The Figma "T1 Components" file remains the design source of truth.
+- Where exceptions get logged: **Per project only** — in that project's `constitution.md` §5 "Project-specific deviations" (date / what / who approved). There is intentionally no system-wide exceptions log; every deviation is project-scoped.
+- Review cadence for this document: **Every release** — reviewed and updated at each CalVer release, when the system actually changes.
 
 ---
 
-**Note for design system owner:** Every field above is an exact reference (path, value, or named rule) or an explicit "not yet defined." The "not yet defined" entries are real gaps in T1 today — grid/breakpoints, dark mode, contrast/WCAG/tap-target, RTL/text-expansion, SemVer/migration guides, and formal governance. Fill them in the T1 sources first, then update this file so downstream projects inherit the answers.
+**Follow-up actions to make these decisions real in the T1 sources:**
+
+1. **Motion tokens** — add `fast 100ms / medium 150ms / slow 200ms` to `tokens.scss` + `colors_and_type.css` (they're only prose today).
+2. **Grid** — add a 12-column grid definition with a 16px (`$t1-space-4`) gutter for full-page/dashboard surfaces.
+3. **Contrast** — verify muted greys (`$t1-fg-muted`, `$t1-fg-subtle`) meet AA 4.5:1 on their backgrounds; fix any that fail.
+4. **Tap target** — ensure interactive controls reserve a 32×32px hit area.
+5. **Text expansion** — audit fixed-width labels for 1.3x tolerance.
+6. **Versioning** — stamp the kit with a CalVer version and create `design-systems/t1/CHANGELOG.md`.
+7. **Governance** — record the specific owner's name in §13.
+
+Decisions marked here are binding until changed via §13 governance (owner sign-off, reviewed every release).
