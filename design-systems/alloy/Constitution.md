@@ -1,7 +1,7 @@
 # Constitution.md — Alloy Design System (GM DRP)
 ### System-wide requirements doc, populated from the Alloy source of truth
 
-Alloy is the **Digital Retail Program (DRP)** design system — white-label ecommerce UI for GM's four brands (**Chevrolet, Buick, GMC, Cadillac**), one system switched at runtime via a `[data-brand]` attribute on `<html>`. This file is inherited by every project built on Alloy and records only values true system-wide. Fields are either an exact value/path pulled from the Alloy sources (`styles/tokens.css`, `styles/brands.css`, `styles/global.css`, `CLAUDE.md`) or a governance decision by the design-system owner. Genuine gaps say **"not yet defined."**
+Alloy is the **Digital Retail Program (DRP)** design system — white-label ecommerce UI for GM's four brands (**Chevrolet, Buick, GMC, Cadillac**), one system switched at runtime via a `[data-brand]` attribute on `<html>`. This file is inherited by every project built on Alloy and records only values true system-wide. Fields are either an exact value/path pulled from the Alloy sources (`styles/tokens.css`, `styles/brands.css`, `styles/global.css`, `CLAUDE.md`) or a governance decision by the design-system owner.
 
 **Design source of truth:** Figma `RsCbyz0LF6FaItYny1FqUU` ("GM • 01. Core Variables") + Storybook `https://aecgm-dev.tekion.xyz/docs/ui-components/`.
 **Populated:** 2026-07-30 from `design-systems/alloy/`; the previously-undefined fields (grid, breakpoints, density, accessibility, i18n, motion, versioning, governance) were resolved by owner decision on the same date.
