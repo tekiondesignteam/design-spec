@@ -1,0 +1,100 @@
+/* ======================================================================
+   Notification — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Notification set (node 289-5301).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / sizes / fonts. Spacing + radius tokens compile with px units,
+   so they are consumed directly (no calc * 1px).
+
+   Axes (mirror the Figma variant set / property panel):
+     variant  → filled                     (.gk-notification--filled)
+     colour   → neutral | info | error |    (.gk-notification--<colour>)
+                success | warning
+   Colour sets only the background tint; the icon colour + message colour are
+   the same across every colour (single tokens in the Figma set).
+
+   Local indirection var — component-internal plumbing, not a token:
+     --_bg   the per-colour background tint
+   ====================================================================== */
+
+.gk-notification {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: var(--component-notification-gap);
+  padding: var(--component-notification-padding-top)
+    var(--component-notification-padding-right)
+    var(--component-notification-padding-bottom)
+    var(--component-notification-padding-left);
+  border-radius: var(--component-notification-borderRadius-default);
+  background: var(--_bg);
+  /* Tint the leading <Icon> with the notification icon token (Icon.css reads
+     --gk-icon-color off any ancestor). */
+  --gk-icon-color: var(--component-notification-color-icon);
+  transition: background-color 0.12s ease;
+}
+
+/* Body — icon + message, flexes to fill the row so the slot is pushed right. */
+.gk-notification__body {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--component-notification-gap);
+}
+
+.gk-notification__message {
+  color: var(--component-notification-color-message);
+  min-width: 0;
+}
+
+/* Trailing content slot — a native Figma SLOT (node 289:5308, property
+   "Content Slot"). A fixed 24x24 box that CLIPS its content. The slot's
+   slotSettings are all at defaults today (unrestricted, unlimited, no fill,
+   no preferred values); the contract is modelled by the component's slot*
+   props. --_slot-size mirrors the size variable the slot binds to in Figma. */
+.gk-notification__slot {
+  --_slot-size: 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--_slot-size);
+  height: var(--_slot-size);
+  overflow: hidden; /* Figma SLOT clipsContent: true */
+}
+
+/* stretchChildOnInsert: true (Figma "Set items to Fill container") →
+   placed items fill the slot box instead of keeping their own size. */
+.gk-notification__slot--fill > * {
+  flex: 1 0 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* displayEmptyByDefault: true keeps the empty slot box — it only reserves the
+   24x24 space (Figma shows its empty-slot affordance in-editor, not at runtime). */
+.gk-notification__slot--empty {
+  /* intentionally no visual — reserves the box */
+}
+
+/* ----------------------------------------------------------------------
+   COLOUR — background tint only. Each colour points --_bg at its token.
+   ---------------------------------------------------------------------- */
+.gk-notification--filled.gk-notification--neutral {
+  --_bg: var(--component-notification-color-bg-neutral);
+}
+.gk-notification--filled.gk-notification--info {
+  --_bg: var(--component-notification-color-bg-info);
+}
+.gk-notification--filled.gk-notification--error {
+  --_bg: var(--component-notification-color-bg-error);
+}
+.gk-notification--filled.gk-notification--success {
+  --_bg: var(--component-notification-color-bg-success);
+}
+.gk-notification--filled.gk-notification--warning {
+  --_bg: var(--component-notification-color-bg-warning);
+}

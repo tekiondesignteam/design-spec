@@ -1,0 +1,19 @@
+/* Tab - core Global Kit component.
+   1:1 with the Figma "Alloy DS BETA" Tab set (node 276-16796).
+   Axis: size lg|sm (cascades to the composed TabItems).
+
+   A PURE tablist layout wrapper. No --component-tab-* tokens exist, so the group
+   binds no design values of its own - it only lays TabItems out in a flush,
+   left-aligned horizontal row (Figma group gap 0, no padding). Every tab's
+   colour/size/border comes from the composed <TabItem> and its
+   --component-tabItem-* tokens. No hardcoded colours/sizes/fonts here. */
+.gk-tab {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Size is a cascade hook forwarded to the TabItems; the group has no
+   size-dependent styling of its own (no group-level size tokens exist). */
+.gk-tab--lg,
+.gk-tab--sm { /* intentionally empty - sizing lives on each TabItem */ }

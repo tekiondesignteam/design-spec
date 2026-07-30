@@ -1,0 +1,73 @@
+/* ======================================================================
+   Status - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Status set (node 306-11265).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours/sizes/fonts. The label typography is the DS text class
+   `text-body-regular-paragraph-md` (Figma Body/Regular/Paragraph/md), applied
+   in the JSX.
+
+   Axes (mirror the Figma variant set / property panel):
+     state -> default | hover (:hover / .gk-status--hover) | disabled
+     flag  -> handled in the JSX (dot vs flag marker)
+
+   Local indirection vars are component-internal plumbing, not tokens:
+     --_bg   background fill per state
+     --_fg   label colour per state
+   ====================================================================== */
+
+.gk-status {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--component-status-gap-default);
+  height: calc(var(--component-status-height-default) * 1px);
+  padding: var(--component-status-padding-top-default) var(--component-status-padding-right-default)
+           var(--component-status-padding-bottom-default) var(--component-status-padding-left-default);
+  border: 0;
+  border-radius: var(--component-status-borderRadius-default);
+  background: var(--_bg, var(--component-status-color-bg-default));
+  color: var(--_fg, var(--component-status-color-text-default));
+  cursor: pointer;
+  transition: background-color .12s ease, color .12s ease;
+  /* The trailing caret is a neutral, non-status glyph. */
+  --gk-caret-color: var(--semantic-color-icon-tertiary);
+}
+
+/* Inner grouping: marker + label sit together (8px), the caret is pushed to
+   the trailing edge by the root gap. */
+.gk-status__body {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gk-status__label {
+  color: var(--_fg, var(--component-status-color-text-default));
+  white-space: nowrap;
+}
+
+.gk-status__caret {
+  display: inline-flex;
+  align-items: center;
+  --gk-icon-color: var(--gk-caret-color);
+}
+
+/* ----------------------------------------------------------------------
+   STATE
+   ---------------------------------------------------------------------- */
+.gk-status:is(:hover, .gk-status--hover):not(:disabled):not(.gk-status--disabled) {
+  --_bg: var(--component-status-color-bg-hover);
+}
+
+.gk-status:is(:disabled, .gk-status--disabled) {
+  --_fg: var(--component-status-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Disabled greys the embedded StatusIcon marker and the caret. The descendant
+   selector outranks StatusIcon's own per-colour --gk-icon-color rule. */
+.gk-status:is(:disabled, .gk-status--disabled) .gk-status-icon,
+.gk-status:is(:disabled, .gk-status--disabled) .gk-status__caret {
+  --gk-icon-color: var(--semantic-color-icon-interactive-disabled);
+}

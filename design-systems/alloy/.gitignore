@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# macOS metadata
+.DS_Store
+
+# Per-developer Claude Code settings (not a shared contract)
+.claude/settings.local.json
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Editor / OS noise
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/

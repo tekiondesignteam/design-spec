@@ -1,0 +1,113 @@
+/* ======================================================================
+   Modal - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Modal (node 276-16616).
+
+   A dialog surface: Header (leading icon + title + subtitle + close button) ·
+   full-bleed content body · Footer (top divider rule + action row). Binds ONLY to
+   token custom properties from tokens/dist/ - no hardcoded colours/sizes/fonts.
+   Re-themes through the [data-brand] / [data-theme] / [data-device] cascade; the
+   component never branches on brand/theme/device.
+
+   Token surfaces:
+     surface → --component-modal-*        (bg · border · borderRadius · borderWidth)
+     header  → --component-modalHeader-*   (bg · text-primary/secondary · gap-lg/md/sm · padding)
+     footer  → --component-modalFooter-*   (bg · gap · padding)
+
+   Typography comes from the DS text-* classes on the title/subtitle elements
+   (Heading/Semibold/H6 and Body/Regular/Paragraph/lg). The fontWeight those styles
+   reference compiles to an invalid CSS weight string (the primitive weight token is
+   value-less), so - exactly as in Button.css - the numeric weight is set here (600 /
+   400) to select the correct Proxima Nova @font-face; colour is bound to the
+   modalHeader text tokens.
+   ====================================================================== */
+
+.gk-modal {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* No width token exists for Modal - the consumer/overlay constrains width; the
+     surface fills whatever box it is placed in. */
+  width: 100%;
+  background: var(--component-modal-color-bg-default);
+  border: var(--component-modal-borderWidth-default) solid var(--component-modal-color-border-default);
+  border-radius: var(--component-modal-borderRadius-default);
+}
+
+/* ---- Header --------------------------------------------------------- */
+.gk-modal__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--component-modalHeader-gap-lg);
+  padding: var(--component-modalHeader-padding-top-default) var(--component-modalHeader-padding-right-default)
+           var(--component-modalHeader-padding-bottom-default) var(--component-modalHeader-padding-left-default);
+  background: var(--component-modalHeader-color-bg-default);
+}
+.gk-modal__header-container {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: flex-start;
+  gap: var(--component-modalHeader-gap-md);
+}
+.gk-modal__leading {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.gk-modal__heading {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+  min-width: 0;
+  gap: var(--component-modalHeader-gap-sm);
+}
+.gk-modal__title {
+  margin: 0;
+  font-weight: 600; /* Heading/Semibold/H6 - see header note */
+  color: var(--component-modalHeader-color-text-primary);
+  word-break: break-word;
+}
+.gk-modal__subtitle {
+  margin: 0;
+  font-weight: 400; /* Body/Regular/Paragraph/lg - see header note */
+  color: var(--component-modalHeader-color-text-secondary);
+  word-break: break-word;
+}
+.gk-modal__close {
+  flex: none;
+}
+
+/* ---- Body ----------------------------------------------------------- */
+/* Per Figma the content slot is full-bleed (the header/footer are inset, the body is
+   edge-to-edge). No content-padding token exists; slotted content supplies its own. */
+.gk-modal__body {
+  width: 100%;
+}
+
+/* ---- Footer --------------------------------------------------------- */
+.gk-modal__footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--component-modalFooter-padding-top-default) var(--component-modalFooter-padding-right-default)
+           var(--component-modalFooter-padding-bottom-default) var(--component-modalFooter-padding-left-default);
+  background: var(--component-modalFooter-color-bg-default);
+}
+.gk-modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--component-modalFooter-gap-default);
+}
+/* Divider = the footer's top rule. Figma insets it a few px; that raw inset is not
+   tokenised, so it is bound to the footer's horizontal padding token instead of a
+   magic number - it lines up with the footer content edges. */
+.gk-modal__divider.gk-divider {
+  position: absolute;
+  top: 0;
+  left: var(--component-modalFooter-padding-left-default);
+  right: var(--component-modalFooter-padding-right-default);
+  width: auto;
+}

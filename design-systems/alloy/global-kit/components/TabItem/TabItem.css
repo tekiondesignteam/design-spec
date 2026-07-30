@@ -1,0 +1,92 @@
+/* TabItem - core Global Kit component.
+   1:1 with the Figma "Alloy DS BETA" .Tab Item set (node 276-16722, + Small set).
+   Axes: size lg|sm · state default|hover|active · selected · disabled.
+   Binds ONLY to token custom properties - no hardcoded colours/sizes/fonts.
+
+   --_fg / --_ic / --_bd / --_bw are component-internal indirection vars (text
+   colour / icon colour / bottom-border colour / bottom-border width), NOT design
+   tokens; each variant+state points them at the matching --component-tabItem-*. */
+.gk-tabitem {
+  /* defaults (Figma State=Default, Selected=False) */
+  --_bg: var(--component-tabItem-color-bg-default);
+  --_fg: var(--component-tabItem-color-text-primary-default);
+  --_ic: var(--component-tabItem-color-icon-default);
+  --_bd: var(--component-tabItem-color-border-default);
+  --_bw: var(--component-tabItem-borderWidth-default);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+  border-bottom: var(--_bw) solid var(--_bd);
+  background: var(--_bg);
+  color: var(--_fg);
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  /* expose the per-state icon token to the child <Icon> */
+  --gk-icon-color: var(--_ic);
+  transition: color .12s ease, border-color .12s ease, border-width .12s ease;
+}
+
+.gk-tabitem__content {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* the count reads in the secondary text colour regardless of state */
+.gk-tabitem__count {
+  color: var(--component-tabItem-color-text-secondary-default);
+}
+
+/* SIZE - height / padding / gap.
+   height tokens are unitless sizing primitives -> * 1px; spacing tokens carry px. */
+.gk-tabitem--lg {
+  height: calc(var(--component-tabItem-height-lg) * 1px);
+  padding: var(--component-tabItem-padding-top-lg-default)
+           var(--component-tabItem-padding-right-lg-default)
+           var(--component-tabItem-padding-bottom-lg-default)
+           var(--component-tabItem-padding-left-lg-default);
+}
+.gk-tabitem--lg .gk-tabitem__content { gap: var(--component-tabItem-gap-lg); }
+
+.gk-tabitem--sm {
+  height: calc(var(--component-tabItem-height-sm) * 1px);
+  padding: var(--component-tabItem-padding-top-sm-default)
+           var(--component-tabItem-padding-right-sm-default)
+           var(--component-tabItem-padding-bottom-sm-default)
+           var(--component-tabItem-padding-left-sm-default);
+}
+.gk-tabitem--sm .gk-tabitem__content { gap: var(--component-tabItem-gap-sm); }
+
+/* STATE - unselected interactive states (do not apply when selected or disabled) */
+.gk-tabitem:is(:hover, .gk-tabitem--hover):not(.gk-tabitem--disabled):not(.gk-tabitem--selected) {
+  --_fg: var(--component-tabItem-color-text-primary-hover);
+  --_ic: var(--component-tabItem-color-icon-hover);
+  --_bd: var(--component-tabItem-color-border-hover);
+}
+.gk-tabitem:is(:active, .gk-tabitem--pressed):not(.gk-tabitem--disabled):not(.gk-tabitem--selected) {
+  --_fg: var(--component-tabItem-color-text-primary-active);
+  --_ic: var(--component-tabItem-color-icon-active);
+  --_bd: var(--component-tabItem-color-border-active);
+}
+
+/* SELECTED - brand text + the thick brand bottom border */
+.gk-tabitem--selected {
+  --_fg: var(--component-tabItem-color-text-primary-selected);
+  --_ic: var(--component-tabItem-color-icon-selected);
+  --_bd: var(--component-tabItem-color-border-selected);
+  --_bw: var(--component-tabItem-borderWidth-selected);
+}
+
+/* DISABLED - highest precedence */
+.gk-tabitem--disabled,
+.gk-tabitem:disabled {
+  --_fg: var(--component-tabItem-color-text-primary-disabled);
+  --_ic: var(--component-tabItem-color-icon-disabled);
+  --_bd: var(--component-tabItem-color-border-disabled);
+  cursor: not-allowed;
+}

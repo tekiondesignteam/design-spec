@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkbox — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link is-active">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Checkbox</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Checkbox</h1>
+        <p class="doc-page-header__desc">
+          Checkboxes allow users to select one or more options from a set. They support three
+          visual states — <strong>Unchecked</strong>, <strong>Checked</strong>, and
+          <strong>Indeterminate</strong> — each with full interactive state coverage.
+          Always pair with a visible label or <code>aria-label</code> for accessibility.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Checkbox</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=3769-50171" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= CHECK STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Check States</h2>
+        <p class="doc-section__subtitle">Three visual states: Unchecked (empty), Checked (filled with checkmark), and Indeterminate (filled with dash — used when a parent selection is partially applied).</p>
+
+        <div class="doc-variant-grid">
+          <!-- Unchecked -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <label class="drp-checkbox-container">
+                <input type="checkbox" class="checkbox__input">
+                <span class="checkbox__box">
+                  <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="checkbox__dash"></span>
+                </span>
+              </label>
+            </div>
+            <div class="doc-variant-card__label">Unchecked</div>
+          </div>
+          <!-- Checked -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <label class="drp-checkbox-container">
+                <input type="checkbox" class="checkbox__input" checked>
+                <span class="checkbox__box">
+                  <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="checkbox__dash"></span>
+                </span>
+              </label>
+            </div>
+            <div class="doc-variant-card__label">Checked</div>
+          </div>
+          <!-- Indeterminate — cycles indeterminate → checked → unchecked → indeterminate -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <label class="drp-checkbox-container">
+                <input type="checkbox" class="checkbox__input" id="cb-indeterminate-demo">
+                <span class="checkbox__box">
+                  <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span class="checkbox__dash"></span>
+                </span>
+              </label>
+            </div>
+            <div class="doc-variant-card__label">Indeterminate</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Unchecked --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"checkbox"</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__input"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__box"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;svg</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__check"</span> <span class="hl-attr">...</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;/svg&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__dash"</span><span class="hl-tag">&gt;&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Checked --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"checkbox"</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__input"</span> <span class="hl-attr">checked</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__box"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Indeterminate (set via JS) --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"checkbox"</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__input"</span> <span class="hl-attr">id</span>=<span class="hl-val">"cb"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__box"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+<span class="hl-tag">&lt;script&gt;</span>
+  <span class="hl-text">document.getElementById('cb').indeterminate = true;</span>
+<span class="hl-tag">&lt;/script&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Interactive States</h2>
+        <p class="doc-section__subtitle">All states are shown below for each check state.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+
+          <!-- Unchecked States -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+
+                <label class="drp-checkbox-container" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Default</span>
+                </label>
+
+                <label class="drp-checkbox-container is-hovered" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Hover</span>
+                </label>
+
+                <label class="drp-checkbox-container drp-disabled" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input" disabled>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Disabled</span>
+                </label>
+
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Unchecked states</div>
+          </div>
+
+          <!-- Checked States -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+
+                <label class="drp-checkbox-container is-checked" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input" checked>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Default</span>
+                </label>
+
+                <label class="drp-checkbox-container is-checked is-hovered" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input" checked>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Hover / Pressed</span>
+                </label>
+
+                <label class="drp-checkbox-container is-checked drp-disabled" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input" checked disabled>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Disabled</span>
+                </label>
+
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Checked states</div>
+          </div>
+
+          <!-- Indeterminate States -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+
+                <label class="drp-checkbox-container is-indeterminate" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Default</span>
+                </label>
+
+                <label class="drp-checkbox-container is-indeterminate is-hovered" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Hover / Pressed</span>
+                </label>
+
+                <label class="drp-checkbox-container is-indeterminate drp-disabled" style="pointer-events:none;">
+                  <input type="checkbox" class="checkbox__input" disabled>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Disabled</span>
+                </label>
+
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Indeterminate states</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= WITH LABEL ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">With Label</h2>
+        <p class="doc-section__subtitle">The label wraps the checkbox in a <code>&lt;label&gt;</code> element, expanding the click target. Place the label before or after the control using DOM order.</p>
+
+        <div class="doc-variant-grid">
+
+          <!-- Trailing label (default) -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <label class="drp-checkbox-container">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Option label</span>
+                </label>
+                <label class="drp-checkbox-container is-checked">
+                  <input type="checkbox" class="checkbox__input" checked>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Selected option</span>
+                </label>
+                <label class="drp-checkbox-container is-indeterminate">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Partial option</span>
+                </label>
+                <label class="drp-checkbox-container drp-disabled">
+                  <input type="checkbox" class="checkbox__input" disabled>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Disabled option</span>
+                </label>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Trailing label (default)</div>
+          </div>
+
+          <!-- Leading label -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <label class="drp-checkbox-container" style="flex-direction:row-reverse;">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Option label</span>
+                </label>
+                <label class="drp-checkbox-container is-checked" style="flex-direction:row-reverse;">
+                  <input type="checkbox" class="checkbox__input" checked>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Selected option</span>
+                </label>
+                <label class="drp-checkbox-container is-indeterminate" style="flex-direction:row-reverse;">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Partial option</span>
+                </label>
+                <label class="drp-checkbox-container drp-disabled" style="flex-direction:row-reverse;">
+                  <input type="checkbox" class="checkbox__input" disabled>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Disabled option</span>
+                </label>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Leading label</div>
+          </div>
+
+          <!-- Group example -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <label class="drp-checkbox-container">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Chevrolet</span>
+                </label>
+                <label class="drp-checkbox-container is-checked">
+                  <input type="checkbox" class="checkbox__input" checked>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Buick</span>
+                </label>
+                <label class="drp-checkbox-container is-indeterminate">
+                  <input type="checkbox" class="checkbox__input">
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">GMC</span>
+                </label>
+                <label class="drp-checkbox-container drp-disabled">
+                  <input type="checkbox" class="checkbox__input" disabled>
+                  <span class="checkbox__box">
+                    <svg class="checkbox__check" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 4.5L4 7.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="checkbox__dash"></span>
+                  </span>
+                  <span class="drp-checkbox-typography-large">Cadillac</span>
+                </label>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Group example</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Trailing label (default) --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"checkbox"</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__input"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__box"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option label</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Leading label --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox"</span> <span class="hl-attr">style</span>=<span class="hl-val">"flex-direction:row-reverse"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"checkbox"</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__input"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__box"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option label</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Disabled --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"checkbox"</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__input"</span> <span class="hl-attr">disabled</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__box"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"checkbox__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option label</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span></pre>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Applied to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--checkbox-container/size</code></td><td>24px</td><td>Box width &amp; height</td></tr>
+              <tr><td><code>--checkbox-container/border-width</code></td><td>1.5px</td><td>Border thickness</td></tr>
+              <tr><td><code>--checkbox-container/border-radius</code></td><td>2px</td><td>Box corner radius</td></tr>
+              <tr><td><code>--checkbox-container/gap</code></td><td>8px</td><td>Gap between box and label</td></tr>
+              <tr><td><code>--checkbox-color-default/border-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Unchecked border</td></tr>
+              <tr><td><code>--checkbox-color-default/background-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Unchecked fill</td></tr>
+              <tr><td><code>--checkbox-color-hover/background-color</code></td><td>rgba(0,0,0,0.04)</td><td>Hover background tint</td></tr>
+              <tr><td><code>--checkbox-color-hover/border-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Hover border</td></tr>
+              <tr><td><code>--checkbox-color-checked/background-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Checked / indeterminate fill</td></tr>
+              <tr><td><code>--checkbox-color-checked/border-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Checked / indeterminate border</td></tr>
+              <tr><td><code>--checkbox-color-checked/check-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Checkmark / dash color</td></tr>
+              <tr><td><code>--checkbox-color-checked-hover/background-color</code></td><td>rgba(0,0,0,0.04)</td><td>Checked hover / pressed background tint</td></tr>
+              <tr><td><code>--checkbox-color-checked-hover/border-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Checked hover / pressed border</td></tr>
+              <tr><td><code>--checkbox-color-disabled/border-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled unchecked border</td></tr>
+              <tr><td><code>--checkbox-color-disabled-checked/background-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Disabled checked fill</td></tr>
+              <tr><td><code>--checkbox-color-disabled-checked/border-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled checked border</td></tr>
+              <tr><td><code>--checkbox-color-disabled-checked/check-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled checkmark / dash color</td></tr>
+              <tr><td><code>--checkbox-color-disabled/label-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled label text</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Always wrap the checkbox in a <code>&lt;label&gt;</code> to expand the click target and associate the label.</li>
+              <li>Use the <strong>Indeterminate</strong> state for parent checkboxes when only some children are checked.</li>
+              <li>Use the <code>disabled</code> HTML attribute for truly unavailable options so screen readers announce the state.</li>
+              <li>Group related checkboxes with a <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> for screen reader context.</li>
+              <li>Keep labels short and descriptive — users scan option lists quickly.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use a checkbox for a single binary action — use a toggle switch instead.</li>
+              <li>Don't set indeterminate state via CSS alone — set <code>element.indeterminate = true</code> in JavaScript.</li>
+              <li>Don't disable checkboxes without explaining why the option is unavailable nearby.</li>
+              <li>Don't use checkboxes for mutually exclusive options — use radio buttons instead.</li>
+              <li>Don't rely on color alone to communicate state — the checkmark and dash icons provide shape-based cues.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Set indeterminate state on any checkbox input inside .is-indeterminate (doc demo states)
+    document.querySelectorAll('.is-indeterminate .checkbox__input').forEach(function(el) {
+      el.indeterminate = true;
+    });
+
+    // Check States demo: indeterminate checkbox cycles indeterminate → checked → unchecked → indeterminate
+    var cbDemo = document.getElementById('cb-indeterminate-demo');
+    if (cbDemo) {
+      cbDemo.indeterminate = true;
+      cbDemo.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (cbDemo.indeterminate) {
+          cbDemo.indeterminate = false;
+          cbDemo.checked = true;
+        } else if (cbDemo.checked) {
+          cbDemo.checked = false;
+        } else {
+          cbDemo.indeterminate = true;
+        }
+      });
+    }
+  </script>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

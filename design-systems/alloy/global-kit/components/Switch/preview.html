@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en" data-brand="arc" data-theme="light" data-device="desktop">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Switch — Alloy DS BETA (property playground)</title>
+
+  <!-- One <link> delivers fonts + primitives + token [data-*] layers + component CSS.
+       The switch is pure CSS (class-driven) — no React/Babel needed to render it. -->
+  <link rel="stylesheet" href="../../dist/global-kit.css" />
+  <!-- Icon glyphs (Phosphor) for the optional status icon. -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+  <style>
+    :root { --panel-bg:#1e1f22; --panel-line:#33353a; --panel-label:#a0a3aa; --panel-text:#e9eaec; --panel-field:#2b2d31; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Proxima Nova", system-ui, sans-serif; color: #161616;
+           display: grid; grid-template-columns: 1fr 340px; height: 100vh; overflow: hidden; background: #F5F5F5; }
+
+    /* ---- canvas ---- */
+    .canvas { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+              gap: 22px; padding: 40px; background: #F5F5F5; overflow-y: auto;
+              transition: background-color .2s ease; }
+    .backdrop-note { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center;
+              font-size: 11px; color: #8a8d94; pointer-events: none; }
+    .stage { border-radius:8px; padding:56px 72px;
+             display:flex; align-items:center; justify-content:center; min-width:280px; }
+
+    /* ---- panel (Figma-style) ---- */
+    .panel { background: var(--panel-bg); color: var(--panel-text);
+             padding: 0 18px 40px; overflow-y:auto; border-radius: 16px; margin: 8px;
+             align-self: start; max-height: calc(100vh - 16px); }
+    .panel h2 { position:sticky; top:0; z-index:2; background:var(--panel-bg);
+             font-size:15px; margin:0 -18px 12px; padding:16px 18px 12px;
+             display:flex; align-items:center; justify-content:space-between;
+             border-bottom:1px solid var(--panel-line);
+             border-top-left-radius:16px; border-top-right-radius:16px; }
+    .vcount { font-size:11px; font-weight:500; color:var(--panel-label); background:var(--panel-field);
+             border-radius:999px; padding:2px 8px; margin-left:4px; vertical-align:middle; }
+    .panel .reset { color:var(--panel-label); font-size:16px; cursor:pointer; background:none; border:none;
+             display:inline-flex; align-items:center; padding:0; line-height:1; }
+    .panel .reset:hover { color:var(--panel-text); }
+    /* collapsible sections */
+    .section { border-top:1px solid var(--panel-line); }
+    .section > summary { list-style:none; cursor:pointer; font-size:14px; font-weight:600; color:var(--panel-text);
+             margin:0; padding:16px 0 12px; display:flex; align-items:center; justify-content:space-between; user-select:none; }
+    .section > summary::-webkit-details-marker { display:none; }
+    .section[open] > summary { margin-bottom:0; }
+    .sec-caret { font-size:14px; color:var(--panel-label); transition:transform .15s; }
+    .section:not([open]) > summary .sec-caret { transform:rotate(-90deg); }
+    .section > summary:hover .sec-caret { color:var(--panel-text); }
+    .row { display:grid; grid-template-columns: 1fr 1.25fr; align-items:center; gap:10px; margin-bottom:12px; }
+    .row label { font-size:13px; color:var(--panel-label); }
+    .row select {
+      width:100%; height:34px; font:inherit; font-size:13px; color:var(--panel-text); background:var(--panel-field);
+      border:1px solid var(--panel-line); border-radius:6px; padding:0 10px; appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a0a3aa' fill='none' stroke-width='1.3'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 10px center; }
+    /* panel toggle (chrome only — not the component under test) */
+    .switch { position:relative; display:inline-block; width:38px; height:22px; justify-self:start; }
+    .switch input { opacity:0; width:0; height:0; }
+    .track { position:absolute; inset:0; background:#4b4d52; border-radius:999px; transition:.15s; cursor:pointer; }
+    .track::before { content:""; position:absolute; width:16px; height:16px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.15s; }
+    .switch input:checked + .track { background:#4285f4; }
+    .switch input:checked + .track::before { transform:translateX(16px); }
+    /* variant gallery (shown until a variant is focused) */
+    .gallery { display:grid; gap:26px 34px; align-items:center; justify-items:center; }
+    .gcell { display:flex; flex-direction:column; align-items:center; gap:12px; cursor:pointer; }
+    .glabel { font-size:11px; color:#6d707a; text-transform:capitalize; }
+    .tok-hint { font-size:12px; color:#7f838b; line-height:1.55; }
+    /* tokens-applied list */
+    .tok { margin-bottom:11px; }
+    .tok .nm { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; color:#c7cad0; line-height:1.45; word-break:break-all; }
+    .tok .val { display:flex; align-items:center; gap:8px; margin-top:3px; }
+    .tok .sw { width:14px; height:14px; border-radius:3px; border:1px solid rgba(255,255,255,.22); flex:none; }
+    .tok .vl { font-size:11px; color:#9a9da4; }
+    .tok-sub { font-size:11px; color:#7f838b; margin:14px 0 8px; text-transform:uppercase; letter-spacing:.04em; }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="stage"><span id="mount"></span></div>
+    <div class="backdrop-note" id="backdrop-note"></div>
+  </div>
+
+  <aside class="panel">
+    <h2><span>Switch <span class="vcount" id="vcount"></span></span> <button class="reset" id="reset" title="Reset" aria-label="Reset"><i class="ph ph-arrow-counter-clockwise"></i></button></h2>
+
+    <details class="section" open style="border-top:none;">
+      <summary><span>Variable modes</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label>Brand</label>
+        <select id="m-brand"><option value="arc">ARC</option><option value="t1">T1</option></select></div>
+      <div class="row"><label>Theme</label>
+        <select id="m-theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+      <div class="row"><label>Device</label>
+        <select id="m-device"><option value="desktop">Desktop</option><option value="tablet">Tablet</option><option value="mobile">Mobile</option></select></div>
+    </details>
+
+    <details class="section" open>
+      <summary><span>Component properties</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label for="p-checked">Checked</label>
+        <label class="switch"><input type="checkbox" id="p-checked"><span class="track"></span></label></div>
+      <div class="row"><label for="p-disabled">Disabled</label>
+        <label class="switch"><input type="checkbox" id="p-disabled"><span class="track"></span></label></div>
+      <div class="row"><label for="p-icon">Show Icon</label>
+        <label class="switch"><input type="checkbox" id="p-icon"><span class="track"></span></label></div>
+      <div class="row"><label for="p-focus">Show Focus Ring</label>
+        <label class="switch"><input type="checkbox" id="p-focus"><span class="track"></span></label></div>
+    </details>
+
+    <details class="section">
+      <summary><span>Tokens applied</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div id="tokens"></div>
+    </details>
+  </aside>
+
+  <script>
+    // Preview opens as a gallery of every Checked x Disabled variant; the first
+    // panel interaction (or a click on a variant) switches to a single, fully
+    // configured variant. Reset returns to the full gallery.
+    var focused = false;
+    var LIGHT_BG = '#F5F5F5', DARK_BG = '#1E1F22';
+
+    // Build a .gk-switch purely from CSS classes (no framework) — mirrors Switch.jsx.
+    function switchHTML(checked, disabled, showIcon, focus) {
+      var cls = ['gk-switch'];
+      if (checked) cls.push('gk-switch--checked');
+      if (disabled) cls.push('gk-switch--disabled');
+      if (focus) cls.push('gk-switch--focus');
+      var icon = showIcon
+        ? '<span class="gk-switch__icon"><span class="gk-icon gk-icon--sm" aria-hidden="true">' +
+            '<span class="gk-icon__glyph"><i class="ph ph-' + (checked ? 'check' : 'x') + '"></i></span></span></span>'
+        : '';
+      return '<button type="button" role="switch" aria-checked="' + checked + '"' + (disabled ? ' disabled' : '') +
+             ' class="' + cls.join(' ') + '">' +
+               '<span class="gk-switch__track">' + icon + '<span class="gk-switch__thumb"></span></span>' +
+             '</button>';
+    }
+
+    function render() {
+      if (!focused) { renderGallery(); return; }
+      var checked = document.getElementById('p-checked').checked;
+      var disabled = document.getElementById('p-disabled').checked;
+      var showIcon = document.getElementById('p-icon').checked;
+      var focus = document.getElementById('p-focus').checked;
+      document.getElementById('mount').innerHTML = switchHTML(checked, disabled, showIcon, focus);
+      renderTokens(checked, disabled, showIcon);
+      applyBackdrop();
+    }
+
+    // Gallery = the four Checked x Disabled variants, shown until the user
+    // interacts with the panel or clicks a variant to focus it. Show Icon /
+    // Show Focus Ring from the panel are reflected in the tiles.
+    function renderGallery() {
+      var showIcon = document.getElementById('p-icon').checked;
+      var focus = document.getElementById('p-focus').checked;
+      var combos = [
+        { c:false, d:false, label:'off' },
+        { c:true,  d:false, label:'on' },
+        { c:false, d:true,  label:'off · disabled' },
+        { c:true,  d:true,  label:'on · disabled' }
+      ];
+      var html = '<div class="gallery" style="grid-template-columns:repeat(2,auto)">';
+      combos.forEach(function (v) {
+        html += '<div class="gcell" data-checked="' + v.c + '" data-disabled="' + v.d + '">' +
+                  switchHTML(v.c, v.d, showIcon, focus) +
+                  '<div class="glabel">' + v.label + '</div></div>';
+      });
+      html += '</div>';
+      document.getElementById('mount').innerHTML = html;
+      document.getElementById('vcount').textContent = '4 variants';
+      document.getElementById('tokens').innerHTML =
+        '<div class="tok-hint">Interact with the panel — or click a variant — to inspect a single variant and its applied tokens.</div>';
+      document.body.style.background = LIGHT_BG;
+      document.querySelector('.canvas').style.background = LIGHT_BG;
+      document.getElementById('backdrop-note').textContent = '';
+    }
+    function focusRender() { focused = true; render(); }
+
+    // ---- A11y backdrop guard --------------------------------------------
+    // Silhouette colour = the track fill. If it fails WCAG 3:1 against the light
+    // canvas and dark reads better, flip canvas + body to dark so the variant
+    // never disappears into the backdrop (the off track is a light grey).
+    function parseColor(str) {
+      if (!str) return null;
+      str = str.trim();
+      if (str[0] === '#') {
+        var h = str.slice(1);
+        if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+        return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16), a: 1 };
+      }
+      var m = str.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      var p = m[1].split(/[,\s/]+/).map(parseFloat);
+      return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+    }
+    function luminance(c) {
+      var a = [c.r, c.g, c.b].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+      return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+    function contrast(c1, c2) {
+      if (!c1 || !c2) return 21;
+      var l1 = luminance(c1), l2 = luminance(c2);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+    function applyBackdrop() {
+      var track = document.querySelector('#mount .gk-switch__track');
+      var note = document.getElementById('backdrop-note');
+      if (!track) return;
+      var rep = parseColor(getComputedStyle(track).backgroundColor);
+      var cLight = contrast(rep, parseColor(LIGHT_BG));
+      var cDark = contrast(rep, parseColor(DARK_BG));
+      var chosen = cLight >= 3 ? LIGHT_BG : (cDark > cLight ? DARK_BG : LIGHT_BG);
+      document.body.style.background = chosen;
+      document.querySelector('.canvas').style.background = chosen;
+      note.textContent = chosen === DARK_BG
+        ? 'Canvas auto-switched to dark — track fails 3:1 contrast on light'
+        : '';
+    }
+
+    // Reflect the tokens applied to the rendered variant. Values are read from
+    // the element's REAL computed style (guaranteed resolved) and paired with the
+    // design token name each property binds to in Switch.css.
+    var COLOR_RE = /^(#|rgb|hsl)/i;
+    function tokenRow(name, value) {
+      var v = (value || '').trim() || '—';
+      var swatch = COLOR_RE.test(v) ? '<span class="sw" style="background:' + v + '"></span>' : '';
+      return '<div class="tok"><div class="nm">' + name + '</div>' +
+             '<div class="val">' + swatch + '<span class="vl">' + v + '</span></div></div>';
+    }
+    function renderTokens(checked, disabled, showIcon) {
+      var box = document.getElementById('tokens');
+      var track = document.querySelector('#mount .gk-switch__track');
+      var thumb = document.querySelector('#mount .gk-switch__thumb');
+      if (!track) { box.innerHTML = ''; return; }
+      var st = getComputedStyle(track);
+      var th = thumb ? getComputedStyle(thumb) : null;
+      var onoff = checked ? 'on' : 'off';
+      var state = disabled ? 'disabled' : 'default';
+
+      var colours = [
+        ['--component-switch-color-bg-track-' + onoff + '-' + state, st.backgroundColor],
+        ['--component-switch-color-bg-thumb-' + onoff + '-' + state, th ? th.backgroundColor : '']
+      ];
+      if (showIcon) {
+        var ic = document.querySelector('#mount .gk-switch__icon .gk-icon');
+        colours.push(['--component-switch-color-icon-' + onoff + '-' + state, ic ? getComputedStyle(ic).color : '']);
+      }
+      var geo = [
+        ['--component-switch-width-default / height-default', st.width + ' × ' + st.height],
+        ['--component-switch-borderRadius-track', st.borderTopLeftRadius],
+        ['--component-switch-height-thumb', th ? th.width : ''],
+        ['--component-switch-borderRadius-thumb', th ? th.borderTopLeftRadius : '']
+      ];
+
+      box.innerHTML =
+        '<div class="tok-sub">Colour · ' + onoff + ' · ' + state + '</div>' +
+        colours.map(function (r) { return tokenRow(r[0], r[1]); }).join('') +
+        '<div class="tok-sub">Geometry</div>' +
+        geo.map(function (r) { return tokenRow(r[0], r[1]); }).join('');
+    }
+
+    function applyModes() {
+      document.documentElement.setAttribute('data-brand', document.getElementById('m-brand').value);
+      document.documentElement.setAttribute('data-theme', document.getElementById('m-theme').value);
+      document.documentElement.setAttribute('data-device', document.getElementById('m-device').value);
+      render();
+    }
+
+    // Any component-property change focuses a single variant.
+    ['p-checked','p-disabled','p-icon','p-focus'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', focusRender);
+    });
+    // Variable modes re-theme whatever is shown (gallery stays gallery).
+    ['m-brand','m-theme','m-device'].forEach(function (id) {
+      document.getElementById(id).addEventListener('change', applyModes);
+    });
+
+    // Click a gallery tile → set the panel to that variant and focus it.
+    document.getElementById('mount').addEventListener('click', function (e) {
+      var cell = e.target.closest && e.target.closest('.gcell');
+      if (!cell) return;
+      document.getElementById('p-checked').checked = cell.dataset.checked === 'true';
+      document.getElementById('p-disabled').checked = cell.dataset.disabled === 'true';
+      focusRender();
+    });
+
+    document.getElementById('reset').addEventListener('click', function () {
+      ['p-checked','p-disabled','p-icon','p-focus'].forEach(function (id) {
+        document.getElementById(id).checked = false;
+      });
+      focused = false;   // reset returns to the full variant gallery
+      render();
+    });
+
+    applyModes();
+  </script>
+</body>
+</html>

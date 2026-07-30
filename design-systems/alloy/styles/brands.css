@@ -1,0 +1,1243 @@
+/* =============================================================================
+   DRP Design System — Multi-Brand Overrides
+   Applied via [data-brand="..."] on <html>
+   Chevrolet is the base — tokens.css holds the default values.
+   Brand palette vars mirror Figma "core/brand/color" variable collection.
+   Component overrides reference palette vars for single-source-of-truth updates.
+   ============================================================================= */
+
+/* ============================================================
+   CHEVROLET — palette vars only (component defaults are in tokens.css)
+   ============================================================ */
+[data-brand="chevrolet"] {
+  /* === Brand Palette (Figma: core/brand/color) === */
+  --brand-color:           #0077D9;
+  --brand-color-hover:     #0E4180;
+  --brand-color-secondary: #F25130;
+  --brand-grey-900:        #1A1A1A;
+  --brand-grey-800:        #262626;
+  --brand-button-disabled: #C3CFD9;
+}
+
+/* ============================================================
+   BUICK — orange #D44400, softer 4px radius
+   Figma: core/brand/color — brand=#D44400, button-hover=#D44400 (same)
+   ============================================================ */
+[data-brand="buick"] {
+  /* === Brand Palette (Figma: core/brand/color) === */
+  --brand-color:           #D44400;
+  --brand-color-hover:     #D44400;
+  --brand-color-secondary: #FE5000;
+  --brand-grey-900:        #222222;
+  --brand-grey-800:        #333333;
+  --brand-button-disabled: #DCB9B9;
+  /* Primary button — filled
+     Figma: charcoal grey bg (#333), NOT brand orange.
+     Brand orange only appears on plain/link CTAs. */
+  --button-contained-color-primary-filled-background-color:         #333333;
+  --button-contained-color-primary-filled-color:                    #ffffff;
+  --button-contained-color-primary-filled-hover-background-color:   #6f6f6d;
+  --button-contained-color-primary-filled-hover-color:              #ffffff;
+  --button-contained-color-primary-filled-active-background-color:  #6f6f6d;
+  --button-contained-color-primary-filled-active-color:             #ffffff;
+  --button-contained-color-primary-filled-disabled-background-color: #d7d5d3;
+  --button-contained-color-primary-filled-disabled-color:           #ffffff;
+  /* Primary button — outlined
+     Figma: subtle light grey bg (#f6f5f4), charcoal border (#333), dark text (#222).
+     Hover fills with mid-grey (#d7d5d3), keeps dark text — NOT white. */
+  --button-contained-color-primary-outlined-background-color:       #f6f5f4;
+  --button-contained-color-primary-outlined-border-color:           #333333;
+  --button-contained-color-primary-outlined-color:                  #222222;
+  --button-contained-color-primary-outlined-hover-background-color: #d7d5d3;
+  --button-contained-color-primary-outlined-hover-border-color:     #333333;
+  --button-contained-color-primary-outlined-hover-color:            #222222;
+  --button-contained-color-primary-outlined-active-background-color: #d7d5d3;
+  --button-contained-color-primary-outlined-active-border-color:    #333333;
+  --button-contained-color-primary-outlined-active-color:           #222222;
+  --button-contained-color-primary-outlined-disabled-border-color:  #a7a6a4;
+  --button-contained-color-primary-outlined-disabled-color:         #a7a6a4;
+  /* Primary button — plain: brand orange (#d44400) */
+  --button-contained-color-primary-plain-color:                     var(--brand-color);
+  --button-contained-color-primary-plain-hover-color:               var(--brand-color);
+  --button-contained-color-primary-plain-active-color:              var(--brand-color);
+  --button-contained-color-primary-plain-disabled-color:            #a7a6a4;
+  /* Inline / link button: brand orange */
+  --button-link-color-primary-color:                                var(--brand-color);
+  --button-link-color-primary-hover-color:                          var(--brand-color);
+  --button-link-color-primary-active-color:                         var(--brand-color);
+  --button-link-color-primary-disabled-color:                       #a7a6a4;
+  /* Global accent tokens */
+  --focus-ring-color:                                               var(--brand-color);
+  --link-color-primary:                                             var(--brand-color);
+  --link-color-primary-hover:                                       var(--brand-color);
+  --breadcrumb-typography-small-default-color:                      #6f6f6d;
+  --breadcrumb-typography-small-default-hover-color:                var(--brand-color);
+  --breadcrumb-typography-small-default-active-color:               var(--brand-color);
+  --breadcrumb-typography-small-default-disabled-color:             #a7a6a4;
+  --breadcrumb-typography-small-selected-color:                     #222222;
+  --accordion-color-text-default:                                   #474747;
+  --accordion-color-text-hover:                                     #222222;
+  --accordion-color-text-active:                                    #222222;
+  --accordion-color-text-disabled:                                  #a7a6a4;
+  --accordion-color-border:                                         #a7a6a4;
+  --accordion-typography-label-font-size:                           18px;
+  --accordion-typography-label-line-height:                         25px;
+  --slider-fill-color:                                              var(--brand-color);
+  --tabs-border-selected:                                           var(--brand-color);
+  --tabs-text-selected:                                             var(--brand-color);
+  /* Tabs — unselected tabs sit on warm off-white, selected tab stays white (Figma node 20401:45845) */
+  --tabs-bg-unselected:                                             #f6f5f4;
+  --tabs-bg-selected:                                               #ffffff;
+  /* Toggle Button Group — Buick uses charcoal for selected (same rationale as primary button) */
+  --toggle-bg-selected:                                             #333333;
+  --toggle-border-selected:                                         #333333;
+  --toggle-border-hover:                                            #333333;
+  --toggle-text-hover:                                              #222222;
+  --toggle-font-family:                                             'Buick_Text', sans-serif;
+  --toggle-font-weight:                                             500;
+  /* Quick Filter — Buick uses Buick_Text body and the charcoal selected accent that matches
+     Toggle Button (Buick reserves the brand orange for primary CTAs, not in-content selection). */
+  --quick-filter-font-family:                                       'Buick_Text', sans-serif;
+  --quick-filter-border-color-selected:                             #333333;
+  --quick-filter-text-color-selected:                               #333333;
+  /* Avatar + Notification — Buick charcoal badge, Buick_Text bold */
+  --notification-badge-bg:                                          #333333;
+  --avatar-initials-font-family:                                    'Buick_Text:Bold', sans-serif;
+  --notification-badge-font-family:                                 'Buick_Text:Bold', sans-serif;
+  --stepper-border-active:                                          var(--brand-color);
+  --stepper-badge-bg:                                               var(--brand-color);
+  --menu-tick-color:                                                var(--brand-color);
+  /* Checkbox — Buick charcoal (#333) for checked/indeterminate (Figma-confirmed); muted gray (#a7a6a4) disabled */
+  --checkbox-color-border-default:     #333333;
+  --checkbox-color-checked-bg:         #333333;
+  --checkbox-color-checked-border:     transparent;
+  --checkbox-color-checked-icon:       #ffffff;
+  --checkbox-color-indeterminate-dash: #333333;
+  --checkbox-color-disabled-border:    #a7a6a4;
+  --checkbox-color-disabled-bg:        #ffffff;
+  --checkbox-color-disabled-icon:      #a7a6a4;
+  --checkbox-color-text:               #222222;
+  /* Shape — inherits 8px default from tokens.css (Figma-confirmed: Buick = 8px, same as base) */
+  --focus-ring-radius-btn: 12px;
+  /* Font — Buick Text (Figma-confirmed: Medium=button/tab/heading, SemiBold=selected/title, Regular=body) */
+  /* Buttons */
+  --button-contained-typography-small-font-family: 'Buick_Text', sans-serif;
+  --button-contained-typography-medium-font-family: 'Buick_Text', sans-serif;
+  --button-contained-typography-large-font-family: 'Buick_Text', sans-serif;
+  --button-contained-typography-small-font-weight: 500;
+  --button-contained-typography-medium-font-weight: 500;
+  --button-contained-typography-large-font-weight: 500;
+  --button-contained-typography-small-font-size: 14px;
+  --button-contained-typography-medium-font-size: 16px;
+  --button-contained-typography-large-font-size: 18px;
+  --button-contained-typography-small-line-height: 20px;
+  --button-contained-typography-medium-line-height: 22px;
+  --button-contained-typography-large-line-height: 25px;
+  --button-link-typography-small-font-family: 'Buick_Text', sans-serif;
+  --button-link-typography-medium-font-family: 'Buick_Text', sans-serif;
+  --button-link-typography-large-font-family: 'Buick_Text', sans-serif;
+  --button-link-typography-small-font-weight: 400;
+  --button-link-typography-medium-font-weight: 400;
+  --button-link-typography-large-font-weight: 400;
+  --button-link-typography-small-font-size: 14px;
+  --button-link-typography-medium-font-size: 16px;
+  --button-link-typography-large-font-size: 18px;
+  --button-link-typography-small-line-height: 20px;
+  --button-link-typography-medium-line-height: 22px;
+  --button-link-typography-large-line-height: 25px;
+  /* Tabs — Buick Text Medium (Figma node 19962:6163: font-weight=Medium/500, mixed case) */
+  --tab-contained-typography-large-font-family: 'Buick_Text', sans-serif;
+  --tab-contained-typography-selected-large-font-family: 'Buick_Text', sans-serif;
+  --tab-contained-typography-font-weight: 500;
+  /* Underlined tabs — same font family/weight as contained */
+  --tab-underlined-font-family: 'Buick_Text', sans-serif;
+  --tab-underlined-font-weight: 500;
+  /* Breadcrumb — Medium for links, SemiBold for current page, 14px (Figma-confirmed) */
+  --breadcrumb-typography-small-default-font-family:  'Buick_Text:Medium', sans-serif;
+  --breadcrumb-typography-small-selected-font-family: 'Buick_Text:SemiBold', sans-serif;
+  --breadcrumb-typography-small-default-font-size:    12px;
+  --breadcrumb-typography-small-selected-font-size:   12px;
+  /* Checkbox & Radio */
+  --checkbox-typography-small-font-family: 'Buick_Text', sans-serif;
+  --checkbox-typography-large-font-family: 'Buick_Text', sans-serif;
+  --radio-typography-small-font-family: 'Buick_Text', sans-serif;
+  --radio-typography-large-font-family: 'Buick_Text', sans-serif;
+  /* Slider — Figma node 20399:5906 */
+  --slider-track-bg:                     #b3b3b3;
+  --slider-thumb-border-color:           var(--brand-color);
+  --slider-thumb-border-width:           1px;
+  --slider-thumb-hover-shadow:           rgba(212,68,0,0.12);
+  --slider-disabled-handle-bg:           #b3b3b3;
+  --slider-disabled-border:              #e6e6e6;
+  --slider-label-color:                  #262626;
+  --slider-minmax-color:                 #666666;
+  --slider-typography-title-font-family: 'Buick_Text', sans-serif;
+  --slider-typography-title-font-size:   16px;
+  --slider-typography-title-line-height: 24px;
+  --slider-typography-range-font-family: 'Buick_Text', sans-serif;
+  --slider-typography-input-font-family: 'Buick_Text', sans-serif;
+  /* Switch */
+  --switch-typography-small-font-family: 'Buick_Text', sans-serif;
+  --switch-typography-large-font-family: 'Buick_Text', sans-serif;
+  /* Link */
+  --link-typography-small-font-family: 'Buick_Text', sans-serif;
+  --link-typography-medium-font-family: 'Buick_Text', sans-serif;
+  --link-typography-large-font-family: 'Buick_Text', sans-serif;
+  --link-typography-small-font-weight: 400;
+  --link-typography-medium-font-weight: 400;
+  --link-typography-large-font-weight: 400;
+  --link-typography-small-font-size: 14px;
+  --link-typography-medium-font-size: 16px;
+  --link-typography-large-font-size: 18px;
+  --link-typography-small-line-height: 20px;
+  --link-typography-medium-line-height: 22px;
+  --link-typography-large-line-height: 25px;
+  /* Text Input */
+  --input-standard-outlined-typography-font-family: 'Buick_Text', sans-serif;
+  /* Accordion */
+  --accordion-typography-label-font-family: 'Buick_Text', sans-serif;
+  --accordion-typography-body-font-family: 'Buick_Text', sans-serif;
+  /* Stepper */
+  --stepper-font-family: 'Buick_Text', sans-serif;
+  --stepper-badge-font-family: 'Buick_Text', sans-serif;
+  /* Menu — Buick_Text Regular for default, Bold for selected, Medium for section headers */
+  --menu-font-family: 'Buick_Text:Regular', sans-serif;
+  --menu-font-family-selected: 'Buick_Text:Bold', sans-serif;
+  --menu-font-size: 16px;
+  --menu-header-size: 14px;
+  --menu-text: #222222;
+  --menu-text-disabled: #a7a6a4;
+  --menu-border: #d7d5d3;
+  --menu-item-bg-hover: #efedea;
+  --menu-item-bg-selected: #efedea;
+  /* Tooltip — Buick Text Regular, dark #222 bg (Figma node 20408:94910) */
+  --tooltip-bg:                 #222222;
+  --tooltip-body-font-family:   'Buick_Text', sans-serif;
+  --tooltip-body-font-weight:   400;
+  --tooltip-body-font-size:     16px;
+  --tooltip-title-font-family:  'Buick_Text:Bold', sans-serif;
+  --tooltip-title-font-weight:  700;
+  /* Chip — Buick Text, larger sizing (14/16 vs 12/14), warm grey neutrals, brand orange primary.
+     Figma node 20408:95127 — body/chip/* + component-typography/chip/* */
+  --chip-font-small-family: 'Buick_Text:Medium', sans-serif;
+  --chip-font-large-family: 'Buick_Text:Bold', sans-serif;
+  --chip-font-small-size: 14px;
+  --chip-font-large-size: 16px;
+  /* Selectable */
+  --chip-selectable-text-default:             #6f6f6d;
+  --chip-selectable-border-default:           #d7d5d3;
+  --chip-selectable-bg-hover:                 #efedea;
+  --chip-selectable-border-hover:             #a7a6a4;
+  --chip-selectable-text-hover:               #222222;
+  --chip-selectable-bg-active:                #efedea;
+  --chip-selectable-border-active:            #333333;
+  --chip-selectable-text-active:              #222222;
+  --chip-selectable-text-disabled:            #a7a6a4;
+  --chip-selectable-border-disabled:          #dcb9b9;
+  --chip-selectable-bg-selected:              #222222;
+  --chip-selectable-bg-selected-disabled:     #dcb9b9;
+  --chip-selectable-border-selected-disabled: #dcb9b9;
+  --chip-selectable-text-selected-disabled:   #a7a6a4;
+  /* Dismissable */
+  --chip-dismissable-text-default:     #222222;
+  --chip-dismissable-border-default:   #d7d5d3;
+  --chip-dismissable-bg-hover:         #efedea;
+  --chip-dismissable-border-hover:     #a7a6a4;
+  --chip-dismissable-text-hover:       #222222;
+  --chip-dismissable-bg-active:        #efedea;
+  --chip-dismissable-border-active:    #333333;
+  --chip-dismissable-text-active:      #222222;
+  --chip-dismissable-text-disabled:    #a7a6a4;
+  --chip-dismissable-border-disabled:  #dcb9b9;
+  /* Plain */
+  --chip-plain-text-primary:  #d44400;
+  --chip-plain-text-success:  #0a7305;
+  --chip-plain-text-warning:  #b3842d;
+  --chip-plain-text-error:    #b50000;
+  --chip-plain-text-grey:     #474747;
+  /* Information — subtle (warm cream primary tint, not orange) */
+  --chip-info-subtle-bg-primary:   #f6f5f4;
+  --chip-info-subtle-text-primary: #d44400;
+  --chip-info-subtle-bg-success:   #ddead9;
+  --chip-info-subtle-text-success: #0a7305;
+  --chip-info-subtle-bg-warning:   #fff9ee;
+  --chip-info-subtle-text-warning: #b3842d;
+  --chip-info-subtle-bg-error:     #fbded6;
+  --chip-info-subtle-text-error:   #b50000;
+  --chip-info-subtle-bg-grey:      #efedea;
+  --chip-info-subtle-text-grey:    #222222;
+  /* Information — emphasis */
+  --chip-info-emphasis-bg-primary:   #d44400;
+  --chip-info-emphasis-text-primary: #ffffff;
+  --chip-info-emphasis-bg-success:   #0a7305;
+  --chip-info-emphasis-text-success: #ffffff;
+  --chip-info-emphasis-bg-warning:   #b3842d;
+  --chip-info-emphasis-text-warning: #222222;
+  --chip-info-emphasis-bg-error:     #b50000;
+  --chip-info-emphasis-text-error:   #ffffff;
+  --chip-info-emphasis-bg-grey:      #222222;
+  --chip-info-emphasis-text-grey:    #ffffff;
+}
+
+
+/* ============================================================
+   GMC — Red #CC0000, sharp 0 radius
+   Figma: core/brand/color — brand=#CC0000, button-hover=#CC0000 (same)
+   ============================================================ */
+[data-brand="gmc"] {
+  /* === Brand Palette (Figma: core/brand/color) === */
+  --brand-color:           #CC0000;
+  --brand-color-hover:     #CC0000;
+  --brand-color-secondary: #E60000;
+  --brand-grey-900:        #060505;
+  --brand-grey-800:        #25282A;
+  --brand-button-disabled: #DCB9B9;
+  /* Primary button — filled
+     Figma (GMC mode): white bg + red border at rest; fills red on hover/pressed.
+     NOT a simple filled-with-brand-color button. */
+  --button-contained-color-primary-filled-background-color:         #ffffff;
+  --button-contained-color-primary-filled-border-color:             #CC0000;
+  --button-contained-color-primary-filled-color:                    #060505;
+  --button-contained-color-primary-filled-hover-background-color:   #CC0000;
+  --button-contained-color-primary-filled-hover-border-color:       transparent;
+  --button-contained-color-primary-filled-hover-color:              #ffffff;
+  --button-contained-color-primary-filled-active-background-color:  #CC0000;
+  --button-contained-color-primary-filled-active-border-color:      transparent;
+  --button-contained-color-primary-filled-active-color:             #ffffff;
+  --button-contained-color-primary-filled-disabled-background-color: transparent;
+  --button-contained-color-primary-filled-disabled-border-color:    #929495;
+  --button-contained-color-primary-filled-disabled-color:           #929495;
+  /* Primary button — outlined
+     Figma: transparent bg + near-black border/text; hover fills near-black (#25282a) + white text */
+  --button-contained-color-primary-outlined-background-color:       transparent;
+  --button-contained-color-primary-outlined-border-color:           #060505;
+  --button-contained-color-primary-outlined-color:                  #060505;
+  --button-contained-color-primary-outlined-hover-background-color: #25282A;
+  --button-contained-color-primary-outlined-hover-border-color:     transparent;
+  --button-contained-color-primary-outlined-hover-color:            #ffffff;
+  --button-contained-color-primary-outlined-active-background-color: #25282A;
+  --button-contained-color-primary-outlined-active-border-color:    #060505;
+  --button-contained-color-primary-outlined-active-color:           #ffffff;
+  --button-contained-color-primary-outlined-disabled-border-color:  #929495;
+  --button-contained-color-primary-outlined-disabled-color:         #929495;
+  /* Primary button — plain: red → near-black hover → darkest pressed */
+  --button-contained-color-primary-plain-color:                     #CC0000;
+  --button-contained-color-primary-plain-hover-color:               #25282A;
+  --button-contained-color-primary-plain-active-color:              #060505;
+  --button-contained-color-primary-plain-disabled-color:            #929495;
+  /* Inline / link button: same as plain */
+  --button-link-color-primary-color:                                #CC0000;
+  --button-link-color-primary-hover-color:                          #25282A;
+  --button-link-color-primary-active-color:                         #060505;
+  --button-link-color-primary-disabled-color:                       #929495;
+  /* Global accent tokens */
+  --focus-ring-color:                                              var(--brand-color);
+  --link-color-primary:                                            var(--brand-color);
+  --link-color-primary-hover:                                      var(--brand-color-hover);
+  --breadcrumb-typography-small-default-color:                     #66696a;
+  --breadcrumb-typography-small-default-hover-color:               var(--brand-color);
+  --breadcrumb-typography-small-default-active-color:              var(--brand-color);
+  --breadcrumb-typography-small-default-disabled-color:            #c8c8c8;
+  --breadcrumb-typography-small-selected-color:                    #060505;
+  --accordion-color-text-default:                                  #ffffff;
+  --accordion-color-text-hover:                                    #ffffff;
+  --accordion-color-text-active:                                   #ffffff;
+  --accordion-color-text-disabled:                                 #6b6d6e;
+  --accordion-color-border:                                        #c8c8c8;
+  --accordion-typography-label-font-size:                          18px;
+  --accordion-typography-label-line-height:                        25px;
+  --slider-fill-color:                                             var(--brand-color);
+  /* Tabs — GMC Figma (node 20401:45845): selected tab uses near-black border + text, only the underline is brand red; sharp corners */
+  --tabs-border-selected:                                          #060505;
+  --tabs-text-selected:                                            #060505;
+  --tabs-underline-color:                                          var(--brand-color);
+  --tabs-radius:                                                   0;
+  /* Toggle Button Group — red selected, sharp corners, uppercase StratumGMC */
+  --toggle-bg-selected:                                            var(--brand-color);
+  --toggle-border-selected:                                        var(--brand-color);
+  --toggle-border-hover:                                           var(--brand-color);
+  --toggle-text-hover:                                             #060505;
+  --toggle-radius:                                                 0;
+  --toggle-font-family:                                            'StratumGMC', sans-serif;
+  --toggle-font-weight:                                            700;
+  --toggle-text-transform:                                         uppercase;
+  --toggle-letter-spacing:                                         0.08em;
+  /* Quick Filter — GMC flattens radius and uppercases labels (mirrors Toggle Button).
+     Selected uses near-black instead of brand red (gmc.com convention — brand red is reserved
+     for primary CTAs and the slider track, not in-content filter selection). */
+  --quick-filter-radius:                                           0;
+  --quick-filter-font-family:                                      'StratumGMC', sans-serif;
+  --quick-filter-font-weight:                                      700;
+  --quick-filter-text-transform:                                   uppercase;
+  --quick-filter-letter-spacing:                                   0.08em;
+  --quick-filter-border-color-selected:                            #1a1a1a;
+  --quick-filter-text-color-selected:                              #1a1a1a;
+  /* Avatar + Notification — GMC near-black badge, StratumGMC bold */
+  --notification-badge-bg:                                         #25282A;
+  --avatar-initials-font-family:                                   'StratumGMC:Bold', sans-serif;
+  --notification-badge-font-family:                                'StratumGMC:Bold', sans-serif;
+  --stepper-border-active:                                         var(--brand-color);
+  --stepper-badge-bg:                                              var(--brand-color);
+  --menu-tick-color:                                               var(--brand-color);
+  /* Checkbox — GMC near-black (#060505) for checked/indeterminate (Figma-confirmed); sharp corners */
+  --checkbox-container-border-radius:  0;
+  --checkbox-color-border-default:     #25282A;
+  --checkbox-color-checked-bg:         #060505;
+  --checkbox-color-checked-border:     transparent;
+  --checkbox-color-checked-icon:       #ffffff;
+  --checkbox-color-indeterminate-dash: #060505;
+  --checkbox-color-disabled-border:    #929495;
+  --checkbox-color-disabled-bg:        #ffffff;
+  --checkbox-color-disabled-icon:      #929495;
+  --checkbox-color-text:               #060505;
+  /* Shape — sharp corners */
+  --button-contained-container-bg-small-border-radius: 0;
+  --button-contained-container-bg-medium-border-radius: 0;
+  --button-contained-container-bg-large-border-radius: 0;
+  --button-contained-icon-container-rect-bg-small-border-radius: 0;
+  --button-contained-icon-container-rect-bg-medium-border-radius: 0;
+  --button-contained-icon-container-rect-bg-large-border-radius: 0;
+  --tab-contained-container-bg-border-radius: 0;
+  --menu-radius: 0;
+  --focus-ring-radius-btn: 4px;
+  --focus-ring-radius-rect: 2px;
+  /* Font — StratumGMC (Figma: Black=bold, Regular=body) */
+  /* Buttons */
+  --button-contained-typography-small-font-family: 'StratumGMC', sans-serif;
+  --button-contained-typography-medium-font-family: 'StratumGMC', sans-serif;
+  --button-contained-typography-large-font-family: 'StratumGMC', sans-serif;
+  --button-contained-typography-small-font-weight: 500;
+  --button-contained-typography-medium-font-weight: 500;
+  --button-contained-typography-large-font-weight: 500;
+  --button-contained-typography-small-font-size: 14px;
+  --button-contained-typography-medium-font-size: 16px;
+  --button-contained-typography-large-font-size: 18px;
+  --button-contained-typography-small-line-height: 20px;
+  --button-contained-typography-medium-line-height: 22px;
+  --button-contained-typography-large-line-height: 25px;
+  --button-contained-typography-small-text-transform: uppercase;
+  --button-contained-typography-medium-text-transform: uppercase;
+  --button-contained-typography-large-text-transform: uppercase;
+  --button-link-typography-small-font-family: 'StratumGMC', sans-serif;
+  --button-link-typography-medium-font-family: 'StratumGMC', sans-serif;
+  --button-link-typography-large-font-family: 'StratumGMC', sans-serif;
+  --button-link-typography-small-font-weight: 400;
+  --button-link-typography-medium-font-weight: 400;
+  --button-link-typography-large-font-weight: 400;
+  --button-link-typography-small-font-size: 14px;
+  --button-link-typography-medium-font-size: 16px;
+  --button-link-typography-large-font-size: 18px;
+  --button-link-typography-small-line-height: 20px;
+  --button-link-typography-medium-line-height: 22px;
+  --button-link-typography-large-line-height: 25px;
+  --button-link-typography-small-text-transform: uppercase;
+  --button-link-typography-medium-text-transform: uppercase;
+  --button-link-typography-large-text-transform: uppercase;
+  /* Tabs — StratumGMC Bold, ALL CAPS (Figma node 19962:6179: font-weight=Bold/700, uppercase) */
+  --tab-contained-typography-large-font-family: 'StratumGMC', sans-serif;
+  --tab-contained-typography-selected-large-font-family: 'StratumGMC', sans-serif;
+  --tab-contained-typography-text-transform: uppercase;
+  /* Underlined tabs — same font family/transform as contained; selected text stays charcoal, underline is brand red */
+  --tab-underlined-font-family: 'StratumGMC', sans-serif;
+  --tab-underlined-text-transform: uppercase;
+  --tab-underlined-text-selected-inside: #060505;
+  /* Breadcrumb — Medium for links, Bold for current page, 12px */
+  --breadcrumb-typography-small-default-font-family:  'StratumGMC:Medium', sans-serif;
+  --breadcrumb-typography-small-selected-font-family: 'StratumGMC:Bold', sans-serif;
+  --breadcrumb-typography-small-default-font-size:    12px;
+  --breadcrumb-typography-small-selected-font-size:   12px;
+  /* Checkbox & Radio */
+  --checkbox-typography-small-font-family: 'StratumGMC', sans-serif;
+  --checkbox-typography-large-font-family: 'StratumGMC', sans-serif;
+  --radio-typography-small-font-family: 'StratumGMC', sans-serif;
+  --radio-typography-large-font-family: 'StratumGMC', sans-serif;
+  /* Slider — Figma node 20399:5906 */
+  --slider-track-bg:                     #b3b3b3;
+  --slider-thumb-border-color:           var(--brand-color);
+  --slider-thumb-border-width:           1px;
+  --slider-thumb-hover-shadow:           rgba(204,0,0,0.12);
+  --slider-disabled-handle-bg:           #b3b3b3;
+  --slider-disabled-border:              #e6e6e6;
+  --slider-label-color:                  #262626;
+  --slider-minmax-color:                 #666666;
+  --slider-typography-title-font-family: 'StratumGMC', sans-serif;
+  --slider-typography-title-font-size:   16px;
+  --slider-typography-title-line-height: 24px;
+  --slider-typography-range-font-family: 'StratumGMC', sans-serif;
+  --slider-typography-input-font-family: 'StratumGMC', sans-serif;
+  /* Switch */
+  --switch-typography-small-font-family: 'StratumGMC', sans-serif;
+  --switch-typography-large-font-family: 'StratumGMC', sans-serif;
+  /* Link */
+  --link-typography-small-font-family: 'StratumGMC', sans-serif;
+  --link-typography-medium-font-family: 'StratumGMC', sans-serif;
+  --link-typography-large-font-family: 'StratumGMC', sans-serif;
+  --link-typography-small-font-weight: 400;
+  --link-typography-medium-font-weight: 400;
+  --link-typography-large-font-weight: 400;
+  --link-typography-small-font-size: 14px;
+  --link-typography-medium-font-size: 16px;
+  --link-typography-large-font-size: 18px;
+  --link-typography-small-line-height: 20px;
+  --link-typography-medium-line-height: 22px;
+  --link-typography-large-line-height: 25px;
+  /* Text Input */
+  --input-standard-outlined-typography-font-family: 'StratumGMC', sans-serif;
+  /* Accordion */
+  --accordion-typography-label-font-family: 'StratumGMC', sans-serif;
+  --accordion-typography-body-font-family: 'StratumGMC', sans-serif;
+  /* Stepper */
+  --stepper-font-family: 'StratumGMC', sans-serif;
+  --stepper-badge-font-family: 'StratumGMC', sans-serif;
+  /* Menu — StratumGMC Regular for default, Bold for selected, Medium for section headers */
+  --menu-font-family: 'StratumGMC:Regular', sans-serif;
+  --menu-font-family-selected: 'StratumGMC:Bold', sans-serif;
+  --menu-font-size: 16px;
+  --menu-header-size: 14px;
+  --menu-text: #060505;
+  --menu-text-disabled: #c8c8c8;
+  --menu-border: #d4d4d4;
+  --menu-item-bg-hover: #ebebeb;
+  --menu-item-bg-selected: #ebebeb;
+  /* Tooltip — StratumGMC Regular, near-black #060505 bg (Figma node 20408:95017) */
+  --tooltip-bg:                 #060505;
+  --tooltip-body-font-family:   'StratumGMC', sans-serif;
+  --tooltip-body-font-weight:   400;
+  --tooltip-body-font-size:     16px;
+  --tooltip-title-font-family:  'StratumGMC:Bold', sans-serif;
+  --tooltip-title-font-weight:  700;
+  /* Chip — StratumGMC, larger sizing (14/16 vs 12/14), neutral grey tint primary, brand red primary text.
+     Figma node 20408:95128 — body/chip/* + component-typography/chip/* */
+  --chip-font-small-family: 'StratumGMC:Medium', sans-serif;
+  --chip-font-large-family: 'StratumGMC:Bold', sans-serif;
+  --chip-font-small-size: 14px;
+  --chip-font-large-size: 16px;
+  /* Selectable */
+  --chip-selectable-text-default:             #66696a;
+  --chip-selectable-border-default:           #d4d4d4;
+  --chip-selectable-bg-hover:                 #ebebeb;
+  --chip-selectable-border-hover:             #c8c8c8;
+  --chip-selectable-text-hover:               #060505;
+  --chip-selectable-bg-active:                #ebebeb;
+  --chip-selectable-border-active:            #25282a;
+  --chip-selectable-text-active:              #060505;
+  --chip-selectable-text-disabled:            #c8c8c8;
+  --chip-selectable-border-disabled:          #dcb9b9;
+  --chip-selectable-bg-selected:              #060505;
+  --chip-selectable-bg-selected-disabled:     #dcb9b9;
+  --chip-selectable-border-selected-disabled: #dcb9b9;
+  --chip-selectable-text-selected-disabled:   #c8c8c8;
+  /* Dismissable */
+  --chip-dismissable-text-default:     #060505;
+  --chip-dismissable-border-default:   #d4d4d4;
+  --chip-dismissable-bg-hover:         #ebebeb;
+  --chip-dismissable-border-hover:     #c8c8c8;
+  --chip-dismissable-text-hover:       #060505;
+  --chip-dismissable-bg-active:        #ebebeb;
+  --chip-dismissable-border-active:    #25282a;
+  --chip-dismissable-text-active:      #060505;
+  --chip-dismissable-text-disabled:    #c8c8c8;
+  --chip-dismissable-border-disabled:  #dcb9b9;
+  /* Plain */
+  --chip-plain-text-primary:  #cc0000;
+  --chip-plain-text-success:  #0a7305;
+  --chip-plain-text-warning:  #b3842d;
+  --chip-plain-text-error:    #b50000;
+  --chip-plain-text-grey:     #25282a;
+  /* Information — subtle (grey tint primary, not red) */
+  --chip-info-subtle-bg-primary:   #ebebeb;
+  --chip-info-subtle-text-primary: #cc0000;
+  --chip-info-subtle-bg-success:   #ddead9;
+  --chip-info-subtle-text-success: #0a7305;
+  --chip-info-subtle-bg-warning:   #fff9ee;
+  --chip-info-subtle-text-warning: #b3842d;
+  --chip-info-subtle-bg-error:     #fbded6;
+  --chip-info-subtle-text-error:   #b50000;
+  --chip-info-subtle-bg-grey:      #ebebeb;
+  --chip-info-subtle-text-grey:    #060505;
+  /* Information — emphasis */
+  --chip-info-emphasis-bg-primary:   #cc0000;
+  --chip-info-emphasis-text-primary: #ffffff;
+  --chip-info-emphasis-bg-success:   #0a7305;
+  --chip-info-emphasis-text-success: #ffffff;
+  --chip-info-emphasis-bg-warning:   #b3842d;
+  --chip-info-emphasis-text-warning: #060505;
+  --chip-info-emphasis-bg-error:     #b50000;
+  --chip-info-emphasis-text-error:   #ffffff;
+  --chip-info-emphasis-bg-grey:      #060505;
+  --chip-info-emphasis-text-grey:    #ffffff;
+}
+
+/* ============================================================
+   CADILLAC — Deep navy #171473 primary, dark #282828 secondary, 0 radius
+   Figma: core/brand/color — brand=#171473, button-hover=#211FAB
+   Figma source: node 20387:5237
+   ============================================================ */
+[data-brand="cadillac"] {
+  /* === Brand Palette (Figma: core/brand/color) === */
+  --brand-color:           #171473;
+  --brand-color-hover:     #211FAB;
+  --brand-color-secondary: #B50000;
+  --brand-grey-900:        #282828;
+  --brand-grey-800:        #505050;
+  --brand-button-disabled: #D2D2D2;
+  /* Primary button — filled (navy → outline on hover; special Cadillac interaction) */
+  --button-contained-color-primary-filled-background-color: #171473;
+  --button-contained-color-primary-filled-color: #ffffff;
+  --button-contained-color-primary-filled-hover-background-color: transparent;
+  --button-contained-color-primary-filled-hover-border-color: #282828;
+  --button-contained-color-primary-filled-hover-color: #282828;
+  --button-contained-color-primary-filled-active-background-color: transparent;
+  --button-contained-color-primary-filled-active-border-color: #282828;
+  --button-contained-color-primary-filled-active-color: #282828;
+  /* Primary button — outlined (inverts to dark fill on hover) */
+  --button-contained-color-primary-outlined-border-color: #282828;
+  --button-contained-color-primary-outlined-color: #282828;
+  --button-contained-color-primary-outlined-hover-background-color: #282828;
+  --button-contained-color-primary-outlined-hover-border-color: #282828;
+  --button-contained-color-primary-outlined-hover-color: #ffffff;
+  --button-contained-color-primary-outlined-active-background-color: #282828;
+  --button-contained-color-primary-outlined-active-border-color: #282828;
+  --button-contained-color-primary-outlined-active-color: #ffffff;
+  /* Primary button — plain */
+  --button-contained-color-primary-plain-color: #171473;
+  --button-contained-color-primary-plain-hover-color: #211fab;
+  --button-contained-color-primary-plain-active-color: #211fab;
+  /* Inline / link button */
+  --button-link-color-primary-color: #171473;
+  --button-link-color-primary-hover-color: #211fab;
+  --button-link-color-primary-active-color: #211fab;
+  --button-link-color-primary-disabled-color: #D2D2D2;
+  /* Global accent tokens */
+  --focus-ring-color: #171473;
+  --link-color-primary: #171473;
+  --link-color-primary-hover: #211fab;
+  --breadcrumb-typography-small-default-color: #787878;
+  --breadcrumb-typography-small-default-hover-color: #171473;
+  --breadcrumb-typography-small-default-active-color: #211fab;
+  --breadcrumb-typography-small-default-disabled-color: #a0a0a0;
+  --breadcrumb-typography-small-selected-color: #282828;
+  --accordion-color-text-default: #282828;
+  --accordion-color-text-hover: #282828;
+  --accordion-color-text-active: #282828;
+  --accordion-color-border: #a0a0a0;
+  --slider-fill-color: #171473;
+  --tabs-border-selected: #171473;
+  --tabs-text-selected: #171473;
+  /* Tabs — Cadillac Figma (node 20401:45845): unselected tabs on light gray, selected stays white; sharp corners */
+  --tabs-bg-unselected: #e8e8e8;
+  --tabs-bg-selected: #ffffff;
+  --tabs-radius: 0;
+  /* Toggle Button Group — navy selected, sharp corners, uppercase Cadillac Gothic Narrow */
+  --toggle-bg-selected: #171473;
+  --toggle-border-selected: #171473;
+  --toggle-border-hover: #171473;
+  --toggle-text-hover: #171473;
+  --toggle-radius: 0;
+  --toggle-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --toggle-font-weight: 500;
+  --toggle-text-transform: uppercase;
+  --toggle-letter-spacing: 0.1em;
+  /* Quick Filter — Cadillac hardcodes navy on selected border + label, flattens radius, uppercases */
+  --quick-filter-border-color-selected: #171473;
+  --quick-filter-text-color-selected:   #171473;
+  --quick-filter-radius:                0;
+  --quick-filter-font-family:           'Cadillac_Gothic_Narrow', sans-serif;
+  --quick-filter-font-weight:           500;
+  --quick-filter-text-transform:        uppercase;
+  --quick-filter-letter-spacing:        0.1em;
+  /* Avatar + Notification — Cadillac navy badge, Cadillac Gothic bold */
+  --notification-badge-bg: #171473;
+  --avatar-initials-font-family: 'Cadillac_Gothic:Bold', sans-serif;
+  --notification-badge-font-family: 'Cadillac_Gothic:Bold', sans-serif;
+  --stepper-border-active: #171473;
+  --stepper-badge-bg: #171473;
+  --menu-tick-color: #171473;
+  /* Checkbox — filled navy for checked, #505050 unchecked border (Figma-confirmed) */
+  --checkbox-container-border-radius:  0;
+  --checkbox-color-border-default:     #505050;
+  --checkbox-color-checked-bg:         #171473;
+  --checkbox-color-checked-border:     transparent;
+  --checkbox-color-checked-icon:       #ffffff;
+  --checkbox-color-indeterminate-dash: #171473;
+  --checkbox-color-disabled-border:    #d2d2d2;
+  --checkbox-color-disabled-bg:        #ffffff;
+  --checkbox-color-disabled-icon:      #d2d2d2;
+  --checkbox-color-text:               #282828;
+  /* Shape — sharp corners */
+  --button-contained-container-bg-small-border-radius: 0;
+  --button-contained-container-bg-medium-border-radius: 0;
+  --button-contained-container-bg-large-border-radius: 0;
+  --button-contained-icon-container-rect-bg-small-border-radius: 0;
+  --button-contained-icon-container-rect-bg-medium-border-radius: 0;
+  --button-contained-icon-container-rect-bg-large-border-radius: 0;
+  --tab-contained-container-bg-border-radius: 0;
+  --menu-radius: 2px;
+  --focus-ring-radius-btn: 4px;
+  --focus-ring-radius-rect: 2px;
+  /* Font — Cadillac Gothic (Figma-confirmed: standard for controls, Narrow for nav/text elements) */
+  /* Buttons — standard Gothic, all caps */
+  --button-contained-typography-small-font-family: 'Cadillac_Gothic', sans-serif;
+  --button-contained-typography-medium-font-family: 'Cadillac_Gothic', sans-serif;
+  --button-contained-typography-large-font-family: 'Cadillac_Gothic', sans-serif;
+  --button-contained-typography-small-font-weight: 500;
+  --button-contained-typography-medium-font-weight: 500;
+  --button-contained-typography-large-font-weight: 500;
+  --button-contained-typography-small-text-transform: uppercase;
+  --button-contained-typography-medium-text-transform: uppercase;
+  --button-contained-typography-large-text-transform: uppercase;
+  --button-link-typography-small-font-family: 'Cadillac_Gothic', sans-serif;
+  --button-link-typography-medium-font-family: 'Cadillac_Gothic', sans-serif;
+  --button-link-typography-large-font-family: 'Cadillac_Gothic', sans-serif;
+  --button-link-typography-small-font-weight: 400;
+  --button-link-typography-medium-font-weight: 400;
+  --button-link-typography-large-font-weight: 400;
+  --button-link-typography-small-text-transform: uppercase;
+  --button-link-typography-medium-text-transform: uppercase;
+  --button-link-typography-large-text-transform: uppercase;
+  /* Tabs — Cadillac Gothic Narrow Medium, ALL CAPS (Figma node 19962:6147: font-weight=Medium/500, uppercase) */
+  --tab-contained-typography-large-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --tab-contained-typography-selected-large-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --tab-contained-typography-font-weight: 500;
+  --tab-contained-typography-text-transform: uppercase;
+  /* Underlined tabs — same font family/weight/transform as contained */
+  --tab-underlined-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --tab-underlined-font-weight: 500;
+  --tab-underlined-text-transform: uppercase;
+  /* Breadcrumb — Narrow Gothic: Medium for links, Bold for current page */
+  --breadcrumb-typography-small-default-font-family: 'Cadillac_Gothic_Narrow:Medium', sans-serif;
+  --breadcrumb-typography-small-selected-font-family: 'Cadillac_Gothic_Narrow:Bold', sans-serif;
+  /* Checkbox & Radio — Narrow Gothic (Figma: form-control-typography uses Narrow Regular) */
+  --checkbox-typography-small-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --checkbox-typography-large-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --radio-typography-small-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --radio-typography-large-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  /* Slider — Figma node 20399:5906 */
+  --slider-track-bg:                     #b3b3b3;
+  --slider-thumb-border-color:           #171473;
+  --slider-thumb-border-width:           1px;
+  --slider-thumb-hover-shadow:           rgba(23,20,115,0.12);
+  --slider-disabled-handle-bg:           #b3b3b3;
+  --slider-disabled-border:              #e6e6e6;
+  --slider-label-color:                  #262626;
+  --slider-minmax-color:                 #666666;
+  --slider-typography-title-font-family: 'Cadillac_Gothic', sans-serif;
+  --slider-typography-title-font-size:   16px;
+  --slider-typography-title-line-height: 24px;
+  --slider-typography-range-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --slider-typography-input-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  /* Switch — standard Gothic */
+  --switch-typography-small-font-family: 'Cadillac_Gothic', sans-serif;
+  --switch-typography-large-font-family: 'Cadillac_Gothic', sans-serif;
+  /* Link — Narrow Gothic (navigation text) */
+  --link-typography-small-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --link-typography-medium-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --link-typography-large-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --link-typography-small-font-weight: 400;
+  --link-typography-medium-font-weight: 400;
+  --link-typography-large-font-weight: 400;
+  /* Text Input — Narrow Gothic */
+  --input-standard-outlined-typography-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  /* Accordion — Figma: Cadillac_Gothic_Narrow Bold for label, Narrow for body */
+  --accordion-typography-label-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --accordion-typography-body-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  /* Stepper — standard Gothic */
+  --stepper-font-family: 'Cadillac_Gothic', sans-serif;
+  --stepper-badge-font-family: 'Cadillac_Gothic', sans-serif;
+  /* Menu — Narrow Gothic (Figma: Regular for default, Bold for selected, Medium for header/desc) */
+  --menu-font-family: 'Cadillac_Gothic_Narrow', sans-serif;
+  --menu-font-family-selected: 'Cadillac_Gothic_Narrow:Bold', sans-serif;
+  --menu-text: #282828;
+  --menu-text-disabled: #a0a0a0;
+  --menu-border: #d2d2d2;
+  /* Tooltip — Cadillac Gothic Narrow Regular, #282828 bg (Figma node 20408:94803) */
+  --tooltip-bg:                 #282828;
+  --tooltip-body-font-family:   'Cadillac_Gothic_Narrow', sans-serif;
+  --tooltip-body-font-weight:   400;
+  --tooltip-body-font-size:     14px;
+  --tooltip-title-font-family:  'Cadillac_Gothic_Narrow:Bold', sans-serif;
+  --tooltip-title-font-weight:  700;
+  /* Chip — Cadillac Gothic Narrow, brand navy primary, Cadillac yellow warning in emphasis.
+     Figma node 20408:95126 — body/chip/* + component-typography/chip/* */
+  --chip-font-small-family: 'Cadillac_Gothic_Narrow:Medium', sans-serif;
+  --chip-font-large-family: 'Cadillac_Gothic_Narrow:Bold', sans-serif;
+  /* Selectable */
+  --chip-selectable-text-default:             #787878;
+  --chip-selectable-border-default:           #a0a0a0;
+  --chip-selectable-bg-hover:                 #f2f2f2;
+  --chip-selectable-border-hover:             #d2d2d2;
+  --chip-selectable-text-hover:               #282828;
+  --chip-selectable-bg-active:                #f2f2f2;
+  --chip-selectable-border-active:            #505050;
+  --chip-selectable-text-active:              #282828;
+  --chip-selectable-text-disabled:            #a0a0a0;
+  --chip-selectable-border-disabled:          #d2d2d2;
+  --chip-selectable-bg-selected:              #282828;
+  --chip-selectable-bg-selected-disabled:     #d2d2d2;
+  --chip-selectable-border-selected-disabled: #d2d2d2;
+  --chip-selectable-text-selected-disabled:   #a0a0a0;
+  /* Dismissable */
+  --chip-dismissable-text-default:     #282828;
+  --chip-dismissable-border-default:   #a0a0a0;
+  --chip-dismissable-bg-hover:         #f2f2f2;
+  --chip-dismissable-border-hover:     #d2d2d2;
+  --chip-dismissable-text-hover:       #282828;
+  --chip-dismissable-bg-active:        #f2f2f2;
+  --chip-dismissable-border-active:    #505050;
+  --chip-dismissable-text-active:      #282828;
+  --chip-dismissable-text-disabled:    #a0a0a0;
+  --chip-dismissable-border-disabled:  #d2d2d2;
+  /* Plain */
+  --chip-plain-text-primary:  #171473;
+  --chip-plain-text-success:  #0a7305;
+  --chip-plain-text-warning:  #f5d98f; /* Figma-confirmed — pale Cadillac yellow */
+  --chip-plain-text-error:    #b50000;
+  --chip-plain-text-grey:     #505050;
+  /* Information — subtle */
+  --chip-info-subtle-bg-primary:   #eeeefd;
+  --chip-info-subtle-text-primary: #171473;
+  --chip-info-subtle-bg-success:   #ddead9;
+  --chip-info-subtle-text-success: #0a7305;
+  --chip-info-subtle-bg-warning:   #fff9ee;
+  --chip-info-subtle-text-warning: #b3842d;
+  --chip-info-subtle-bg-error:     #fbded6;
+  --chip-info-subtle-text-error:   #b50000;
+  --chip-info-subtle-bg-grey:      #f2f2f2;
+  --chip-info-subtle-text-grey:    #282828;
+  /* Information — emphasis */
+  --chip-info-emphasis-bg-primary:   #171473;
+  --chip-info-emphasis-text-primary: #ffffff;
+  --chip-info-emphasis-bg-success:   #0a7305;
+  --chip-info-emphasis-text-success: #ffffff;
+  --chip-info-emphasis-bg-warning:   #f5d98f; /* Cadillac pale yellow */
+  --chip-info-emphasis-text-warning: #282828;
+  --chip-info-emphasis-bg-error:     #b50000;
+  --chip-info-emphasis-text-error:   #ffffff;
+  --chip-info-emphasis-bg-grey:      #282828;
+  --chip-info-emphasis-text-grey:    #ffffff;
+}
+
+/* =============================================================================
+   DOC CHROME OVERRIDES
+   Sidebar logo, header links, card hover accents, eyebrow text, tags
+   ============================================================================= */
+
+/* Buick */
+/* Menu: section headers use Buick_Text:Medium (Figma: list-item-typography-description/font-family) */
+[data-brand="buick"] .menu__header { font-family: 'Buick_Text:Medium', sans-serif; }
+/* Inline button: Buick_Text stays at weight 500 on hover/pressed — color change is the visual cue */
+[data-brand="buick"] .drp-button-link-color-primary.is-hovered,
+[data-brand="buick"] .drp-button-link-color-primary:hover,
+[data-brand="buick"] .drp-button-link-color-primary.is-pressed,
+[data-brand="buick"] .drp-button-link-color-primary:active { font-weight: 500; }
+/* Breadcrumb: Medium (500) for links, SemiBold (600) for current page */
+[data-brand="buick"] .drp-breadcrumb-typography-small-default  { font-weight: 500; }
+[data-brand="buick"] .drp-breadcrumb-typography-small-selected,
+[data-brand="buick"] .drp-breadcrumb-typography-small-current   { font-weight: 600; }
+/* Checkbox: checked+hover keeps charcoal fill, transparent border (same color, still invisible border) */
+/* Checkbox: disabled+checked = muted gray fill (#a7a6a4), white icon */
+[data-brand="buick"] .drp-checkbox-container.drp-disabled.is-checked .checkbox__box { background-color: #a7a6a4; border-color: #a7a6a4; }
+[data-brand="buick"] .drp-checkbox-container.drp-disabled.is-checked .checkbox__check { color: #ffffff; }
+/* Accordion: border lines #a7a6a4 (Figma-confirmed, all states) */
+[data-brand="buick"] .drp-accordion-container-bg { border-top-color: #a7a6a4; border-bottom-color: #a7a6a4; }
+[data-brand="buick"] .drp-accordion-details      { border-top-color: #a7a6a4; }
+[data-brand="buick"] body                           { font-family: 'Buick_Text', sans-serif; }
+[data-brand="buick"] { --type-heading-family: 'Buick_Text', sans-serif; --type-heading-weight: 500; }
+/* Header — Buick */
+[data-brand="buick"] {
+  --header-bg:                     #efedea;
+  --header-border-color:           #d7d5d3;
+  --header-divider-color:          #d7d5d3;
+  --header-dealership-color:       #222222;
+  --header-dealership-font-family: 'Buick_Text', sans-serif;
+  --header-dealership-font-weight: 600;
+  --header-nav-color:              #222222;
+  --header-nav-font-family:        'Buick_Text', sans-serif;
+  --header-nav-font-weight:        500;
+  --header-icon-color:             #333333;
+}
+/* Configurator Sub-header — Buick (Figma: headline-5-bold=Buick Text Medium, body-1/body-2 18/25+16/22 Regular, tab=Buick Text Medium 18/25, headline-6-bold=Buick Text Medium) */
+[data-brand="buick"] {
+  --config-subheader-font-family:                'Buick_Text', sans-serif;
+  --config-subheader-name-font-family:           'Buick_Text', sans-serif;
+  --config-subheader-name-font-weight:           500;
+  --config-subheader-subtitle-font-family:       'Buick_Text', sans-serif;
+  --config-subheader-subtitle-font-weight:       400;
+  --config-subheader-subtitle-font-size:         18px;
+  --config-subheader-subtitle-line-height:       25px;
+  --config-subheader-tab-font-family:            'Buick_Text', sans-serif;
+  --config-subheader-tab-font-weight:            500;
+  --config-subheader-tab-font-size:              18px;
+  --config-subheader-tab-line-height:            25px;
+  --config-subheader-price-label-font-family:    'Buick_Text', sans-serif;
+  --config-subheader-price-label-font-weight:    400;
+  --config-subheader-price-label-font-size:      16px;
+  --config-subheader-price-label-line-height:    22px;
+  --config-subheader-price-value-font-family:    'Buick_Text', sans-serif;
+  --config-subheader-price-value-font-weight:    500;
+  --config-subheader-count-font-family:          'Buick_Text', sans-serif;
+}
+/* Footer — Buick (body-3-regular=Buick_Text 14/22 Regular; disclaimer heading=Buick_Text 16/22 Bold) */
+[data-brand="buick"] {
+  --footer-font-family:                      'Buick_Text', sans-serif;
+  --footer-links-font-family:                'Buick_Text', sans-serif;
+  --footer-links-font-size:                  14px;
+  --footer-links-line-height:                22px;
+  --footer-disclaimer-heading-font-family:   'Buick_Text', sans-serif;
+  --footer-disclaimer-heading-font-weight:   700;
+  --footer-disclaimer-heading-font-size:     16px;
+  --footer-disclaimer-heading-line-height:   22px;
+  --footer-disclaimer-body-font-family:      'Buick_Text', sans-serif;
+  --footer-disclaimer-body-font-size:        14px;
+  --footer-disclaimer-body-line-height:      22px;
+  --footer-price-value-font-family:          'Buick_Text', sans-serif;
+  --footer-price-value-font-weight:          500;
+  --footer-chat-fab-primary-bg:              #D44400;
+}
+[data-brand="buick"] .doc-header__breadcrumb a      { color: #D44400; }
+[data-brand="buick"] .doc-sidebar__logo-mark         { background: #D44400; }
+[data-brand="buick"] .doc-sidebar__link.is-active    { background: rgba(212,68,0,0.12); color: #f06030; }
+[data-brand="buick"] .doc-page-header__eyebrow       { color: #D44400; }
+[data-brand="buick"] .doc-page-header__link          { color: #D44400; }
+[data-brand="buick"] .doc-card:hover                 { border-color: #D44400; box-shadow: 0 4px 16px rgba(212,68,0,0.12); }
+[data-brand="buick"] .doc-card__arrow                { color: #D44400; }
+[data-brand="buick"] .doc-tag--blue                  { background: #fdf0eb; color: #D44400; }
+
+/* GMC */
+/* Menu: section headers use StratumGMC:Medium (Figma: list-item-typography-description/font-family) */
+[data-brand="gmc"] .menu__header { font-family: 'StratumGMC:Medium', sans-serif; }
+/* Breadcrumb: Medium (500) for links, Bold (700) for current page */
+[data-brand="gmc"] .drp-breadcrumb-typography-small-default  { font-weight: 500; }
+[data-brand="gmc"] .drp-breadcrumb-typography-small-selected,
+[data-brand="gmc"] .drp-breadcrumb-typography-small-current   { font-weight: 700; }
+/* Checkbox: indeterminate uses near-black (#060505) border, distinct from unchecked (#25282A) */
+[data-brand="gmc"] .drp-checkbox-container.is-indeterminate .checkbox__box { border-color: #060505; }
+[data-brand="gmc"] .drp-checkbox-container.is-indeterminate.is-hovered .checkbox__box { border-color: #060505; }
+/* Checkbox: checked+hover keeps transparent border (is-hovered would otherwise set it to #25282A) */
+[data-brand="gmc"] .drp-checkbox-container.is-checked.is-hovered .checkbox__box { border-color: transparent; }
+/* Checkbox: disabled+checked = muted gray fill (#929495), white icon */
+[data-brand="gmc"] .drp-checkbox-container.drp-disabled.is-checked .checkbox__box { background-color: #929495; border-color: #929495; }
+[data-brand="gmc"] .drp-checkbox-container.drp-disabled.is-checked .checkbox__check { color: #ffffff; }
+/* Checkbox: disabled+indeterminate = white bg, muted grey border/dash — must beat the near-black rule above (0,1,4,0 > 0,1,3,0) */
+[data-brand="gmc"] .drp-checkbox-container.is-indeterminate.drp-disabled .checkbox__box { border-color: var(--checkbox-color-disabled-border, #929495); }
+[data-brand="gmc"] .drp-checkbox-container.is-indeterminate.drp-disabled .checkbox__dash { background: var(--checkbox-color-disabled-icon, #929495); }
+/* Accordion — dark charcoal header, white text/icons (Figma: #25282A bg throughout) */
+[data-brand="gmc"] .drp-accordion-container-summary-bg {
+  background: #25282A;
+  padding: 0 16px;
+}
+[data-brand="gmc"] .drp-accordion-container-bg { border-top-color: #c8c8c8; border-bottom-color: #c8c8c8; }
+[data-brand="gmc"] .drp-accordion-details      { border-top-color: #c8c8c8; }
+[data-brand="gmc"] .accordion__label           { font-weight: 700; }
+[data-brand="gmc"] body                              { font-family: 'StratumGMC', sans-serif; }
+[data-brand="gmc"] { --type-heading-family: 'StratumGMC', sans-serif; --type-heading-weight: 900; }
+/* Header — GMC */
+[data-brand="gmc"] {
+  --header-bg:                     #ebebeb;
+  --header-border-color:           #d4d4d4;
+  --header-divider-color:          #d4d4d4;
+  --header-dealership-color:       #060505;
+  --header-dealership-font-family: 'StratumGMC', sans-serif;
+  --header-dealership-font-weight: 700;
+  --header-dealership-font-size:   18px;
+  --header-dealership-line-height: 25px;
+  --header-nav-color:              #060505;
+  --header-nav-font-family:        'StratumGMC', sans-serif;
+  --header-nav-font-weight:        500;
+  --header-nav-font-size:          18px;
+  --header-nav-line-height:        25px;
+  --header-icon-color:             #25282a;
+}
+/* Configurator Sub-header — GMC (Figma: headline-5-bold=StratumGMC Black 900, body-1/body-2 18/25+16/22 Regular, tab=StratumGMC Medium 18/25, headline-6-bold=StratumGMC Black 900) */
+[data-brand="gmc"] {
+  --config-subheader-font-family:                'StratumGMC', sans-serif;
+  --config-subheader-name-font-family:           'StratumGMC', sans-serif;
+  --config-subheader-name-font-weight:           900;
+  --config-subheader-subtitle-font-family:       'StratumGMC', sans-serif;
+  --config-subheader-subtitle-font-weight:       400;
+  --config-subheader-subtitle-font-size:         18px;
+  --config-subheader-subtitle-line-height:       25px;
+  --config-subheader-tab-font-family:            'StratumGMC', sans-serif;
+  --config-subheader-tab-font-weight:            500;
+  --config-subheader-tab-font-size:              18px;
+  --config-subheader-tab-line-height:            25px;
+  --config-subheader-price-label-font-family:    'StratumGMC', sans-serif;
+  --config-subheader-price-label-font-weight:    400;
+  --config-subheader-price-label-font-size:      16px;
+  --config-subheader-price-label-line-height:    22px;
+  --config-subheader-price-value-font-family:    'StratumGMC', sans-serif;
+  --config-subheader-price-value-font-weight:    900;
+  --config-subheader-count-font-family:          'StratumGMC', sans-serif;
+}
+/* Footer — GMC (body-3-regular=StratumGMC 14/20 Regular; body-2-bold=StratumGMC 16/22 Bold) */
+[data-brand="gmc"] {
+  --footer-bg:                               #ffffff;
+  --footer-bg-configurator:                  #ebebeb;
+  --footer-border-color:                     #d4d4d4;
+  --footer-text-color:                       #060505;
+  --footer-text-subtle-color:                #25282a;
+  --footer-icon-color:                       #25282a;
+  --footer-font-family:                      'StratumGMC', sans-serif;
+  --footer-links-font-family:                'StratumGMC', sans-serif;
+  --footer-links-font-size:                  14px;
+  --footer-links-line-height:                20px;
+  --footer-disclaimer-heading-font-family:   'StratumGMC', sans-serif;
+  --footer-disclaimer-heading-font-weight:   700;
+  --footer-disclaimer-heading-font-size:     16px;
+  --footer-disclaimer-heading-line-height:   22px;
+  --footer-disclaimer-body-font-family:      'StratumGMC', sans-serif;
+  --footer-disclaimer-body-font-size:        14px;
+  --footer-disclaimer-body-line-height:      20px;
+  --footer-price-value-font-family:          'StratumGMC', sans-serif;
+  --footer-price-value-font-weight:          900;
+  --footer-chat-fab-primary-bg:              #CC0000;
+}
+[data-brand="gmc"] .doc-header__breadcrumb a         { color: #CC0000; }
+[data-brand="gmc"] .doc-sidebar__logo-mark           { background: #CC0000; }
+[data-brand="gmc"] .doc-sidebar__link.is-active      { background: rgba(204,0,0,0.12); color: #e84040; }
+[data-brand="gmc"] .doc-page-header__eyebrow         { color: #CC0000; }
+[data-brand="gmc"] .doc-page-header__link            { color: #CC0000; }
+[data-brand="gmc"] .doc-card:hover                   { border-color: #CC0000; box-shadow: 0 4px 16px rgba(204,0,0,0.10); }
+[data-brand="gmc"] .doc-card__arrow                  { color: #CC0000; }
+[data-brand="gmc"] .doc-tag--blue                    { background: #fde8e8; color: #CC0000; }
+
+/* Chevrolet */
+/* Checkbox: outline style throughout — base CSS defaults (white bg, #262626 border/icon) handle all states correctly.
+   Disabled: white bg + #c3cfd9 border/icon — no override needed, fallbacks in global.css are correct. */
+[data-brand="chevrolet"] body { font-family: 'Chevy_Sans', sans-serif; }
+
+/* Cadillac */
+/* Menu: header + description rows use Cadillac_Gothic_Narrow:Medium (Figma: list-item-typography-description/font-family) */
+[data-brand="cadillac"] .menu__header { font-family: 'Cadillac_Gothic_Narrow:Medium', sans-serif; }
+[data-brand="cadillac"] .menu__desc   { font-family: 'Cadillac_Gothic_Narrow:Medium', sans-serif; font-weight: 500; }
+/* Inline button: Cadillac Gothic stays at weight 500 on hover/pressed — color change is the visual cue */
+[data-brand="cadillac"] .drp-button-link-color-primary.is-hovered,
+[data-brand="cadillac"] .drp-button-link-color-primary:hover,
+[data-brand="cadillac"] .drp-button-link-color-primary.is-pressed,
+[data-brand="cadillac"] .drp-button-link-color-primary:active { font-weight: 500; }
+/* Checkbox: indeterminate uses brand navy border (distinct from unchecked #505050) */
+[data-brand="cadillac"] .drp-checkbox-container.is-indeterminate .checkbox__box  { border-color: #171473; }
+[data-brand="cadillac"] .drp-checkbox-container.is-indeterminate .checkbox__dash  { background: #171473; }
+[data-brand="cadillac"] .drp-checkbox-container.is-indeterminate.is-hovered .checkbox__box { border-color: #211fab; }
+[data-brand="cadillac"] .drp-checkbox-container.is-indeterminate.is-hovered .checkbox__dash { background: #211fab; }
+/* Checkbox: disabled indeterminate must use muted grey (#d2d2d2) — more specific rule overrides the navy above */
+[data-brand="cadillac"] .drp-checkbox-container.is-indeterminate.drp-disabled .checkbox__box { border-color: var(--checkbox-color-disabled-border, #d2d2d2); }
+[data-brand="cadillac"] .drp-checkbox-container.is-indeterminate.drp-disabled .checkbox__dash { background: var(--checkbox-color-disabled-icon, #d2d2d2); }
+/* Checkbox: checked+hover darkens fill to #211fab, keeps border transparent */
+[data-brand="cadillac"] .drp-checkbox-container.is-checked.is-hovered .checkbox__box { background-color: #211fab; border-color: transparent; }
+/* Breadcrumb: Narrow Medium (500) for links, Narrow Bold (700) for current page */
+[data-brand="cadillac"] .drp-breadcrumb-typography-small-default  { font-weight: 500; }
+[data-brand="cadillac"] .drp-breadcrumb-typography-small-selected,
+[data-brand="cadillac"] .drp-breadcrumb-typography-small-current   { font-weight: 700; }
+/* Accordion: border lines #a0a0a0 (explicit rule + token both set) */
+[data-brand="cadillac"] .drp-accordion-container-bg { border-top-color: #a0a0a0; border-bottom-color: #a0a0a0; }
+[data-brand="cadillac"] .drp-accordion-details      { border-top-color: #a0a0a0; }
+/* Accordion: Bold label weight (icon brand-swap is handled by icons.css masks) */
+[data-brand="cadillac"] .accordion__label                                             { font-weight: 700; }
+
+[data-brand="cadillac"] body                         { font-family: 'Cadillac_Gothic_Narrow', sans-serif; }
+[data-brand="cadillac"] { --type-heading-family: 'Cadillac_Gothic_Wide', sans-serif; --type-heading-weight: 700; }
+/* Cadillac headline-5 / headline-6 use the regular Cadillac_Gothic cut, not
+   the wide cut — the wide cut reads too heavy at sub-display sizes. */
+[data-brand="cadillac"] {
+  --type-headline-5-family: 'Cadillac_Gothic', sans-serif;
+  --type-headline-6-family: 'Cadillac_Gothic', sans-serif;
+}
+/* Header — Cadillac */
+[data-brand="cadillac"] {
+  --header-bg:                     #f2f2f2;
+  --header-border-color:           #a0a0a0;
+  --header-divider-color:          #d2d2d2;
+  --header-dealership-color:       #282828;
+  --header-dealership-font-family: 'Cadillac_Gothic_Narrow:Bold', sans-serif;
+  --header-dealership-font-weight: 700;
+  --header-nav-color:              #282828;
+  --header-nav-font-family:        'Cadillac_Gothic_Narrow', sans-serif;
+  --header-nav-font-weight:        500;
+  --header-icon-color:             #0d0d0d;
+}
+/* Configurator Sub-header — Cadillac (Figma: headline-5-bold=Cadillac Gothic Bold, body-1/body-2=Cadillac Gothic Narrow Regular, tab=Cadillac Gothic Medium, headline-6-bold=Cadillac Gothic Bold) */
+[data-brand="cadillac"] {
+  --config-subheader-font-family:                'Cadillac_Gothic_Narrow', sans-serif;
+  --config-subheader-name-font-family:           'Cadillac_Gothic', sans-serif;
+  --config-subheader-name-font-weight:           700;
+  --config-subheader-subtitle-font-family:       'Cadillac_Gothic_Narrow', sans-serif;
+  --config-subheader-subtitle-font-weight:       400;
+  --config-subheader-tab-font-family:            'Cadillac_Gothic', sans-serif;
+  --config-subheader-tab-font-weight:            500;
+  --config-subheader-price-label-font-family:    'Cadillac_Gothic_Narrow', sans-serif;
+  --config-subheader-price-label-font-weight:    400;
+  --config-subheader-price-value-font-family:    'Cadillac_Gothic', sans-serif;
+  --config-subheader-price-value-font-weight:    700;
+  --config-subheader-count-font-family:          'Cadillac_Gothic_Narrow', sans-serif;
+}
+/* Footer — Cadillac (body-3-regular=Cadillac_Gothic_Narrow Regular; body-2-bold=Cadillac_Gothic Bold) */
+[data-brand="cadillac"] {
+  --footer-bg:                               #ffffff;
+  --footer-bg-configurator:                  #f2f2f2;
+  --footer-border-color:                     #a0a0a0;
+  --footer-text-color:                       #282828;
+  --footer-text-subtle-color:                #505050;
+  --footer-icon-color:                       #0d0d0d;
+  --footer-font-family:                      'Cadillac_Gothic_Narrow', sans-serif;
+  --footer-links-font-family:                'Cadillac_Gothic_Narrow', sans-serif;
+  --footer-disclaimer-heading-font-family:   'Cadillac_Gothic', sans-serif;
+  --footer-disclaimer-heading-font-weight:   700;
+  --footer-disclaimer-body-font-family:      'Cadillac_Gothic_Narrow', sans-serif;
+  --footer-price-value-font-family:          'Cadillac_Gothic', sans-serif;
+  --footer-price-value-font-weight:          700;
+  --footer-chat-fab-primary-bg:              #171473;
+}
+[data-brand="cadillac"] .doc-header__breadcrumb a    { color: #171473; }
+[data-brand="cadillac"] .doc-sidebar__logo-mark      { background: #171473; }
+[data-brand="cadillac"] .doc-sidebar__link.is-active { background: rgba(23,20,115,0.12); color: #4a47c8; }
+[data-brand="cadillac"] .doc-page-header__eyebrow    { color: #171473; }
+[data-brand="cadillac"] .doc-page-header__link       { color: #171473; }
+[data-brand="cadillac"] .doc-card:hover              { border-color: #171473; box-shadow: 0 4px 16px rgba(23,20,115,0.10); }
+[data-brand="cadillac"] .doc-card__arrow             { color: #171473; }
+[data-brand="cadillac"] .doc-tag--blue               { background: #ebebf9; color: #171473; }
+
+/* =============================================================================
+   VSR CARD — per-brand overrides
+   Figma: 1390:104316 (chevy), 1390:104317 (cadillac), 1390:105291 (buick), 1390:106265 (gmc)
+   ============================================================================= */
+
+[data-brand="buick"] {
+  --vsr-card-border-color:           #d7d5d3;
+  --vsr-card-divider-color:          #d7d5d3;
+  --vsr-card-status-color:           #222222;
+  --vsr-card-name-color:             #222222;
+  --vsr-card-msrp-label-color:       #6f6f6d;
+  --vsr-card-msrp-value-color:       #222222;
+  --vsr-card-dealership-color:       #474747;
+  --vsr-card-distance-color:         #6f6f6d;
+  --vsr-card-price-label-color:      #474747;
+  --vsr-card-price-value-color:      #222222;
+  --vsr-card-detail-color:           #474747;
+  --vsr-card-vin-label-color:        #6f6f6d;
+  --vsr-card-vin-value-color:        #222222;
+  --vsr-card-heart-color:            #333333;
+  --vsr-card-status-font-family:     'Buick_Text', sans-serif;
+  --vsr-card-status-font-size:       14px;
+  --vsr-card-status-font-weight:     400;
+  --vsr-card-name-font-family:       'Buick_Text', sans-serif;
+  --vsr-card-name-font-size:         18px;
+  --vsr-card-name-line-height:       25px;
+  --vsr-card-name-font-weight:       600;
+  --vsr-card-meta-font-family:       'Buick_Text', sans-serif;
+  --vsr-card-meta-font-size:         14px;
+  --vsr-card-price-label-font-family:'Buick_Text', sans-serif;
+  --vsr-card-price-label-font-size:  16px;
+  --vsr-card-price-value-font-family:'Buick_Text', sans-serif;
+  --vsr-card-price-value-font-size:  18px;
+  --vsr-card-price-value-line-height:25px;
+  --vsr-card-vin-font-size:          14px;
+
+  /* VSR Math Box — Buick body fonts */
+  --vsr-math-box-font-family:        'Buick_Text', sans-serif;
+  --vsr-math-box-bold-font-family:   'Buick_Text', sans-serif;
+}
+
+[data-brand="gmc"] {
+  --vsr-card-border-color:           #d4d4d4;
+  --vsr-card-border-radius:          0;
+  --vsr-card-divider-color:          #d4d4d4;
+  --vsr-card-status-color:           #060505;
+  --vsr-card-name-color:             #060505;
+  --vsr-card-msrp-label-color:       #66696a;
+  --vsr-card-msrp-value-color:       #060505;
+  --vsr-card-dealership-color:       #25282a;
+  --vsr-card-distance-color:         #66696a;
+  --vsr-card-price-label-color:      #25282a;
+  --vsr-card-price-value-color:      #060505;
+  --vsr-card-detail-color:           #25282a;
+  --vsr-card-vin-label-color:        #66696a;
+  --vsr-card-vin-value-color:        #060505;
+  --vsr-card-heart-color:            #cc0000;
+  --vsr-card-status-text-transform:  uppercase;
+  --vsr-card-name-text-transform:    uppercase;
+  --vsr-card-status-font-family:     'StratumGMC', sans-serif;
+  --vsr-card-status-font-size:       14px;
+  --vsr-card-status-font-weight:     400;
+  --vsr-card-name-font-family:       'StratumGMC', sans-serif;
+  --vsr-card-name-font-size:         18px;
+  --vsr-card-name-line-height:       25px;
+  --vsr-card-name-font-weight:       700;
+  --vsr-card-meta-font-family:       'StratumGMC', sans-serif;
+  --vsr-card-meta-font-size:         14px;
+  --vsr-card-price-label-font-family:'StratumGMC', sans-serif;
+  --vsr-card-price-label-font-size:  16px;
+  --vsr-card-price-value-font-family:'StratumGMC', sans-serif;
+  --vsr-card-price-value-font-size:  18px;
+  --vsr-card-price-value-line-height:25px;
+  --vsr-card-vin-font-size:          14px;
+
+  /* VSR Math Box — GMC body fonts */
+  --vsr-math-box-font-family:        'StratumGMC', sans-serif;
+  --vsr-math-box-bold-font-family:   'StratumGMC', sans-serif;
+}
+
+[data-brand="cadillac"] {
+  --vsr-card-bg:                     #f2f2f2;
+  --vsr-card-border-color:           transparent;
+  --vsr-card-border-radius:          0;
+  --vsr-card-divider-color:          #d2d2d2;
+  --vsr-card-status-color:           #282828;
+  --vsr-card-name-color:             #282828;
+  --vsr-card-msrp-label-color:       #787878;
+  --vsr-card-msrp-value-color:       #282828;
+  --vsr-card-dealership-color:       #505050;
+  --vsr-card-distance-color:         #787878;
+  --vsr-card-price-label-color:      #505050;
+  --vsr-card-price-value-color:      #282828;
+  --vsr-card-detail-color:           #505050;
+  --vsr-card-vin-label-color:        #787878;
+  --vsr-card-vin-value-color:        #282828;
+  --vsr-card-heart-color:            #0d0d0d;
+  --vsr-card-status-text-transform:  uppercase;
+  --vsr-card-name-text-transform:    uppercase;
+  --vsr-card-status-font-family:     'Cadillac_Gothic_Narrow', sans-serif;
+  --vsr-card-status-font-weight:     500;
+  --vsr-card-name-font-family:       'Cadillac_Gothic_Narrow', sans-serif;
+  --vsr-card-name-font-weight:       700;
+  --vsr-card-meta-font-family:       'Cadillac_Gothic_Narrow', sans-serif;
+  --vsr-card-price-label-font-family:'Cadillac_Gothic_Narrow', sans-serif;
+  --vsr-card-price-value-font-family:'Cadillac_Gothic_Narrow', sans-serif;
+
+  /* VSR Math Box — Cadillac dark theme + body fonts */
+  --vsr-math-box-bg:                 #262626;
+  --vsr-math-box-text-primary:       #ffffff;
+  --vsr-math-box-text-secondary:     #b3b3b3;
+  --vsr-math-box-divider:            #4a4a4a;
+  --vsr-math-box-font-family:        'Cadillac_Gothic', sans-serif;
+  --vsr-math-box-bold-font-family:   'Cadillac_Gothic', sans-serif;
+}
+
+/* =============================================================================
+   VSR QUICK VIEW — per-brand overrides
+   Figma: 1:967 (chevy), 1:2229 (buick), 2:595 (gmc), 1:2054 (cadillac).
+   Most styling flows through atomic Button/IconButton + foundation typography
+   (--type-heading-family / --type-heading-weight). Only radius (GMC + Cadillac
+   flatten to 0) and primary text color (mirrors vsr-card neutrals) deviate.
+   ============================================================================= */
+
+[data-brand="buick"] {
+  --vsr-quick-view-text-primary:     #222222;
+}
+
+[data-brand="gmc"] {
+  --vsr-quick-view-radius:                          0;
+  --vsr-quick-view-identity-radius:                 0;
+  --vsr-quick-view-color-swatch-radius:             0;
+  --vsr-quick-view-text-primary:                    #060505;
+  --vsr-quick-view-title-text-transform:            uppercase;
+  --vsr-quick-view-options-heading-text-transform:  uppercase;
+}
+
+[data-brand="cadillac"] {
+  --vsr-quick-view-radius:                          0;
+  --vsr-quick-view-identity-radius:                 0;
+  --vsr-quick-view-color-swatch-radius:             0;
+  --vsr-quick-view-text-primary:                    #282828;
+  --vsr-quick-view-title-text-transform:            uppercase;
+}

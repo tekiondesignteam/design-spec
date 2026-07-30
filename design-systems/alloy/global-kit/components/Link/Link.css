@@ -1,0 +1,67 @@
+/* ======================================================================
+   Link — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Link set (node 276-12109).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / sizes / fonts. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     state    → default | hover | visited   (real :hover on the interactive
+                default, OR forced with .gk-link--hover / .gk-link--visited so
+                a tool/preview can show a state without pointer interaction)
+     disabled → .gk-link--disabled           (intent-independent; wins over state)
+
+   Colours resolve through two local indirection vars (--_fg text / --_ic icon)
+   that each state points at the matching token. The vars are component-internal
+   plumbing, NOT design tokens — values always come from var(--component-link-…).
+   ====================================================================== */
+
+.gk-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--component-link-gap-default);
+  padding: var(--component-link-padding-top-default) var(--component-link-padding-right-default)
+           var(--component-link-padding-bottom-default) var(--component-link-padding-left-default);
+  color: var(--_fg);
+  /* Typography = Body/Medium/Paragraph/md (the .text-body-medium-paragraph-md
+     class on the label, from tokens/dist/computedStyles.css). font-weight is
+     pinned to 500 here because the fontWeight-Medium token that text style
+     references compiles to the string "Medium" (invalid as a CSS font-weight,
+     so silently dropped) — this working 500 selects Proxima Nova Medium. */
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.12s ease;
+  /* Leading/trailing glyphs render with the Global Kit <Icon> component; expose
+     the per-state icon token so the glyph tints with the link state
+     (Icon reads var(--gk-icon-color)). */
+  --gk-icon-color: var(--_ic);
+  /* default state */
+  --_fg: var(--component-link-color-text-default);
+  --_ic: var(--component-link-color-icon-default);
+}
+
+.gk-link__label {
+  word-break: break-word;
+}
+
+/* ----------------------------------------------------------------------
+   STATE — colours per state (disabled is intent-independent and wins)
+   ---------------------------------------------------------------------- */
+.gk-link--visited:not(.gk-link--disabled) {
+  --_fg: var(--component-link-color-text-visited);
+  --_ic: var(--component-link-color-icon-visited);
+}
+.gk-link:is(:hover, .gk-link--hover):not(.gk-link--disabled) {
+  --_fg: var(--component-link-color-text-hover);
+  --_ic: var(--component-link-color-icon-hover);
+}
+.gk-link--disabled {
+  --_fg: var(--component-link-color-text-disabled);
+  --_ic: var(--component-link-color-icon-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Button — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link is-active">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Icon Button</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Icon Button</h1>
+        <p class="doc-page-header__desc">
+          Icon-only buttons for compact action areas — toolbars, cards, and media controls.
+          Available in <strong>Rectangle</strong> and <strong>Circle</strong> shapes across three sizes.
+          The <strong>Primary</strong> theme follows the brand's button color system and works on light backgrounds.
+          The <strong>Inverse</strong> theme uses white and works on dark or image backgrounds.
+          Always include an <code>aria-label</code> since there is no visible text.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Icon Button - Primary</span>
+          <span class="doc-tag doc-tag--blue">Icon Button - Inverse</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=4743-63425" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/?path=/story/ui-components-button--primary" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= PRIMARY — STYLE VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Primary — Style Variants</h2>
+        <p class="doc-section__subtitle">Three visual styles × two shapes. All share the same size tokens; only color tokens differ. Rectangle uses the brand corner radius; circle is always 50%.</p>
+
+        <div class="doc-variant-grid">
+          <!-- Filled -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="gap:16px;">
+              <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-filled" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+              <button class="drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-primary-filled" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="doc-variant-card__label">Filled</div>
+          </div>
+          <!-- Outline -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="gap:16px;">
+              <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-outlined" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+              <button class="drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-primary-outlined" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="doc-variant-card__label">Outline</div>
+          </div>
+          <!-- Plain -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="gap:16px;">
+              <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-plain" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+              <button class="drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-primary-plain" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="doc-variant-card__label">Plain</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Filled · Rectangle --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-filled"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Add item"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Outline · Circle --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-primary-outlined"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Add item"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= PRIMARY — INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Primary — Interactive States</h2>
+        <p class="doc-section__subtitle">All states are shown below. State classes mirror the button component: <code>is-hovered</code> for hover/pressed, <code>drp-disabled</code> + <code>disabled</code> for disabled.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+
+          <!-- Filled states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-filled" style="pointer-events:none;" aria-label="Default">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px;">Default</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-filled is-hovered" style="pointer-events:none;" aria-label="Hover / Pressed">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px;">Hover / Pressed</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-filled drp-disabled" style="pointer-events:none;" aria-label="Disabled" disabled>
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; opacity:0.45;">Disabled</span>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Filled states</div>
+          </div>
+
+          <!-- Outline states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-outlined" style="pointer-events:none;" aria-label="Default">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px;">Default</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-outlined is-hovered" style="pointer-events:none;" aria-label="Hover / Pressed">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px;">Hover / Pressed</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-outlined drp-disabled" style="pointer-events:none;" aria-label="Disabled" disabled>
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; opacity:0.45;">Disabled</span>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Outline states</div>
+          </div>
+
+          <!-- Plain states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-plain" style="pointer-events:none;" aria-label="Default">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px;">Default</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-plain is-hovered" style="pointer-events:none;" aria-label="Hover / Pressed">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px;">Hover / Pressed</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-plain drp-disabled" style="pointer-events:none;" aria-label="Disabled" disabled>
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; opacity:0.45;">Disabled</span>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Plain states</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= PRIMARY — SIZES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Primary — Sizes</h2>
+        <p class="doc-section__subtitle">Three sizes: Large (48×48px), Medium (40×40px), Small (32×32px). Size modifiers apply to all style and shape variants.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <!-- Filled -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:center; gap:20px;">
+                <button class="drp-button-contained-icon-container-rect-bg-large drp-button-contained-color-primary-filled" aria-label="Large">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-filled" aria-label="Medium">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-small drp-button-contained-color-primary-filled" aria-label="Small">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Filled</div>
+          </div>
+          <!-- Outline -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:center; gap:20px;">
+                <button class="drp-button-contained-icon-container-rect-bg-large drp-button-contained-color-primary-outlined" aria-label="Large">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-outlined" aria-label="Medium">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-small drp-button-contained-color-primary-outlined" aria-label="Small">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Outline</div>
+          </div>
+          <!-- Plain -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:center; gap:20px;">
+                <button class="drp-button-contained-icon-container-rect-bg-large drp-button-contained-color-primary-plain" aria-label="Large">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-plain" aria-label="Medium">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-small drp-button-contained-color-primary-plain" aria-label="Small">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Plain</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Large --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-icon-container-rect-bg-large drp-button-contained-color-primary-filled"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Add item"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Medium --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-primary-filled"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Add item"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Small --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-icon-container-rect-bg-small drp-button-contained-color-primary-filled"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Add item"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INVERSE — STYLE VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Style Variants</h2>
+        <p class="doc-section__subtitle">Inverse icon buttons use white fill, border, and icon color on dark or image backgrounds. Rectangle and Circle shapes both supported.</p>
+
+        <div class="doc-variant-grid">
+          <!-- Filled -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark" style="gap:16px;">
+              <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-filled" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+              <button class="drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-inverse-filled" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="doc-variant-card__label">Filled</div>
+          </div>
+          <!-- Outline -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark" style="gap:16px;">
+              <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-outlined" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+              <button class="drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-inverse-outlined" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="doc-variant-card__label">Outline</div>
+          </div>
+          <!-- Plain -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark" style="gap:16px;">
+              <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-plain" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+              <button class="drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-inverse-plain" aria-label="Favorite">
+                <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="doc-variant-card__label">Plain</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Inverse filled rectangle --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-filled"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Add item"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Inverse outline circle --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-icon-container-circle-bg-medium drp-button-contained-color-inverse-outlined"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Add item"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INVERSE — INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Interactive States</h2>
+        <p class="doc-section__subtitle">All states are shown below. Inverse buttons use white on dark — colors are brand-agnostic.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+
+          <!-- Filled states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-filled" style="pointer-events:none;" aria-label="Default">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.9);">Default</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-filled" style="pointer-events:none; background-color:#e6e6e6;" aria-label="Hover / Pressed">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.9);">Hover / Pressed</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-filled drp-disabled" style="pointer-events:none;" aria-label="Disabled" disabled>
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.4);">Disabled</span>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Filled states</div>
+          </div>
+
+          <!-- Outline states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-outlined" style="pointer-events:none;" aria-label="Default">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.9);">Default</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-outlined" style="pointer-events:none; background-color:rgba(255,255,255,0.1);" aria-label="Hover / Pressed">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.9);">Hover / Pressed</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-outlined drp-disabled" style="pointer-events:none;" aria-label="Disabled" disabled>
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.4);">Disabled</span>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Outline states</div>
+          </div>
+
+          <!-- Plain states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-plain" style="pointer-events:none;" aria-label="Default">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.9);">Default</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-plain" style="pointer-events:none; background-color:rgba(255,255,255,0.1);" aria-label="Hover / Pressed">
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.9);">Hover / Pressed</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-plain drp-disabled" style="pointer-events:none;" aria-label="Disabled" disabled>
+                    <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                  </button>
+                  <span style="font-size:14px; color:rgba(255,255,255,0.4);">Disabled</span>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Plain states</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= INVERSE — SIZES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Sizes</h2>
+        <p class="doc-section__subtitle">Three sizes: Large (48×48px), Medium (40×40px), Small (32×32px). Size modifiers apply to all style and shape variants.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <!-- Filled -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:center; gap:20px;">
+                <button class="drp-button-contained-icon-container-rect-bg-large drp-button-contained-color-inverse-filled" aria-label="Large">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-filled" aria-label="Medium">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-small drp-button-contained-color-inverse-filled" aria-label="Small">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Filled</div>
+          </div>
+          <!-- Outline -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:center; gap:20px;">
+                <button class="drp-button-contained-icon-container-rect-bg-large drp-button-contained-color-inverse-outlined" aria-label="Large">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-outlined" aria-label="Medium">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-small drp-button-contained-color-inverse-outlined" aria-label="Small">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Outline</div>
+          </div>
+          <!-- Plain -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:center; gap:20px;">
+                <button class="drp-button-contained-icon-container-rect-bg-large drp-button-contained-color-inverse-plain" aria-label="Large">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-medium drp-button-contained-color-inverse-plain" aria-label="Medium">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+                <button class="drp-button-contained-icon-container-rect-bg-small drp-button-contained-color-inverse-plain" aria-label="Small">
+                  <i class="drp-icon drp-icon--heart" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Plain</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection. Icon buttons share all <code>--button-contained-color-*</code> tokens with the contained button.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Applied to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--button-contained-icon-container-rect-bg-large-width</code></td><td>48px</td><td>Large rect width &amp; height</td></tr>
+              <tr><td><code>--button-contained-icon-container-rect-bg-medium-width</code></td><td>40px</td><td>Medium rect width &amp; height</td></tr>
+              <tr><td><code>--button-contained-icon-container-rect-bg-small-width</code></td><td>32px</td><td>Small rect width &amp; height</td></tr>
+              <tr><td><code>--button-contained-icon-container-rect-bg-large-border-radius</code></td><td>8px</td><td>Rect corner radius (brand overridable)</td></tr>
+              <tr><td><code>--button-contained-icon-container-rect-bg-large-border-width</code></td><td>2px</td><td>Border width (outline style)</td></tr>
+              <tr><td><code>--button-contained-icon-container-circle-bg-large-border-radius</code></td><td>50%</td><td>Circle shape (always full-round)</td></tr>
+              <tr><td><code>--button-contained-color-primary-filled-background-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Primary filled bg (Chevrolet)</td></tr>
+              <tr><td><code>--button-contained-color-primary-filled-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Primary filled icon</td></tr>
+              <tr><td><code>--button-contained-color-primary-filled-hover-background-color</code></td><td><span class="doc-swatch" style="background:#0e4180;"></span>#0e4180</td><td>Primary hover / pressed bg (Chevrolet)</td></tr>
+              <tr><td><code>--button-contained-color-primary-filled-disabled-background-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Primary disabled bg (Chevrolet)</td></tr>
+              <tr><td><code>--button-contained-color-primary-outlined-border-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Primary outline border &amp; icon (Chevrolet)</td></tr>
+              <tr><td><code>--button-contained-color-primary-plain-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Primary plain icon (Chevrolet)</td></tr>
+              <tr><td><code>--button-contained-color-inverse-filled-background-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Inverse filled bg</td></tr>
+              <tr><td><code>--button-contained-color-inverse-filled-color</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Inverse filled icon</td></tr>
+              <tr><td><code>--button-contained-color-inverse-outlined-border-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Inverse outline border &amp; icon</td></tr>
+              <tr><td><code>--focus-ring-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Focus ring color</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Always include an <code>aria-label</code> describing the action — icon buttons have no visible label.</li>
+              <li>Pair with a tooltip to reveal the action label on hover for sighted users.</li>
+              <li>Use Primary on light/white backgrounds and Inverse (white fill) on dark/image backgrounds.</li>
+              <li>Use Circle shape for media controls and avatar-adjacent actions.</li>
+              <li>Scale down to Small (32px) only in dense toolbars where tap targets are supplemented by surrounding space.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use icon buttons without an <code>aria-label</code> — they are inaccessible to screen reader users.</li>
+              <li>Don't use Small (32px) as the only touch target in mobile contexts — it falls below the 44px minimum.</li>
+              <li>Don't mix Primary and Inverse in the same surface without a visible background contrast boundary.</li>
+              <li>Don't use an icon that doesn't clearly communicate the action without a text label.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

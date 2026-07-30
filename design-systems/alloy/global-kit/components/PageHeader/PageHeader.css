@@ -1,0 +1,119 @@
+/* ======================================================================
+   PageHeader - core Global Kit component.
+   1:1 with the Figma "Alloy DS BETA" Page - Header component (node 276-16818).
+
+   Structure:
+     · left container  - back / leading Icon, title + optional subtitle,
+                          optional vertical Divider, optional trailing slot
+     · action area     - the Global Kit <ButtonGroup> (right aligned)
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours / sizes / spacing. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component never
+   branches on brand/theme/device.
+
+   Tokens consumed (--component-pageHeader-*):
+     · color-bg-default            -> header background
+     · color-icon-default          -> back / leading Icon glyph tint
+                                      (via --gk-icon-color, read by <Icon>)
+     · color-text-primary-default  -> title colour
+     · color-text-secondary-default-> subtitle colour
+     · gap-default                 -> row gap (icon <-> content <-> actions)
+     · gap-xs                      -> subtitle-row gap
+     · padding-top/right/bottom/left-default -> header padding
+
+   Spacing tokens (gap / padding) resolve to spacing primitives that already
+   carry their px unit (semantic/spacing -> primitive-spacing-N = Npx), so they
+   are consumed directly - no calc(* 1px) wrap (unlike unitless sizing primitives).
+
+   Typography is applied via the DS text-style classes in the JSX
+   (title -> .text-heading-semibold-h6, subtitle -> .text-body-medium-paragraph-xs
+   from tokens/dist/computedStyles.css); this file sets only the token colours.
+   ====================================================================== */
+
+.gk-page-header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--component-pageHeader-gap-default);
+  width: 100%;
+  background: var(--component-pageHeader-color-bg-default);
+  padding-top: var(--component-pageHeader-padding-top-default);
+  padding-right: var(--component-pageHeader-padding-right-default);
+  padding-bottom: var(--component-pageHeader-padding-bottom-default);
+  padding-left: var(--component-pageHeader-padding-left-default);
+
+  /* per-component icon tint - the child <Icon> reads --gk-icon-color from here */
+  --gk-icon-color: var(--component-pageHeader-color-icon-default);
+
+  transition: background-color 0.12s ease;
+}
+
+/* Left container: grows to fill, holds icon(s) + content + divider + slot. */
+.gk-page-header__left {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  gap: var(--component-pageHeader-gap-default);
+  min-width: 0;
+  align-self: stretch;
+}
+
+/* Back / leading nav icons sit at their natural 24px box, never shrinking. */
+.gk-page-header__nav-icon {
+  flex: none;
+}
+
+/* Title + subtitle stack, vertically centred; never forces the row to shrink. */
+.gk-page-header__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.gk-page-header__title {
+  color: var(--component-pageHeader-color-text-primary-default);
+  /* single line, ellipsised when the header is narrow */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gk-page-header__subtitle-row {
+  display: flex;
+  align-items: center;
+  gap: var(--component-pageHeader-gap-xs);
+}
+
+.gk-page-header__subtitle {
+  color: var(--component-pageHeader-color-text-secondary-default);
+  white-space: nowrap;
+}
+
+/* Vertical divider between the content block and the trailing slot. The kit
+   <Divider orientation="vertical"> already owns its colour/thickness tokens and a
+   40px min-height; it only needs to not shrink here. */
+.gk-page-header__divider {
+  flex: none;
+}
+
+/* Title Right Content Slot: OPEN slot, clipsContent false in Figma, so NO
+   overflow clip. A 24px square placeholder box matching the Figma slot size;
+   its content is supplied by the `titleTrailing` prop. */
+.gk-page-header__slot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+/* Action area (ButtonGroup) hugs the right edge, never shrinking. */
+.gk-page-header__actions {
+  flex: none;
+  margin-left: auto;
+}

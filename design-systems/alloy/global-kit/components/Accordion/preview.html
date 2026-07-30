@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en" data-brand="arc" data-theme="light" data-device="desktop">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accordion — Alloy DS BETA (property playground)</title>
+
+  <!-- One <link> delivers fonts + primitives + token [data-*] layers + component CSS.
+       The accordion + Icon are pure CSS — no React/Babel needed to render them. -->
+  <link rel="stylesheet" href="../../dist/global-kit.css" />
+  <!-- Icon glyphs (Phosphor). If blocked, the accordion still renders, glyphs just won't show. -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+  <style>
+    :root { --panel-bg:#1e1f22; --panel-line:#33353a; --panel-label:#a0a3aa; --panel-text:#e9eaec; --panel-field:#2b2d31; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Proxima Nova", system-ui, sans-serif; color: #161616;
+           display: grid; grid-template-columns: 1fr 360px; height: 100vh; overflow: hidden; background: #F5F5F5; }
+
+    /* ---- canvas ---- */
+    .canvas { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+              gap: 22px; padding: 40px; background: #F5F5F5; overflow-y: auto;
+              transition: background-color .2s ease; }
+    .backdrop-note { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center;
+              font-size: 11px; color: #8a8d94; pointer-events: none; }
+
+    /* ---- panel (Figma-style) ---- */
+    .panel { background: var(--panel-bg); color: var(--panel-text);
+             padding: 0 18px 40px; overflow-y:auto; border-radius: 16px; margin: 8px;
+             align-self: start; max-height: calc(100vh - 16px); }
+    .panel h2 { position:sticky; top:0; z-index:2; background:var(--panel-bg);
+             font-size:15px; margin:0 -18px 12px; padding:16px 18px 12px;
+             display:flex; align-items:center; justify-content:space-between;
+             border-bottom:1px solid var(--panel-line);
+             border-top-left-radius:16px; border-top-right-radius:16px; }
+    .vcount { font-size:11px; font-weight:500; color:var(--panel-label); background:var(--panel-field);
+             border-radius:999px; padding:2px 8px; margin-left:4px; vertical-align:middle; }
+    .panel .reset { color:var(--panel-label); font-size:16px; cursor:pointer; background:none; border:none;
+             display:inline-flex; align-items:center; padding:0; line-height:1; }
+    .panel .reset:hover { color:var(--panel-text); }
+    .section { border-top:1px solid var(--panel-line); }
+    .section > summary { list-style:none; cursor:pointer; font-size:14px; font-weight:600; color:var(--panel-text);
+             margin:0; padding:16px 0 12px; display:flex; align-items:center; justify-content:space-between; user-select:none; }
+    .section > summary::-webkit-details-marker { display:none; }
+    .section[open] > summary { margin-bottom:0; }
+    .sec-caret { font-size:14px; color:var(--panel-label); transition:transform .15s; }
+    .section:not([open]) > summary .sec-caret { transform:rotate(-90deg); }
+    .section > summary:hover .sec-caret { color:var(--panel-text); }
+    .row { display:grid; grid-template-columns: 1fr 1.3fr; align-items:center; gap:10px; margin-bottom:12px; }
+    .row label { font-size:13px; color:var(--panel-label); }
+    .row.sub label { padding-left:12px; font-size:12px; color:#7f838b; }
+    .row.is-off label { opacity:.45; }
+    .row select, .row input[type=text], .row input[list] {
+      width:100%; height:34px; font:inherit; font-size:13px; color:var(--panel-text); background:var(--panel-field);
+      border:1px solid var(--panel-line); border-radius:6px; padding:0 10px; appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a0a3aa' fill='none' stroke-width='1.3'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 10px center; }
+    .row input[type=text] { background-image:none; }
+    .row input:disabled { opacity:.4; }
+    .switch { position:relative; display:inline-block; width:38px; height:22px; justify-self:start; }
+    .switch input { opacity:0; width:0; height:0; }
+    .track { position:absolute; inset:0; background:#4b4d52; border-radius:999px; transition:.15s; cursor:pointer; }
+    .track::before { content:""; position:absolute; width:16px; height:16px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.15s; }
+    .switch input:checked + .track { background:#4285f4; }
+    .switch input:checked + .track::before { transform:translateX(16px); }
+    .gallery { display:grid; gap:22px; align-items:start; justify-items:center; width:100%; max-width:440px; }
+    .gcell { display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; width:100%; }
+    .glabel { font-size:11px; color:#6d707a; text-transform:capitalize; }
+    .tok-hint { font-size:12px; color:#7f838b; line-height:1.55; }
+    .tok { margin-bottom:11px; }
+    .tok .nm { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; color:#c7cad0; line-height:1.45; word-break:break-all; }
+    .tok .val { display:flex; align-items:center; gap:8px; margin-top:3px; }
+    .tok .sw { width:14px; height:14px; border-radius:3px; border:1px solid rgba(255,255,255,.22); flex:none; }
+    .tok .vl { font-size:11px; color:#9a9da4; }
+    .tok-sub { font-size:11px; color:#7f838b; margin:14px 0 8px; text-transform:uppercase; letter-spacing:.04em; }
+    .demo-content { font-size:13px; color:#6d707a; line-height:1.55; }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <div id="mount"></div>
+    <div class="backdrop-note" id="backdrop-note"></div>
+  </div>
+
+  <aside class="panel">
+    <h2><span>Accordion <span class="vcount" id="vcount"></span></span> <button class="reset" id="reset" title="Reset" aria-label="Reset"><i class="ph ph-arrow-counter-clockwise"></i></button></h2>
+
+    <details class="section" open style="border-top:none;">
+      <summary><span>Variable modes</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label>Brand</label>
+        <select id="m-brand"><option value="arc">ARC</option><option value="t1">T1</option></select></div>
+      <div class="row"><label>Theme</label>
+        <select id="m-theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+      <div class="row"><label>Device</label>
+        <select id="m-device"><option value="desktop">Desktop</option><option value="tablet">Tablet</option><option value="mobile">Mobile</option></select></div>
+    </details>
+
+    <details class="section" open>
+      <summary><span>Component properties</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label>Status</label>
+        <select id="p-status"><option value="default">Default</option><option value="error">Error</option><option value="success">Success</option></select></div>
+      <div class="row"><label>State</label>
+        <select id="p-state"><option value="default">Default</option><option value="hover">Hover</option></select></div>
+      <div class="row"><label for="p-open">Open</label>
+        <label class="switch"><input type="checkbox" id="p-open"><span class="track"></span></label></div>
+      <div class="row"><label for="p-disabled">Disabled</label>
+        <label class="switch"><input type="checkbox" id="p-disabled"><span class="track"></span></label></div>
+
+      <div class="row"><label for="p-caret-left">Show caret (left)</label>
+        <label class="switch"><input type="checkbox" id="p-caret-left" checked><span class="track"></span></label></div>
+      <div class="row"><label for="p-caret-right">Show caret (right)</label>
+        <label class="switch"><input type="checkbox" id="p-caret-right" checked><span class="track"></span></label></div>
+
+      <div class="row"><label for="p-leading">Show leading icon</label>
+        <label class="switch"><input type="checkbox" id="p-leading"><span class="track"></span></label></div>
+      <div class="row sub" id="leading-row"><label>Leading glyph</label>
+        <div id="leading-mount"></div></div>
+
+      <div class="row"><label for="p-trailing">Show trailing icon</label>
+        <label class="switch"><input type="checkbox" id="p-trailing"><span class="track"></span></label></div>
+      <div class="row sub" id="trailing-row"><label>Trailing glyph</label>
+        <div id="trailing-mount"></div></div>
+
+      <div class="row"><label>Title</label>
+        <input type="text" id="p-title" value="Accordion"></div>
+      <div class="row"><label>Description</label>
+        <input type="text" id="p-description" value="Description"></div>
+    </details>
+
+    <details class="section">
+      <summary><span>Tokens applied</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div id="tokens"></div>
+    </details>
+  </aside>
+
+  <!-- glyph catalog + searchable picker — one shared build-less helper in ../../lib -->
+  <script src="../../lib/glyphs.js"></script>
+  <script>
+    var focused = false;
+
+    // The Global Kit <Icon> markup for a caret (size lg = 24px box), as a string.
+    function caretMarkup() {
+      return '<span class="gk-icon gk-icon--lg gk-accordion__caret" aria-hidden="true">' +
+               '<span class="gk-icon__glyph"><i class="ph ph-caret-down"></i></span>' +
+             '</span>';
+    }
+    // A content/side icon (also size lg), for the leading/trailing glyph slots.
+    function sideIconMarkup(glyph) {
+      return '<span class="gk-icon gk-icon--lg gk-accordion__side-icon" aria-hidden="true">' +
+               '<span class="gk-icon__glyph"><i class="ph ph-' + glyph + '"></i></span>' +
+             '</span>';
+    }
+
+    function esc(s) { return String(s).replace(/[<>&]/g, function (c) { return { '<':'&lt;','>':'&gt;','&':'&amp;' }[c]; }); }
+    function val(id) { return document.getElementById(id).value; }
+    function on(id) { return document.getElementById(id).checked; }
+
+    // Build one accordion's HTML from a config object (mirrors Accordion.jsx classes).
+    function accordionMarkup(cfg) {
+      var cls = ['gk-accordion'];
+      if (cfg.open) cls.push('gk-accordion--open');
+      if (cfg.status === 'error') cls.push('gk-accordion--error');
+      if (cfg.status === 'success') cls.push('gk-accordion--success');
+      if (cfg.disabled) cls.push('gk-accordion--disabled');
+      if (cfg.state === 'hover') cls.push('gk-accordion--hover');
+
+      var inner = '';
+      if (cfg.caretLeft) inner += caretMarkup();
+      inner += '<span class="gk-accordion__container">';
+      if (cfg.leading) inner += sideIconMarkup(cfg.leadingGlyph);
+      inner += '<span class="gk-accordion__text">' +
+                 '<span class="gk-accordion__title text-body-semibold-paragraph-lg">' + esc(cfg.title) + '</span>' +
+                 (cfg.description ? '<span class="gk-accordion__description text-body-medium-paragraph-sm">' + esc(cfg.description) + '</span>' : '') +
+               '</span>';
+      if (cfg.trailing) inner += sideIconMarkup(cfg.trailingGlyph);
+      inner += '</span>';
+      if (cfg.caretRight) inner += caretMarkup();
+
+      // Content is ALWAYS in the DOM (mirrors Accordion.jsx) so open/close can
+      // animate via the .gk-accordion--open class; the grid row collapses it.
+      var content =
+        '<div class="gk-accordion__content-wrap" aria-hidden="' + (cfg.open ? 'false' : 'true') + '">' +
+          '<div class="gk-accordion__content">' +
+            '<div class="gk-accordion__content-body" role="region"><p class="demo-content" style="margin:0">' +
+              'Panel content goes here. Any children passed to &lt;Accordion&gt; render in this region when the panel is open.' +
+            '</p></div>' +
+          '</div>' +
+        '</div>';
+
+      return '<div class="' + cls.join(' ') + '">' +
+               '<button type="button" class="gk-accordion__header"' + (cfg.disabled ? ' disabled' : '') +
+                 ' aria-expanded="' + (cfg.open ? 'true' : 'false') + '">' + inner + '</button>' +
+               content +
+             '</div>';
+    }
+
+    function currentCfg() {
+      return {
+        title: val('p-title'),
+        description: val('p-description'),
+        status: val('p-status'),
+        state: val('p-state'),
+        open: on('p-open'),
+        disabled: on('p-disabled'),
+        caretLeft: on('p-caret-left'),
+        caretRight: on('p-caret-right'),
+        leading: on('p-leading'),
+        trailing: on('p-trailing'),
+        leadingGlyph: leadingCombo.getValue(),
+        trailingGlyph: trailingCombo.getValue(),
+      };
+    }
+
+    function render() {
+      if (!focused) { renderGallery(); return; }
+      var cfg = currentCfg();
+
+      document.getElementById('leading-row').classList.toggle('is-off', !cfg.leading);
+      document.getElementById('trailing-row').classList.toggle('is-off', !cfg.trailing);
+      leadingCombo.setDisabled(!cfg.leading);
+      trailingCombo.setDisabled(!cfg.trailing);
+
+      document.getElementById('mount').innerHTML = accordionMarkup(cfg);
+      // Clicking the header toggles open by flipping the class on the LIVE node
+      // (not a full re-render), so the height + caret transitions actually play.
+      var root = document.querySelector('#mount .gk-accordion');
+      var header = document.querySelector('#mount .gk-accordion__header');
+      if (header && !cfg.disabled) header.addEventListener('click', function () {
+        var nowOpen = !root.classList.contains('gk-accordion--open');
+        root.classList.toggle('gk-accordion--open', nowOpen);
+        header.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+        root.querySelector('.gk-accordion__content-wrap').setAttribute('aria-hidden', nowOpen ? 'false' : 'true');
+        document.getElementById('p-open').checked = nowOpen;
+        renderTokens(currentCfg());
+      });
+
+      renderTokens(cfg);
+      applyBackdrop();
+    }
+
+    // Gallery = the six Figma states, shown until the panel is touched.
+    var GALLERY = [
+      { label: 'Default' },
+      { label: 'Hover',    state: 'hover' },
+      { label: 'Error',    status: 'error' },
+      { label: 'Success',  status: 'success' },
+      { label: 'Disabled', disabled: true },
+      { label: 'Expanded', open: true },
+    ];
+    function renderGallery() {
+      var html = '<div class="gallery">';
+      GALLERY.forEach(function (g, i) {
+        var cfg = { title: 'Accordion', description: 'Description', caretLeft: true, caretRight: true,
+                    status: g.status || 'default', state: g.state || 'default', open: !!g.open, disabled: !!g.disabled };
+        html += '<div class="gcell" data-i="' + i + '">' + accordionMarkup(cfg) +
+                  '<div class="glabel">' + g.label + '</div></div>';
+      });
+      html += '</div>';
+      document.getElementById('mount').innerHTML = html;
+      document.getElementById('vcount').textContent = GALLERY.length + ' states';
+      document.getElementById('tokens').innerHTML =
+        '<div class="tok-hint">Interact with the panel — or click a state — to inspect a single variant and its applied tokens.</div>';
+      document.body.style.background = LIGHT_BG;
+      document.querySelector('.canvas').style.background = LIGHT_BG;
+      document.getElementById('backdrop-note').textContent = '';
+    }
+    function focusRender() { focused = true; render(); }
+
+    // ---- A11y backdrop guard (same approach as the Button preview) --------
+    var LIGHT_BG = '#F5F5F5', DARK_BG = '#1E1F22';
+    function parseColor(str) {
+      if (!str) return null;
+      str = str.trim();
+      if (str[0] === '#') {
+        var h = str.slice(1);
+        if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+        return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16), a: 1 };
+      }
+      var m = str.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      var p = m[1].split(/[,\s/]+/).map(parseFloat);
+      return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+    }
+    function luminance(c) {
+      var a = [c.r, c.g, c.b].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+      return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+    function contrast(c1, c2) {
+      if (!c1 || !c2) return 21;
+      var l1 = luminance(c1), l2 = luminance(c2);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+    // The accordion always has a white-ish fill; guard on its border so an
+    // all-neutral panel never dissolves into the canvas.
+    function applyBackdrop() {
+      var el = document.querySelector('#mount .gk-accordion');
+      var note = document.getElementById('backdrop-note');
+      if (!el) return;
+      var cs = getComputedStyle(el);
+      var rep = parseColor(cs.borderTopColor);
+      var cLight = contrast(rep, parseColor(LIGHT_BG));
+      var chosen = cLight >= 1.3 ? LIGHT_BG : DARK_BG;
+      document.body.style.background = chosen;
+      document.querySelector('.canvas').style.background = chosen;
+      note.textContent = '';
+    }
+
+    // Tokens applied — read the rendered element's real computed style and pair
+    // each value with the design token the CSS binds it to for the current state.
+    var COLOR_RE = /^(#|rgb|hsl)/i;
+    function tokenRow(name, value) {
+      var v = (value || '').trim() || '—';
+      var swatch = COLOR_RE.test(v) ? '<span class="sw" style="background:' + v + '"></span>' : '';
+      return '<div class="tok"><div class="nm">' + name + '</div>' +
+             '<div class="val">' + swatch + '<span class="vl">' + v + '</span></div></div>';
+    }
+    function renderTokens(cfg) {
+      var root = document.querySelector('#mount .gk-accordion');
+      var header = document.querySelector('#mount .gk-accordion__header');
+      var box = document.getElementById('tokens');
+      if (!root || !header) { box.innerHTML = ''; return; }
+      var rcs = getComputedStyle(root), hcs = getComputedStyle(header);
+
+      // Which token suffix wins for border/bg (mirrors Accordion.css precedence).
+      var s = cfg.disabled ? 'disabled'
+            : cfg.status === 'error' ? 'error'
+            : cfg.status === 'success' ? 'success'
+            : cfg.open ? 'expanded'
+            : cfg.state === 'hover' ? 'hover'
+            : 'default';
+      var textS = cfg.disabled ? 'disabled' : 'default';
+
+      var color = [
+        ['--component-accordion-color-border-' + s, rcs.borderTopColor],
+        ['--component-accordionHeader-color-bg-' + s, hcs.backgroundColor],
+        ['--component-accordionHeader-color-text-primary-' + textS, rcs.getPropertyValue('--_tp')],
+        ['--component-accordionHeader-color-text-secondary-' + textS, rcs.getPropertyValue('--_ts')],
+        ['--component-accordionHeader-color-icon-' + textS, rcs.getPropertyValue('--_ic')],
+      ];
+      var geo = [
+        ['--component-accordion-borderRadius-default', rcs.borderTopLeftRadius],
+        ['--component-accordion-borderWidth-default', rcs.borderTopWidth],
+        ['--component-accordionHeader-gap-md', hcs.columnGap || hcs.gap],
+        ['--component-accordionHeader-padding-top-default', hcs.paddingTop],
+        ['--component-accordionHeader-padding-right-default', hcs.paddingRight],
+        ['--component-accordionHeader-padding-bottom-default', hcs.paddingBottom],
+        ['--component-accordionHeader-padding-left-default', hcs.paddingLeft],
+      ];
+      box.innerHTML =
+        '<div class="tok-sub">Colour</div>' + color.map(function (r) { return tokenRow(r[0], r[1]); }).join('') +
+        '<div class="tok-sub">Geometry</div>' + geo.map(function (r) { return tokenRow(r[0], r[1]); }).join('');
+    }
+
+    function applyModes() {
+      document.documentElement.setAttribute('data-brand', val('m-brand'));
+      document.documentElement.setAttribute('data-theme', val('m-theme'));
+      document.documentElement.setAttribute('data-device', val('m-device'));
+      render();
+    }
+
+    // Leading/trailing glyph pickers = the SAME combobox the Icon preview uses.
+    var leadingCombo = GKGlyphCombobox.create({
+      mount: document.getElementById('leading-mount'), value: 'info', onChange: focusRender });
+    var trailingCombo = GKGlyphCombobox.create({
+      mount: document.getElementById('trailing-mount'), value: 'dots-three', onChange: focusRender });
+
+    ['p-status','p-state','p-open','p-disabled','p-caret-left','p-caret-right','p-leading','p-trailing','p-title','p-description']
+      .forEach(function (id) { document.getElementById(id).addEventListener('input', focusRender); });
+    ['m-brand','m-theme','m-device']
+      .forEach(function (id) { document.getElementById(id).addEventListener('change', applyModes); });
+
+    // Click a gallery tile → load that state into the panel and focus it.
+    document.getElementById('mount').addEventListener('click', function (e) {
+      if (focused) return;
+      var cell = e.target.closest && e.target.closest('.gcell');
+      if (!cell) return;
+      var g = GALLERY[+cell.dataset.i];
+      document.getElementById('p-status').value = g.status || 'default';
+      document.getElementById('p-state').value = g.state || 'default';
+      document.getElementById('p-open').checked = !!g.open;
+      document.getElementById('p-disabled').checked = !!g.disabled;
+      focusRender();
+    });
+
+    document.getElementById('reset').addEventListener('click', function () {
+      document.getElementById('p-status').value = 'default';
+      document.getElementById('p-state').value = 'default';
+      ['p-open','p-disabled','p-leading','p-trailing'].forEach(function (id){ document.getElementById(id).checked = false; });
+      ['p-caret-left','p-caret-right'].forEach(function (id){ document.getElementById(id).checked = true; });
+      leadingCombo.setValue('info');
+      trailingCombo.setValue('dots-three');
+      document.getElementById('p-title').value = 'Accordion';
+      document.getElementById('p-description').value = 'Description';
+      focused = false;
+      render();
+    });
+
+    applyModes();
+  </script>
+</body>
+</html>

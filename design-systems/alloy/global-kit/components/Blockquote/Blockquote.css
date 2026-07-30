@@ -1,0 +1,73 @@
+/* ======================================================================
+   Blockquote — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Blockquote set (node 276-10482).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / sizes / fonts. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     color → primary | neutral   (.gk-blockquote--<color>)
+             — the only visual axis. The left rule colour resolves through a
+               single local indirection var (--_bd) that each colour points
+               at the matching border token; --_bd is component-internal
+               plumbing, not a design token.
+   ====================================================================== */
+
+.gk-blockquote {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  gap: var(--component-blockquote-gap-default);
+  margin: 0;
+  padding: var(--component-blockquote-padding-top-default) var(--component-blockquote-padding-right-default)
+           var(--component-blockquote-padding-bottom-default) var(--component-blockquote-padding-left-default);
+  background: var(--component-blockquote-color-bg-default);
+  color: var(--component-blockquote-color-text-default);
+  border-left: var(--component-blockquote-borderWidth-medium) solid var(--_bd);
+  /* Typography = the DS text styles the Figma blockquote applies (Body/Medium/
+     Paragraph/{lg,sm} → the .text-body-medium-paragraph-* classes on the quote
+     and cite). font-weight is kept at 500 because the fontWeight-Medium token
+     those classes reference compiles to the string "Medium" (invalid as a CSS
+     font-weight, so silently dropped) — the text inherits this working 500,
+     which selects the Proxima Nova Medium @font-face. */
+  font-weight: 500;
+}
+
+/* COLOUR — the left rule is the only variant difference. */
+.gk-blockquote--primary { --_bd: var(--component-blockquote-color-border-default); }
+.gk-blockquote--neutral { --_bd: var(--component-blockquote-color-border-neutral); }
+
+/* Leading quote mark rendered with the Global Kit <Icon>; expose the icon
+   token to it (Icon reads var(--gk-icon-color)). Per Figma the glyph is
+   mirrored horizontally (scaleY(-1)+rotate(180deg) nets to scaleX(-1)) so it
+   reads as an opening quote. */
+.gk-blockquote__icon {
+  --gk-icon-color: var(--component-blockquote-color-icon-default);
+}
+.gk-blockquote__icon .gk-icon__glyph {
+  transform: scaleX(-1);
+}
+
+/* Quote body + attribution stack, tighter inner gap. */
+.gk-blockquote__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--component-blockquote-gap-inner);
+  width: 100%;
+}
+
+.gk-blockquote__quote {
+  margin: 0;
+  width: 100%;
+  word-break: break-word;
+}
+
+.gk-blockquote__cite {
+  margin: 0;
+  width: 100%;
+  word-break: break-word;
+}

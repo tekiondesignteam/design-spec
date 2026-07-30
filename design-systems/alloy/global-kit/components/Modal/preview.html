@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en" data-brand="arc" data-theme="light" data-device="desktop">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modal — Alloy DS BETA (property playground)</title>
+
+  <!-- One <link> delivers fonts + primitives + token [data-*] layers + component CSS.
+       Modal and every child it composes (IconButton · Button · Divider · Icon) are
+       pure CSS - no React/Babel needed to render them here. -->
+  <link rel="stylesheet" href="../../dist/global-kit.css" />
+  <!-- Icon glyphs (Phosphor). If blocked, the modal still renders, glyphs just won't show. -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+  <style>
+    :root { --panel-bg:#1e1f22; --panel-line:#33353a; --panel-label:#a0a3aa; --panel-text:#e9eaec; --panel-field:#2b2d31; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Proxima Nova", system-ui, sans-serif; color: #161616;
+           display: grid; grid-template-columns: 1fr 360px; height: 100vh; overflow: hidden; background: #F5F5F5; }
+
+    /* ---- canvas ---- */
+    .canvas { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+              gap: 22px; padding: 40px; background: #F5F5F5; overflow-y: auto;
+              transition: background-color .2s ease; }
+    .backdrop-note { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center;
+              font-size: 11px; color: #8a8d94; pointer-events: none; }
+    .stage { border-radius:8px; padding:40px;
+             display:flex; align-items:center; justify-content:center; }
+    /* the modal is width:100% of its box - give the stage a dialog-sized box */
+    #mount { width: 440px; max-width: 100%; }
+    #mount.gallery-mode { width: auto; }
+
+    /* preview-only sample body content (the modal body is full-bleed by design) */
+    .sample-body { padding: 20px 24px; font-size: 14px; line-height: 1.5; color: #45474d; }
+
+    /* ---- panel (Figma-style) ---- */
+    .panel { background: var(--panel-bg); color: var(--panel-text);
+             padding: 0 18px 40px; overflow-y:auto; border-radius: 16px; margin: 8px;
+             align-self: start; max-height: calc(100vh - 16px); }
+    .panel h2 { position:sticky; top:0; z-index:2; background:var(--panel-bg);
+             font-size:15px; margin:0 -18px 12px; padding:16px 18px 12px;
+             display:flex; align-items:center; justify-content:space-between;
+             border-bottom:1px solid var(--panel-line);
+             border-top-left-radius:16px; border-top-right-radius:16px; }
+    .vcount { font-size:11px; font-weight:500; color:var(--panel-label); background:var(--panel-field);
+             border-radius:999px; padding:2px 8px; margin-left:4px; vertical-align:middle; }
+    .panel .reset { color:var(--panel-label); font-size:16px; cursor:pointer; background:none; border:none;
+             display:inline-flex; align-items:center; padding:0; line-height:1; }
+    .panel .reset:hover { color:var(--panel-text); }
+    /* collapsible sections */
+    .section { border-top:1px solid var(--panel-line); }
+    .section > summary { list-style:none; cursor:pointer; font-size:14px; font-weight:600; color:var(--panel-text);
+             margin:0; padding:16px 0 12px; display:flex; align-items:center; justify-content:space-between; user-select:none; }
+    .section > summary::-webkit-details-marker { display:none; }
+    .section[open] > summary { margin-bottom:0; }
+    .sec-caret { font-size:14px; color:var(--panel-label); transition:transform .15s; }
+    .section:not([open]) > summary .sec-caret { transform:rotate(-90deg); }
+    .section > summary:hover .sec-caret { color:var(--panel-text); }
+    .row { display:grid; grid-template-columns: 1fr 1.3fr; align-items:center; gap:10px; margin-bottom:12px; }
+    .row label { font-size:13px; color:var(--panel-label); }
+    .row.sub label { padding-left:12px; font-size:12px; color:#7f838b; }
+    .row.is-off label { opacity:.45; }
+    .row select, .row input[type=text], .row input[list] {
+      width:100%; height:34px; font:inherit; font-size:13px; color:var(--panel-text); background:var(--panel-field);
+      border:1px solid var(--panel-line); border-radius:6px; padding:0 10px; appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a0a3aa' fill='none' stroke-width='1.3'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 10px center; }
+    .row input[type=text] { background-image:none; }
+    .row input:disabled { opacity:.4; }
+    /* toggle */
+    .switch { position:relative; display:inline-block; width:38px; height:22px; justify-self:start; }
+    .switch input { opacity:0; width:0; height:0; }
+    .track { position:absolute; inset:0; background:#4b4d52; border-radius:999px; transition:.15s; cursor:pointer; }
+    .track::before { content:""; position:absolute; width:16px; height:16px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.15s; }
+    .switch input:checked + .track { background:#4285f4; }
+    .switch input:checked + .track::before { transform:translateX(16px); }
+    /* variant gallery (shown until a config is focused) */
+    .gallery { display:grid; gap:26px 34px; align-items:start; justify-items:center; grid-template-columns:repeat(2,auto); }
+    .gcell { display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; }
+    .gcell .gk-modal { width:300px; }
+    .glabel { font-size:11px; color:#6d707a; text-transform:capitalize; }
+    .tok-hint { font-size:12px; color:#7f838b; line-height:1.55; }
+    /* tokens-applied list */
+    .tok { margin-bottom:11px; }
+    .tok .nm { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; color:#c7cad0; line-height:1.45; word-break:break-all; }
+    .tok .val { display:flex; align-items:center; gap:8px; margin-top:3px; }
+    .tok .sw { width:14px; height:14px; border-radius:3px; border:1px solid rgba(255,255,255,.22); flex:none; }
+    .tok .vl { font-size:11px; color:#9a9da4; }
+    .tok-sub { font-size:11px; color:#7f838b; margin:14px 0 8px; text-transform:uppercase; letter-spacing:.04em; }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="stage"><span id="mount"></span></div>
+    <div class="backdrop-note" id="backdrop-note"></div>
+  </div>
+
+  <aside class="panel">
+    <h2><span>Modal <span class="vcount" id="vcount"></span></span> <button class="reset" id="reset" title="Reset" aria-label="Reset"><i class="ph ph-arrow-counter-clockwise"></i></button></h2>
+
+    <details class="section" open style="border-top:none;">
+      <summary><span>Variable modes</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label>Brand</label>
+        <select id="m-brand"><option value="arc">ARC</option><option value="t1">T1</option></select></div>
+      <div class="row"><label>Theme</label>
+        <select id="m-theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+      <div class="row"><label>Device</label>
+        <select id="m-device"><option value="desktop">Desktop</option><option value="tablet">Tablet</option><option value="mobile">Mobile</option></select></div>
+    </details>
+
+    <details class="section" open>
+      <summary><span>Component properties</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label>Title</label>
+        <input type="text" id="p-title" value="Title goes here"></div>
+
+      <div class="row"><label for="p-subtitle-on">Show subtitle</label>
+        <label class="switch"><input type="checkbox" id="p-subtitle-on"><span class="track"></span></label></div>
+      <div class="row sub" id="subtitle-row"><label>Subtitle</label>
+        <input type="text" id="p-subtitle" value="Sub title text content will appear here."></div>
+
+      <div class="row"><label for="p-leading-on">Show leading icon</label>
+        <label class="switch"><input type="checkbox" id="p-leading-on"><span class="track"></span></label></div>
+      <div class="row sub" id="leading-row"><label>Leading glyph</label>
+        <div id="leading-mount"></div></div>
+
+      <div class="row"><label>Content</label>
+        <input type="text" id="p-content" value="Modal body content goes here."></div>
+
+      <div class="row"><label>Confirm label</label>
+        <input type="text" id="p-confirm" value="Button"></div>
+      <div class="row"><label>Cancel label</label>
+        <input type="text" id="p-cancel" value="Button"></div>
+    </details>
+
+    <details class="section">
+      <summary><span>Tokens applied</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div id="tokens"></div>
+    </details>
+  </aside>
+
+  <!-- glyph catalog + searchable picker — one shared build-less helper in ../../lib -->
+  <script src="../../lib/glyphs.js"></script>
+  <script>
+    // Preview opens as a gallery of representative configurations; the first panel
+    // interaction (or a tile click) switches to a single, fully-configured modal.
+    var focused = false;
+
+    function esc(s) { return (s || '').replace(/[<>&]/g, ''); }
+    function val(id) { return document.getElementById(id).value; }
+    function on(id) { return document.getElementById(id).checked; }
+
+    // ---- Child component markup (each is the pure-CSS Global Kit component) -----
+    // Leading area = Global Kit <Icon size="xl"> (32px), matching the Figma slot.
+    function leadingMarkup(glyph) {
+      return '<div class="gk-modal__leading">' +
+               '<span class="gk-icon gk-icon--xl" aria-hidden="true">' +
+                 '<span class="gk-icon__glyph"><i class="ph ph-' + glyph + '"></i></span>' +
+               '</span>' +
+             '</div>';
+    }
+    // Close = Global Kit <IconButton type="ghost" intent="neutral" size="lg"> with an x glyph.
+    function closeMarkup() {
+      return '<button class="gk-icon-button gk-icon-button--ghost gk-icon-button--neutral gk-icon-button--lg gk-modal__close" aria-label="Close">' +
+               '<span class="gk-icon gk-icon--md gk-icon-button__icon" aria-hidden="true">' +
+                 '<span class="gk-icon__glyph"><i class="ph ph-x"></i></span>' +
+               '</span>' +
+             '</button>';
+    }
+    // Footer action = Global Kit <Button size="lg">.
+    function buttonMarkup(type, intent, label) {
+      return '<button class="gk-button gk-button--' + type + ' gk-button--' + intent + ' gk-button--lg">' +
+               '<span class="gk-button__label text-body-medium-paragraph-lg">' + esc(label) + '</span>' +
+             '</button>';
+    }
+    // Footer top rule = Global Kit <Divider>.
+    function dividerMarkup() {
+      return '<div class="gk-divider gk-divider--horizontal gk-divider--full-width gk-modal__divider" role="separator" aria-orientation="horizontal">' +
+               '<span class="gk-divider__line"></span>' +
+             '</div>';
+    }
+
+    // ---- Modal markup ----------------------------------------------------------
+    function modalMarkup(cfg) {
+      var html = '<div class="gk-modal" role="dialog" aria-modal="true">';
+      html +=   '<div class="gk-modal__header">';
+      html +=     '<div class="gk-modal__header-container">';
+      if (cfg.leading) html += leadingMarkup(cfg.leadingGlyph);
+      html +=       '<div class="gk-modal__heading">';
+      if (cfg.title) html += '<p class="gk-modal__title text-heading-semibold-h6">' + esc(cfg.title) + '</p>';
+      if (cfg.subtitle) html += '<p class="gk-modal__subtitle text-body-regular-paragraph-lg">' + esc(cfg.subtitleText) + '</p>';
+      html +=       '</div>';
+      html +=     '</div>';
+      html +=     closeMarkup();
+      html +=   '</div>';
+      html +=   '<div class="gk-modal__body"><div class="sample-body">' + esc(cfg.content) + '</div></div>';
+      html +=   '<div class="gk-modal__footer">';
+      html +=     dividerMarkup();
+      html +=     '<div class="gk-modal__actions">' +
+                    buttonMarkup('stroke', 'primary', cfg.cancel) +
+                    buttonMarkup('filled', 'primary', cfg.confirm) +
+                  '</div>';
+      html +=   '</div>';
+      html += '</div>';
+      return html;
+    }
+
+    function currentConfig() {
+      return {
+        title: val('p-title'),
+        subtitle: on('p-subtitle-on'), subtitleText: val('p-subtitle'),
+        leading: on('p-leading-on'), leadingGlyph: leadingCombo.getValue(),
+        content: val('p-content'),
+        confirm: val('p-confirm'), cancel: val('p-cancel')
+      };
+    }
+
+    function render() {
+      if (!focused) { renderGallery(); return; }
+      document.getElementById('mount').classList.remove('gallery-mode');
+
+      // dim + disable the sub-controls whose toggle is off
+      document.getElementById('subtitle-row').classList.toggle('is-off', !on('p-subtitle-on'));
+      document.getElementById('leading-row').classList.toggle('is-off', !on('p-leading-on'));
+      document.getElementById('p-subtitle').disabled = !on('p-subtitle-on');
+      leadingCombo.setDisabled(!on('p-leading-on'));
+
+      document.getElementById('mount').innerHTML = modalMarkup(currentConfig());
+      renderTokens();
+      applyBackdrop();
+    }
+
+    // Gallery = four representative configurations, shown until a tile is clicked or
+    // the panel is touched.
+    var GALLERY = [
+      { key:'basic',    label:'basic',              title:'Title goes here', subtitle:false, leading:false },
+      { key:'subtitle', label:'with subtitle',      title:'Title goes here', subtitle:true,  leading:false },
+      { key:'leading',  label:'with leading icon',  title:'Title goes here', subtitle:false, leading:true  },
+      { key:'both',     label:'leading + subtitle', title:'Title goes here', subtitle:true,  leading:true  }
+    ];
+    function renderGallery() {
+      document.getElementById('mount').classList.add('gallery-mode');
+      var html = '<div class="gallery">';
+      GALLERY.forEach(function (g) {
+        var cfg = {
+          title: g.title,
+          subtitle: g.subtitle, subtitleText: 'Sub title text content will appear here.',
+          leading: g.leading, leadingGlyph: 'info',
+          content: 'Modal body content goes here.',
+          confirm: 'Button', cancel: 'Button'
+        };
+        html += '<div class="gcell" data-key="' + g.key + '">' + modalMarkup(cfg) +
+                  '<div class="glabel">' + g.label + '</div></div>';
+      });
+      html += '</div>';
+      document.getElementById('mount').innerHTML = html;
+      document.getElementById('vcount').textContent = GALLERY.length + ' configurations';
+      document.getElementById('tokens').innerHTML =
+        '<div class="tok-hint">Interact with the panel — or click a configuration — to inspect a single modal and its applied tokens.</div>';
+      document.body.style.background = LIGHT_BG;
+      document.querySelector('.canvas').style.background = LIGHT_BG;
+      document.getElementById('backdrop-note').textContent = '';
+    }
+    function focusRender() { focused = true; render(); }
+
+    // ---- A11y backdrop guard --------------------------------------------
+    var LIGHT_BG = '#F5F5F5', DARK_BG = '#1E1F22';
+    function parseColor(str) {
+      if (!str) return null;
+      str = str.trim();
+      if (str[0] === '#') {
+        var h = str.slice(1);
+        if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+        return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16), a: 1 };
+      }
+      var m = str.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      var p = m[1].split(/[,\s/]+/).map(parseFloat);
+      return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+    }
+    function luminance(c) {
+      var a = [c.r, c.g, c.b].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+      return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+    function contrast(c1, c2) {
+      if (!c1 || !c2) return 21;
+      var l1 = luminance(c1), l2 = luminance(c2);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+    function applyBackdrop() {
+      var el = document.querySelector('#mount .gk-modal');
+      var note = document.getElementById('backdrop-note');
+      if (!el) return;
+      var cs = getComputedStyle(el);
+      var bg = parseColor(cs.backgroundColor);          // modal surface fill
+      var rep = (bg && bg.a > 0.1) ? bg : parseColor(cs.borderTopColor);
+      var cLight = contrast(rep, parseColor(LIGHT_BG));
+      var cDark = contrast(rep, parseColor(DARK_BG));
+      var chosen = cLight >= 3 ? LIGHT_BG : (cDark > cLight ? DARK_BG : LIGHT_BG);
+      document.body.style.background = chosen;
+      document.querySelector('.canvas').style.background = chosen;
+      note.textContent = chosen === DARK_BG
+        ? 'Canvas auto-switched to dark — surface fails 3:1 contrast on light'
+        : '';
+    }
+
+    // Reflect the tokens applied to the rendered modal. Values are read from the real
+    // computed styles of the surface / header / footer and paired with the design
+    // token each property binds to in Modal.css.
+    var COLOR_RE = /^(#|rgb|hsl)/i;
+    function tokenRow(name, value) {
+      var v = (value || '').trim() || '—';
+      var swatch = COLOR_RE.test(v) ? '<span class="sw" style="background:' + v + '"></span>' : '';
+      return '<div class="tok"><div class="nm">' + name + '</div>' +
+             '<div class="val">' + swatch + '<span class="vl">' + v + '</span></div></div>';
+    }
+    function renderTokens() {
+      var box = document.getElementById('tokens');
+      var modal = document.querySelector('#mount .gk-modal');
+      var header = document.querySelector('#mount .gk-modal__header');
+      var footer = document.querySelector('#mount .gk-modal__footer');
+      var title = document.querySelector('#mount .gk-modal__title');
+      var sub = document.querySelector('#mount .gk-modal__subtitle');
+      if (!modal) { box.innerHTML = ''; return; }
+      var m = getComputedStyle(modal), h = getComputedStyle(header), f = getComputedStyle(footer);
+
+      var surface = [
+        ['--component-modal-color-bg-default', m.backgroundColor],
+        ['--component-modal-color-border-default', m.borderTopColor],
+        ['--component-modal-borderRadius-default', m.borderTopLeftRadius],
+        ['--component-modal-borderWidth-default', m.borderTopWidth]
+      ];
+      var head = [
+        ['--component-modalHeader-color-bg-default', h.backgroundColor],
+        ['--component-modalHeader-color-text-primary', title ? getComputedStyle(title).color : '—'],
+        ['--component-modalHeader-color-text-secondary', sub ? getComputedStyle(sub).color : '(subtitle off)'],
+        ['--component-modalHeader-padding-top-default', h.paddingTop],
+        ['--component-modalHeader-padding-left-default', h.paddingLeft],
+        ['--component-modalHeader-gap-lg', h.columnGap || h.gap]
+      ];
+      var foot = [
+        ['--component-modalFooter-color-bg-default', f.backgroundColor],
+        ['--component-modalFooter-gap-default', getComputedStyle(document.querySelector('#mount .gk-modal__actions')).columnGap],
+        ['--component-modalFooter-padding-top-default', f.paddingTop],
+        ['--component-modalFooter-padding-left-default', f.paddingLeft]
+      ];
+      box.innerHTML =
+        '<div class="tok-sub">Surface</div>' + surface.map(function (r) { return tokenRow(r[0], r[1]); }).join('') +
+        '<div class="tok-sub">Header</div>' + head.map(function (r) { return tokenRow(r[0], r[1]); }).join('') +
+        '<div class="tok-sub">Footer</div>' + foot.map(function (r) { return tokenRow(r[0], r[1]); }).join('');
+    }
+
+    function applyModes() {
+      document.documentElement.setAttribute('data-brand', val('m-brand'));
+      document.documentElement.setAttribute('data-theme', val('m-theme'));
+      document.documentElement.setAttribute('data-device', val('m-device'));
+      render();
+    }
+
+    // Leading glyph picker = the SAME combobox the Icon preview uses. No fork here.
+    var leadingCombo = GKGlyphCombobox.create({
+      mount: document.getElementById('leading-mount'), value: 'info', onChange: focusRender });
+
+    // Any component-property change focuses a single modal.
+    ['p-title','p-subtitle-on','p-subtitle','p-leading-on','p-content','p-confirm','p-cancel']
+      .forEach(function (id) { document.getElementById(id).addEventListener('input', focusRender); });
+    // Variable modes re-theme whatever is shown (gallery stays gallery).
+    ['m-brand','m-theme','m-device']
+      .forEach(function (id) { document.getElementById(id).addEventListener('change', applyModes); });
+
+    // Click a gallery tile → set the panel to that configuration and focus it.
+    document.getElementById('mount').addEventListener('click', function (e) {
+      var cell = e.target.closest && e.target.closest('.gcell');
+      if (!cell) return;
+      var g = GALLERY.filter(function (x) { return x.key === cell.dataset.key; })[0];
+      document.getElementById('p-subtitle-on').checked = g.subtitle;
+      document.getElementById('p-leading-on').checked = g.leading;
+      focusRender();
+    });
+
+    document.getElementById('reset').addEventListener('click', function () {
+      document.getElementById('p-title').value = 'Title goes here';
+      document.getElementById('p-subtitle').value = 'Sub title text content will appear here.';
+      document.getElementById('p-content').value = 'Modal body content goes here.';
+      document.getElementById('p-confirm').value = 'Button';
+      document.getElementById('p-cancel').value = 'Button';
+      document.getElementById('p-subtitle-on').checked = false;
+      document.getElementById('p-leading-on').checked = false;
+      leadingCombo.setValue('info');
+      focused = false;   // reset returns to the configuration gallery
+      render();
+    });
+
+    applyModes();
+  </script>
+</body>
+</html>

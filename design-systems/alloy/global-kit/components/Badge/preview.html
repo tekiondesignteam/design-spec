@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" data-brand="arc" data-theme="light" data-device="desktop">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Badge — Alloy DS BETA (property playground)</title>
+
+  <!-- One <link> delivers fonts + primitives + token [data-*] layers + component CSS.
+       Badge is a pure-CSS component - no React/Babel needed. -->
+  <link rel="stylesheet" href="../../dist/global-kit.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+
+  <style>
+    :root { --panel-bg:#1e1f22; --panel-line:#33353a; --panel-label:#a0a3aa; --panel-text:#e9eaec; --panel-field:#2b2d31; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Proxima Nova", system-ui, sans-serif; color: #161616;
+           display: grid; grid-template-columns: 1fr 360px; height: 100vh; overflow: hidden; background: #F5F5F5; }
+
+    /* ---- canvas ---- */
+    .canvas { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+              gap: 22px; padding: 40px; background: #F5F5F5; overflow-y: auto;
+              transition: background-color .2s ease; }
+    .backdrop-note { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center;
+              font-size: 11px; color: #8a8d94; pointer-events: none; }
+    .stage { border-radius:8px; padding:56px 72px;
+             display:flex; align-items:center; justify-content:center; min-width:280px; }
+
+    /* ---- panel (Figma-style) ---- */
+    .panel { background: var(--panel-bg); color: var(--panel-text);
+             padding: 0 18px 40px; overflow-y:auto; border-radius: 16px; margin: 8px;
+             align-self: start; max-height: calc(100vh - 16px); }
+    .panel h2 { position:sticky; top:0; z-index:2; background:var(--panel-bg);
+             font-size:15px; margin:0 -18px 12px; padding:16px 18px 12px;
+             display:flex; align-items:center; justify-content:space-between;
+             border-bottom:1px solid var(--panel-line);
+             border-top-left-radius:16px; border-top-right-radius:16px; }
+    .vcount { font-size:11px; font-weight:500; color:var(--panel-label); background:var(--panel-field);
+             border-radius:999px; padding:2px 8px; margin-left:4px; vertical-align:middle; }
+    .panel .reset { color:var(--panel-label); font-size:16px; cursor:pointer; background:none; border:none;
+             display:inline-flex; align-items:center; padding:0; line-height:1; }
+    .panel .reset:hover { color:var(--panel-text); }
+    .section { border-top:1px solid var(--panel-line); }
+    .section > summary { list-style:none; cursor:pointer; font-size:14px; font-weight:600; color:var(--panel-text);
+             margin:0; padding:16px 0 12px; display:flex; align-items:center; justify-content:space-between; user-select:none; }
+    .section > summary::-webkit-details-marker { display:none; }
+    .section[open] > summary { margin-bottom:0; }
+    .sec-caret { font-size:14px; color:var(--panel-label); transition:transform .15s; }
+    .section:not([open]) > summary .sec-caret { transform:rotate(-90deg); }
+    .section > summary:hover .sec-caret { color:var(--panel-text); }
+    .row { display:grid; grid-template-columns: 1fr 1.3fr; align-items:center; gap:10px; margin-bottom:12px; }
+    .row label { font-size:13px; color:var(--panel-label); }
+    .row.sub label { padding-left:12px; font-size:12px; color:#7f838b; }
+    .row.is-off { opacity:.4; }
+    .row select, .row input[type=text] {
+      width:100%; height:34px; font:inherit; font-size:13px; color:var(--panel-text); background:var(--panel-field);
+      border:1px solid var(--panel-line); border-radius:6px; padding:0 10px; appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a0a3aa' fill='none' stroke-width='1.3'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 10px center; }
+    .row input[type=text] { background-image:none; }
+    .row input:disabled, .row select:disabled { opacity:.4; }
+    /* toggle */
+    .switch { position:relative; display:inline-block; width:38px; height:22px; justify-self:start; }
+    .switch input { opacity:0; width:0; height:0; }
+    .track { position:absolute; inset:0; background:#4b4d52; border-radius:999px; transition:.15s; cursor:pointer; }
+    .track::before { content:""; position:absolute; width:16px; height:16px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.15s; }
+    .switch input:checked + .track { background:#4285f4; }
+    .switch input:checked + .track::before { transform:translateX(16px); }
+    /* variant gallery (shown until a variant is focused) */
+    .gallery { display:grid; gap:22px 34px; align-items:center; justify-items:center; grid-template-columns:repeat(4,auto); }
+    .gcell { display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; }
+    .glabel { font-size:11px; color:#6d707a; text-transform:capitalize; }
+    .grow-label { grid-column:1 / -1; justify-self:start; font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:#8a8d94; margin-top:6px; }
+    .tok-hint { font-size:12px; color:#7f838b; line-height:1.55; }
+    .tok { margin-bottom:11px; }
+    .tok .nm { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10.5px; color:#c7cad0; line-height:1.45; word-break:break-all; }
+    .tok .val { display:flex; align-items:center; gap:8px; margin-top:3px; }
+    .tok .sw { width:14px; height:14px; border-radius:3px; border:1px solid rgba(255,255,255,.22); flex:none; }
+    .tok .vl { font-size:11px; color:#9a9da4; }
+    .tok-sub { font-size:11px; color:#7f838b; margin:14px 0 8px; text-transform:uppercase; letter-spacing:.04em; }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="stage"><span id="mount"></span></div>
+    <div class="backdrop-note" id="backdrop-note"></div>
+  </div>
+
+  <aside class="panel">
+    <h2><span>Badge <span class="vcount" id="vcount"></span></span> <button class="reset" id="reset" title="Reset" aria-label="Reset"><i class="ph ph-arrow-counter-clockwise"></i></button></h2>
+
+    <details class="section" open style="border-top:none;">
+      <summary><span>Variable modes</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label>Brand</label>
+        <select id="m-brand"><option value="arc">ARC</option><option value="t1">T1</option></select></div>
+      <div class="row"><label>Theme</label>
+        <select id="m-theme"><option value="light">Light</option><option value="dark">Dark</option></select></div>
+      <div class="row"><label>Device</label>
+        <select id="m-device"><option value="desktop">Desktop</option><option value="tablet">Tablet</option><option value="mobile">Mobile</option></select></div>
+    </details>
+
+    <details class="section" open>
+      <summary><span>Component properties</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div class="row"><label>Colour</label>
+        <select id="p-color"><option value="info">Info</option><option value="error">Error</option><option value="warning">Warning</option><option value="success">Success</option></select></div>
+      <div class="row"><label>Size</label>
+        <select id="p-size"><option value="md" selected>md</option><option value="sm">sm</option></select></div>
+      <div class="row"><label>Light</label>
+        <label class="switch"><input type="checkbox" id="p-light"><span class="track"></span></label></div>
+      <div class="row"><label>Dot</label>
+        <label class="switch"><input type="checkbox" id="p-dot"><span class="track"></span></label></div>
+      <div class="row sub" id="count-row"><label>Count</label>
+        <input type="text" id="p-count" value="7" maxlength="4"></div>
+    </details>
+
+    <details class="section">
+      <summary><span>Tokens applied</span><i class="ph ph-caret-down sec-caret"></i></summary>
+      <div id="tokens"></div>
+    </details>
+  </aside>
+
+  <script>
+    var COLORS = ['info','error','warning','success'];
+    var focused = false;
+
+    // Badge markup, as a string (pure-CSS component; count form carries a text
+    // span with the DS caption class, dot form is empty).
+    function badgeMarkup(o) {
+      var cls = 'gk-badge gk-badge--' + o.color + ' gk-badge--' + o.size +
+                (o.light ? ' gk-badge--light' : ' gk-badge--filled') +
+                (o.dot ? ' gk-badge--dot' : '');
+      var inner = o.dot ? '' :
+        '<span class="gk-badge__count text-body-semibold-paragraph-xs">' +
+          String(o.count == null ? '' : o.count).replace(/[<>&]/g, '') +
+        '</span>';
+      return '<span class="' + cls + '"' + (o.dot ? ' role="presentation"' : '') + '>' + inner + '</span>';
+    }
+
+    function val(id) { return document.getElementById(id).value; }
+    function checked(id) { return document.getElementById(id).checked; }
+    function current() {
+      return { color: val('p-color'), size: val('p-size'),
+               light: checked('p-light'), dot: checked('p-dot'), count: val('p-count') };
+    }
+
+    function render() {
+      if (!focused) { renderGallery(); return; }
+      var o = current();
+      // the count field does not apply to the dot form
+      document.getElementById('count-row').classList.toggle('is-off', o.dot);
+      document.getElementById('p-count').disabled = o.dot;
+
+      document.getElementById('mount').innerHTML = badgeMarkup(o);
+      renderTokens(o);
+      applyBackdrop();
+    }
+
+    // Gallery = the exact Figma set: 4 colours x { filled md, filled sm,
+    // filled dot, light md, light sm, light dot } = 24 variants. Dot mirrors
+    // Figma's md dot for both treatments.
+    var ROWS = [
+      { label: 'Filled · count · md', light:false, dot:false, size:'md' },
+      { label: 'Filled · count · sm', light:false, dot:false, size:'sm' },
+      { label: 'Filled · dot',        light:false, dot:true,  size:'md' },
+      { label: 'Light · count · md',  light:true,  dot:false, size:'md' },
+      { label: 'Light · count · sm',  light:true,  dot:false, size:'sm' },
+      { label: 'Light · dot',         light:true,  dot:true,  size:'md' },
+    ];
+    function renderGallery() {
+      var html = '<div class="gallery">';
+      var n = 0;
+      ROWS.forEach(function (row) {
+        html += '<div class="grow-label">' + row.label + '</div>';
+        COLORS.forEach(function (color) {
+          var o = { color:color, size:row.size, light:row.light, dot:row.dot, count:'7' };
+          n++;
+          html += '<div class="gcell" data-color="' + color + '" data-size="' + row.size +
+                  '" data-light="' + row.light + '" data-dot="' + row.dot + '">' +
+                    badgeMarkup(o) +
+                    '<div class="glabel">' + color + '</div>' +
+                  '</div>';
+        });
+      });
+      html += '</div>';
+      document.getElementById('mount').innerHTML = html;
+      document.getElementById('vcount').textContent = n + ' variants';
+      document.getElementById('tokens').innerHTML =
+        '<div class="tok-hint">Interact with the panel - or click a variant - to inspect a single variant and its applied tokens.</div>';
+      document.body.style.background = LIGHT_BG;
+      document.querySelector('.canvas').style.background = LIGHT_BG;
+      document.getElementById('backdrop-note').textContent = '';
+    }
+    function focusRender() { focused = true; render(); }
+
+    // ---- A11y backdrop guard --------------------------------------------
+    var LIGHT_BG = '#F5F5F5', DARK_BG = '#1E1F22';
+    function parseColor(str) {
+      if (!str) return null;
+      str = str.trim();
+      if (str[0] === '#') {
+        var h = str.slice(1);
+        if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+        return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16), a: 1 };
+      }
+      var m = str.match(/rgba?\(([^)]+)\)/);
+      if (!m) return null;
+      var p = m[1].split(/[,\s/]+/).map(parseFloat);
+      return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+    }
+    function luminance(c) {
+      var a = [c.r, c.g, c.b].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+      return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+    function contrast(c1, c2) {
+      if (!c1 || !c2) return 21;
+      var l1 = luminance(c1), l2 = luminance(c2);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+    function applyBackdrop() {
+      var el = document.getElementById('mount').firstElementChild;
+      var note = document.getElementById('backdrop-note');
+      if (!el) return;
+      var cs = getComputedStyle(el);
+      // silhouette = the opaque fill; light badges have a subtle fill, so fall
+      // back to the text colour if the fill reads too close to the canvas.
+      var rep = parseColor(cs.backgroundColor) || parseColor(cs.color);
+      var cLight = contrast(rep, parseColor(LIGHT_BG));
+      var cDark = contrast(rep, parseColor(DARK_BG));
+      var chosen = cLight >= 3 ? LIGHT_BG : (cDark > cLight ? DARK_BG : LIGHT_BG);
+      document.body.style.background = chosen;
+      document.querySelector('.canvas').style.background = chosen;
+      note.textContent = chosen === DARK_BG
+        ? 'Canvas auto-switched to dark - variant fails 3:1 contrast on light'
+        : '';
+    }
+
+    // Tokens applied - REAL computed values off the rendered element, paired with
+    // the design token each property binds to in Badge.css.
+    var COLOR_RE = /^(#|rgb|hsl)/i;
+    function tokenRow(name, value) {
+      var v = (value || '').trim() || '—';
+      var swatch = COLOR_RE.test(v) ? '<span class="sw" style="background:' + v + '"></span>' : '';
+      return '<div class="tok"><div class="nm">' + name + '</div>' +
+             '<div class="val">' + swatch + '<span class="vl">' + v + '</span></div></div>';
+    }
+    function renderTokens(o) {
+      var bd = document.querySelector('#mount .gk-badge');
+      var box = document.getElementById('tokens');
+      if (!bd) { box.innerHTML = ''; return; }
+      var cs = getComputedStyle(bd);
+      var treat = o.light ? 'light' : 'filled';
+      var color = [['--component-badge-color-' + treat + '-' + o.color + '-bg-default', cs.backgroundColor]];
+      if (!o.dot) {
+        var cnt = bd.querySelector('.gk-badge__count');
+        color.push(['--component-badge-color-' + treat + '-' + o.color + '-text-default', cnt ? getComputedStyle(cnt).color : cs.color]);
+      }
+      var sizeTok = o.dot ? '--component-badge-dot-height-' + o.size : '--component-badge-height-' + o.size;
+      var geo = [
+        [sizeTok + ' (height)', cs.height],
+        [sizeTok + ' (min-width)', cs.minWidth],
+        ['--component-badge-borderRadius-' + o.size, cs.borderTopLeftRadius],
+        ['--component-badge-borderWidth-' + o.size, cs.borderTopWidth]
+      ];
+      box.innerHTML =
+        '<div class="tok-sub">Colour</div>' + color.map(function (r) { return tokenRow(r[0], r[1]); }).join('') +
+        '<div class="tok-sub">Geometry</div>' + geo.map(function (r) { return tokenRow(r[0], r[1]); }).join('');
+    }
+
+    function applyModes() {
+      document.documentElement.setAttribute('data-brand', val('m-brand'));
+      document.documentElement.setAttribute('data-theme', val('m-theme'));
+      document.documentElement.setAttribute('data-device', val('m-device'));
+      render();
+    }
+
+    // Any component-property change focuses a single variant.
+    ['p-color','p-size','p-count'].forEach(function (id) { document.getElementById(id).addEventListener('input', focusRender); });
+    ['p-light','p-dot'].forEach(function (id) { document.getElementById(id).addEventListener('change', focusRender); });
+    // Variable modes re-theme whatever is shown (gallery stays gallery).
+    ['m-brand','m-theme','m-device'].forEach(function (id) { document.getElementById(id).addEventListener('change', applyModes); });
+
+    // Click a gallery tile -> set the panel to that variant and focus it.
+    document.getElementById('mount').addEventListener('click', function (e) {
+      var cell = e.target.closest && e.target.closest('.gcell');
+      if (!cell) return;
+      document.getElementById('p-color').value = cell.dataset.color;
+      document.getElementById('p-size').value = cell.dataset.size;
+      document.getElementById('p-light').checked = cell.dataset.light === 'true';
+      document.getElementById('p-dot').checked = cell.dataset.dot === 'true';
+      focusRender();
+    });
+
+    document.getElementById('reset').addEventListener('click', function () {
+      document.getElementById('p-color').value = 'info';
+      document.getElementById('p-size').value = 'md';
+      document.getElementById('p-light').checked = false;
+      document.getElementById('p-dot').checked = false;
+      document.getElementById('p-count').value = '7';
+      focused = false;   // reset returns to the full variant gallery
+      render();
+    });
+
+    applyModes();
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+/* ======================================================================
+   Icon — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Icon set (node 304-9596 / 276-11443).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / radii. The box sizes (xl 32 · lg 24 · md 20 · sm 16 · xs 12)
+   come straight from the Figma frame dimensions, which have no dedicated
+   sizing token, so they stay as raw px — same as the design source.
+
+   Axes (mirror the Figma variant set / property panel):
+     size        → xl | lg | md | sm | xs   (.gk-icon--<size>)
+     background  → off | on                 (.gk-icon--bg)
+
+   Local indirection vars are component-internal plumbing, not tokens:
+     --_box     square box size (px)
+     --_glyph   glyph size — equals --_box normally, 75% of it with a
+                background so the brand container gets even padding
+     --_radius  corner radius token for the background container
+   ====================================================================== */
+
+.gk-icon {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--_box);
+  height: var(--_box);
+  /* font-size drives the glyph size for icon-FONT glyphs (Phosphor <i>);
+     the 1em glyph box below keeps it square and centred. */
+  font-size: var(--_glyph);
+  line-height: 1;
+  /* Colour defaults to the semantic icon token, but any host context (e.g. a
+     Button) may override it by setting --gk-icon-color on an ancestor. */
+  color: var(--gk-icon-color, var(--semantic-color-icon-primary));
+}
+
+/* Glyph slot — a 1em square that the child fills. line-height:1 strips
+   font baseline metrics so the glyph sits dead-centre in the box. */
+.gk-icon__glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+}
+.gk-icon__glyph > * {
+  display: block;
+  line-height: 1;
+}
+.gk-icon__glyph > svg,
+.gk-icon__glyph > img {
+  width: 100%;
+  height: 100%;
+}
+
+/* ----------------------------------------------------------------------
+   SIZE — box, glyph (= box when no background), and background radius.
+   ---------------------------------------------------------------------- */
+.gk-icon--xl { --_box: 32px; --_glyph: 32px; --_radius: var(--semantic-borderRadius-base); }
+.gk-icon--lg { --_box: 24px; --_glyph: 24px; --_radius: var(--semantic-borderRadius-sm); }
+.gk-icon--md { --_box: 20px; --_glyph: 20px; --_radius: var(--semantic-borderRadius-sm); }
+.gk-icon--sm { --_box: 16px; --_glyph: 16px; --_radius: var(--semantic-borderRadius-xs); }
+.gk-icon--xs { --_box: 12px; --_glyph: 12px; --_radius: var(--semantic-borderRadius-xs); }
+
+/* ----------------------------------------------------------------------
+   BACKGROUND — brand-coloured, rounded container. Glyph shrinks to 75% of
+   the box (24/32 = 18/24 = 15/20 = 12/16 = 9/12) and flips to inverse.
+   ---------------------------------------------------------------------- */
+.gk-icon--bg {
+  background: var(--semantic-color-bg-brand);
+  border-radius: var(--_radius);
+  color: var(--semantic-color-icon-inverse);
+}
+.gk-icon--bg.gk-icon--xl { --_glyph: 24px; }
+.gk-icon--bg.gk-icon--lg { --_glyph: 18px; }
+.gk-icon--bg.gk-icon--md { --_glyph: 15px; }
+.gk-icon--bg.gk-icon--sm { --_glyph: 12px; }
+.gk-icon--bg.gk-icon--xs { --_glyph: 9px; }

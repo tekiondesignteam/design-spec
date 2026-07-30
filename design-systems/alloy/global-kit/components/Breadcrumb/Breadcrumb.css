@@ -1,0 +1,97 @@
+/* ======================================================================
+   Breadcrumb — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Breadcrumb page (node 304-11122):
+   the assembled Breadcrumb + the .Breadcrumb Item set (Type axis:
+   Home Icon · Default · Default Hover · Truncation · Active · Active Hover).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / sizes / fonts. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Two gap tokens drive layout:
+     --component-breadcrumb-gap-default       between crumbs (list gap)
+     --component-breadcrumbItem-gap-default   within a crumb (label→separator)
+
+   Crumb colour resolves through a local indirection var (--_fg) that each
+   state points at the matching token. --_fg is component-internal plumbing,
+   NOT a design token — values always come from var(--component-breadcrumbItem-…).
+   Glyphs render with the Global Kit <Icon>, which reads var(--gk-icon-color).
+   ====================================================================== */
+
+.gk-breadcrumb {
+  display: block;
+}
+
+.gk-breadcrumb__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--component-breadcrumb-gap-default);
+}
+
+/* A crumb = its content (link / ellipsis) + a trailing separator, spaced by
+   the item gap token. The Active (last) crumb has no separator. */
+.gk-breadcrumb__item {
+  display: flex;
+  align-items: center;
+  gap: var(--component-breadcrumbItem-gap-default);
+}
+
+/* ----------------------------------------------------------------------
+   CRUMB LINK — text colour per state; glyph tints with the same --_fg.
+   Typography = Body/Medium/Paragraph/md (.text-body-medium-paragraph-md on
+   the label). font-weight is pinned to 500 because the fontWeight-Medium
+   token that text style references compiles to the string "Medium" (invalid
+   as a CSS font-weight, so silently dropped) — 500 selects Proxima Nova Medium.
+   ---------------------------------------------------------------------- */
+.gk-breadcrumb__link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.12s ease;
+  color: var(--_fg);
+  --gk-icon-color: var(--_fg);
+  /* default state */
+  --_fg: var(--component-breadcrumbItem-color-text-default);
+}
+.gk-breadcrumb__label {
+  word-break: break-word;
+}
+
+.gk-breadcrumb__link:is(:hover, .gk-breadcrumb__link--hover) {
+  --_fg: var(--component-breadcrumbItem-color-text-hover);
+}
+
+/* Active = the current-page crumb (last in the trail). */
+.gk-breadcrumb__item--active .gk-breadcrumb__link {
+  --_fg: var(--component-breadcrumbItem-color-text-active);
+}
+.gk-breadcrumb__item--active .gk-breadcrumb__link:is(:hover, .gk-breadcrumb__link--hover) {
+  --_fg: var(--component-breadcrumbItem-color-text-activeHover);
+}
+
+/* Home crumb: icon-only. The glyph rests on the icon token, then follows the
+   link's hover colour so it reads as interactive like the text crumbs. */
+.gk-breadcrumb__link--home {
+  --gk-icon-color: var(--component-breadcrumbItem-color-icon-default);
+}
+.gk-breadcrumb__link--home:is(:hover, .gk-breadcrumb__link--hover) {
+  --gk-icon-color: var(--component-breadcrumbItem-color-text-hover);
+}
+
+/* ----------------------------------------------------------------------
+   SEPARATOR + TRUNCATION — structural glyphs on the icon token; they do not
+   react to hover.
+   ---------------------------------------------------------------------- */
+.gk-breadcrumb__sep,
+.gk-breadcrumb__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  --gk-icon-color: var(--component-breadcrumbItem-color-icon-default);
+}

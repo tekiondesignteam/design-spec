@@ -1,0 +1,74 @@
+/* ======================================================================
+   Divider - core Global Kit separator line.
+   1:1 with Figma "Alloy DS BETA" Divider set (node 276-12094).
+
+   Axes:
+     · orientation - horizontal | vertical
+     · variant     - full-width | inset-left | inset-right | middle | inset
+       (horizontal: full-width / inset-left / inset-right / middle ·
+        vertical:   full-width / middle / inset)
+
+   Binds to token custom properties - no hardcoded colours or fonts. The line:
+     · colour    -> --component-divider-color-bg-default
+     · thickness -> --component-divider-borderWidth-default, falling back to the
+       semantic default (--semantic-borderWidth-default = 1px) until the divider
+       borderWidth token is added at source. That semantic token is the exact
+       primitive the divider token will alias to, so this is a zero-swap fallback,
+       not a hardcoded value.
+
+   TEMPORARY (interim, approved): the inset amounts (48 / 32 / 8 px, read from the
+   Figma node) are NOT yet tokenised for divider - the DS spacing scale tops out at
+   space28 and no divider inset token exists. They live in the flagged local vars
+   below and should be promoted to --component-divider-spacing-* tokens at source;
+   swap the three values here for var(--component-divider-spacing-*) once they land.
+   ====================================================================== */
+
+.gk-divider {
+  box-sizing: border-box;
+  display: flex;
+
+  /* line colour + thickness (see header) */
+  --_color: var(--component-divider-color-bg-default);
+  --_thickness: var(--component-divider-borderWidth-default, var(--semantic-borderWidth-default));
+
+  /* TEMPORARY inset amounts - pending --component-divider-spacing-* tokens */
+  --_inset-lg: 48px; /* horizontal single-side inset (inset-left / inset-right) */
+  --_inset-md: 32px; /* horizontal middle inset (each side) */
+  --_inset-sm: 8px;  /* vertical inset (each side / top) */
+}
+
+/* The rule itself: grows along the divider's main axis; the cross axis carries the
+   thickness. A subtle transition lets the colour re-tint smoothly on theme change. */
+.gk-divider__line {
+  background: var(--_color);
+  flex: 1 0 0;
+  transition: background-color 0.12s ease;
+}
+
+/* ---- horizontal: spans its container width; thickness is the height ---- */
+.gk-divider--horizontal {
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+.gk-divider--horizontal .gk-divider__line { height: var(--_thickness); }
+
+.gk-divider--horizontal.gk-divider--inset-left  { padding-left: var(--_inset-lg); }
+.gk-divider--horizontal.gk-divider--inset-right { padding-right: var(--_inset-lg); }
+.gk-divider--horizontal.gk-divider--middle      { padding-inline: var(--_inset-md); }
+
+/* ---- vertical: fills its container height; thickness is the width ----
+   align-self:stretch fills the height of a flex/grid parent; min-height gives a
+   sensible standalone height (the 40px Figma demo) when nothing constrains it.
+   size40 is a sizing token (a legitimate dimension), unitless -> * 1px. */
+.gk-divider--vertical {
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  min-height: calc(var(--semantic-sizing-size40) * 1px);
+}
+.gk-divider--vertical .gk-divider__line { width: var(--_thickness); }
+
+.gk-divider--vertical.gk-divider--middle { padding-block: var(--_inset-sm); }
+.gk-divider--vertical.gk-divider--inset  { padding-top: var(--_inset-sm); }

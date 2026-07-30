@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabs — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link is-active">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Tabs</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Tabs</h1>
+        <p class="doc-page-header__desc">
+          A contained, joined tab bar for switching between related content panels.
+          Tabs share borders and collapse them via negative margins to form a seamless
+          row. Supports 2–5 tabs at a fixed 48px height.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Tabs</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=19925-5759" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= TAB COUNTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Tab Counts</h2>
+        <p class="doc-section__subtitle">Tab groups support 2 to 5 tabs. Beyond 5, consider a different navigation pattern such as a dropdown menu or pagination.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- 2 tabs -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="drp-tab-contained-container drp-tab-contained-container--lg" role="tablist" data-tabgroup="count-2">
+                <button class="drp-tab-contained-tab-container-bg is-selected" role="tab" aria-selected="true"><span>Overview</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Details</span></button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">2 tabs</div>
+          </div>
+
+          <!-- 3 tabs -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="drp-tab-contained-container drp-tab-contained-container--lg" role="tablist" data-tabgroup="count-3">
+                <button class="drp-tab-contained-tab-container-bg is-selected" role="tab" aria-selected="true"><span>Overview</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Specs</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Gallery</span></button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">3 tabs</div>
+          </div>
+
+          <!-- 4 tabs -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="drp-tab-contained-container drp-tab-contained-container--lg" role="tablist" data-tabgroup="count-4">
+                <button class="drp-tab-contained-tab-container-bg is-selected" role="tab" aria-selected="true"><span>Overview</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Specs</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Gallery</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Reviews</span></button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">4 tabs</div>
+          </div>
+
+          <!-- 5 tabs -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="drp-tab-contained-container drp-tab-contained-container--lg" role="tablist" data-tabgroup="count-5">
+                <button class="drp-tab-contained-tab-container-bg is-selected" role="tab" aria-selected="true"><span>Overview</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Specs</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Gallery</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Reviews</span></button>
+                <button class="drp-tab-contained-tab-container-bg" role="tab" aria-selected="false"><span>Finance</span></button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">5 tabs (maximum)</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= CODE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Code</h2>
+        <p class="doc-section__subtitle">Minimal HTML for a 3-tab group with content panels. Add <code>data-tabgroup</code> to the tab bar and wire panels with matching <code>data-panel</code> / <code>data-tabgroup-panel</code> attributes.</p>
+
+        <pre class="doc-code"><span class="hl-com">&lt;!-- Tab bar --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"tabs tabs--lg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tablist"</span> <span class="hl-attr">data-tabgroup</span>=<span class="hl-val">"my-tabs"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"tabs__item is-selected"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"true"</span>  <span class="hl-attr">data-panel</span>=<span class="hl-val">"panel-a"</span><span class="hl-tag">&gt;</span>Overview<span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"tabs__item"</span>             <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"false"</span> <span class="hl-attr">data-panel</span>=<span class="hl-val">"panel-b"</span><span class="hl-tag">&gt;</span>Specs<span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"tabs__item"</span>             <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"false"</span> <span class="hl-attr">data-panel</span>=<span class="hl-val">"panel-c"</span><span class="hl-tag">&gt;</span>Gallery<span class="hl-tag">&lt;/button&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-com">&lt;!-- Panels --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"tabs-panel is-active"</span> <span class="hl-attr">id</span>=<span class="hl-val">"panel-a"</span> <span class="hl-attr">data-tabgroup-panel</span>=<span class="hl-val">"my-tabs"</span><span class="hl-tag">&gt;</span>Overview content<span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"tabs-panel"</span>          <span class="hl-attr">id</span>=<span class="hl-val">"panel-b"</span> <span class="hl-attr">data-tabgroup-panel</span>=<span class="hl-val">"my-tabs"</span><span class="hl-tag">&gt;</span>Specs content<span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"tabs-panel"</span>          <span class="hl-attr">id</span>=<span class="hl-val">"panel-c"</span> <span class="hl-attr">data-tabgroup-panel</span>=<span class="hl-val">"my-tabs"</span><span class="hl-tag">&gt;</span>Gallery content<span class="hl-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <!-- ======================= DESIGN TOKENS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--tabs-height-lg</code></td><td>48px</td><td>Tab height</td></tr>
+              <tr><td><code>--tabs-bg</code></td><td><span class="doc-swatch" style="background:#ffffff; border:1px solid #ddd;"></span>#ffffff</td><td>Tab background</td></tr>
+              <tr><td><code>--tabs-border-selected</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Border + text color — selected</td></tr>
+              <tr><td><code>--tabs-border-default</code></td><td><span class="doc-swatch" style="background:#e6e6e6; border:1px solid #ccc;"></span>#e6e6e6</td><td>Border color — unselected</td></tr>
+              <tr><td><code>--tabs-text-selected</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Text color — selected</td></tr>
+              <tr><td><code>--tabs-text-default</code></td><td><span class="doc-swatch" style="background:#666666;"></span>#666666</td><td>Text color — unselected</td></tr>
+              <tr><td><code>--tabs-radius</code></td><td>8px</td><td>Corner radius (first/last tab)</td></tr>
+              <tr><td><code>--tabs-underline</code></td><td>4px</td><td>Bottom underline bar height</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Keep labels short (1–3 words) — tabs are not for long sentences.</li>
+              <li>Always have exactly one tab selected at all times.</li>
+              <li>Use tabs for primary page navigation with 2–5 related panels.</li>
+              <li>Provide a content panel for every tab.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use more than 5 tabs — use a different navigation pattern instead.</li>
+              <li>Don't use tabs when the content on each panel is very similar — use filters instead.</li>
+              <li>Don't rely only on color to communicate the selected state.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="tabs.js"></script>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

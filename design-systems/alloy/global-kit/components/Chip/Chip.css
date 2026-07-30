@@ -1,0 +1,234 @@
+/* ======================================================================
+   Chip - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Chip set (node 276-11685).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours / sizes / fonts. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     type  -> filled | outlined | soft | ghost        (.gk-chip--<type>)
+     color -> primary | secondary | error | warning
+              | info | success                        (.gk-chip--<color>)
+     size  -> lg | md | sm                            (.gk-chip--<size>)
+
+   Colours resolve through four local indirection vars
+   (--_bg / --_fg / --_ic / --_bd) that each type+color combo points at
+   the matching token. The vars are component-internal plumbing, not
+   design tokens - values always come from var(--component-chip-...).
+   Only the `outlined` type carries a dedicated border token; the other
+   types point --_bd at their own bg so the 1px border reads as a clean
+   seam (filled/soft) or is invisible (ghost, whose bg is transparent).
+   ====================================================================== */
+
+.gk-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: var(--component-chip-borderWidth-default);
+  border-color: var(--_bd);
+  border-radius: var(--component-chip-borderRadius-default);
+  background: var(--_bg);
+  color: var(--_fg);
+  white-space: nowrap;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  /* Leading/trailing glyphs are the Global Kit <Icon>; expose the per-variant
+     icon token to it so the glyph tints with the chip colour. */
+  --gk-icon-color: var(--_ic);
+}
+
+.gk-chip__label {
+  word-break: break-word;
+}
+
+/* The avatar / icon slots sit flush against the label at the chip gap. */
+.gk-chip__avatar,
+.gk-chip__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+}
+
+/* ----------------------------------------------------------------------
+   SIZE - height / padding / gap
+   ---------------------------------------------------------------------- */
+.gk-chip--lg {
+  height: calc(var(--component-chip-height-lg) * 1px);
+  gap: var(--component-chip-gap-lg);
+  padding: var(--component-chip-padding-top-lg) var(--component-chip-padding-right-lg)
+           var(--component-chip-padding-bottom-lg) var(--component-chip-padding-left-lg);
+}
+.gk-chip--md {
+  height: calc(var(--component-chip-height-md) * 1px);
+  gap: var(--component-chip-gap-md);
+  padding: var(--component-chip-padding-top-md) var(--component-chip-padding-right-md)
+           var(--component-chip-padding-bottom-md) var(--component-chip-padding-left-md);
+}
+.gk-chip--sm {
+  height: calc(var(--component-chip-height-sm) * 1px);
+  gap: var(--component-chip-gap-sm);
+  padding: var(--component-chip-padding-top-sm) var(--component-chip-padding-right-sm)
+           var(--component-chip-padding-bottom-sm) var(--component-chip-padding-left-sm);
+}
+
+/* ======================================================================
+   TYPE * FILLED  (--_bd points at the bg token)
+   ====================================================================== */
+.gk-chip--filled.gk-chip--primary {
+  --_bg: var(--component-chip-color-filled-primary-bg-default);
+  --_fg: var(--component-chip-color-filled-primary-text-default);
+  --_ic: var(--component-chip-color-filled-primary-icon-default);
+  --_bd: var(--component-chip-color-filled-primary-bg-default);
+}
+.gk-chip--filled.gk-chip--secondary {
+  --_bg: var(--component-chip-color-filled-secondary-bg-default);
+  --_fg: var(--component-chip-color-filled-secondary-text-default);
+  --_ic: var(--component-chip-color-filled-secondary-icon-default);
+  --_bd: var(--component-chip-color-filled-secondary-bg-default);
+}
+.gk-chip--filled.gk-chip--error {
+  --_bg: var(--component-chip-color-filled-error-bg-default);
+  --_fg: var(--component-chip-color-filled-error-text-default);
+  --_ic: var(--component-chip-color-filled-error-icon-default);
+  --_bd: var(--component-chip-color-filled-error-bg-default);
+}
+.gk-chip--filled.gk-chip--warning {
+  --_bg: var(--component-chip-color-filled-warning-bg-default);
+  --_fg: var(--component-chip-color-filled-warning-text-default);
+  --_ic: var(--component-chip-color-filled-warning-icon-default);
+  --_bd: var(--component-chip-color-filled-warning-bg-default);
+}
+.gk-chip--filled.gk-chip--info {
+  --_bg: var(--component-chip-color-filled-info-bg-default);
+  --_fg: var(--component-chip-color-filled-info-text-default);
+  --_ic: var(--component-chip-color-filled-info-icon-default);
+  --_bd: var(--component-chip-color-filled-info-bg-default);
+}
+.gk-chip--filled.gk-chip--success {
+  --_bg: var(--component-chip-color-filled-success-bg-default);
+  --_fg: var(--component-chip-color-filled-success-text-default);
+  --_ic: var(--component-chip-color-filled-success-icon-default);
+  --_bd: var(--component-chip-color-filled-success-bg-default);
+}
+
+/* ======================================================================
+   TYPE * OUTLINED  (dedicated border token; subtle bg)
+   ====================================================================== */
+.gk-chip--outlined.gk-chip--primary {
+  --_bg: var(--component-chip-color-outlined-primary-bg-default);
+  --_fg: var(--component-chip-color-outlined-primary-text-default);
+  --_ic: var(--component-chip-color-outlined-primary-icon-default);
+  --_bd: var(--component-chip-color-outlined-primary-border-default);
+}
+.gk-chip--outlined.gk-chip--secondary {
+  --_bg: var(--component-chip-color-outlined-secondary-bg-default);
+  --_fg: var(--component-chip-color-outlined-secondary-text-default);
+  --_ic: var(--component-chip-color-outlined-secondary-icon-default);
+  --_bd: var(--component-chip-color-outlined-secondary-border-default);
+}
+.gk-chip--outlined.gk-chip--error {
+  --_bg: var(--component-chip-color-outlined-error-bg-default);
+  --_fg: var(--component-chip-color-outlined-error-text-default);
+  --_ic: var(--component-chip-color-outlined-error-icon-default);
+  --_bd: var(--component-chip-color-outlined-error-border-default);
+}
+.gk-chip--outlined.gk-chip--warning {
+  --_bg: var(--component-chip-color-outlined-warning-bg-default);
+  --_fg: var(--component-chip-color-outlined-warning-text-default);
+  --_ic: var(--component-chip-color-outlined-warning-icon-default);
+  --_bd: var(--component-chip-color-outlined-warning-border-default);
+}
+.gk-chip--outlined.gk-chip--info {
+  --_bg: var(--component-chip-color-outlined-info-bg-default);
+  --_fg: var(--component-chip-color-outlined-info-text-default);
+  --_ic: var(--component-chip-color-outlined-info-icon-default);
+  --_bd: var(--component-chip-color-outlined-info-border-default);
+}
+.gk-chip--outlined.gk-chip--success {
+  --_bg: var(--component-chip-color-outlined-success-bg-default);
+  --_fg: var(--component-chip-color-outlined-success-text-default);
+  --_ic: var(--component-chip-color-outlined-success-icon-default);
+  --_bd: var(--component-chip-color-outlined-success-border-default);
+}
+
+/* ======================================================================
+   TYPE * SOFT  (--_bd points at the soft bg token)
+   ====================================================================== */
+.gk-chip--soft.gk-chip--primary {
+  --_bg: var(--component-chip-color-soft-primary-bg-default);
+  --_fg: var(--component-chip-color-soft-primary-text-default);
+  --_ic: var(--component-chip-color-soft-primary-icon-default);
+  --_bd: var(--component-chip-color-soft-primary-bg-default);
+}
+.gk-chip--soft.gk-chip--secondary {
+  --_bg: var(--component-chip-color-soft-secondary-bg-default);
+  --_fg: var(--component-chip-color-soft-secondary-text-default);
+  --_ic: var(--component-chip-color-soft-secondary-icon-default);
+  --_bd: var(--component-chip-color-soft-secondary-bg-default);
+}
+.gk-chip--soft.gk-chip--error {
+  --_bg: var(--component-chip-color-soft-error-bg-default);
+  --_fg: var(--component-chip-color-soft-error-text-default);
+  --_ic: var(--component-chip-color-soft-error-icon-default);
+  --_bd: var(--component-chip-color-soft-error-bg-default);
+}
+.gk-chip--soft.gk-chip--warning {
+  --_bg: var(--component-chip-color-soft-warning-bg-default);
+  --_fg: var(--component-chip-color-soft-warning-text-default);
+  --_ic: var(--component-chip-color-soft-warning-icon-default);
+  --_bd: var(--component-chip-color-soft-warning-bg-default);
+}
+.gk-chip--soft.gk-chip--info {
+  --_bg: var(--component-chip-color-soft-info-bg-default);
+  --_fg: var(--component-chip-color-soft-info-text-default);
+  --_ic: var(--component-chip-color-soft-info-icon-default);
+  --_bd: var(--component-chip-color-soft-info-bg-default);
+}
+.gk-chip--soft.gk-chip--success {
+  --_bg: var(--component-chip-color-soft-success-bg-default);
+  --_fg: var(--component-chip-color-soft-success-text-default);
+  --_ic: var(--component-chip-color-soft-success-icon-default);
+  --_bd: var(--component-chip-color-soft-success-bg-default);
+}
+
+/* ======================================================================
+   TYPE * GHOST  (--_bd points at the ghost bg token, which is transparent)
+   ====================================================================== */
+.gk-chip--ghost.gk-chip--primary {
+  --_bg: var(--component-chip-color-ghost-primary-bg-default);
+  --_fg: var(--component-chip-color-ghost-primary-text-default);
+  --_ic: var(--component-chip-color-ghost-primary-icon-default);
+  --_bd: var(--component-chip-color-ghost-primary-bg-default);
+}
+.gk-chip--ghost.gk-chip--secondary {
+  --_bg: var(--component-chip-color-ghost-secondary-bg-default);
+  --_fg: var(--component-chip-color-ghost-secondary-text-default);
+  --_ic: var(--component-chip-color-ghost-secondary-icon-default);
+  --_bd: var(--component-chip-color-ghost-secondary-bg-default);
+}
+.gk-chip--ghost.gk-chip--error {
+  --_bg: var(--component-chip-color-ghost-error-bg-default);
+  --_fg: var(--component-chip-color-ghost-error-text-default);
+  --_ic: var(--component-chip-color-ghost-error-icon-default);
+  --_bd: var(--component-chip-color-ghost-error-bg-default);
+}
+.gk-chip--ghost.gk-chip--warning {
+  --_bg: var(--component-chip-color-ghost-warning-bg-default);
+  --_fg: var(--component-chip-color-ghost-warning-text-default);
+  --_ic: var(--component-chip-color-ghost-warning-icon-default);
+  --_bd: var(--component-chip-color-ghost-warning-bg-default);
+}
+.gk-chip--ghost.gk-chip--info {
+  --_bg: var(--component-chip-color-ghost-info-bg-default);
+  --_fg: var(--component-chip-color-ghost-info-text-default);
+  --_ic: var(--component-chip-color-ghost-info-icon-default);
+  --_bd: var(--component-chip-color-ghost-info-bg-default);
+}
+.gk-chip--ghost.gk-chip--success {
+  --_bg: var(--component-chip-color-ghost-success-bg-default);
+  --_fg: var(--component-chip-color-ghost-success-text-default);
+  --_ic: var(--component-chip-color-ghost-success-icon-default);
+  --_bd: var(--component-chip-color-ghost-success-bg-default);
+}

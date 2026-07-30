@@ -1,0 +1,49 @@
+/* ======================================================================
+   StatusIcon - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Status Icon set (node 306-11300).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours/sizes. StatusIcon carries no --component-status-icon-* set of its
+   own (like Flag and Icon): its single styling input is the semantic accent
+   colour, which it forwards to the child Icon via --gk-icon-color. The box
+   size (dot 12 - flag 16) is owned by the Icon size classes (xs / sm).
+
+   Axis (mirror the Figma variant set):
+     color -> one accent per class (.gk-status-icon--<color>)
+     (open + shape are structural glyph choices handled in the JSX)
+   ====================================================================== */
+
+.gk-status-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  /* Colour of the child glyph. Icon.css reads var(--gk-icon-color) for its
+     glyph, so setting it here tints the dot/flag with the chosen accent. */
+}
+
+/* ----------------------------------------------------------------------
+   GLYPH SIZE - the Icon box stays the Figma 12 (dot) / 16 (flag), but the
+   glyph is sized to the Figma vector's proportion of that box: the design
+   draws the circle at ~9.75/12 (0.8125) and the flag at ~12/16 (0.78), which
+   is tighter than a Phosphor glyph's default full-em fill. Overriding the
+   Icon's internal --_glyph shrinks the glyph without touching the box. This is
+   a geometric ratio from the source vector, not a design token.
+   ---------------------------------------------------------------------- */
+.gk-status-icon--dot  .gk-icon { --_glyph: calc(var(--_box) * 0.8125); }
+.gk-status-icon--flag .gk-icon { --_glyph: calc(var(--_box) * 0.78); }
+
+/* ----------------------------------------------------------------------
+   COLOUR - each variant maps to a semantic accent token. 'teal' binds the
+   accent the Figma source references (cyan).
+   ---------------------------------------------------------------------- */
+.gk-status-icon--blue      { --gk-icon-color: var(--semantic-color-accent-blue); }
+.gk-status-icon--gray      { --gk-icon-color: var(--semantic-color-accent-gray); }
+.gk-status-icon--pink      { --gk-icon-color: var(--semantic-color-accent-pink); }
+.gk-status-icon--purple    { --gk-icon-color: var(--semantic-color-accent-purple); }
+.gk-status-icon--green     { --gk-icon-color: var(--semantic-color-accent-green); }
+.gk-status-icon--teal      { --gk-icon-color: var(--semantic-color-accent-cyan); }
+.gk-status-icon--lightGray { --gk-icon-color: var(--semantic-color-accent-lightGray); }
+.gk-status-icon--darkGray  { --gk-icon-color: var(--semantic-color-accent-darkGray); }
+.gk-status-icon--red       { --gk-icon-color: var(--semantic-color-accent-red); }
+.gk-status-icon--orange    { --gk-icon-color: var(--semantic-color-accent-orange); }
+.gk-status-icon--yellow    { --gk-icon-color: var(--semantic-color-accent-yellow); }

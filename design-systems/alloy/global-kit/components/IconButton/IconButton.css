@@ -1,0 +1,298 @@
+/* ======================================================================
+   IconButton - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Icon Button set (node 276-11081).
+
+   Icon Button is Button's twin: a square, icon-only control. The Figma source
+   authors it directly against the SHARED --component-button-* token set (there is
+   no dedicated --component-iconbutton-* set), so this file binds to the button
+   tokens - legitimate token consumption, not hardcoded values. Nothing here is a
+   raw colour/size/font; every value resolves through var(--component-button-…) and
+   re-themes through the [data-brand] / [data-theme] / [data-device] cascade. The
+   component never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel, same as <Button>):
+     type   → filled | stroke | ghost           (.gk-icon-button--<type>)
+     intent → primary | destructive | neutral    (.gk-icon-button--<intent>)
+     size   → lg 36 | md 32 | sm 24 (square)     (.gk-icon-button--<size>)
+     state  → default | hover | active           (via real :hover / :active, OR
+              forced with .gk-icon-button--hover / --pressed so a tool/preview can
+              show a state without pointer interaction)
+
+   Border width follows Button: the single --component-button-borderWidth-default
+   for every size (the per-size borderWidth-lg / -md the Figma node references are
+   not tokenised, exactly as in Button.css).
+
+   Colours resolve through four local indirection vars (--_bg / --_fg / --_ic /
+   --_bd); each type+intent+state combo points them at the matching token. These
+   vars are component-internal plumbing, not design tokens.
+   ====================================================================== */
+
+.gk-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+  border-style: solid;
+  border-width: var(--component-button-borderWidth-default);
+  border-color: var(--_bd);
+  background: var(--_bg);
+  color: var(--_fg);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  /* Expose the per-state icon token to the child <Icon> (reads var(--gk-icon-color)). */
+  --gk-icon-color: var(--_ic);
+}
+
+/* Loading spinner - the <Spinner> ring retinted to the per-state icon token, track
+   dropped, so it reads as a single arc in the icon colour (matches Button). */
+.gk-icon-button__spinner {
+  flex-shrink: 0;
+  --gk-spinner-thumb-color: var(--_ic);
+  --gk-spinner-track-color: transparent;
+}
+
+/* ----------------------------------------------------------------------
+   SIZE - square box (width = height) + radius. The width/height tokens come
+   from the unitless `sizing` primitive scale, so × 1px makes them a length.
+   ---------------------------------------------------------------------- */
+.gk-icon-button--lg {
+  width: calc(var(--component-button-width-lg) * 1px);
+  height: calc(var(--component-button-height-lg) * 1px);
+  border-radius: var(--component-button-borderRadius-lg);
+}
+.gk-icon-button--md {
+  width: calc(var(--component-button-width-md) * 1px);
+  height: calc(var(--component-button-height-md) * 1px);
+  border-radius: var(--component-button-borderRadius-md);
+}
+.gk-icon-button--sm {
+  width: calc(var(--component-button-width-sm) * 1px);
+  height: calc(var(--component-button-height-sm) * 1px);
+  border-radius: var(--component-button-borderRadius-sm);
+}
+
+/* ======================================================================
+   TYPE · FILLED
+   ====================================================================== */
+/* filled / primary */
+.gk-icon-button--filled.gk-icon-button--primary {
+  --_bg: var(--component-button-color-filled-primary-bg-default);
+  --_fg: var(--component-button-color-filled-primary-text-default);
+  --_ic: var(--component-button-color-filled-primary-icon-default);
+  --_bd: var(--component-button-color-filled-primary-border-default);
+}
+.gk-icon-button--filled.gk-icon-button--primary:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-filled-primary-bg-hover);
+  --_fg: var(--component-button-color-filled-primary-text-hover);
+  --_ic: var(--component-button-color-filled-primary-icon-hover);
+  --_bd: var(--component-button-color-filled-primary-border-hover);
+}
+.gk-icon-button--filled.gk-icon-button--primary:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-filled-primary-bg-pressed);
+  --_fg: var(--component-button-color-filled-primary-text-pressed);
+  --_ic: var(--component-button-color-filled-primary-icon-pressed);
+  --_bd: var(--component-button-color-filled-primary-border-pressed);
+}
+/* filled / destructive */
+.gk-icon-button--filled.gk-icon-button--destructive {
+  --_bg: var(--component-button-color-filled-destructive-bg-default);
+  --_fg: var(--component-button-color-filled-destructive-text-default);
+  --_ic: var(--component-button-color-filled-destructive-icon-default);
+  --_bd: var(--component-button-color-filled-destructive-border-default);
+}
+.gk-icon-button--filled.gk-icon-button--destructive:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-filled-destructive-bg-hover);
+  --_fg: var(--component-button-color-filled-destructive-text-hover);
+  --_ic: var(--component-button-color-filled-destructive-icon-hover);
+  --_bd: var(--component-button-color-filled-destructive-border-hover);
+}
+.gk-icon-button--filled.gk-icon-button--destructive:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-filled-destructive-bg-pressed);
+  --_fg: var(--component-button-color-filled-destructive-text-pressed);
+  --_ic: var(--component-button-color-filled-destructive-icon-pressed);
+  --_bd: var(--component-button-color-filled-destructive-border-pressed);
+}
+/* filled / neutral */
+.gk-icon-button--filled.gk-icon-button--neutral {
+  --_bg: var(--component-button-color-filled-neutral-bg-default);
+  --_fg: var(--component-button-color-filled-neutral-text-default);
+  --_ic: var(--component-button-color-filled-neutral-icon-default);
+  --_bd: var(--component-button-color-filled-neutral-border-default);
+}
+.gk-icon-button--filled.gk-icon-button--neutral:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-filled-neutral-bg-hover);
+  --_fg: var(--component-button-color-filled-neutral-text-hover);
+  --_ic: var(--component-button-color-filled-neutral-icon-hover);
+  --_bd: var(--component-button-color-filled-neutral-border-hover);
+}
+.gk-icon-button--filled.gk-icon-button--neutral:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-filled-neutral-bg-pressed);
+  --_fg: var(--component-button-color-filled-neutral-text-pressed);
+  --_ic: var(--component-button-color-filled-neutral-icon-pressed);
+  --_bd: var(--component-button-color-filled-neutral-border-pressed);
+}
+/* filled / disabled - also the LOADING state (disabled colour set + spinner). */
+.gk-icon-button--filled:disabled,
+.gk-icon-button--filled.gk-icon-button--disabled,
+.gk-icon-button--filled.gk-icon-button--loading {
+  --_bg: var(--component-button-color-filled-disabled-bg);
+  --_fg: var(--component-button-color-filled-disabled-text);
+  --_ic: var(--component-button-color-filled-disabled-icon);
+  --_bd: var(--component-button-color-filled-disabled-border);
+}
+
+/* ======================================================================
+   TYPE · STROKE
+   ====================================================================== */
+/* stroke / primary */
+.gk-icon-button--stroke.gk-icon-button--primary {
+  --_bg: var(--component-button-color-stroke-primary-bg-default);
+  --_fg: var(--component-button-color-stroke-primary-text-default);
+  --_ic: var(--component-button-color-stroke-primary-icon-default);
+  --_bd: var(--component-button-color-stroke-primary-border-default);
+}
+.gk-icon-button--stroke.gk-icon-button--primary:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-stroke-primary-bg-hover);
+  --_fg: var(--component-button-color-stroke-primary-text-hover);
+  --_ic: var(--component-button-color-stroke-primary-icon-hover);
+  --_bd: var(--component-button-color-stroke-primary-border-hover);
+}
+.gk-icon-button--stroke.gk-icon-button--primary:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-stroke-primary-bg-pressed);
+  --_fg: var(--component-button-color-stroke-primary-text-pressed);
+  --_ic: var(--component-button-color-stroke-primary-icon-pressed);
+  --_bd: var(--component-button-color-stroke-primary-border-pressed);
+}
+/* stroke / destructive */
+.gk-icon-button--stroke.gk-icon-button--destructive {
+  --_bg: var(--component-button-color-stroke-destructive-bg-default);
+  --_fg: var(--component-button-color-stroke-destructive-text-default);
+  --_ic: var(--component-button-color-stroke-destructive-icon-default);
+  --_bd: var(--component-button-color-stroke-destructive-border-default);
+}
+.gk-icon-button--stroke.gk-icon-button--destructive:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-stroke-destructive-bg-hover);
+  --_fg: var(--component-button-color-stroke-destructive-text-hover);
+  --_ic: var(--component-button-color-stroke-destructive-icon-hover);
+  --_bd: var(--component-button-color-stroke-destructive-border-hover);
+}
+.gk-icon-button--stroke.gk-icon-button--destructive:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-stroke-destructive-bg-pressed);
+  --_fg: var(--component-button-color-stroke-destructive-text-pressed);
+  --_ic: var(--component-button-color-stroke-destructive-icon-pressed);
+  --_bd: var(--component-button-color-stroke-destructive-border-pressed);
+}
+/* stroke / neutral */
+.gk-icon-button--stroke.gk-icon-button--neutral {
+  --_bg: var(--component-button-color-stroke-neutral-bg-default);
+  --_fg: var(--component-button-color-stroke-neutral-text-default);
+  --_ic: var(--component-button-color-stroke-neutral-icon-default);
+  --_bd: var(--component-button-color-stroke-neutral-border-default);
+}
+.gk-icon-button--stroke.gk-icon-button--neutral:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-stroke-neutral-bg-hover);
+  --_fg: var(--component-button-color-stroke-neutral-text-hover);
+  --_ic: var(--component-button-color-stroke-neutral-icon-hover);
+  --_bd: var(--component-button-color-stroke-neutral-border-hover);
+}
+.gk-icon-button--stroke.gk-icon-button--neutral:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-stroke-neutral-bg-pressed);
+  --_fg: var(--component-button-color-stroke-neutral-text-pressed);
+  --_ic: var(--component-button-color-stroke-neutral-icon-pressed);
+  --_bd: var(--component-button-color-stroke-neutral-border-pressed);
+}
+/* stroke / disabled - also LOADING (disabled colour set + spinner). */
+.gk-icon-button--stroke:disabled,
+.gk-icon-button--stroke.gk-icon-button--disabled,
+.gk-icon-button--stroke.gk-icon-button--loading {
+  --_bg: var(--component-button-color-stroke-disabled-bg);
+  --_fg: var(--component-button-color-stroke-disabled-text);
+  --_ic: var(--component-button-color-stroke-disabled-icon);
+  --_bd: var(--component-button-color-stroke-disabled-border);
+}
+
+/* ======================================================================
+   TYPE · GHOST
+   ====================================================================== */
+/* ghost / primary */
+.gk-icon-button--ghost.gk-icon-button--primary {
+  --_bg: var(--component-button-color-ghost-primary-bg-default);
+  --_fg: var(--component-button-color-ghost-primary-text-default);
+  --_ic: var(--component-button-color-ghost-primary-icon-default);
+  --_bd: var(--component-button-color-ghost-primary-border-default);
+}
+.gk-icon-button--ghost.gk-icon-button--primary:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-ghost-primary-bg-hover);
+  --_fg: var(--component-button-color-ghost-primary-text-hover);
+  --_ic: var(--component-button-color-ghost-primary-icon-hover);
+  --_bd: var(--component-button-color-ghost-primary-border-hover);
+}
+.gk-icon-button--ghost.gk-icon-button--primary:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-ghost-primary-bg-pressed);
+  --_fg: var(--component-button-color-ghost-primary-text-pressed);
+  --_ic: var(--component-button-color-ghost-primary-icon-pressed);
+  --_bd: var(--component-button-color-ghost-primary-border-pressed);
+}
+/* ghost / destructive */
+.gk-icon-button--ghost.gk-icon-button--destructive {
+  --_bg: var(--component-button-color-ghost-destructive-bg-default);
+  --_fg: var(--component-button-color-ghost-destructive-text-default);
+  --_ic: var(--component-button-color-ghost-destructive-icon-default);
+  --_bd: var(--component-button-color-ghost-destructive-border-default);
+}
+.gk-icon-button--ghost.gk-icon-button--destructive:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-ghost-destructive-bg-hover);
+  --_fg: var(--component-button-color-ghost-destructive-text-hover);
+  --_ic: var(--component-button-color-ghost-destructive-icon-hover);
+  --_bd: var(--component-button-color-ghost-destructive-border-hover);
+}
+.gk-icon-button--ghost.gk-icon-button--destructive:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-ghost-destructive-bg-pressed);
+  --_fg: var(--component-button-color-ghost-destructive-text-pressed);
+  --_ic: var(--component-button-color-ghost-destructive-icon-pressed);
+  --_bd: var(--component-button-color-ghost-destructive-border-pressed);
+}
+/* ghost / neutral */
+.gk-icon-button--ghost.gk-icon-button--neutral {
+  --_bg: var(--component-button-color-ghost-neutral-bg-default);
+  --_fg: var(--component-button-color-ghost-neutral-text-default);
+  --_ic: var(--component-button-color-ghost-neutral-icon-default);
+  --_bd: var(--component-button-color-ghost-neutral-border-default);
+}
+.gk-icon-button--ghost.gk-icon-button--neutral:is(:hover, .gk-icon-button--hover):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-ghost-neutral-bg-hover);
+  --_fg: var(--component-button-color-ghost-neutral-text-hover);
+  --_ic: var(--component-button-color-ghost-neutral-icon-hover);
+  --_bd: var(--component-button-color-ghost-neutral-border-hover);
+}
+.gk-icon-button--ghost.gk-icon-button--neutral:is(:active, .gk-icon-button--pressed):not(:disabled):not(.gk-icon-button--loading) {
+  --_bg: var(--component-button-color-ghost-neutral-bg-pressed);
+  --_fg: var(--component-button-color-ghost-neutral-text-pressed);
+  --_ic: var(--component-button-color-ghost-neutral-icon-pressed);
+  --_bd: var(--component-button-color-ghost-neutral-border-pressed);
+}
+/* ghost / disabled - also LOADING (disabled colour set + spinner). */
+.gk-icon-button--ghost:disabled,
+.gk-icon-button--ghost.gk-icon-button--disabled,
+.gk-icon-button--ghost.gk-icon-button--loading {
+  --_bg: var(--component-button-color-ghost-disabled-bg);
+  --_fg: var(--component-button-color-ghost-disabled-text);
+  --_ic: var(--component-button-color-ghost-disabled-icon);
+  --_bd: var(--component-button-color-ghost-disabled-border);
+}
+
+/* ----------------------------------------------------------------------
+   STATE · disabled & loading affordances (colours handled per type above)
+   ---------------------------------------------------------------------- */
+.gk-icon-button:disabled,
+.gk-icon-button.gk-icon-button--disabled {
+  cursor: not-allowed;
+}
+.gk-icon-button--loading {
+  cursor: default;
+  pointer-events: none;
+}

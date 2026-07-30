@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadcrumb — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link is-active">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Breadcrumb</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Breadcrumb</h1>
+        <p class="doc-page-header__desc">
+          A horizontal navigation trail that shows the user's current location within the site
+          hierarchy. Each node is a clickable link except the last, which represents the current
+          page. Supports 2–5+ depth levels with automatic truncation for long trails.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">.drp-breadcrumb-container</span>
+          <span class="doc-tag doc-tag--blue">.drp-breadcrumb-typography-small-default</span>
+          <span class="doc-tag doc-tag--blue">.drp-breadcrumb-typography-small-current</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=3769-50215" target="_blank">View in Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= DEPTH VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Depth Variants</h2>
+        <p class="doc-section__subtitle">Breadcrumbs scale from 2 to 5 levels. For trails deeper than 5 nodes, collapse the middle items into an ellipsis (…).</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+
+          <!-- 2-level -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <nav class="drp-breadcrumb-container" aria-label="Breadcrumb">
+                <ol class="drp-breadcrumb-list">
+                  <li class="drp-breadcrumb-item">
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <div class="doc-variant-card__label">2 levels</div>
+          </div>
+
+          <!-- 3-level -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <nav class="drp-breadcrumb-container" aria-label="Breadcrumb">
+                <ol class="drp-breadcrumb-list">
+                  <li class="drp-breadcrumb-item">
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Vehicles</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <div class="doc-variant-card__label">3 levels</div>
+          </div>
+
+          <!-- 4-level -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <nav class="drp-breadcrumb-container" aria-label="Breadcrumb">
+                <ol class="drp-breadcrumb-list">
+                  <li class="drp-breadcrumb-item">
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Vehicles</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Chevrolet</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <div class="doc-variant-card__label">4 levels</div>
+          </div>
+
+          <!-- 5+ truncated -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <nav class="drp-breadcrumb-container" aria-label="Breadcrumb">
+                <ol class="drp-breadcrumb-list">
+                  <li class="drp-breadcrumb-item">
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="drp-breadcrumb-typography-small-default" style="pointer-events:none; cursor:default;">…</span>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Chevrolet</a>
+                  </li>
+                  <li class="drp-breadcrumb-item">
+                    <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <div class="doc-variant-card__label">5+ levels (truncated)</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;nav</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-container"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Breadcrumb"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;ol</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-list"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;li</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-item"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"/"</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-typography-small-default"</span><span class="hl-tag">&gt;</span><span class="hl-text">Home</span><span class="hl-tag">&lt;/a&gt;</span>
+    <span class="hl-tag">&lt;/li&gt;</span>
+    <span class="hl-tag">&lt;li</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-item"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;svg</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-sep"</span> <span class="hl-attr">viewBox</span>=<span class="hl-val">"0 0 16 16"</span> <span class="hl-attr">aria-hidden</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span><span class="hl-text">…</span><span class="hl-tag">&lt;/svg&gt;</span>
+      <span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"/vehicles"</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-typography-small-default"</span><span class="hl-tag">&gt;</span><span class="hl-text">Vehicles</span><span class="hl-tag">&lt;/a&gt;</span>
+    <span class="hl-tag">&lt;/li&gt;</span>
+    <span class="hl-tag">&lt;li</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-item"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;svg</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-sep"</span> <span class="hl-attr">viewBox</span>=<span class="hl-val">"0 0 16 16"</span> <span class="hl-attr">aria-hidden</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span><span class="hl-text">…</span><span class="hl-tag">&lt;/svg&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-breadcrumb-typography-small-current"</span> <span class="hl-attr">aria-current</span>=<span class="hl-val">"page"</span><span class="hl-tag">&gt;</span><span class="hl-text">Silverado</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/li&gt;</span>
+  <span class="hl-tag">&lt;/ol&gt;</span>
+<span class="hl-tag">&lt;/nav&gt;</span>
+
+<span class="hl-comment">&lt;!-- Truncated (5+ levels): use a plain &lt;span&gt; with text "…" as the collapsed middle item --&gt;</span>
+<span class="hl-comment">&lt;!-- Disabled link: add .drp-disabled to .drp-breadcrumb-typography-small-default            --&gt;</span></pre>
+      </div>
+
+      <!-- ======================= ITEM STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Item States</h2>
+        <p class="doc-section__subtitle">All states shown statically in trail context. Hover and pressed change the link color; disabled mutes and removes interaction. The current page node is never a link.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+
+          <!-- Link states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="flex-direction:column; align-items:flex-start; gap:20px;">
+
+              <!-- Default -->
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
+                <span style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:.05em;">Default</span>
+                <nav class="drp-breadcrumb-container" aria-label="Default">
+                  <ol class="drp-breadcrumb-list">
+                    <li class="drp-breadcrumb-item">
+                      <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Vehicles</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+              <!-- Hover -->
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
+                <span style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:.05em;">Hover</span>
+                <nav class="drp-breadcrumb-container" aria-label="Hover">
+                  <ol class="drp-breadcrumb-list">
+                    <li class="drp-breadcrumb-item">
+                      <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <a href="#" class="drp-breadcrumb-typography-small-default is-hovered" style="pointer-events:none;">Vehicles</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+              <!-- Pressed -->
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
+                <span style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:.05em;">Pressed</span>
+                <nav class="drp-breadcrumb-container" aria-label="Pressed">
+                  <ol class="drp-breadcrumb-list">
+                    <li class="drp-breadcrumb-item">
+                      <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <a href="#" class="drp-breadcrumb-typography-small-default is-pressed" style="pointer-events:none;">Vehicles</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+              <!-- Disabled -->
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
+                <span style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:.05em;">Disabled</span>
+                <nav class="drp-breadcrumb-container" aria-label="Disabled">
+                  <ol class="drp-breadcrumb-list">
+                    <li class="drp-breadcrumb-item">
+                      <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <a class="drp-breadcrumb-typography-small-default drp-disabled" aria-disabled="true">Vehicles</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+            </div>
+            <div class="doc-variant-card__label">Link states</div>
+          </div>
+
+          <!-- Current page state -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="flex-direction:column; align-items:flex-start; gap:20px;">
+
+              <!-- Current page only -->
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
+                <span style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:.05em;">Current page</span>
+                <nav class="drp-breadcrumb-container" aria-label="Current page">
+                  <ol class="drp-breadcrumb-list">
+                    <li class="drp-breadcrumb-item">
+                      <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+              <!-- Current page in full trail -->
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:4px;">
+                <span style="font-size:11px; color:#999; text-transform:uppercase; letter-spacing:.05em;">In context</span>
+                <nav class="drp-breadcrumb-container" aria-label="Full trail">
+                  <ol class="drp-breadcrumb-list">
+                    <li class="drp-breadcrumb-item">
+                      <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Home</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <a href="#" class="drp-breadcrumb-typography-small-default" style="pointer-events:none;">Vehicles</a>
+                    </li>
+                    <li class="drp-breadcrumb-item">
+                      <svg class="drp-breadcrumb-sep" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      <span class="drp-breadcrumb-typography-small-current" aria-current="page">Silverado</span>
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+
+            </div>
+            <div class="doc-variant-card__label">Current page (last node, never a link)</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>breadcrumb</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Token</th><th>Value</th><th>Applied to</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--breadcrumb-container-gap</code></td><td>4px</td><td>Gap between items and separators</td></tr>
+              <tr><td><code>--breadcrumb-container-height</code></td><td>24px</td><td>Row height</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-default-font-size</code></td><td>12px</td><td>Link font size</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-default-line-height</code></td><td>20px</td><td>Link line height</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-default-color</code></td><td><span class="doc-swatch" style="background:#666666;"></span>#666666</td><td>Link — default color</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-default-hover-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Link — hover color</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-default-active-color</code></td><td><span class="doc-swatch" style="background:#0e4180;"></span>#0e4180</td><td>Link — pressed color</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-default-disabled-color</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Link — disabled color</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-selected-font-size</code></td><td>12px</td><td>Current page font size</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-selected-line-height</code></td><td>20px</td><td>Current page line height</td></tr>
+              <tr><td><code>--breadcrumb-typography-small-selected-color</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Current page label color</td></tr>
+              <tr><td><code>--breadcrumb-sep-color</code></td><td><span class="doc-swatch" style="background:#999999;"></span>#999999</td><td>Separator chevron color</td></tr>
+              <tr><td><code>--breadcrumb-sep-size</code></td><td>16px</td><td>Separator icon size</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Always add <code>aria-label="Breadcrumb"</code> to the <code>&lt;nav&gt;</code> element.</li>
+              <li>Mark the last item with <code>aria-current="page"</code> and use a <code>&lt;span&gt;</code>, not an <code>&lt;a&gt;</code>.</li>
+              <li>Use an <code>&lt;ol&gt;</code> list — the ordered structure conveys hierarchy to screen readers.</li>
+              <li>Truncate trails of 6+ nodes by collapsing middle items into "…".</li>
+              <li>Keep labels short — one or two words per node.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't make the last (current) item a link — the user is already on that page.</li>
+              <li>Don't use breadcrumbs on top-level pages with no parent hierarchy.</li>
+              <li>Don't use breadcrumbs as a substitute for primary navigation.</li>
+              <li>Don't truncate fewer than 5 nodes — show them in full.</li>
+              <li>Don't mix breadcrumb with other location indicators on the same page.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

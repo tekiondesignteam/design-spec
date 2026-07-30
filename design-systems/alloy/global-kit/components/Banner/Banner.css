@@ -1,0 +1,174 @@
+/* ======================================================================
+   Banner — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Banner set (node 289-5190).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / radii / spacing. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component never
+   branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     color   -> info | neutral | error | success | warning   (.gk-banner--<color>)
+     variant -> outlined | filled                            (.gk-banner--outlined / --filled)
+
+   Colours resolve through local indirection vars set per variant+color:
+     --_bg      container surface        --_title  title text colour
+     --_msg     secondary/message text   --_stripe status colour (stripe + icon tile bg)
+     --_glyph   icon glyph colour (inverse, on the status-coloured tile)
+   These vars are component-internal plumbing, not design tokens — values
+   always come from var(--component-banner-...).
+
+   NOTE (structural dimensions with no banner token): the status stripe width
+   (4px), the icon tile box (24px) + its glyph (18px), and the close glyph
+   (12px) are fixed layout constants in the Figma spec with no themeable token
+   backing, so they are literal px here. Every colour, gap, padding, radius and
+   border-width DOES resolve through a --component-banner-* token. The icon tile
+   corner uses --semantic-borderRadius-sm (the token Figma binds, as there is no
+   banner-owned icon radius). The default content slot renders the Global Kit
+   <Link> component, which owns its own link tokens + states.
+   ====================================================================== */
+
+.gk-banner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--component-banner-gap);
+  padding: var(--component-banner-padding-top) var(--component-banner-padding-right)
+           var(--component-banner-padding-bottom) var(--component-banner-padding-left);
+  border-radius: var(--component-banner-borderRadius-default);
+  background: var(--_bg);
+  color: var(--_msg);
+  transition: background-color .12s ease, border-color .12s ease;
+}
+
+/* ----------------------------------------------------------------------
+   VARIANT — surface + border treatment.
+   outlined: white surface, full border.
+   filled:   subtle status-tinted surface, bottom rule only.
+   ---------------------------------------------------------------------- */
+.gk-banner--outlined {
+  --_bg: var(--component-banner-color-bg-outlined-default);
+  --_msg: var(--component-banner-color-text-outlined-secondary-default);
+  border: var(--component-banner-borderWidth-default) solid var(--component-banner-color-border-default);
+}
+.gk-banner--filled {
+  --_msg: var(--component-banner-color-text-filled-secondary-default);
+  --_title: var(--component-banner-color-text-filled-primary-default);
+  border-bottom: var(--component-banner-borderWidth-default) solid var(--component-banner-color-border-default);
+}
+
+/* ----------------------------------------------------------------------
+   COLOR — the status stripe + icon tile colour (both variants) and, for the
+   outlined variant, the status-tinted title. Filled surfaces are status-tinted;
+   filled titles stay neutral-dark (set on .gk-banner--filled above).
+   ---------------------------------------------------------------------- */
+.gk-banner--info    { --_stripe: var(--component-banner-color-icon-info); }
+.gk-banner--neutral { --_stripe: var(--component-banner-color-icon-neutral); }
+.gk-banner--error   { --_stripe: var(--component-banner-color-icon-error); }
+.gk-banner--success { --_stripe: var(--component-banner-color-icon-success); }
+.gk-banner--warning { --_stripe: var(--component-banner-color-icon-warning); }
+
+.gk-banner--outlined.gk-banner--info    { --_title: var(--component-banner-color-text-outlined-primary-info); }
+.gk-banner--outlined.gk-banner--neutral { --_title: var(--component-banner-color-text-outlined-primary-neutral); }
+.gk-banner--outlined.gk-banner--error   { --_title: var(--component-banner-color-text-outlined-primary-error); }
+.gk-banner--outlined.gk-banner--success { --_title: var(--component-banner-color-text-outlined-primary-success); }
+.gk-banner--outlined.gk-banner--warning { --_title: var(--component-banner-color-text-outlined-primary-warning); }
+
+.gk-banner--filled.gk-banner--info    { --_bg: var(--component-banner-color-bg-filled-info); }
+.gk-banner--filled.gk-banner--neutral { --_bg: var(--component-banner-color-bg-filled-neutral); }
+.gk-banner--filled.gk-banner--error   { --_bg: var(--component-banner-color-bg-filled-error); }
+.gk-banner--filled.gk-banner--success { --_bg: var(--component-banner-color-bg-filled-success); }
+.gk-banner--filled.gk-banner--warning { --_bg: var(--component-banner-color-bg-filled-warning); }
+
+/* The icon glyph sits on the status-coloured tile in the inverse colour. */
+.gk-banner { --_glyph: var(--component-banner-color-icon-inverse); }
+
+/* ----------------------------------------------------------------------
+   STATUS STRIPE — a full-height, rounded status-coloured rule (4px, no token).
+   ---------------------------------------------------------------------- */
+.gk-banner__indicator {
+  flex-shrink: 0;
+  align-self: stretch;
+  width: 4px;
+  border-radius: 9999px;
+  background: var(--_stripe);
+}
+
+/* ----------------------------------------------------------------------
+   CONTENT — flexes to fill; body on the left, slot + close on the right.
+   ---------------------------------------------------------------------- */
+.gk-banner__content {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--component-banner-gap);
+}
+.gk-banner__body {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--component-banner-gap);
+}
+
+/* Icon tile — status-coloured rounded square carrying an inverse glyph. */
+.gk-banner__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--semantic-borderRadius-sm);
+  background: var(--_stripe);
+  color: var(--_glyph);
+}
+.gk-banner__icon .ph { font-size: 18px; line-height: 1; }
+.gk-banner__icon svg,
+.gk-banner__icon img { width: 18px; height: 18px; display: block; }
+
+/* Title + message sit on one row (Figma), title fixed, message flexes. */
+.gk-banner__text {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--component-banner-gap);
+}
+.gk-banner__title {
+  flex-shrink: 0;
+  color: var(--_title);
+  /* fontWeight tokens compile to non-numeric strings; 600 selects the
+     Proxima Nova Semibold @font-face. */
+  font-weight: 600;
+}
+.gk-banner__message {
+  min-width: 0;
+  color: var(--_msg);
+}
+
+/* Content slot — holds the Global Kit <Link> (which owns its own styling). */
+.gk-banner__slot {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Close — a bare ✕ button (12px glyph, neutral-dark icon colour). */
+.gk-banner__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--component-banner-color-icon-default);
+  cursor: pointer;
+  transition: opacity .12s ease;
+}
+.gk-banner__close .ph { font-size: 12px; line-height: 1; }
+.gk-banner__close:hover { opacity: .7; }

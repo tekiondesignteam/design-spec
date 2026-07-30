@@ -1,0 +1,103 @@
+/* ======================================================================
+   Avatar - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Avatar set (node 304-9611).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours / radii / sizes. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component never
+   branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     size   -> 2xs | xs | sm | md | lg    (.gk-avatar--<size>)
+     shape  -> round | square             (.gk-avatar--round / --square)
+     type   -> image | icon | initials    (.gk-avatar--<type>)
+     color  -> grey | purple | blue | teal | pink | orange
+               (.gk-avatar--<color>; the container fill for the initials type)
+
+   Colours resolve through two local indirection vars set per variant:
+     --_bg   container fill        --_fg   text (initials) colour
+   plus two geometry vars:
+     --_box  square box size (px)  --_radius  corner radius token
+   These vars are component-internal plumbing, not design tokens - values
+   always come from var(--component-avatar-...).
+
+   NOTE (no avatar typography/border token): initials scale off the box with an
+   internal ratio - the same approach the Icon component uses for its glyph, as
+   the token set carries no avatar font-size. The avatar padding tokens are all
+   "none", so the box carries no padding (image/glyph fill or centre directly).
+   font-weight is kept numeric (600) because the DS fontWeight tokens compile to
+   non-numeric strings; 600 selects the Proxima Nova Semibold @font-face.
+   ====================================================================== */
+
+.gk-avatar {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;            /* clip the image to the avatar shape */
+  width: var(--_box);
+  height: var(--_box);
+  border-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+  /* icon type tints the child <Icon> via this per-type override (see below);
+     default keeps whatever the Icon resolves on its own. */
+}
+
+/* Image fills the clipped box edge to edge. */
+.gk-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Initials slot - font-size tracks the box (internal ratio; no avatar font
+   token exists). */
+.gk-avatar__initials {
+  font-size: calc(var(--_box) * 0.4);
+  letter-spacing: 0.01em;
+}
+
+/* ----------------------------------------------------------------------
+   SIZE - square box from the height token (unitless sizing primitive -> px)
+   ---------------------------------------------------------------------- */
+.gk-avatar--2xs { --_box: calc(var(--component-avatar-height-2xs) * 1px); }
+.gk-avatar--xs  { --_box: calc(var(--component-avatar-height-xs)  * 1px); }
+.gk-avatar--sm  { --_box: calc(var(--component-avatar-height-sm)  * 1px); }
+.gk-avatar--md  { --_box: calc(var(--component-avatar-height-md)  * 1px); }
+.gk-avatar--lg  { --_box: calc(var(--component-avatar-height-lg)  * 1px); }
+
+/* ----------------------------------------------------------------------
+   SHAPE - corner radius
+   ---------------------------------------------------------------------- */
+.gk-avatar--round  { --_radius: var(--component-avatar-borderRadius-rounded); }
+.gk-avatar--square { --_radius: var(--component-avatar-borderRadius-square); }
+
+/* ----------------------------------------------------------------------
+   COLOR - container fill + initials text.
+   grey uses default (dark) text; the five brand fills use inverse (white).
+   ---------------------------------------------------------------------- */
+.gk-avatar--grey   { --_bg: var(--component-avatar-color-bg-grey);   --_fg: var(--component-avatar-color-text-default); }
+.gk-avatar--purple { --_bg: var(--component-avatar-color-bg-purple); --_fg: var(--component-avatar-color-text-inverse); }
+.gk-avatar--blue   { --_bg: var(--component-avatar-color-bg-blue);   --_fg: var(--component-avatar-color-text-inverse); }
+.gk-avatar--teal   { --_bg: var(--component-avatar-color-bg-teal);   --_fg: var(--component-avatar-color-text-inverse); }
+.gk-avatar--pink   { --_bg: var(--component-avatar-color-bg-pink);   --_fg: var(--component-avatar-color-text-inverse); }
+.gk-avatar--orange { --_bg: var(--component-avatar-color-bg-orange); --_fg: var(--component-avatar-color-text-inverse); }
+
+/* ----------------------------------------------------------------------
+   TYPE overrides - image + icon always sit on the grey container regardless
+   of the colour prop; icon tints its glyph with the grey icon token.
+   (Placed after COLOR so the single-class override wins by source order.)
+   ---------------------------------------------------------------------- */
+.gk-avatar--image,
+.gk-avatar--icon {
+  --_bg: var(--component-avatar-color-bg-grey);
+}
+.gk-avatar--icon {
+  --gk-icon-color: var(--component-avatar-color-icon-grey);
+}

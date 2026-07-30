@@ -1,0 +1,157 @@
+/* ======================================================================
+   Switch — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Switch set (node 276-12181).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / sizes / radii. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     checked   → off | on          (.gk-switch--checked)
+     disabled  → off | on          (.gk-switch--disabled)
+     showIcon  → BOOLEAN "Show Icon"       (status glyph in .gk-switch__icon)
+     focus     → BOOLEAN "Show Focus Ring" (.gk-switch--focus, or :focus-visible)
+
+   Colours resolve through five local indirection vars that each state combo
+   points at the matching token; they are component-internal plumbing, not
+   design tokens:
+     --_track-bg / --_track-bd   track fill + border
+     --_thumb-bg / --_thumb-bd   thumb fill + border
+     --_icon                     status-glyph colour (exposed to child <Icon>)
+     --_focus                    focus-ring colour (no dedicated switch token
+                                 exists in Figma, so it uses the semantic brand
+                                 border token — same precedent as Icon/Checkbox)
+
+   Sizing primitives (width/height/thumb) are unitless in tokens, so they are
+   multiplied by 1px; radius / border-width / padding tokens already carry px.
+   The 1px track + thumb borders are drawn with inset box-shadow (not CSS
+   border) so, like Figma's INSIDE stroke, they sit over the 2px padding and
+   never consume layout — keeping the 20px thumb exact in the 24px track.
+   ====================================================================== */
+
+.gk-switch {
+  display: inline-flex;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  /* pill focus ring (Figma focus rectangle is fully rounded) */
+  border-radius: 999px;
+  outline: none;
+
+  /* OFF · default */
+  --_track-bg: var(--component-switch-color-bg-track-off-default);
+  --_track-bd: var(--component-switch-color-border-track-off-default);
+  --_thumb-bg: var(--component-switch-color-bg-thumb-off-default);
+  --_thumb-bd: var(--component-switch-color-border-thumb-off-default);
+  --_icon: var(--component-switch-color-icon-off-default);
+  --_focus: var(--semantic-color-border-brand);
+}
+
+/* ON · default */
+.gk-switch--checked {
+  --_track-bg: var(--component-switch-color-bg-track-on-default);
+  --_track-bd: var(--component-switch-color-border-track-on-default);
+  --_thumb-bg: var(--component-switch-color-bg-thumb-on-default);
+  --_thumb-bd: var(--component-switch-color-border-thumb-on-default);
+  --_icon: var(--component-switch-color-icon-on-default);
+}
+
+/* OFF · disabled */
+.gk-switch--disabled {
+  --_track-bg: var(--component-switch-color-bg-track-off-disabled);
+  --_track-bd: var(--component-switch-color-border-track-off-disabled);
+  --_thumb-bg: var(--component-switch-color-bg-thumb-off-disabled);
+  --_thumb-bd: var(--component-switch-color-border-thumb-off-disabled);
+  --_icon: var(--component-switch-color-icon-off-disabled);
+}
+
+/* ON · disabled */
+.gk-switch--checked.gk-switch--disabled {
+  --_track-bg: var(--component-switch-color-bg-track-on-disabled);
+  --_track-bd: var(--component-switch-color-border-track-on-disabled);
+  --_thumb-bg: var(--component-switch-color-bg-thumb-on-disabled);
+  --_thumb-bd: var(--component-switch-color-border-thumb-on-disabled);
+  --_icon: var(--component-switch-color-icon-on-disabled);
+}
+
+.gk-switch:disabled,
+.gk-switch.gk-switch--disabled {
+  cursor: not-allowed;
+}
+
+/* ----------------------------------------------------------------------
+   TRACK — the sized pill; 1px inside border via inset box-shadow.
+   ---------------------------------------------------------------------- */
+.gk-switch__track {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(var(--component-switch-width-default) * 1px);
+  height: calc(var(--component-switch-height-default) * 1px);
+  padding: var(--component-switch-padding-top-default) var(--component-switch-padding-right-default)
+           var(--component-switch-padding-bottom-default) var(--component-switch-padding-left-default);
+  border-radius: var(--component-switch-borderRadius-track);
+  background: var(--_track-bg);
+  box-shadow: inset 0 0 0 var(--component-switch-borderWidth-default) var(--_track-bd);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ----------------------------------------------------------------------
+   THUMB — 20px square, slides left (off) to right (on).
+   Travel = (track width - thumb) - left padding - right padding = 24px.
+   ---------------------------------------------------------------------- */
+.gk-switch__thumb {
+  position: absolute;
+  top: var(--component-switch-padding-top-default);
+  left: var(--component-switch-padding-left-default);
+  width: calc(var(--component-switch-height-thumb) * 1px);
+  height: calc(var(--component-switch-height-thumb) * 1px);
+  border-radius: var(--component-switch-borderRadius-thumb);
+  background: var(--_thumb-bg);
+  box-shadow: inset 0 0 0 var(--component-switch-borderWidth-default) var(--_thumb-bd);
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s ease;
+}
+.gk-switch--checked .gk-switch__thumb {
+  transform: translateX(calc(
+    (var(--component-switch-width-default) - var(--component-switch-height-thumb)) * 1px
+    - var(--component-switch-padding-left-default)
+    - var(--component-switch-padding-right-default)));
+}
+
+/* ----------------------------------------------------------------------
+   ICON — optional status glyph in the exposed track area opposite the thumb.
+   Off: thumb left, icon right. On: thumb right, icon left. The child <Icon>
+   reads --gk-icon-color, so the glyph tints with the per-state token.
+   ---------------------------------------------------------------------- */
+.gk-switch__icon {
+  position: absolute;
+  top: var(--component-switch-padding-top-default);
+  right: var(--component-switch-padding-right-default);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(
+    (var(--component-switch-width-default) - var(--component-switch-height-thumb)) * 1px
+    - var(--component-switch-padding-left-default)
+    - var(--component-switch-padding-right-default));
+  height: calc(var(--component-switch-height-thumb) * 1px);
+  --gk-icon-color: var(--_icon);
+}
+.gk-switch--checked .gk-switch__icon {
+  right: auto;
+  left: var(--component-switch-padding-left-default);
+}
+
+/* ----------------------------------------------------------------------
+   FOCUS — pill ring on real keyboard focus, or forced via .gk-switch--focus.
+   ---------------------------------------------------------------------- */
+.gk-switch:focus-visible,
+.gk-switch.gk-switch--focus {
+  outline: 2px solid var(--_focus);
+  outline-offset: 2px;
+}

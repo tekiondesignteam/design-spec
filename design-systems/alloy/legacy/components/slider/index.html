@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slider — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+  <style>
+    /* Ensure preview areas give sliders full width */
+    .doc-variant-card__preview .drp-slider-container { width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link is-active">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Slider</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Slider</h1>
+        <p class="doc-page-header__desc">
+          Sliders let users select a value or range of values along a continuous track.
+          The <strong>Single slider</strong> controls one value; the <strong>Range slider</strong>
+          controls a lower and upper bound simultaneously. Both variants display the current
+          value(s) in a badge and support disabled states.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Slider</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=3773-50156" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Variants</h2>
+        <p class="doc-section__subtitle">Two variants: Single slider for a single value, and Range slider for a min–max selection. Both are interactive below.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Single Slider -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="drp-slider-container">
+                <div class="drp-slider-header">
+                  <span class="drp-slider-typography-title">Distance</span>
+                  <span class="drp-slider-value"><output class="drp-slider-output" id="single-out">50</output></span>
+                </div>
+                <div class="drp-slider-track-wrap">
+                  <input type="range" class="drp-slider-input" id="single-slider"
+                    min="0" max="100" value="50" aria-label="Distance">
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Single slider</div>
+          </div>
+
+          <!-- Range Slider -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="drp-slider-container drp-slider-container--range">
+                <div class="drp-slider-header">
+                  <span class="drp-slider-typography-title">Price range</span>
+                  <span class="drp-slider-value">
+                    <output class="drp-slider-output" id="range-out-lower">20</output>
+                    <span class="drp-slider-to">to</span>
+                    <output class="drp-slider-output" id="range-out-upper">70</output>
+                  </span>
+                </div>
+                <div class="drp-slider-track-wrap" id="range-wrap">
+                  <div class="drp-slider-range-track">
+                    <div class="drp-slider-range-fill" id="range-fill"></div>
+                  </div>
+                  <input type="range" class="drp-slider-input drp-slider-input--lower" id="range-lower"
+                    min="0" max="100" value="20" aria-label="Minimum price">
+                  <input type="range" class="drp-slider-input drp-slider-input--upper" id="range-upper"
+                    min="0" max="100" value="70" aria-label="Maximum price">
+                </div>
+                <div class="drp-slider-footer">
+                  <span class="drp-slider-typography-range">Min</span>
+                  <span class="drp-slider-typography-range">Max</span>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Range slider</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Single slider --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__header"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__title"</span><span class="hl-tag">&gt;</span><span class="hl-text">Volume</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__value"</span><span class="hl-tag">&gt;&lt;output</span> <span class="hl-attr">id</span>=<span class="hl-val">"out"</span><span class="hl-tag">&gt;</span><span class="hl-text">50</span><span class="hl-tag">&lt;/output&gt;&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__track-wrap"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"range"</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__input"</span>
+           <span class="hl-attr">id</span>=<span class="hl-val">"vol"</span> <span class="hl-attr">min</span>=<span class="hl-val">"0"</span> <span class="hl-attr">max</span>=<span class="hl-val">"100"</span> <span class="hl-attr">value</span>=<span class="hl-val">"50"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Volume"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-tag">&lt;!-- Range slider --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider slider--range"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__header"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__title"</span><span class="hl-tag">&gt;</span><span class="hl-text">Price range</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__value"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;output</span> <span class="hl-attr">id</span>=<span class="hl-val">"out-lo"</span><span class="hl-tag">&gt;</span><span class="hl-text">20</span><span class="hl-tag">&lt;/output&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__to"</span><span class="hl-tag">&gt;</span><span class="hl-text">to</span><span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;output</span> <span class="hl-attr">id</span>=<span class="hl-val">"out-hi"</span><span class="hl-tag">&gt;</span><span class="hl-text">70</span><span class="hl-tag">&lt;/output&gt;</span>
+    <span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__track-wrap"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__range-track"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__range-fill"</span><span class="hl-tag">&gt;&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"range"</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__input slider__input--lower"</span>
+           <span class="hl-attr">min</span>=<span class="hl-val">"0"</span> <span class="hl-attr">max</span>=<span class="hl-val">"100"</span> <span class="hl-attr">value</span>=<span class="hl-val">"20"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Minimum"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"range"</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__input slider__input--upper"</span>
+           <span class="hl-attr">min</span>=<span class="hl-val">"0"</span> <span class="hl-attr">max</span>=<span class="hl-val">"100"</span> <span class="hl-attr">value</span>=<span class="hl-val">"70"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Maximum"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__footer"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__footer-label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Min</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"slider__footer-label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Max</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-tag">&lt;script&gt;</span>
+<span class="hl-text">// Single slider fill + value update
+function updateSingle(input, output) {
+  var min = +input.min || 0, max = +input.max || 100;
+  var pct = ((+input.value - min) / (max - min)) * 100;
+  input.style.setProperty('--fill', pct + '%');
+  output.textContent = input.value;
+}
+// Range slider fill + value update
+function updateRange(wrap) {
+  var lower = wrap.querySelector('.slider__input--lower');
+  var upper = wrap.querySelector('.slider__input--upper');
+  var fill  = wrap.querySelector('.slider__range-fill');
+  var min = +lower.min || 0, max = +lower.max || 100;
+  var lPct = ((+lower.value - min) / (max - min)) * 100;
+  var uPct = ((+upper.value - min) / (max - min)) * 100;
+  fill.style.left  = lPct + '%';
+  fill.style.right = (100 - uPct) + '%';
+}</span>
+<span class="hl-tag">&lt;/script&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Interactive States</h2>
+        <p class="doc-section__subtitle">Default and Disabled states for each variant. Disabled sliders cannot be interacted with and all active colours shift to <code>#c3cfd9</code>.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Single — states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:flex; flex-direction:column; gap:24px; width:100%;">
+                <!-- Default -->
+                <div>
+                  <div class="doc-state-label">Default</div>
+                  <div class="drp-slider-container">
+                    <div class="drp-slider-header">
+                      <span class="drp-slider-typography-title">Label</span>
+                      <span class="drp-slider-value"><output id="states-single-out">50</output></span>
+                    </div>
+                    <div class="drp-slider-track-wrap">
+                      <input type="range" class="drp-slider-input" id="states-single" min="0" max="100" value="50" aria-label="Label">
+                    </div>
+                  </div>
+                </div>
+                <!-- Disabled -->
+                <div>
+                  <div class="doc-state-label" style="color:#c3cfd9;">Disabled</div>
+                  <div class="drp-slider-container">
+                    <div class="drp-slider-header">
+                      <span class="drp-slider-typography-title" style="color:#c3cfd9;">Label</span>
+                      <span class="drp-slider-value" style="color:#c3cfd9;">50</span>
+                    </div>
+                    <div class="drp-slider-track-wrap">
+                      <input type="range" class="drp-slider-input" min="0" max="100" value="50"
+                        style="--fill:50%;" disabled aria-hidden="true">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Single slider states</div>
+          </div>
+
+          <!-- Range — states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:flex; flex-direction:column; gap:24px; width:100%;">
+                <!-- Default -->
+                <div>
+                  <div class="doc-state-label">Default</div>
+                  <div class="drp-slider-container drp-slider-container--range">
+                    <div class="drp-slider-header">
+                      <span class="drp-slider-typography-title">Label</span>
+                      <span class="drp-slider-value">
+                        <output id="states-range-out-lo">20</output>
+                        <span class="drp-slider-to">to</span>
+                        <output id="states-range-out-hi">70</output>
+                      </span>
+                    </div>
+                    <div class="drp-slider-track-wrap">
+                      <div class="drp-slider-range-track">
+                        <div class="drp-slider-range-fill" id="states-range-fill"></div>
+                      </div>
+                      <input type="range" class="drp-slider-input drp-slider-input--lower"
+                        id="states-range-lo" min="0" max="100" value="20" aria-label="Minimum">
+                      <input type="range" class="drp-slider-input drp-slider-input--upper"
+                        id="states-range-hi" min="0" max="100" value="70" aria-label="Maximum">
+                    </div>
+                    <div class="drp-slider-footer">
+                      <span class="drp-slider-typography-range">Min</span>
+                      <span class="drp-slider-typography-range">Max</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Disabled -->
+                <div>
+                  <div class="doc-state-label" style="color:#c3cfd9;">Disabled</div>
+                  <div class="drp-slider-container drp-slider-container--range drp-disabled">
+                    <div class="drp-slider-header">
+                      <span class="drp-slider-typography-title" style="color:#c3cfd9;">Label</span>
+                      <span class="drp-slider-value" style="color:#c3cfd9;">20 <span class="drp-slider-to">to</span> 70</span>
+                    </div>
+                    <div class="drp-slider-track-wrap">
+                      <div class="drp-slider-range-track">
+                        <div class="drp-slider-range-fill" style="left:20%; right:30%;"></div>
+                      </div>
+                      <input type="range" class="drp-slider-input drp-slider-input--lower"
+                        min="0" max="100" value="20" disabled aria-hidden="true">
+                      <input type="range" class="drp-slider-input drp-slider-input--upper"
+                        min="0" max="100" value="70" disabled aria-hidden="true">
+                    </div>
+                    <div class="drp-slider-footer">
+                      <span class="drp-slider-typography-range" style="color:#c3cfd9;">Min</span>
+                      <span class="drp-slider-typography-range" style="color:#c3cfd9;">Max</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Range slider states</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Applied to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--slider-track-height</code></td><td>4px</td><td>Track thickness</td></tr>
+              <tr><td><code>--slider-track-radius</code></td><td>2px</td><td>Track corner radius</td></tr>
+              <tr><td><code>--slider-thumb-size</code></td><td>16px</td><td>Thumb diameter</td></tr>
+              <tr><td><code>--slider-thumb-border-width</code></td><td>2px</td><td>Thumb border thickness</td></tr>
+              <tr><td><code>--slider-track-bg</code></td><td><span class="doc-swatch" style="background:#e8ecef; border:1px solid #ddd;"></span>#e8ecef</td><td>Unfilled track color</td></tr>
+              <tr><td><code>--slider-fill-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Filled track &amp; active thumb border</td></tr>
+              <tr><td><code>--slider-thumb-bg</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Thumb fill</td></tr>
+              <tr><td><code>--slider-thumb-border-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Thumb border color</td></tr>
+              <tr><td><code>--slider-thumb-hover-shadow</code></td><td>rgba(0,119,217,0.12)</td><td>Thumb hover glow color</td></tr>
+              <tr><td><code>--slider-disabled-fill</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled filled track</td></tr>
+              <tr><td><code>--slider-disabled-border</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled thumb border</td></tr>
+              <tr><td><code>--slider-label-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Title label color</td></tr>
+              <tr><td><code>--slider-value-bg</code></td><td><span class="doc-swatch" style="background:#f2f4f6; border:1px solid #ddd;"></span>#f2f4f6</td><td>Value badge background</td></tr>
+              <tr><td><code>--slider-minmax-color</code></td><td><span class="doc-swatch" style="background:#888888;"></span>#888888</td><td>Min / Max label color</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Always provide a visible title label describing what the slider controls.</li>
+              <li>Display the current value in the badge so users know the exact selection without guessing.</li>
+              <li>Use the Range variant when users need to define both a lower and upper bound (e.g., price filters, date ranges).</li>
+              <li>Always include <code>aria-label</code> on each <code>&lt;input type="range"&gt;</code> for screen reader support.</li>
+              <li>Set meaningful <code>min</code>, <code>max</code>, and <code>step</code> attributes that reflect the actual domain of values.</li>
+              <li>Show Min / Max labels on the Range slider to orient users to the scale.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use a slider when the user needs to enter a precise value — use a number input instead.</li>
+              <li>Don't omit the value badge — users cannot read exact values from a thumb position alone.</li>
+              <li>Don't use a slider for binary or categorical choices — use a toggle or radio group instead.</li>
+              <li>Don't allow the lower thumb to exceed the upper thumb in a Range slider — enforce the constraint in JavaScript.</li>
+              <li>Don't disable a slider without explaining why the control is unavailable nearby.</li>
+              <li>Don't use very small <code>step</code> values on mobile — thumb precision is limited by touch target size.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="slider.js"></script>
+
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

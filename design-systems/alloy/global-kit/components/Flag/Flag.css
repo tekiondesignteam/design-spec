@@ -1,0 +1,30 @@
+/* ======================================================================
+   Flag — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Country Flag set (node 351-1690 /
+   276-12581). One axis - Country (~250 values) - which is CONTENT, not
+   style. Flag therefore binds NO design tokens: it owns no colour, radius
+   or size. The artwork is a brand-independent sprite and the box is em-sized
+   by the inherited font-size, so there is nothing here to tokenise.
+
+   RUNTIME DEPENDENCY (like Icon -> Phosphor): the flag artwork comes from the
+   open-source `flag-icons` sprite, which is NOT part of dist/global-kit.css.
+   A host that renders Flag must load the sprite once, e.g.:
+     <link rel="stylesheet"
+       href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css" />
+   flag-icons supplies the `.fi`, `.fi-<iso>` and `.fis` rules (background
+   image, 4:3 box, square variant). This file only adds the structural
+   `.gk-flag` root so a flag aligns cleanly inline with text.
+
+   Aspect note: flag-icons draws 4:3; the Figma source is 21x15 (7:5). These
+   are close and the sprite is left undistorted rather than force-fit to 7:5.
+   ====================================================================== */
+
+.gk-flag {
+  /* `.fi` (from flag-icons) already sets display:inline-block, the em-based
+     4:3 box and the background image. We only pin vertical alignment so a
+     flag sits on the text mid-line when used inline. */
+  vertical-align: middle;
+  /* Size follows the inherited font-size (flag-icons is em-based); no box is
+     hardcoded here - a consumer sizes the flag via font-size. */
+  line-height: 1em;
+}

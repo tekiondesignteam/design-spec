@@ -1,0 +1,58 @@
+/* ======================================================================
+   AvatarGroup - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Avatar Group set (node 304-11132).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours / sizes / widths. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component never
+   branches on brand/theme/device.
+
+   Structure: a flex row of <Avatar> children (plus an optional trailing "+N"
+   overflow chip that reuses the .gk-avatar classes). Two group-level concerns
+   layer on top of each child avatar:
+
+     overlap  every avatar after the first pulls left by the group gap token, so
+              the avatars lap one another - overlap = --component-avatarGroup-gap-default.
+     ring     each avatar carries an inverse (canvas-coloured) ring so overlapping
+              avatars stay visually distinct. Drawn as a box-shadow (not a border)
+              so it sits OUTSIDE the box without shrinking the avatar's content or
+              being clipped by the avatar's own overflow:hidden. The ring width +
+              colour come from --component-avatar-borderWidth-default and
+              --semantic-color-border-inverse (matches the Figma border overlay).
+
+   Stacking: later siblings paint on top (DOM order), so each avatar's ring cleanly
+   caps the previous one's right edge - the standard overlapping-avatars read. On
+   hover an avatar lifts to the front so it can be inspected in full.
+   ====================================================================== */
+
+.gk-avatar-group {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  /* flex gap stays 0; the overlap is produced by negative margins below, exactly
+     as the Figma Slot does (gap 0 + per-avatar left inset). */
+  gap: 0;
+}
+
+/* Every avatar in the group (real avatars from <Avatar>, plus the overflow chip)
+   gets the inverse ring. box-shadow keeps it outside the box and above the
+   avatar's own clip. */
+.gk-avatar-group > .gk-avatar {
+  position: relative;
+  box-shadow: 0 0 0 var(--component-avatar-borderWidth-default) var(--semantic-color-border-inverse);
+  transition: transform 0.15s ease;
+}
+
+/* Overlap: pull each avatar after the first left by the group gap token
+   (unitless sizing primitive -> negative px). */
+.gk-avatar-group > .gk-avatar + .gk-avatar {
+  margin-left: calc(var(--component-avatarGroup-gap-default) * -1px);
+}
+
+/* Hover raises the avatar to the front and lifts it slightly so the whole
+   avatar (and its ring) reads over its neighbours. */
+.gk-avatar-group > .gk-avatar:hover,
+.gk-avatar-group > .gk-avatar:focus-visible {
+  z-index: 1;
+  transform: translateY(-2px);
+}

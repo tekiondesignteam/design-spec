@@ -1,0 +1,207 @@
+/* ======================================================================
+   Checkbox — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Checkbox set (node 276-15704).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / sizes / fonts. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     shape  → square | circle              (.gk-checkbox--square / --circle)
+     color  → brand  | success             (.gk-checkbox--brand / --success)
+     size   → sm | md | lg                 (.gk-checkbox--<size>)
+     checked / indeterminate               (.gk-checkbox--checked / --indeterminate)
+     state  → default | hover | active     (via real :hover / :active, OR
+              forced with .gk-checkbox--hover / .gk-checkbox--pressed so a
+              tool/preview can show a state without pointer interaction)
+     disabled                              (.gk-checkbox--disabled + :disabled)
+
+   The box colours resolve through three local indirection vars
+   (--_bg / --_bd / --_ic) that each color + checked-state + state combo
+   points at the matching token. Those vars are component-internal plumbing,
+   NOT design tokens — values always come from var(--component-checkbox-…).
+   Indeterminate reuses the "checked" token group (fill + mark), differing
+   only in the glyph drawn.
+   ====================================================================== */
+
+.gk-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--component-checkbox-gap-default);
+  color: var(--component-checkbox-color-text-default);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Native input drives interaction + accessibility; visually hidden so the
+   styled box is what the user sees. Kept in-flow-adjacent to the box so
+   :focus-visible can raise a focus ring on it. */
+.gk-checkbox__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gk-checkbox__box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-style: solid;
+  border-width: var(--component-checkbox-borderWidth-default);
+  border-color: var(--_bd);
+  background: var(--_bg);
+  color: var(--_ic);
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+/* The mark scales with the box; hidden unless checked / indeterminate. */
+.gk-checkbox__mark {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.gk-checkbox--checked .gk-checkbox__mark {
+  opacity: 1;
+}
+
+.gk-checkbox__label {
+  color: inherit;
+}
+
+/* ----------------------------------------------------------------------
+   SHAPE — corner radius
+   ---------------------------------------------------------------------- */
+.gk-checkbox--square .gk-checkbox__box {
+  border-radius: var(--component-checkbox-borderRadius-square);
+}
+.gk-checkbox--circle .gk-checkbox__box {
+  border-radius: var(--component-checkbox-borderRadius-circle);
+}
+
+/* ----------------------------------------------------------------------
+   SIZE — box dimensions (height token is the unitless sizing primitive,
+   so multiply by 1px; the box is square so width == height)
+   ---------------------------------------------------------------------- */
+.gk-checkbox--sm .gk-checkbox__box {
+  width: calc(var(--component-checkbox-height-sm) * 1px);
+  height: calc(var(--component-checkbox-height-sm) * 1px);
+}
+.gk-checkbox--md .gk-checkbox__box {
+  width: calc(var(--component-checkbox-height-md) * 1px);
+  height: calc(var(--component-checkbox-height-md) * 1px);
+}
+.gk-checkbox--lg .gk-checkbox__box {
+  width: calc(var(--component-checkbox-height-lg) * 1px);
+  height: calc(var(--component-checkbox-height-lg) * 1px);
+}
+
+/* ======================================================================
+   COLOUR · UNCHECKED
+   ====================================================================== */
+/* unchecked / brand */
+.gk-checkbox--brand {
+  --_bg: var(--component-checkbox-color-bg-unchecked-brand-default);
+  --_bd: var(--component-checkbox-color-border-unchecked-brand-default);
+}
+.gk-checkbox--brand:is(:hover, .gk-checkbox--hover):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-unchecked-brand-hover);
+  --_bd: var(--component-checkbox-color-border-unchecked-brand-hover);
+}
+.gk-checkbox--brand:is(:active, .gk-checkbox--pressed):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-unchecked-brand-active);
+  --_bd: var(--component-checkbox-color-border-unchecked-brand-active);
+}
+/* unchecked / success */
+.gk-checkbox--success {
+  --_bg: var(--component-checkbox-color-bg-unchecked-success-default);
+  --_bd: var(--component-checkbox-color-border-unchecked-success-default);
+}
+.gk-checkbox--success:is(:hover, .gk-checkbox--hover):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-unchecked-success-hover);
+  --_bd: var(--component-checkbox-color-border-unchecked-success-hover);
+}
+.gk-checkbox--success:is(:active, .gk-checkbox--pressed):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-unchecked-success-active);
+  --_bd: var(--component-checkbox-color-border-unchecked-success-active);
+}
+
+/* ======================================================================
+   COLOUR · CHECKED / INDETERMINATE (shared token group)
+   ====================================================================== */
+/* checked / brand */
+.gk-checkbox--checked.gk-checkbox--brand {
+  --_bg: var(--component-checkbox-color-bg-checked-brand-default);
+  --_bd: var(--component-checkbox-color-border-checked-brand-default);
+  --_ic: var(--component-checkbox-color-icon-checked-brand-default);
+}
+.gk-checkbox--checked.gk-checkbox--brand:is(:hover, .gk-checkbox--hover):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-checked-brand-hover);
+  --_bd: var(--component-checkbox-color-border-checked-brand-hover);
+  --_ic: var(--component-checkbox-color-icon-checked-brand-hover);
+}
+.gk-checkbox--checked.gk-checkbox--brand:is(:active, .gk-checkbox--pressed):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-checked-brand-active);
+  --_bd: var(--component-checkbox-color-border-checked-brand-active);
+  --_ic: var(--component-checkbox-color-icon-checked-brand-active);
+}
+/* checked / success */
+.gk-checkbox--checked.gk-checkbox--success {
+  --_bg: var(--component-checkbox-color-bg-checked-success-default);
+  --_bd: var(--component-checkbox-color-border-checked-success-default);
+  --_ic: var(--component-checkbox-color-icon-checked-success-default);
+}
+.gk-checkbox--checked.gk-checkbox--success:is(:hover, .gk-checkbox--hover):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-checked-success-hover);
+  --_bd: var(--component-checkbox-color-border-checked-success-hover);
+  --_ic: var(--component-checkbox-color-icon-checked-success-hover);
+}
+.gk-checkbox--checked.gk-checkbox--success:is(:active, .gk-checkbox--pressed):not(.gk-checkbox--disabled) {
+  --_bg: var(--component-checkbox-color-bg-checked-success-active);
+  --_bd: var(--component-checkbox-color-border-checked-success-active);
+  --_ic: var(--component-checkbox-color-icon-checked-success-active);
+}
+
+/* ======================================================================
+   STATE · DISABLED (intent-independent by checked-ness; last so it wins)
+   ====================================================================== */
+.gk-checkbox--disabled {
+  cursor: not-allowed;
+  color: var(--component-checkbox-color-text-disabled);
+}
+/* unchecked disabled */
+.gk-checkbox--brand.gk-checkbox--disabled {
+  --_bg: var(--component-checkbox-color-bg-unchecked-brand-disabled);
+  --_bd: var(--component-checkbox-color-border-unchecked-brand-disabled);
+}
+.gk-checkbox--success.gk-checkbox--disabled {
+  --_bg: var(--component-checkbox-color-bg-unchecked-success-disabled);
+  --_bd: var(--component-checkbox-color-border-unchecked-success-disabled);
+}
+/* checked / indeterminate disabled */
+.gk-checkbox--checked.gk-checkbox--brand.gk-checkbox--disabled {
+  --_bg: var(--component-checkbox-color-bg-checked-brand-disabled);
+  --_bd: var(--component-checkbox-color-border-checked-brand-disabled);
+  --_ic: var(--component-checkbox-color-icon-checked-brand-disabled);
+}
+.gk-checkbox--checked.gk-checkbox--success.gk-checkbox--disabled {
+  --_bg: var(--component-checkbox-color-bg-checked-success-disabled);
+  --_bd: var(--component-checkbox-color-border-checked-success-disabled);
+  --_ic: var(--component-checkbox-color-icon-checked-success-disabled);
+}
+
+/* ----------------------------------------------------------------------
+   FOCUS — keyboard focus ring on the box when the native input is focused
+   ---------------------------------------------------------------------- */
+.gk-checkbox__input:focus-visible + .gk-checkbox__box {
+  outline: 2px solid var(--component-checkbox-color-border-unchecked-brand-active);
+  outline-offset: 2px;
+}

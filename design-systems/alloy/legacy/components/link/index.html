@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link is-active">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Link</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Link</h1>
+        <p class="doc-page-header__desc">
+          Inline underlined links for navigating between pages or pointing to external resources.
+          <strong>Primary</strong> links use brand blue for high-visibility navigation.
+          <strong>Neutral</strong> links blend into body text while remaining accessible.
+          Use <strong>Inverse</strong> on dark or image backgrounds.
+          Supports optional leading or trailing icons in all three sizes.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Link</span>
+          <span class="doc-tag doc-tag--blue">Link - Inverse</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=3769-50217" target="_blank">View in Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= STYLE VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Style Variants</h2>
+        <p class="doc-section__subtitle">Two color styles for different usage contexts. Both are always underlined — the underline is the primary affordance distinguishing links from plain text.</p>
+
+        <div class="doc-variant-grid">
+          <!-- Primary -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <a href="#" class="drp-link-container-large" onclick="return false;">Link Label</a>
+            </div>
+            <div class="doc-variant-card__label">Primary (default)</div>
+          </div>
+          <!-- Neutral -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <a href="#" class="drp-link-container-large drp-link-color-neutral" onclick="return false;">Link Label</a>
+            </div>
+            <div class="doc-variant-card__label">Neutral</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Primary (default) --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"/destination"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Neutral --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"/destination"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--neutral"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Interactive States</h2>
+        <p class="doc-section__subtitle">All states shown statically. Hover and pressed darken the text color; neutral keeps the same color in all interactive states. Disabled prevents interaction and mutes the color.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <!-- Primary states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large" style="pointer-events:none;" onclick="return false;">Default</a>
+                <a href="#" class="drp-link-container-large is-hovered" style="pointer-events:none;" onclick="return false;">Hover</a>
+                <a href="#" class="drp-link-container-large is-pressed" style="pointer-events:none;" onclick="return false;">Pressed</a>
+                <a href="#" class="drp-link-container-large drp-disabled" style="pointer-events:none;" aria-disabled="true" onclick="return false;">Disabled</a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Primary states</div>
+          </div>
+          <!-- Neutral states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">Default</a>
+                <a href="#" class="drp-link-container-large drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">Hover</a>
+                <a href="#" class="drp-link-container-large drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">Pressed</a>
+                <a href="#" class="drp-link-container-large drp-link-color-neutral drp-disabled" style="pointer-events:none;" aria-disabled="true" onclick="return false;">Disabled</a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Neutral states</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Default --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"/destination"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Disabled (anchor) --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--disabled"</span> <span class="hl-attr">aria-disabled</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Disabled (button) --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"link"</span> <span class="hl-attr">disabled</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= SIZES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Sizes</h2>
+        <p class="doc-section__subtitle">Three sizes that match body text scale: Large (16px), Medium (14px), Small (12px). Match the link size to the surrounding body copy.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <!-- Primary sizes -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large" style="pointer-events:none;" onclick="return false;">Large (16px)</a>
+                <a href="#" class="drp-link-container-medium" style="pointer-events:none;" onclick="return false;">Medium (14px)</a>
+                <a href="#" class="drp-link-container-small" style="pointer-events:none;" onclick="return false;">Small (12px)</a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Primary</div>
+          </div>
+          <!-- Neutral sizes -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">Large (16px)</a>
+                <a href="#" class="drp-link-container-medium drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">Medium (14px)</a>
+                <a href="#" class="drp-link-container-small drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">Small (12px)</a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Neutral</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Large (default) --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Medium --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--md"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Small --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--sm"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span></pre>
+      </div>
+
+      <!-- ======================= WITH ICONS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">With Icons</h2>
+        <p class="doc-section__subtitle">Optional leading or trailing icon. Icons use 24×24px for Large and Medium, 16×16px for Small. Icons inherit <code>currentColor</code>.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <!-- Primary with icons -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large" style="pointer-events:none;" onclick="return false;">
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  Leading Icon
+                </a>
+                <a href="#" class="drp-link-container-large" style="pointer-events:none;" onclick="return false;">
+                  Trailing Icon
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </a>
+                <a href="#" class="drp-link-container-small" style="pointer-events:none;" onclick="return false;">
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  Small Leading Icon
+                </a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Primary</div>
+          </div>
+          <!-- Neutral with icons -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  Leading Icon
+                </a>
+                <a href="#" class="drp-link-container-large drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">
+                  Trailing Icon
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </a>
+                <a href="#" class="drp-link-container-small drp-link-color-neutral" style="pointer-events:none;" onclick="return false;">
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  Small Leading Icon
+                </a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Neutral</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Leading icon (large/medium) --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"link__icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-text">Link Label</span>
+<span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Trailing icon (large/medium) --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-text">Link Label</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"link__icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/a&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INVERSE — STYLE VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Style</h2>
+        <p class="doc-section__subtitle">Use Inverse links on dark or image-filled backgrounds. The white link color ensures contrast against dark surfaces.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <a href="#" class="drp-link-container-large drp-link-color-inverse" onclick="return false;">Link Label</a>
+            </div>
+            <div class="doc-variant-card__label">Inverse</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--inverse"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INVERSE — INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Interactive States</h2>
+        <p class="doc-section__subtitle">Hover and pressed shift the text to a muted gray. Disabled uses a darker gray for contrast against the dark surface.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large drp-link-color-inverse" style="pointer-events:none;" onclick="return false;">Default</a>
+                <a href="#" class="drp-link-container-large drp-link-color-inverse is-hovered" style="pointer-events:none;" onclick="return false;">Hover</a>
+                <a href="#" class="drp-link-container-large drp-link-color-inverse is-pressed" style="pointer-events:none;" onclick="return false;">Pressed</a>
+                <a href="#" class="drp-link-container-large drp-link-color-inverse drp-disabled" style="pointer-events:none;" aria-disabled="true" onclick="return false;">Disabled</a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Inverse states</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================= INVERSE — SIZES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Sizes</h2>
+        <p class="doc-section__subtitle">Size modifiers work identically on Inverse links.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large drp-link-color-inverse" style="pointer-events:none;" onclick="return false;">Large (16px)</a>
+                <a href="#" class="drp-link-container-medium drp-link-color-inverse" style="pointer-events:none;" onclick="return false;">Medium (14px)</a>
+                <a href="#" class="drp-link-container-small drp-link-color-inverse" style="pointer-events:none;" onclick="return false;">Small (12px)</a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Inverse</div>
+          </div>
+          <!-- Inverse with icons -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <a href="#" class="drp-link-container-large drp-link-color-inverse" style="pointer-events:none;" onclick="return false;">
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                  Leading Icon
+                </a>
+                <a href="#" class="drp-link-container-medium drp-link-color-inverse" style="pointer-events:none;" onclick="return false;">
+                  Trailing Icon
+                  <span class="drp-link-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </a>
+                <a href="#" class="drp-link-container-small drp-link-color-inverse" style="pointer-events:none;" onclick="return false;">Small Link</a>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Inverse with icons</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Inverse Large --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--inverse"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Inverse Medium --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--inverse link--md"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span>
+
+<span class="hl-tag">&lt;!-- Inverse Small --&gt;</span>
+<span class="hl-tag">&lt;a</span> <span class="hl-attr">href</span>=<span class="hl-val">"#"</span> <span class="hl-attr">class</span>=<span class="hl-val">"link link--inverse link--sm"</span><span class="hl-tag">&gt;</span><span class="hl-text">Link Label</span><span class="hl-tag">&lt;/a&gt;</span></pre>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>body/link</code> and <code>component-typography/link</code> variable collections.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Applied to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--link-color-primary</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Primary default text</td></tr>
+              <tr><td><code>--link-color-primary-hover</code></td><td><span class="doc-swatch" style="background:#0e4180;"></span>#0e4180</td><td>Primary hover / pressed text</td></tr>
+              <tr><td><code>--link-color-primary-disabled</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Primary disabled text</td></tr>
+              <tr><td><code>--link-color-neutral</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Neutral text (all interactive states)</td></tr>
+              <tr><td><code>--link-color-neutral-disabled</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Neutral disabled text</td></tr>
+              <tr><td><code>--link-color-inverse</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Inverse default text</td></tr>
+              <tr><td><code>--link-color-inverse-hover</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Inverse hover / pressed text</td></tr>
+              <tr><td><code>--link-color-inverse-disabled</code></td><td><span class="doc-swatch" style="background:#666;"></span>#666666</td><td>Inverse disabled text</td></tr>
+              <tr><td><code>--link-font-lg</code></td><td>16px</td><td>Large font size</td></tr>
+              <tr><td><code>--link-lh-lg</code></td><td>24px</td><td>Large line height</td></tr>
+              <tr><td><code>--link-font-md</code></td><td>14px</td><td>Medium font size</td></tr>
+              <tr><td><code>--link-lh-md</code></td><td>22px</td><td>Medium line height</td></tr>
+              <tr><td><code>--link-font-sm</code></td><td>12px</td><td>Small font size</td></tr>
+              <tr><td><code>--link-lh-sm</code></td><td>20px</td><td>Small line height</td></tr>
+              <tr><td><code>--link-gap</code></td><td>8px</td><td>Gap between icon and label</td></tr>
+              <tr><td><code>--link-icon-lg</code></td><td>24px</td><td>Icon size — Large / Medium</td></tr>
+              <tr><td><code>--link-icon-sm</code></td><td>16px</td><td>Icon size — Small</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Use <strong>Primary</strong> for standalone navigation links that need high visibility (e.g., "View all vehicles").</li>
+              <li>Use <strong>Neutral</strong> for inline links within a paragraph of body text — the underline distinguishes them from surrounding copy.</li>
+              <li>Use <strong>Inverse</strong> on dark hero panels, image overlays, or dark-color section backgrounds.</li>
+              <li>Match the link size (<code>--lg</code>, <code>--md</code>, <code>--sm</code>) to the surrounding body copy size.</li>
+              <li>Use trailing arrow icons for links that navigate away from the current page or open external resources.</li>
+              <li>Use the <code>aria-disabled="true"</code> attribute on <code>&lt;a&gt;</code> links and the <code>disabled</code> attribute on <code>&lt;button&gt;</code> elements so screen readers announce the disabled state.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use Link for interface actions that stay on the same page — use <strong>Button</strong> or <strong>Inline Button</strong> instead.</li>
+              <li>Don't remove the underline — it is the primary visual affordance that distinguishes a link from plain text.</li>
+              <li>Don't use Neutral links when they need to stand out from surrounding text — use Primary instead.</li>
+              <li>Don't place a Primary link on a dark background — use Inverse to maintain contrast.</li>
+              <li>Don't mix more than one icon placement (leading + trailing) on the same link.</li>
+              <li>Don't use vague link labels like "click here" or "read more" — write descriptive labels so users know the destination.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

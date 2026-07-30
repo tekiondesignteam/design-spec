@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Button — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link is-active">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Radio Button</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Radio Button</h1>
+        <p class="doc-page-header__desc">
+          Radio buttons allow users to select exactly one option from a mutually exclusive set.
+          They support two visual states — <strong>Unselected</strong> and <strong>Selected</strong> —
+          each with full interactive state coverage. Always group radio buttons with a shared
+          <code>name</code> attribute and a visible <code>&lt;fieldset&gt;</code> / <code>&lt;legend&gt;</code>.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Radio Button</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=3769-50173" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= SELECT STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Select States</h2>
+        <p class="doc-section__subtitle">Two visual states: Unselected (empty circle) and Selected (circle with filled inner dot).</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+          <!-- Unselected -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <label class="drp-radio-container">
+                <input type="radio" class="radio__input" name="states-demo">
+                <span class="radio__box">
+                  <span class="radio__dot"></span>
+                </span>
+              </label>
+            </div>
+            <div class="doc-variant-card__label">Unselected</div>
+          </div>
+          <!-- Selected -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <label class="drp-radio-container">
+                <input type="radio" class="radio__input" name="states-demo" checked>
+                <span class="radio__box">
+                  <span class="radio__dot"></span>
+                </span>
+              </label>
+            </div>
+            <div class="doc-variant-card__label">Selected</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Unselected --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__input"</span> <span class="hl-attr">name</span>=<span class="hl-val">"group"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__box"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__dot"</span><span class="hl-tag">&gt;&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Selected --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__input"</span> <span class="hl-attr">name</span>=<span class="hl-val">"group"</span> <span class="hl-attr">checked</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__box"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__dot"</span><span class="hl-tag">&gt;&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Interactive States</h2>
+        <p class="doc-section__subtitle">All states are shown below for each select state.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Unselected States -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:grid; grid-template-columns:24px 1fr; align-items:center; gap:10px 14px; width:100%; max-width:180px;">
+
+                <label class="drp-radio-container" style="pointer-events:none;">
+                  <input type="radio" class="radio__input" name="unsel-states">
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                </label>
+                <span style="font-size:13px; color:#333;">Default</span>
+
+                <label class="drp-radio-container is-hovered" style="pointer-events:none;">
+                  <input type="radio" class="radio__input" name="unsel-states-h">
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                </label>
+                <span style="font-size:13px; color:#333;">Hover / Pressed</span>
+
+                <label class="drp-radio-container drp-disabled" style="pointer-events:none;">
+                  <input type="radio" class="radio__input" name="unsel-states-d" disabled>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                </label>
+                <span style="font-size:13px; color:#c3cfd9;">Disabled</span>
+
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Unselected states</div>
+          </div>
+
+          <!-- Selected States -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:grid; grid-template-columns:24px 1fr; align-items:center; gap:10px 14px; width:100%; max-width:180px;">
+
+                <label class="drp-radio-container is-selected" style="pointer-events:none;">
+                  <input type="radio" class="radio__input" name="sel-states" checked>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                </label>
+                <span style="font-size:13px; color:#333;">Default</span>
+
+                <label class="drp-radio-container is-selected is-hovered" style="pointer-events:none;">
+                  <input type="radio" class="radio__input" name="sel-states-h" checked>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                </label>
+                <span style="font-size:13px; color:#333;">Hover / Pressed</span>
+
+                <label class="drp-radio-container is-selected drp-disabled" style="pointer-events:none;">
+                  <input type="radio" class="radio__input" name="sel-states-d" checked disabled>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                </label>
+                <span style="font-size:13px; color:#c3cfd9;">Disabled</span>
+
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Selected states</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= WITH LABEL ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">With Label</h2>
+        <p class="doc-section__subtitle">The label wraps the radio button in a <code>&lt;label&gt;</code> element, expanding the click target. Place the label before or after the control using DOM order.</p>
+
+        <div class="doc-variant-grid">
+
+          <!-- Trailing label (default) -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <label class="drp-radio-container">
+                  <input type="radio" class="radio__input" name="trailing-demo">
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Option label</span>
+                </label>
+                <label class="drp-radio-container">
+                  <input type="radio" class="radio__input" name="trailing-demo" checked>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Selected option</span>
+                </label>
+                <label class="drp-radio-container drp-disabled">
+                  <input type="radio" class="radio__input" name="trailing-demo" disabled>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Disabled option</span>
+                </label>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Trailing label (default)</div>
+          </div>
+
+          <!-- Leading label -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <label class="drp-radio-container" style="flex-direction:row-reverse;">
+                  <input type="radio" class="radio__input" name="leading-demo">
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Option label</span>
+                </label>
+                <label class="drp-radio-container" style="flex-direction:row-reverse;">
+                  <input type="radio" class="radio__input" name="leading-demo" checked>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Selected option</span>
+                </label>
+                <label class="drp-radio-container drp-disabled" style="flex-direction:row-reverse;">
+                  <input type="radio" class="radio__input" name="leading-demo" disabled>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Disabled option</span>
+                </label>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Leading label</div>
+          </div>
+
+          <!-- Group example -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <label class="drp-radio-container">
+                  <input type="radio" class="radio__input" name="group-demo">
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Chevrolet</span>
+                </label>
+                <label class="drp-radio-container">
+                  <input type="radio" class="radio__input" name="group-demo" checked>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Buick</span>
+                </label>
+                <label class="drp-radio-container">
+                  <input type="radio" class="radio__input" name="group-demo">
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">GMC</span>
+                </label>
+                <label class="drp-radio-container drp-disabled">
+                  <input type="radio" class="radio__input" name="group-demo" disabled>
+                  <span class="radio__box"><span class="radio__dot"></span></span>
+                  <span class="radio__label">Cadillac</span>
+                </label>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Group example</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Trailing label (default) --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__input"</span> <span class="hl-attr">name</span>=<span class="hl-val">"group"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__box"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__dot"</span><span class="hl-tag">&gt;&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option label</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Leading label --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">style</span>=<span class="hl-val">"flex-direction:row-reverse"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__input"</span> <span class="hl-attr">name</span>=<span class="hl-val">"group"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__box"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__dot"</span><span class="hl-tag">&gt;&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option label</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Disabled --&gt;</span>
+<span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__input"</span> <span class="hl-attr">name</span>=<span class="hl-val">"group"</span> <span class="hl-attr">disabled</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__box"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__dot"</span><span class="hl-tag">&gt;&lt;/span&gt;&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Disabled option</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/label&gt;</span>
+
+<span class="hl-tag">&lt;!-- Group with fieldset --&gt;</span>
+<span class="hl-tag">&lt;fieldset&gt;</span>
+  <span class="hl-tag">&lt;legend&gt;</span><span class="hl-text">Select a brand</span><span class="hl-tag">&lt;/legend&gt;</span>
+  <span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__input"</span> <span class="hl-attr">name</span>=<span class="hl-val">"brand"</span> <span class="hl-attr">value</span>=<span class="hl-val">"chevrolet"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__box"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__dot"</span><span class="hl-tag">&gt;&lt;/span&gt;&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Chevrolet</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/label&gt;</span>
+  <span class="hl-tag">&lt;label</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"radio"</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__input"</span> <span class="hl-attr">name</span>=<span class="hl-val">"brand"</span> <span class="hl-attr">value</span>=<span class="hl-val">"buick"</span> <span class="hl-attr">checked</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__box"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__dot"</span><span class="hl-tag">&gt;&lt;/span&gt;&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"radio__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Buick</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/label&gt;</span>
+<span class="hl-tag">&lt;/fieldset&gt;</span></pre>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Applied to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--radio-container/size</code></td><td>24px</td><td>Circle width &amp; height</td></tr>
+              <tr><td><code>--radio-container/border-width</code></td><td>1.5px</td><td>Border thickness</td></tr>
+              <tr><td><code>--radio-container/gap</code></td><td>8px</td><td>Gap between circle and label</td></tr>
+              <tr><td><code>--radio-dot/size</code></td><td>16px</td><td>Inner dot diameter</td></tr>
+              <tr><td><code>--radio-color-default/border-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Unselected border</td></tr>
+              <tr><td><code>--radio-color-default/background-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Unselected fill</td></tr>
+              <tr><td><code>--radio-color-selected/border-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Selected border</td></tr>
+              <tr><td><code>--radio-color-selected/dot-color</code></td><td><span class="doc-swatch" style="background:#1a1a1a;"></span>#1a1a1a</td><td>Inner dot color</td></tr>
+              <tr><td><code>--radio-color-disabled/border-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled unselected border</td></tr>
+              <tr><td><code>--radio-color-disabled-selected/border-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled selected border</td></tr>
+              <tr><td><code>--radio-color-disabled-selected/dot-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled inner dot color</td></tr>
+              <tr><td><code>--radio-color-disabled/label-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Disabled label text</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Always wrap the radio button in a <code>&lt;label&gt;</code> to expand the click target and associate the label.</li>
+              <li>Group all related radio buttons with the same <code>name</code> attribute so only one can be selected at a time.</li>
+              <li>Wrap groups with a <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> for screen reader context.</li>
+              <li>Pre-select a default option whenever possible — leaving all radio buttons unselected forces the user to make an additional choice.</li>
+              <li>Use the <code>disabled</code> HTML attribute for unavailable options so assistive technology announces the state.</li>
+              <li>Keep labels short and scannable — users read option lists quickly.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use radio buttons for options that are not mutually exclusive — use checkboxes instead.</li>
+              <li>Don't use radio buttons for a single on/off toggle — use a toggle switch instead.</li>
+              <li>Don't omit the <code>name</code> attribute — without it, each radio button acts independently.</li>
+              <li>Don't disable all options in a group without providing context for why none are available.</li>
+              <li>Don't use radio buttons if there are more than 5–6 options — consider a select dropdown instead.</li>
+              <li>Don't rely on color alone to communicate the selected state — the inner dot provides a shape-based cue.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

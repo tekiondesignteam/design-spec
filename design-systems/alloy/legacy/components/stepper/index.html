@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stepper — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link is-active">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Stepper</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Stepper</h1>
+        <p class="doc-page-header__desc">
+          A step-progress indicator for multi-step checkout and wizard flows.
+          Each step shows a numbered badge and a label. The active step is
+          underlined in blue; inactive steps show a 1px gray baseline.
+          A compact mobile variant collapses inactive steps to badge-only width
+          and supports optional prev/next navigation arrows.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Stepper</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=2348-14585" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Variants</h2>
+        <p class="doc-section__subtitle">Two size variants: Large (48px) for desktop page flows, and Small (40px) for mobile — inactive steps collapse to badge-only with optional navigation arrows.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Desktop Large -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="padding: 20px 24px;">
+              <div class="drp-stepper-container drp-stepper-container--lg" role="tablist" aria-label="Desktop stepper example" data-stepgroup="variant-lg">
+                <button class="drp-stepper-item is-active" role="tab" aria-selected="true">
+                  <span class="drp-stepper-badge">1</span>
+                  <span class="drp-stepper-label">Vehicle</span>
+                </button>
+                <button class="drp-stepper-item" role="tab" aria-selected="false">
+                  <span class="drp-stepper-badge">2</span>
+                  <span class="drp-stepper-label">Options</span>
+                </button>
+                <button class="drp-stepper-item" role="tab" aria-selected="false">
+                  <span class="drp-stepper-badge">3</span>
+                  <span class="drp-stepper-label">Review</span>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Large — 48px</div>
+          </div>
+
+          <!-- Mobile Small -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="padding: 20px 24px;">
+              <div class="drp-stepper-container drp-stepper-container--sm" role="tablist" aria-label="Mobile stepper example" data-stepgroup="variant-sm">
+                <button class="drp-stepper-nav drp-stepper-nav--prev" aria-label="Previous step" disabled>
+                  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="drp-stepper-track">
+                  <button class="drp-stepper-item is-active" role="tab" aria-selected="true">
+                    <span class="drp-stepper-badge">1</span>
+                    <span class="drp-stepper-label">Vehicle</span>
+                  </button>
+                  <button class="drp-stepper-item" role="tab" aria-selected="false">
+                    <span class="drp-stepper-badge">2</span>
+                    <span class="drp-stepper-label">Options</span>
+                  </button>
+                  <button class="drp-stepper-item" role="tab" aria-selected="false">
+                    <span class="drp-stepper-badge">3</span>
+                    <span class="drp-stepper-label">Review</span>
+                  </button>
+                </div>
+                <button class="drp-stepper-nav drp-stepper-nav--next" aria-label="Next step">
+                  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Small — 40px</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= STEP COUNTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Step Counts</h2>
+        <p class="doc-section__subtitle">Stepper supports 2–4 steps. Steps are equal-width on desktop; the mobile variant collapses inactive steps so only the active label is visible.</p>
+
+        <!-- 2 steps -->
+        <div class="doc-variant-card" style="margin-bottom: 24px;">
+          <div class="doc-variant-card__preview" style="padding: 20px 24px;">
+            <div class="drp-stepper-container drp-stepper-container--lg" role="tablist" data-stepgroup="count-2">
+              <button class="drp-stepper-item is-active" role="tab" aria-selected="true">
+                <span class="drp-stepper-badge">1</span>
+                <span class="drp-stepper-label">Vehicle</span>
+              </button>
+              <button class="drp-stepper-item" role="tab" aria-selected="false">
+                <span class="drp-stepper-badge">2</span>
+                <span class="drp-stepper-label">Review</span>
+              </button>
+            </div>
+          </div>
+          <div class="doc-variant-card__label">2 steps</div>
+        </div>
+
+        <!-- 3 steps -->
+        <div class="doc-variant-card" style="margin-bottom: 24px;">
+          <div class="doc-variant-card__preview" style="padding: 20px 24px;">
+            <div class="drp-stepper-container drp-stepper-container--lg" role="tablist" data-stepgroup="count-3">
+              <button class="drp-stepper-item is-active" role="tab" aria-selected="true">
+                <span class="drp-stepper-badge">1</span>
+                <span class="drp-stepper-label">Vehicle</span>
+              </button>
+              <button class="drp-stepper-item" role="tab" aria-selected="false">
+                <span class="drp-stepper-badge">2</span>
+                <span class="drp-stepper-label">Finance</span>
+              </button>
+              <button class="drp-stepper-item" role="tab" aria-selected="false">
+                <span class="drp-stepper-badge">3</span>
+                <span class="drp-stepper-label">Review</span>
+              </button>
+            </div>
+          </div>
+          <div class="doc-variant-card__label">3 steps</div>
+        </div>
+
+        <!-- 4 steps -->
+        <div class="doc-variant-card">
+          <div class="doc-variant-card__preview" style="padding: 20px 24px;">
+            <div class="drp-stepper-container drp-stepper-container--lg" role="tablist" data-stepgroup="count-4">
+              <button class="drp-stepper-item is-active" role="tab" aria-selected="true">
+                <span class="drp-stepper-badge">1</span>
+                <span class="drp-stepper-label">Vehicle</span>
+              </button>
+              <button class="drp-stepper-item" role="tab" aria-selected="false">
+                <span class="drp-stepper-badge">2</span>
+                <span class="drp-stepper-label">Options</span>
+              </button>
+              <button class="drp-stepper-item" role="tab" aria-selected="false">
+                <span class="drp-stepper-badge">3</span>
+                <span class="drp-stepper-label">Finance</span>
+              </button>
+              <button class="drp-stepper-item" role="tab" aria-selected="false">
+                <span class="drp-stepper-badge">4</span>
+                <span class="drp-stepper-label">Review</span>
+              </button>
+            </div>
+          </div>
+          <div class="doc-variant-card__label">4 steps (maximum)</div>
+        </div>
+
+      </div>
+
+      <!-- ======================= MOBILE NAVIGATION ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Mobile Navigation</h2>
+        <p class="doc-section__subtitle">The mobile stepper compresses inactive steps to 32px (badge only). Optional prev/next arrows navigate through steps. Click any step or use the arrows below.</p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;">
+        <div class="doc-variant-card">
+          <div class="doc-variant-card__preview" style="padding: 20px 24px;">
+            <div class="drp-stepper-container drp-stepper-container--sm" role="tablist" aria-label="Mobile navigation demo" data-stepgroup="mobile-nav">
+              <button class="drp-stepper-nav drp-stepper-nav--prev" aria-label="Previous step" disabled>
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="drp-stepper-track">
+                <button class="drp-stepper-item is-active" role="tab" aria-selected="true">
+                  <span class="drp-stepper-badge">1</span>
+                  <span class="drp-stepper-label">Vehicle</span>
+                </button>
+                <button class="drp-stepper-item" role="tab" aria-selected="false">
+                  <span class="drp-stepper-badge">2</span>
+                  <span class="drp-stepper-label">Options</span>
+                </button>
+                <button class="drp-stepper-item" role="tab" aria-selected="false">
+                  <span class="drp-stepper-badge">3</span>
+                  <span class="drp-stepper-label">Finance</span>
+                </button>
+                <button class="drp-stepper-item" role="tab" aria-selected="false">
+                  <span class="drp-stepper-badge">4</span>
+                  <span class="drp-stepper-label">Review</span>
+                </button>
+              </div>
+              <button class="drp-stepper-nav drp-stepper-nav--next" aria-label="Next step">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="doc-variant-card__label">Small — 40px · 4 steps · with navigation arrows</div>
+        </div>
+        </div>
+
+      </div>
+
+      <!-- ======================= CODE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Code</h2>
+        <p class="doc-section__subtitle">Desktop and mobile HTML structures. The <code>data-stepgroup</code> attribute wires up the JS selection behaviour.</p>
+
+        <pre class="doc-code"><span class="hl-com">&lt;!-- Desktop (Large) --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper stepper--lg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tablist"</span> <span class="hl-attr">data-stepgroup</span>=<span class="hl-val">"checkout"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__item is-active"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__badge"</span><span class="hl-tag">&gt;</span>1<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__label"</span><span class="hl-tag">&gt;</span>Vehicle<span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__item"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__badge"</span><span class="hl-tag">&gt;</span>2<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__label"</span><span class="hl-tag">&gt;</span>Finance<span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__item"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__badge"</span><span class="hl-tag">&gt;</span>3<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__label"</span><span class="hl-tag">&gt;</span>Review<span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/button&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-com">&lt;!-- Mobile (Small) with prev/next arrows --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper stepper--sm"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tablist"</span> <span class="hl-attr">data-stepgroup</span>=<span class="hl-val">"checkout-sm"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__nav stepper__nav--prev"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Previous step"</span> <span class="hl-attr">disabled</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- chevron left --&gt;</span><span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__track"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__item is-active"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__badge"</span><span class="hl-tag">&gt;</span>1<span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__label"</span><span class="hl-tag">&gt;</span>Vehicle<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/button&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__item"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__badge"</span><span class="hl-tag">&gt;</span>2<span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__label"</span><span class="hl-tag">&gt;</span>Finance<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/button&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__item"</span> <span class="hl-attr">role</span>=<span class="hl-val">"tab"</span> <span class="hl-attr">aria-selected</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__badge"</span><span class="hl-tag">&gt;</span>3<span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__label"</span><span class="hl-tag">&gt;</span>Review<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"stepper__nav stepper__nav--next"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Next step"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- chevron right --&gt;</span><span class="hl-tag">&lt;/button&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <!-- ======================= DESIGN TOKENS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--stepper-height-lg</code></td><td>48px</td><td>Height — desktop (Large)</td></tr>
+              <tr><td><code>--stepper-height-sm</code></td><td>40px</td><td>Height — mobile (Small)</td></tr>
+              <tr><td><code>--stepper-border-default</code></td><td><span class="doc-swatch" style="background:#e6e6e6; border:1px solid #ccc;"></span>#e6e6e6</td><td>Baseline underline color — inactive</td></tr>
+              <tr><td><code>--stepper-border-active</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Active step underline color</td></tr>
+              <tr><td><code>--stepper-underline</code></td><td>4px</td><td>Active step underline thickness</td></tr>
+              <tr><td><code>--stepper-text</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Step label text color</td></tr>
+              <tr><td><code>--stepper-badge-bg</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Badge background</td></tr>
+              <tr><td><code>--stepper-badge-text</code></td><td><span class="doc-swatch" style="background:#ffffff; border:1px solid #ddd;"></span>#ffffff</td><td>Badge text color</td></tr>
+              <tr><td><code>--stepper-badge-size</code></td><td>16px</td><td>Badge height (pill auto-widths to content)</td></tr>
+              <tr><td><code>--stepper-badge-radius</code></td><td>1000px</td><td>Badge pill border-radius</td></tr>
+              <tr><td><code>--stepper-font-size</code></td><td>16px</td><td>Step label font size</td></tr>
+              <tr><td><code>--stepper-lh</code></td><td>24px</td><td>Step label line-height</td></tr>
+              <tr><td><code>--stepper-gap</code></td><td>8px</td><td>Gap between badge and label</td></tr>
+              <tr><td><code>--stepper-padding-x</code></td><td>16px</td><td>Horizontal padding on active mobile step</td></tr>
+              <tr><td><code>--stepper-compact-w</code></td><td>32px</td><td>Width of inactive mobile step (badge only)</td></tr>
+              <tr><td><code>--stepper-nav-size</code></td><td>40px</td><td>Width/height of prev/next arrow button</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Keep step labels to 1–2 words — the mobile variant must fit the active label in the available space.</li>
+              <li>Always show all steps including future ones — users need to understand the full flow upfront.</li>
+              <li>Use the mobile variant (Small) on viewports below 768px and the desktop variant (Large) above.</li>
+              <li>Include prev/next arrows on mobile when steps are not directly tappable (e.g., inside a narrow container).</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use more than 4 steps — the mobile stepper becomes difficult to navigate.</li>
+              <li>Don't skip steps or reorder them without user action — the numbered badges imply a sequence.</li>
+              <li>Don't use Stepper for tab-based content switching — use the Tabs component instead.</li>
+              <li>Don't add icons or extra content inside step items — the badge number is the only permitted indicator.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="stepper.js"></script>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

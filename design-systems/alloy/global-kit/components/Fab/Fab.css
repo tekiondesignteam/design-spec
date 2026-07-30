@@ -1,0 +1,178 @@
+/* ======================================================================
+   Fab - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" FAB set (node 304-9604 / 276-11464).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours / sizes / fonts. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     intent  → primary | destructive | inverse   (.gk-fab--<intent>)
+     size    → lg | md | sm | xs                  (.gk-fab--<size>)
+     variant → Default | Only Icon               (.gk-fab--icon-only)
+     state   → default | hover | active          (via real :hover / :active,
+               OR forced with .gk-fab--hover / .gk-fab--active so a
+               tool/preview can show a state without pointer interaction)
+
+   Colours are resolved through three local indirection vars
+   (--_bg / --_fg / --_ic) that each intent+state combo points at the
+   matching token. The vars are component-internal plumbing, not design
+   tokens - values always come from var(--component-fab-…).
+   ====================================================================== */
+
+.gk-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: var(--component-fab-borderWidth-default);
+  border-color: transparent;
+  /* Pill radius from the token - with an equal-side (icon-only) box this
+     renders as a circle. */
+  border-radius: var(--component-fab-borderRadius-default);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  text-decoration: none;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  /* The glyph is rendered with the Global Kit <Icon> component; expose the
+     per-state icon token so it tints with the FAB state (Icon reads
+     var(--gk-icon-color)). */
+  --gk-icon-color: var(--_ic);
+}
+
+.gk-fab__label {
+  word-break: break-word;
+}
+
+/* Loading spinner - the <Spinner> ring sized to the icon; retint the thumb to
+   the per-state icon token and drop the track so it reads as a single arc. */
+.gk-fab__spinner {
+  flex-shrink: 0;
+  --gk-spinner-thumb-color: var(--_ic);
+  --gk-spinner-track-color: transparent;
+}
+
+/* ----------------------------------------------------------------------
+   SIZE - height / padding / gap (Default pill)
+   height token is sourced from the unitless `sizing` primitive scale, so
+   multiply by 1px to make it a valid CSS length. gap / padding come from the
+   `spacing` scale which already carries units.
+   ---------------------------------------------------------------------- */
+.gk-fab--lg {
+  height: calc(var(--component-fab-height-lg) * 1px);
+  gap: var(--component-fab-gap-lg);
+  padding: var(--component-fab-padding-top-lg) var(--component-fab-padding-right-lg)
+           var(--component-fab-padding-bottom-lg) var(--component-fab-padding-left-lg);
+}
+.gk-fab--md {
+  height: calc(var(--component-fab-height-md) * 1px);
+  gap: var(--component-fab-gap-md);
+  padding: var(--component-fab-padding-top-md) var(--component-fab-padding-right-md)
+           var(--component-fab-padding-bottom-md) var(--component-fab-padding-left-md);
+}
+.gk-fab--sm {
+  height: calc(var(--component-fab-height-sm) * 1px);
+  gap: var(--component-fab-gap-sm);
+  padding: var(--component-fab-padding-top-sm) var(--component-fab-padding-right-sm)
+           var(--component-fab-padding-bottom-sm) var(--component-fab-padding-left-sm);
+}
+.gk-fab--xs {
+  height: calc(var(--component-fab-height-xs) * 1px);
+  gap: var(--component-fab-gap-xs);
+  padding: var(--component-fab-padding-top-xs) var(--component-fab-padding-right-xs)
+           var(--component-fab-padding-bottom-xs) var(--component-fab-padding-left-xs);
+}
+
+/* ----------------------------------------------------------------------
+   VARIANT · Only Icon - square box (width token) → circle at pill radius,
+   no label, no horizontal padding.
+   ---------------------------------------------------------------------- */
+.gk-fab--icon-only {
+  padding: 0;
+  gap: 0;
+}
+.gk-fab--icon-only.gk-fab--lg { width: calc(var(--component-fab-width-lg) * 1px); }
+.gk-fab--icon-only.gk-fab--md { width: calc(var(--component-fab-width-md) * 1px); }
+.gk-fab--icon-only.gk-fab--sm { width: calc(var(--component-fab-width-sm) * 1px); }
+.gk-fab--icon-only.gk-fab--xs { width: calc(var(--component-fab-width-xs) * 1px); }
+
+/* ======================================================================
+   INTENT · colour sets (default / hover / active)
+   ====================================================================== */
+/* primary */
+.gk-fab--primary {
+  --_bg: var(--component-fab-color-primary-bg-default);
+  --_fg: var(--component-fab-color-primary-text-default);
+  --_ic: var(--component-fab-color-primary-icon-default);
+}
+.gk-fab--primary:is(:hover, .gk-fab--hover):not(:disabled):not(.gk-fab--loading) {
+  --_bg: var(--component-fab-color-primary-bg-hover);
+  --_fg: var(--component-fab-color-primary-text-hover);
+  --_ic: var(--component-fab-color-primary-icon-hover);
+}
+.gk-fab--primary:is(:active, .gk-fab--active):not(:disabled):not(.gk-fab--loading) {
+  --_bg: var(--component-fab-color-primary-bg-active);
+  --_fg: var(--component-fab-color-primary-text-active);
+  --_ic: var(--component-fab-color-primary-icon-active);
+}
+/* destructive */
+.gk-fab--destructive {
+  --_bg: var(--component-fab-color-destructive-bg-default);
+  --_fg: var(--component-fab-color-destructive-text-default);
+  --_ic: var(--component-fab-color-destructive-icon-default);
+}
+.gk-fab--destructive:is(:hover, .gk-fab--hover):not(:disabled):not(.gk-fab--loading) {
+  --_bg: var(--component-fab-color-destructive-bg-hover);
+  --_fg: var(--component-fab-color-destructive-text-hover);
+  --_ic: var(--component-fab-color-destructive-icon-hover);
+}
+.gk-fab--destructive:is(:active, .gk-fab--active):not(:disabled):not(.gk-fab--loading) {
+  --_bg: var(--component-fab-color-destructive-bg-active);
+  --_fg: var(--component-fab-color-destructive-text-active);
+  --_ic: var(--component-fab-color-destructive-icon-active);
+}
+/* inverse */
+.gk-fab--inverse {
+  --_bg: var(--component-fab-color-inverse-bg-default);
+  --_fg: var(--component-fab-color-inverse-text-default);
+  --_ic: var(--component-fab-color-inverse-icon-default);
+}
+.gk-fab--inverse:is(:hover, .gk-fab--hover):not(:disabled):not(.gk-fab--loading) {
+  --_bg: var(--component-fab-color-inverse-bg-hover);
+  --_fg: var(--component-fab-color-inverse-text-hover);
+  --_ic: var(--component-fab-color-inverse-icon-hover);
+}
+.gk-fab--inverse:is(:active, .gk-fab--active):not(:disabled):not(.gk-fab--loading) {
+  --_bg: var(--component-fab-color-inverse-bg-active);
+  --_fg: var(--component-fab-color-inverse-text-active);
+  --_ic: var(--component-fab-color-inverse-icon-active);
+}
+
+/* disabled - also the LOADING state, which per Figma uses the disabled
+   colour set (intent-independent) + a spinner. */
+.gk-fab:disabled,
+.gk-fab.gk-fab--disabled,
+.gk-fab.gk-fab--loading {
+  --_bg: var(--component-fab-color-disabled-bg);
+  --_fg: var(--component-fab-color-disabled-text);
+  --_ic: var(--component-fab-color-disabled-icon);
+}
+
+/* ----------------------------------------------------------------------
+   STATE · disabled & loading affordances (colours handled above)
+   ---------------------------------------------------------------------- */
+.gk-fab:disabled,
+.gk-fab.gk-fab--disabled {
+  cursor: not-allowed;
+}
+.gk-fab--loading {
+  cursor: default;
+  pointer-events: none;
+}

@@ -1,0 +1,83 @@
+/* ======================================================================
+   Badge - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Badge set (node 276-11371).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours / radii / sizes. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component never
+   branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     color  -> info | error | warning | success   (.gk-badge--<color>)
+     light  -> filled | light treatment           (.gk-badge--filled / --light)
+     dot    -> bare status dot, no content         (.gk-badge--dot)
+     size   -> md | sm                             (.gk-badge--md / --sm)
+
+   Colours resolve through two local indirection vars set per treatment+color:
+     --_bg   fill colour        --_fg   count text colour
+   plus one geometry var per size:
+     --_box  circle box size (px, from the height token)
+   These vars are component-internal plumbing, not design tokens - values
+   always come from var(--component-badge-...).
+
+   NOTE (no badge padding/gap/width token): the count form is a fixed circle
+   whose width tracks the height token (min-width = height). It fits a single
+   glyph 1:1 with Figma, which specs only single-character counts; there is no
+   horizontal-padding token to grow it for multi-digit counts, so those are not
+   padded (a wider count sits flush - add a token at the source if needed).
+   font-weight is kept numeric (600) because the DS fontWeight tokens compile to
+   non-numeric strings; 600 selects the Proxima Nova Semibold @font-face.
+   ====================================================================== */
+
+.gk-badge {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: var(--_box);
+  min-width: var(--_box);
+  padding: 0;
+  border-radius: var(--component-badge-borderRadius-md);
+  border-style: solid;
+  border-width: calc(var(--component-badge-borderWidth-md) * 1px);
+  border-color: transparent;
+  background: var(--_bg);
+  color: var(--_fg);
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+  transition: background-color .12s ease, color .12s ease;
+}
+
+/* Count slot - pinned line-height so the glyph centres in the circle. */
+.gk-badge__count {
+  line-height: 1;
+}
+
+/* ----------------------------------------------------------------------
+   SIZE - circle box from the height token (unitless sizing primitive -> px)
+   ---------------------------------------------------------------------- */
+.gk-badge--md { --_box: calc(var(--component-badge-height-md) * 1px); border-radius: var(--component-badge-borderRadius-md); border-width: calc(var(--component-badge-borderWidth-md) * 1px); }
+.gk-badge--sm { --_box: calc(var(--component-badge-height-sm) * 1px); border-radius: var(--component-badge-borderRadius-sm); border-width: calc(var(--component-badge-borderWidth-sm) * 1px); }
+
+/* ----------------------------------------------------------------------
+   DOT - a bare status dot; fixed dot-height for the size, no content.
+   ---------------------------------------------------------------------- */
+.gk-badge--dot.gk-badge--md { --_box: calc(var(--component-badge-dot-height-md) * 1px); }
+.gk-badge--dot.gk-badge--sm { --_box: calc(var(--component-badge-dot-height-sm) * 1px); }
+.gk-badge--dot { min-width: var(--_box); }
+
+/* ----------------------------------------------------------------------
+   COLOR x TREATMENT - fill + count text.
+   filled = solid feedback bg; light = subtle bg with feedback-coloured text.
+   ---------------------------------------------------------------------- */
+.gk-badge--filled.gk-badge--info    { --_bg: var(--component-badge-color-filled-info-bg-default);    --_fg: var(--component-badge-color-filled-info-text-default); }
+.gk-badge--filled.gk-badge--error   { --_bg: var(--component-badge-color-filled-error-bg-default);   --_fg: var(--component-badge-color-filled-error-text-default); }
+.gk-badge--filled.gk-badge--warning { --_bg: var(--component-badge-color-filled-warning-bg-default); --_fg: var(--component-badge-color-filled-warning-text-default); }
+.gk-badge--filled.gk-badge--success { --_bg: var(--component-badge-color-filled-success-bg-default); --_fg: var(--component-badge-color-filled-success-text-default); }
+
+.gk-badge--light.gk-badge--info     { --_bg: var(--component-badge-color-light-info-bg-default);     --_fg: var(--component-badge-color-light-info-text-default); }
+.gk-badge--light.gk-badge--error    { --_bg: var(--component-badge-color-light-error-bg-default);    --_fg: var(--component-badge-color-light-error-text-default); }
+.gk-badge--light.gk-badge--warning  { --_bg: var(--component-badge-color-light-warning-bg-default);  --_fg: var(--component-badge-color-light-warning-text-default); }
+.gk-badge--light.gk-badge--success  { --_bg: var(--component-badge-color-light-success-bg-default);  --_fg: var(--component-badge-color-light-success-text-default); }

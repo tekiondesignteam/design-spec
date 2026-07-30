@@ -1,0 +1,26 @@
+/* ======================================================================
+   ButtonGroup - core Global Kit component.
+   1:1 with the Figma "Alloy DS BETA" Button Group set (node 304-9598;
+   symbol 276-15700).
+
+   Binds ONLY to token custom properties from tokens/dist/ - no hardcoded
+   colours / sizes / gaps. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component never
+   branches on brand/theme/device.
+
+   The group is pure layout: a horizontal flex row whose ONLY styled property
+   is the inter-button gap, which resolves to --component-buttonGroup-gap-default
+   (the single token the Figma set owns). Every button's appearance is owned by
+   the composed <Button> and its own tokens - the group adds nothing to them.
+
+   The gap token resolves to a spacing primitive that already carries its px
+   unit (semantic/spacing -> primitive-spacing-8 = 8px), so it is consumed
+   directly - no calc(* 1px) wrap (unlike sizing primitives, which are unitless).
+   ====================================================================== */
+
+.gk-button-group {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--component-buttonGroup-gap-default);
+}

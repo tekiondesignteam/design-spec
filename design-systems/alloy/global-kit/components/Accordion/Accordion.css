@@ -1,0 +1,201 @@
+/* ======================================================================
+   Accordion — core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Accordion set (node 276-16549).
+
+   Binds ONLY to token custom properties from tokens/dist/ — no hardcoded
+   colours / sizes / fonts. Re-themes automatically through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component
+   never branches on brand/theme/device.
+
+   Axes (mirror the Figma variant set / property panel):
+     status  → default | error | success   (.gk-accordion--error/--success)
+     open    → expanded state              (.gk-accordion--open, toggled on click)
+     hover   → real :hover on the header, OR forced with .gk-accordion--hover
+               so a tool/preview can show the hover state
+     disabled                              (.gk-accordion--disabled)
+
+   Colours resolve through five local indirection vars set on the root:
+     --_bd   container border colour
+     --_hbg  header background
+     --_tp   header title (primary text)
+     --_ts   header description (secondary text)
+     --_ic   caret / icon colour
+   These are component-internal plumbing, not design tokens — values always
+   come from var(--component-accordion(Header)-…). State precedence matches
+   the Figma variants: disabled > error/success > open(expanded) > hover.
+   ====================================================================== */
+
+.gk-accordion {
+  /* defaults */
+  --_bd: var(--component-accordion-color-border-default);
+  --_hbg: var(--component-accordionHeader-color-bg-default);
+  --_tp: var(--component-accordionHeader-color-text-primary-default);
+  --_ts: var(--component-accordionHeader-color-text-secondary-default);
+  --_ic: var(--component-accordionHeader-color-icon-default);
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 400px;
+  overflow: clip;
+  background: var(--component-accordion-color-bg-default);
+  border-style: solid;
+  border-width: var(--component-accordion-borderWidth-default);
+  border-color: var(--_bd);
+  border-radius: var(--component-accordion-borderRadius-default);
+  padding: var(--component-accordion-padding-top-default) var(--component-accordion-padding-right-default)
+           var(--component-accordion-padding-bottom-default) var(--component-accordion-padding-left-default);
+  transition: border-color 0.12s ease;
+}
+
+/* ----------------------------------------------------------------------
+   HEADER — caret + title/description + optional content icons.
+   The whole row is the toggle button.
+   ---------------------------------------------------------------------- */
+.gk-accordion__header {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--component-accordionHeader-gap-md);
+  width: 100%;
+  padding: var(--component-accordionHeader-padding-top-default) var(--component-accordionHeader-padding-right-default)
+           var(--component-accordionHeader-padding-bottom-default) var(--component-accordionHeader-padding-left-default);
+  background: var(--_hbg);
+  border: none;
+  border-width: var(--component-accordionHeader-borderWidth-default);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background-color 0.12s ease;
+  /* Caret + content icons read this per-state icon token via the <Icon> hook. */
+  --gk-icon-color: var(--_ic);
+}
+
+/* Caret — Phosphor caret-down; rotates to point up when the panel is open. */
+.gk-accordion__caret {
+  transition: transform 0.15s ease;
+}
+.gk-accordion--open .gk-accordion__caret {
+  transform: rotate(180deg);
+}
+
+/* Middle container: leading icon + text block + trailing icon. */
+.gk-accordion__container {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--component-accordionHeader-gap-sm);
+}
+.gk-accordion__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+}
+/* Typography comes entirely from the DS text-style classes the Figma header
+   applies (added on the elements in the JSX): title → Body/Semibold/Paragraph/lg
+   (.text-body-semibold-paragraph-lg), description → Body/Medium/Paragraph/sm
+   (.text-body-medium-paragraph-sm), both from tokens/dist/computedStyles.css.
+   Only the per-state colour is set here — family/size/weight/line-height/
+   letter-spacing all inherit from those classes unchanged. */
+.gk-accordion__title {
+  color: var(--_tp);
+  word-break: break-word;
+}
+.gk-accordion__description {
+  color: var(--_ts);
+  word-break: break-word;
+}
+.gk-accordion__side-icon {
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------------------------------
+   CONTENT — always in the DOM so open/close can animate. The wrapper is a
+   1-column grid whose single row animates 0fr → 1fr (collapsed → auto
+   height) with no JS height measurement; the inner element clips overflow
+   so its padding never bleeds out while the row is collapsed.
+   ---------------------------------------------------------------------- */
+.gk-accordion__content-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.24s ease;
+}
+.gk-accordion--open .gk-accordion__content-wrap {
+  grid-template-rows: 1fr;
+}
+/* The collapsing grid item MUST be padding-free: overflow:hidden clips
+   children, but an element's own padding still occupies height, so any
+   padding here would keep the row from ever reaching 0 (a leaked sliver
+   while closed). Padding + colour therefore live on the inner element. */
+.gk-accordion__content {
+  min-height: 0;      /* defeat the grid track's auto minimum → collapses to 0 */
+  overflow: hidden;
+}
+.gk-accordion__content-body {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--component-accordionHeader-padding-bottom-default)
+           var(--component-accordionHeader-padding-right-default)
+           var(--component-accordionHeader-padding-bottom-default)
+           var(--component-accordionHeader-padding-left-default);
+  color: var(--component-accordionHeader-color-text-primary-default);
+}
+
+/* ======================================================================
+   STATES — precedence: disabled > error/success > open > hover > default.
+   Later rules in this file override earlier ones at equal specificity, so
+   they are ordered from lowest to highest priority.
+   ====================================================================== */
+
+/* HOVER (real pointer hover on an otherwise-default header, or forced). */
+.gk-accordion:not(.gk-accordion--disabled):not(.gk-accordion--error):not(.gk-accordion--success):not(.gk-accordion--open):has(.gk-accordion__header:hover),
+.gk-accordion--hover:not(.gk-accordion--disabled):not(.gk-accordion--error):not(.gk-accordion--success):not(.gk-accordion--open) {
+  --_bd: var(--component-accordion-color-border-hover);
+  --_hbg: var(--component-accordionHeader-color-bg-hover);
+}
+
+/* OPEN / EXPANDED. */
+.gk-accordion--open:not(.gk-accordion--disabled):not(.gk-accordion--error):not(.gk-accordion--success) {
+  --_bd: var(--component-accordion-color-border-expanded);
+  --_hbg: var(--component-accordionHeader-color-bg-expanded);
+}
+
+/* SUCCESS status. */
+.gk-accordion--success:not(.gk-accordion--disabled) {
+  --_bd: var(--component-accordion-color-border-success);
+  --_hbg: var(--component-accordionHeader-color-bg-success);
+}
+
+/* ERROR status. */
+.gk-accordion--error:not(.gk-accordion--disabled) {
+  --_bd: var(--component-accordion-color-border-error);
+  --_hbg: var(--component-accordionHeader-color-bg-error);
+}
+
+/* DISABLED — wins over everything; intent-independent. */
+.gk-accordion--disabled {
+  --_bd: var(--component-accordion-color-border-disabled);
+  --_hbg: var(--component-accordionHeader-color-bg-disabled);
+  --_tp: var(--component-accordionHeader-color-text-primary-disabled);
+  --_ts: var(--component-accordionHeader-color-text-secondary-disabled);
+  --_ic: var(--component-accordionHeader-color-icon-disabled);
+}
+.gk-accordion--disabled .gk-accordion__header {
+  cursor: not-allowed;
+}
+
+/* Honour users who ask for less motion — snap open/closed instead. */
+@media (prefers-reduced-motion: reduce) {
+  .gk-accordion,
+  .gk-accordion__header,
+  .gk-accordion__caret,
+  .gk-accordion__content-wrap {
+    transition: none;
+  }
+}

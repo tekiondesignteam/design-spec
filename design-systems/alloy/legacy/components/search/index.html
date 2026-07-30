@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link is-active">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Search</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Search</h1>
+        <p class="doc-page-header__desc">
+          A search input field with an inline search icon, a clear button that appears when the
+          field has a value, and an optional autocomplete suggestion dropdown. Includes a "Go"
+          variant that adds a bold action label and divider on the trailing edge.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Search</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=1860-13798" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Variants</h2>
+        <p class="doc-section__subtitle">Two variants: the standard search field with a left magnifier icon, and the Go variant which moves the icon to the right and adds a bold "Go" label with a divider.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+
+          <!-- Default -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="search" style="max-width:320px; width:100%;">
+                <div class="search__field">
+                  <span class="search__icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
+                  <input type="text" class="search__input" placeholder="Search" aria-label="Search" id="var-default">
+                  <button class="search__clear" aria-label="Clear search" tabindex="-1">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Default</div>
+          </div>
+
+          <!-- With Go -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="search search--go" style="max-width:320px; width:100%;">
+                <div class="search__field">
+                  <input type="text" class="search__input" placeholder="Search" aria-label="Search" id="var-go">
+                  <button class="search__clear" aria-label="Clear search" tabindex="-1">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                  <div class="search__divider"></div>
+                  <button class="search__go" aria-label="Submit search">Go</button>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">With Go</div>
+          </div>
+
+          <!-- Disabled -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div class="search search--disabled" style="max-width:320px; width:100%;">
+                <div class="search__field">
+                  <span class="search__icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </span>
+                  <input type="text" class="search__input" placeholder="Search" aria-label="Search" disabled>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Disabled</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-com">&lt;!-- Default --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"search"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__field"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__icon"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- search SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"text"</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__input"</span> <span class="hl-attr">placeholder</span>=<span class="hl-val">"Search"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__clear"</span> <span class="hl-attr">aria-label</span>=<span class="hl-val">"Clear search"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- × SVG --&gt;</span><span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-com">&lt;!-- With Go --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"search search--go"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__field"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"text"</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__input"</span> <span class="hl-attr">placeholder</span>=<span class="hl-val">"Search"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__clear"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- × SVG --&gt;</span><span class="hl-tag">&lt;/button&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__divider"</span><span class="hl-tag">&gt;&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__go"</span><span class="hl-tag">&gt;</span>Go<span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-com">&lt;!-- Disabled --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"search search--disabled"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__field"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__icon"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- search SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"text"</span> <span class="hl-attr">class</span>=<span class="hl-val">"search__input"</span> <span class="hl-attr">placeholder</span>=<span class="hl-val">"Search"</span> <span class="hl-attr">disabled</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <!-- ======================= STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">States</h2>
+        <p class="doc-section__subtitle">All interactive states shown for both variants. The clear button appears only when the field has a value. Focus ring is keyboard-only.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Standard variant states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="flex-direction:column; align-items:stretch; gap:24px; width:100%;">
+
+              <div>
+                <div class="doc-state-label">Default (empty)</div>
+                <div class="search">
+                  <div class="search__field" style="pointer-events:none;">
+                    <span class="search__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                    <input type="text" class="search__input" placeholder="Search" tabindex="-1">
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="doc-state-label">Hover</div>
+                <div class="search">
+                  <div class="search__field is-hovered" style="pointer-events:none;">
+                    <span class="search__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                    <input type="text" class="search__input" placeholder="Search" tabindex="-1">
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="doc-state-label">Active / Has value</div>
+                <div class="search">
+                  <div class="search__field is-active" style="pointer-events:none;">
+                    <span class="search__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                    <input type="text" class="search__input" value="Chevrolet Silverado" tabindex="-1">
+                    <button class="search__clear is-visible" tabindex="-1" aria-label="Clear" style="pointer-events:none;">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="doc-state-label" style="color:#c3cfd9;">Disabled</div>
+                <div class="search search--disabled">
+                  <div class="search__field">
+                    <span class="search__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                    <input type="text" class="search__input" placeholder="Search" disabled tabindex="-1">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="doc-variant-card__label">Standard</div>
+          </div>
+
+          <!-- Go variant states -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="flex-direction:column; align-items:stretch; gap:24px; width:100%;">
+
+              <div>
+                <div class="doc-state-label">Default (empty)</div>
+                <div class="search search--go">
+                  <div class="search__field" style="pointer-events:none;">
+                    <input type="text" class="search__input" placeholder="Search" tabindex="-1">
+                    <div class="search__divider"></div>
+                    <button class="search__go" tabindex="-1" style="pointer-events:none;">Go</button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="doc-state-label">Hover</div>
+                <div class="search search--go">
+                  <div class="search__field is-hovered" style="pointer-events:none;">
+                    <input type="text" class="search__input" placeholder="Search" tabindex="-1">
+                    <div class="search__divider"></div>
+                    <button class="search__go" tabindex="-1" style="pointer-events:none;">Go</button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="doc-state-label">Active / Has value</div>
+                <div class="search search--go">
+                  <div class="search__field is-active" style="pointer-events:none;">
+                    <input type="text" class="search__input" value="GMC Sierra" tabindex="-1">
+                    <button class="search__clear is-visible" tabindex="-1" aria-label="Clear" style="pointer-events:none;">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="search__divider"></div>
+                    <button class="search__go" tabindex="-1" style="pointer-events:none;">Go</button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="doc-state-label" style="color:#c3cfd9;">Disabled</div>
+                <div class="search search--go search--disabled">
+                  <div class="search__field">
+                    <input type="text" class="search__input" placeholder="Search" disabled tabindex="-1">
+                    <div class="search__divider"></div>
+                    <button class="search__go" tabindex="-1" disabled>Go</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="doc-variant-card__label">With Go</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= WITH SUGGESTIONS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">With Suggestions</h2>
+        <p class="doc-section__subtitle">Type in the field below to see autocomplete suggestions. The dropdown appears when the field has a value. Click a suggestion to select it, or click × to clear.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Standard with suggestions -->
+          <div class="doc-variant-card" style="overflow:visible;">
+            <div class="doc-variant-card__preview" style="align-items:stretch; padding-bottom:200px;">
+              <div class="search" id="search-demo-1" style="max-width:100%; width:100%;">
+                <div class="search__field">
+                  <span class="search__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                  <input type="text" class="search__input" placeholder="Search vehicles…" aria-label="Search vehicles" id="input-demo-1" autocomplete="off">
+                  <button class="search__clear" aria-label="Clear search">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                </div>
+                <div class="search__menu" id="menu-demo-1">
+                  <div class="search__menu-item" data-value="Chevrolet Silverado">Chevrolet Silverado</div>
+                  <div class="search__menu-item" data-value="Chevrolet Blazer">Chevrolet Blazer</div>
+                  <div class="search__menu-item is-selected" data-value="Chevrolet Equinox">Chevrolet Equinox</div>
+                  <div class="search__menu-item" data-value="Chevrolet Malibu">Chevrolet Malibu</div>
+                  <div class="search__menu-item" data-value="Chevrolet Colorado">Chevrolet Colorado</div>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Standard</div>
+          </div>
+
+          <!-- Go with suggestions -->
+          <div class="doc-variant-card" style="overflow:visible;">
+            <div class="doc-variant-card__preview" style="align-items:stretch; padding-bottom:200px;">
+              <div class="search search--go" id="search-demo-2" style="max-width:100%; width:100%;">
+                <div class="search__field">
+                  <input type="text" class="search__input" placeholder="Search vehicles…" aria-label="Search vehicles" id="input-demo-2" autocomplete="off">
+                  <button class="search__clear" aria-label="Clear search">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 9l6 6M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </button>
+                  <div class="search__divider"></div>
+                  <button class="search__go" aria-label="Submit search">Go</button>
+                </div>
+                <div class="search__menu" id="menu-demo-2">
+                  <div class="search__menu-item" data-value="GMC Sierra">GMC Sierra</div>
+                  <div class="search__menu-item" data-value="GMC Canyon">GMC Canyon</div>
+                  <div class="search__menu-item is-selected" data-value="GMC Acadia">GMC Acadia</div>
+                  <div class="search__menu-item" data-value="GMC Terrain">GMC Terrain</div>
+                  <div class="search__menu-item" data-value="GMC Yukon">GMC Yukon</div>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">With Go</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ======================= DESIGN TOKENS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--search-height</code></td><td>56px</td><td>Field height</td></tr>
+              <tr><td><code>--search-bg</code></td><td><span class="doc-swatch" style="background:#f2f2f2; border:1px solid #ddd;"></span>#f2f2f2</td><td>Field background fill</td></tr>
+              <tr><td><code>--search-border-default</code></td><td><span class="doc-swatch" style="background:#e6e6e6;"></span>#e6e6e6</td><td>Bottom border — default state</td></tr>
+              <tr><td><code>--search-border-hover</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Bottom border — hover state</td></tr>
+              <tr><td><code>--search-border-active</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Bottom border — active / focused</td></tr>
+              <tr><td><code>--search-border-width</code></td><td>2px</td><td>Bottom border thickness</td></tr>
+              <tr><td><code>--search-border-radius</code></td><td>4px</td><td>Top corner radius</td></tr>
+              <tr><td><code>--search-padding-x</code></td><td>16px</td><td>Horizontal padding inside field</td></tr>
+              <tr><td><code>--search-gap</code></td><td>16px</td><td>Gap between icon, input, and actions</td></tr>
+              <tr><td><code>--search-text</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Typed text color</td></tr>
+              <tr><td><code>--search-placeholder</code></td><td><span class="doc-swatch" style="background:#666666;"></span>#666666</td><td>Placeholder text color</td></tr>
+              <tr><td><code>--search-text-disabled</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Text color in disabled state</td></tr>
+              <tr><td><code>--search-icon</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Icon color — enabled</td></tr>
+              <tr><td><code>--search-icon-disabled</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9</td><td>Icon color — disabled state</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <div class="doc-dos__body">
+              <ul>
+                <li>Always include a search icon — it sets user expectation that this field triggers a query.</li>
+                <li>Show the clear (×) button as soon as the field has any value so users can reset quickly.</li>
+                <li>Use the "Go" variant when search requires an explicit submit action (e.g., a new page load).</li>
+                <li>Show at most 5–7 suggestions; use a scrollable list for longer sets.</li>
+                <li>Highlight the matched portion of each suggestion when possible.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <div class="doc-donts__body">
+              <ul>
+                <li>Don't remove the search icon — the field looks like a plain text input without it.</li>
+                <li>Don't show suggestions when the field is empty — only open the dropdown after the user starts typing.</li>
+                <li>Don't use both a left search icon and a "Go" button together — the Go variant uses no left icon.</li>
+                <li>Don't use this component for non-search contexts; use Text Input for form fields.</li>
+                <li>Don't disable the entire field unless the page context makes search genuinely unavailable.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // ── Reusable suggestion data ─────────────────────────────────────────────
+    var SUGGESTIONS_1 = [
+      'Chevrolet Silverado', 'Chevrolet Blazer', 'Chevrolet Equinox',
+      'Chevrolet Malibu', 'Chevrolet Colorado', 'Chevrolet Tahoe',
+      'Chevrolet Traverse', 'Chevrolet Trax'
+    ];
+    var SUGGESTIONS_2 = [
+      'GMC Sierra', 'GMC Canyon', 'GMC Acadia',
+      'GMC Terrain', 'GMC Yukon', 'GMC Savana',
+      'GMC Envoy', 'GMC Jimmy'
+    ];
+
+    // ── Keyboard-only focus ring (all non-disabled search fields) ────────────
+    document.querySelectorAll('.search:not(.search--disabled) .search__field').forEach(function(field) {
+      if (field.style.pointerEvents === 'none') return;
+      var input = field.querySelector('.search__input');
+      if (!input) return;
+      var mouseDown = false;
+      field.addEventListener('mousedown', function() { mouseDown = true; });
+      input.addEventListener('focus', function() {
+        if (!mouseDown) field.classList.add('is-keyboard-focused');
+        mouseDown = false;
+        field.classList.add('is-active');
+      });
+      input.addEventListener('blur', function() {
+        field.classList.remove('is-keyboard-focused');
+        field.classList.remove('is-active');
+        mouseDown = false;
+      });
+    });
+
+    // ── Interactive search with suggestions ──────────────────────────────────
+    function initSearch(wrapperId, inputId, menuId, suggestions) {
+      var wrapper = document.getElementById(wrapperId);
+      var input   = document.getElementById(inputId);
+      var menu    = document.getElementById(menuId);
+      if (!wrapper || !input || !menu) return;
+
+      var field = wrapper.querySelector('.search__field');
+      var clear = wrapper.querySelector('.search__clear');
+
+      function renderSuggestions(query) {
+        var q = query.trim().toLowerCase();
+        var matches = q
+          ? suggestions.filter(function(s) { return s.toLowerCase().indexOf(q) !== -1; })
+          : suggestions;
+
+        menu.innerHTML = '';
+        if (matches.length === 0) {
+          var empty = document.createElement('div');
+          empty.className = 'search__menu-empty';
+          empty.textContent = 'No results for "' + query + '"';
+          menu.appendChild(empty);
+        } else {
+          matches.forEach(function(item) {
+            var el = document.createElement('div');
+            el.className = 'search__menu-item';
+            el.dataset.value = item;
+            el.textContent = item;
+            el.addEventListener('mousedown', function(e) {
+              e.preventDefault(); // prevent blur before click
+            });
+            el.addEventListener('click', function(e) {
+              e.stopPropagation();
+              input.value = item;
+              updateClear();
+              closeMenu();
+              input.focus();
+            });
+            menu.appendChild(el);
+          });
+        }
+      }
+
+      function openMenu() {
+        renderSuggestions(input.value);
+        wrapper.classList.add('search--open');
+        field.classList.add('is-active');
+      }
+
+      function closeMenu() {
+        wrapper.classList.remove('search--open');
+        field.classList.remove('is-active');
+      }
+
+      function updateClear() {
+        if (clear) {
+          if (input.value) {
+            clear.classList.add('is-visible');
+          } else {
+            clear.classList.remove('is-visible');
+          }
+        }
+      }
+
+      // Show/hide clear button + open dropdown on typing
+      input.addEventListener('input', function() {
+        updateClear();
+        if (input.value) {
+          openMenu();
+        } else {
+          closeMenu();
+        }
+      });
+
+      // Open on focus if has value
+      input.addEventListener('focus', function() {
+        if (input.value) openMenu();
+      });
+
+      // Close on blur (with delay for click events)
+      input.addEventListener('blur', function() {
+        setTimeout(closeMenu, 150);
+      });
+
+      // Clear button
+      if (clear) {
+        clear.addEventListener('click', function(e) {
+          e.stopPropagation();
+          input.value = '';
+          updateClear();
+          closeMenu();
+          input.focus();
+        });
+      }
+
+      // Keyboard: Escape to close, Enter to submit
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeMenu();
+          input.blur();
+        }
+      });
+
+      // Close on outside click
+      document.addEventListener('click', function(e) {
+        if (!wrapper.contains(e.target)) closeMenu();
+      });
+
+      updateClear();
+    }
+
+    initSearch('search-demo-1', 'input-demo-1', 'menu-demo-1', SUGGESTIONS_1);
+    initSearch('search-demo-2', 'input-demo-2', 'menu-demo-2', SUGGESTIONS_2);
+
+    // ── Variant demos: clear button toggle ───────────────────────────────────
+    ['var-default', 'var-go'].forEach(function(id) {
+      var input = document.getElementById(id);
+      if (!input) return;
+      var wrapper = input.closest('.search');
+      var clear   = wrapper && wrapper.querySelector('.search__clear');
+      if (!input || !clear) return;
+      input.addEventListener('input', function() {
+        if (input.value) {
+          clear.classList.add('is-visible');
+        } else {
+          clear.classList.remove('is-visible');
+        }
+      });
+      clear.addEventListener('click', function(e) {
+        e.stopPropagation();
+        input.value = '';
+        clear.classList.remove('is-visible');
+        input.focus();
+      });
+    });
+  </script>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

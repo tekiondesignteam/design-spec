@@ -1,0 +1,39 @@
+/* ======================================================================
+   Card - core Global Kit surface container (node 304-11123 "Card").
+   An outer shell: a padded, bordered, rounded surface with one content
+   slot (children). No variant axes - a single "default" surface.
+
+   Binds ONLY to --component-card-* token custom properties; no hardcoded
+   colours, sizes, radii or spacing. Retheming across brand/theme/device
+   is the [data-*] token cascade (e.g. ARC square vs T1 rounded corners).
+
+   The card-* leaf tokens already resolve to px lengths (primitive
+   spacing/borderRadius/borderWidth carry their units), so they bind raw -
+   no calc(... * 1px) is needed here.
+   ====================================================================== */
+
+.gk-card {
+  box-sizing: border-box;
+
+  /* local plumbing -> design tokens */
+  --_bg: var(--component-card-color-bg-default);
+  --_bd: var(--component-card-color-border-default);
+
+  background: var(--_bg);
+  border-style: solid;
+  border-color: var(--_bd);
+  border-width: var(--component-card-borderWidth-default);
+  border-radius: var(--component-card-borderRadius-default);
+
+  /* four-side padding, one token per side (matches the Figma spec) */
+  padding: var(--component-card-padding-top-default)
+           var(--component-card-padding-right-default)
+           var(--component-card-padding-bottom-default)
+           var(--component-card-padding-left-default);
+
+  /* Figma "Content Slot" (node 276:16862) has clipsContent: true - clip the
+     content to the rounded surface. */
+  overflow: hidden;
+
+  transition: background-color .12s ease, border-color .12s ease;
+}

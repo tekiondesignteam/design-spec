@@ -1,7 +1,11 @@
-# Alloy Design System
+# Alloy Design System (GM DRP)
 
-Placeholder for the Alloy design system (tokens, components, foundations).
+The **Digital Retail Program (DRP)** design system — white-label ecommerce UI for GM's four brands (Chevrolet, Buick, GMC, Cadillac), one system switched at runtime via `[data-brand]` on `<html>`.
 
-Populate this folder with the Alloy source of truth (e.g. from `tekiondesignsystem-alloy`).
-Until then this is a stub so `/new-project` can offer **alloy** as a selectable design system.
+- **Governance + inherited visual direction:** `Constitution.md`
+- **Engineering guide + build process:** `CLAUDE.md`
+- **Tokens:** `styles/tokens.css` (Chevy base) → `styles/brands.css` (per-brand) → `styles/global.css` (component classes)
+- **Components:** `src/components/ui/<name>.tsx`
+- **Design source of truth:** Figma `RsCbyz0LF6FaItYny1FqUU` + Storybook `https://aecgm-dev.tekion.xyz/docs/ui-components/`
+
 Read-only for designers — enforced by `hooks/pre-commit`.

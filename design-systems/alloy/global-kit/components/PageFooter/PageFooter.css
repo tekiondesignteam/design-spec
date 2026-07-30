@@ -1,0 +1,110 @@
+/* ======================================================================
+   PageFooter - core Global Kit component.
+   1:1 with Figma "Alloy DS BETA" Page Footer (node 276-16805).
+
+   A bottom action bar: a top border rule · a left container (leading icon +
+   title/subtitle + a vertical separator + a 24x24 content slot) · a right
+   action area (Button Group). Binds ONLY to token custom properties from
+   tokens/dist/ - no hardcoded colours/sizes/fonts. Re-themes through the
+   [data-brand] / [data-theme] / [data-device] cascade; the component never
+   branches on brand/theme/device.
+
+   Token surface -> --component-pageFooter-*
+     color-bg-default · color-border-default · color-icon-default ·
+     color-text-primary-default · color-text-secondary-default ·
+     borderWidth-default · gap-default · padding-{top,right,bottom,left}-default
+
+   The leading icon colour is exposed to the child <Icon> via --gk-icon-color
+   (the Icon component reads that override off any ancestor).
+
+   Typography comes from the DS text-* classes on the title/subtitle elements
+   (Body/Medium/Paragraph/lg and Body/Regular/Caption/lg). The fontWeight those
+   styles reference compiles to an invalid CSS weight string (the primitive weight
+   token is value-less), so - exactly as in Button.css / Modal.css - the numeric
+   weight is set here (500 / 400) to select the correct Proxima Nova @font-face;
+   colour binds to the pageFooter text tokens.
+
+   Structural dimension with no pageFooter token: the Title Content Slot is a
+   24x24 Figma frame. It binds to the semantic sizing token size24 (the exact
+   primitive dimension Figma uses), unitless -> * 1px. The vertical separator has
+   no fixed height - it stretches to the row's content height (see below).
+   ====================================================================== */
+
+.gk-page-footer {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--component-pageFooter-gap-default);
+  width: 100%;
+  padding: var(--component-pageFooter-padding-top-default)
+           var(--component-pageFooter-padding-right-default)
+           var(--component-pageFooter-padding-bottom-default)
+           var(--component-pageFooter-padding-left-default);
+  background: var(--component-pageFooter-color-bg-default);
+  border-top: var(--component-pageFooter-borderWidth-default) solid
+              var(--component-pageFooter-color-border-default);
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+/* ---- Left container: icon + text + separator + slot -------------------- */
+.gk-page-footer__left {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+  gap: var(--component-pageFooter-gap-default);
+}
+.gk-page-footer__icon {
+  flex: none;
+  /* hand the pageFooter icon token to the child <Icon> (scoped to the leading
+     icon only, so the action buttons keep their own per-state icon tokens). */
+  --gk-icon-color: var(--component-pageFooter-color-icon-default);
+}
+
+.gk-page-footer__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.gk-page-footer__title {
+  margin: 0;
+  font-weight: 500; /* Body/Medium/Paragraph/lg - see header note */
+  color: var(--component-pageFooter-color-text-primary-default);
+  /* Figma: the title ellipsises on overflow within the flexing left container. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gk-page-footer__subtitle {
+  margin: 0;
+  font-weight: 400; /* Body/Regular/Caption/lg - see header note */
+  color: var(--component-pageFooter-color-text-secondary-default);
+  word-break: break-word;
+}
+
+/* Vertical separator = the divider between the text and the content slot. It has
+   no fixed height token; align-self:stretch fills the row's content height (the
+   24px Figma rule), and min-height:0 clears the divider's standalone 40px floor. */
+.gk-page-footer__separator.gk-divider {
+  flex: none;
+  align-self: stretch;
+  min-height: 0;
+}
+
+/* Title Content Slot - 24x24 box; clipsContent false in Figma, so it does NOT clip. */
+.gk-page-footer__slot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--semantic-sizing-size24) * 1px);
+  height: calc(var(--semantic-sizing-size24) * 1px);
+}
+
+/* ---- Right action area ------------------------------------------------- */
+.gk-page-footer__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+}

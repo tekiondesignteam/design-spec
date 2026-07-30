@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link is-active">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Accordion</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Accordion</h1>
+        <p class="doc-page-header__desc">
+          A vertically stacked set of interactive headings that reveal or hide associated content panels.
+          Each item has a <strong>label</strong> with a <strong>toggle icon</strong> (plus/minus) that
+          indicates its state. Supports <strong>left</strong> and <strong>right</strong> icon positions,
+          optional <strong>decorative icons</strong> beside the label, and full
+          <strong>disabled</strong> state coverage.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Accordion</span>
+          <span class="doc-tag doc-tag--blue">.accordion-group</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=536-9911" target="_blank">View in Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= ITEM STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Item States</h2>
+        <p class="doc-section__subtitle">Click a header to expand or collapse it. Hover to see the hover color.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+
+          <!-- Left icon -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 24px;">
+              <div class="drp-accordion-group" style="width:100%;" id="states-left">
+                <div class="drp-accordion-container-bg" data-group="states-left">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                    <div class="accordion__label-wrap"><span class="accordion__label">Exterior Color</span></div>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Choose from a curated palette of GM-approved exterior paint colors.</div>
+                  </div>
+                </div>
+                <div class="drp-accordion-container-bg" data-group="states-left">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                    <div class="accordion__label-wrap"><span class="accordion__label">Interior Options</span></div>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Select from premium seating materials and interior trim packages.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Left icon</div>
+          </div>
+
+          <!-- Right icon -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 24px;">
+              <div class="drp-accordion-group" style="width:100%;" id="states-right">
+                <div class="drp-accordion-container-bg" data-group="states-right">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <div class="accordion__label-wrap"><span class="accordion__label">Exterior Color</span></div>
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Choose from a curated palette of GM-approved exterior paint colors.</div>
+                  </div>
+                </div>
+                <div class="drp-accordion-container-bg" data-group="states-right">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <div class="accordion__label-wrap"><span class="accordion__label">Interior Options</span></div>
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Select from premium seating materials and interior trim packages.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Right icon</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Left icon --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__header"</span> <span class="hl-attr">aria-expanded</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__icon"</span> <span class="hl-attr">aria-hidden</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;i</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon drp-icon--circle-chevron-down accordion__icon-closed"</span><span class="hl-tag">&gt;&lt;/i&gt;</span>
+      <span class="hl-tag">&lt;i</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon drp-icon--circle-chevron-up accordion__icon-open"</span><span class="hl-tag">&gt;&lt;/i&gt;</span>
+    <span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__label-wrap"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Label</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__panel"</span> <span class="hl-attr">role</span>=<span class="hl-val">"region"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__body"</span><span class="hl-tag">&gt;</span><span class="hl-text">Content goes here.</span><span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-comment">&lt;!-- Right icon: put label-wrap before the icon span --&gt;</span>
+<span class="hl-comment">&lt;!-- Open:     add .is-open to .accordion          --&gt;</span>
+<span class="hl-comment">&lt;!-- Disabled: add .is-disabled to .accordion      --&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INTERACTIVE GROUP ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Accordion Group</h2>
+        <p class="doc-section__subtitle">Click a header to expand it. Only one item opens at a time. The icon switches from plus to minus and the label turns blue.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+
+          <!-- Left icon group -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 24px;">
+              <div class="drp-accordion-group" style="width:100%;" id="group-left">
+                <div class="drp-accordion-container-bg" data-group="group-left">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                    <div class="accordion__label-wrap"><span class="accordion__label">Exterior Color</span></div>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Choose from a curated palette of GM-approved exterior paint colors, including standard and premium metallic finishes.</div>
+                  </div>
+                </div>
+                <div class="drp-accordion-container-bg is-open" data-group="group-left">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="true">
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                    <div class="accordion__label-wrap"><span class="accordion__label">Interior Trim</span></div>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Select from leather, premium cloth, or synthetic suede upholstery in multiple colorways to match your style.</div>
+                  </div>
+                </div>
+                <div class="drp-accordion-container-bg" data-group="group-left">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                    <div class="accordion__label-wrap"><span class="accordion__label">Wheel Package</span></div>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Upgrade from standard alloy wheels to a performance or chrome package to complete the look.</div>
+                  </div>
+                </div>
+                <div class="drp-accordion-container-bg drp-disabled" data-group="group-left">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false" disabled>
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                    <div class="accordion__label-wrap"><span class="accordion__label">Accessories (unavailable)</span></div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Left icon group</div>
+          </div>
+
+          <!-- Right icon group -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 24px;">
+              <div class="drp-accordion-group" style="width:100%;" id="group-right">
+                <div class="drp-accordion-container-bg" data-group="group-right">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <div class="accordion__label-wrap"><span class="accordion__label">Financing Options</span></div>
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Compare finance, lease, and cash-purchase options side-by-side to find the plan that works for your budget.</div>
+                  </div>
+                </div>
+                <div class="drp-accordion-container-bg is-open" data-group="group-right">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="true">
+                    <div class="accordion__label-wrap"><span class="accordion__label">Trade-In Value</span></div>
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Enter your current vehicle details to get an estimated trade-in value that can be applied toward your new vehicle purchase.</div>
+                  </div>
+                </div>
+                <div class="drp-accordion-container-bg" data-group="group-right">
+                  <button class="drp-accordion-container-summary-bg" aria-expanded="false">
+                    <div class="accordion__label-wrap"><span class="accordion__label">Delivery Details</span></div>
+                    <span class="accordion__icon" aria-hidden="true">
+                      <i class="drp-icon drp-icon--circle-chevron-down accordion__icon-closed"></i>
+                      <i class="drp-icon drp-icon--circle-chevron-up accordion__icon-open"></i>
+                    </span>
+                  </button>
+                  <div class="drp-accordion-details" role="region">
+                    <div class="accordion__body">Review estimated build time, delivery window, and dealer pickup or home-delivery options for your configured vehicle.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Right icon group</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion-group"</span> <span class="hl-attr">id</span>=<span class="hl-val">"my-group"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion"</span> <span class="hl-attr">data-group</span>=<span class="hl-val">"my-group"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__header"</span> <span class="hl-attr">aria-expanded</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/button&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__panel"</span> <span class="hl-attr">role</span>=<span class="hl-val">"region"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"accordion__body"</span><span class="hl-tag">&gt;</span><span class="hl-text">Content</span><span class="hl-tag">&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-comment">&lt;!-- repeat for each item --&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map to the Figma <code>body/accordion</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Token</th><th>Value</th><th>Applied to</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--accordion-bg</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Container background</td></tr>
+              <tr><td><code>--accordion-border</code></td><td><span class="doc-swatch" style="background:#e6e6e6;"></span>#e6e6e6</td><td>Bottom divider line</td></tr>
+              <tr><td><code>--accordion-text</code></td><td><span class="doc-swatch" style="background:#666;"></span>#666666</td><td>Label — default</td></tr>
+              <tr><td><code>--accordion-text-hover</code></td><td><span class="doc-swatch" style="background:#0e4180;"></span>#0e4180</td><td>Label + icon — hover</td></tr>
+              <tr><td><code>--accordion-text-active</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Label + icon — open</td></tr>
+              <tr><td><code>--accordion-text-disabled</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Label + icon — disabled</td></tr>
+              <tr><td><code>--accordion-header-h</code></td><td>56px</td><td>Header row height</td></tr>
+              <tr><td><code>--accordion-content-px</code></td><td>16px</td><td>Panel horizontal padding</td></tr>
+              <tr><td><code>--accordion-content-py</code></td><td>16px</td><td>Panel vertical padding</td></tr>
+              <tr><td><code>--accordion-font-size</code></td><td>16px</td><td>Label font size</td></tr>
+              <tr><td><code>--accordion-lh</code></td><td>24px</td><td>Label line height</td></tr>
+              <tr><td><code>--accordion-icon-size</code></td><td>24px</td><td>Toggle icon container size</td></tr>
+              <tr><td><code>--accordion-gap</code></td><td>24px</td><td>Gap between icon and label-wrap</td></tr>
+              <tr><td><code>--accordion-inner-gap</code></td><td>8px</td><td>Gap within label-wrap</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Always add <code>aria-expanded="true/false"</code> to the trigger button so screen readers announce the state.</li>
+              <li>Add <code>role="region"</code> to the panel so assistive technology identifies it as an expandable region.</li>
+              <li>Keep labels concise — one short phrase that clearly describes the hidden content.</li>
+              <li>Use <code>.accordion-group</code> to wrap stacked items — it adds the top border cleanly.</li>
+              <li>Keep icon position (left or right) consistent across all items in the same group.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't nest accordions inside accordions — use a different disclosure pattern instead.</li>
+              <li>Don't mix left-icon and right-icon variants within the same group.</li>
+              <li>Don't put primary actions inside panels that are hidden by default.</li>
+              <li>Don't mix items with and without decorative icons in the same group.</li>
+              <li>Don't use accordions when all sections are equally important and always visible.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="accordion.js"></script>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

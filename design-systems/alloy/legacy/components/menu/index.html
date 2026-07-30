@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link is-active">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Menu</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Menu</h1>
+        <p class="doc-page-header__desc">
+          A floating list of options that appears on demand — typically triggered by a button or dropdown field.
+          Items support a <strong>selected</strong> state with a checkmark indicator
+          and an optional <strong>description</strong> line below the label.
+          Sections can be separated with <strong>dividers</strong> and labelled with <strong>headers</strong>.
+          A built-in <strong>search</strong> row filters the list as the user types.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Menu</span>
+          <span class="doc-tag doc-tag--blue">.Menu List</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=3769-50175" target="_blank">View in Figma ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= VARIANTS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Variants</h2>
+        <p class="doc-section__subtitle">Two item types: a standard label-only item and an item with a secondary description line. Both support selected and disabled states.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Standard item -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 0;">
+              <div class="drp-list-container-bg is-open" style="position:static; width:100%; max-width:240px; box-shadow:none; border-radius:0; padding:0;">
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Option label</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-selected" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Selected option</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg drp-disabled" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Disabled option</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Standard</div>
+          </div>
+
+          <!-- Item with description -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 0;">
+              <div class="drp-list-container-bg is-open" style="position:static; width:100%; max-width:240px; box-shadow:none; border-radius:0; padding:0;">
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body">
+                    <span class="menu__label">Option label</span>
+                    <span class="menu__desc">Secondary detail text</span>
+                  </div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-selected" style="pointer-events:none;">
+                  <div class="menu__body">
+                    <span class="menu__label">Selected option</span>
+                    <span class="menu__desc">Secondary detail text</span>
+                  </div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg drp-disabled" style="pointer-events:none;">
+                  <div class="menu__body">
+                    <span class="menu__label">Disabled option</span>
+                    <span class="menu__desc">Secondary detail text</span>
+                  </div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">With Description</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Standard item --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__body"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option</span><span class="hl-tag">&lt;/span&gt;</span><span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__tick"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Item with description --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__body"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__desc"</span><span class="hl-tag">&gt;</span><span class="hl-text">Secondary detail</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__tick"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Selected --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg is-selected"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span> <span class="hl-attr">aria-checked</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Disabled --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span> <span class="hl-attr">disabled</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INTERACTIVE DEMO ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Interactive Demo</h2>
+        <p class="doc-section__subtitle">Click the button to open the menu. Click an item to select it — the tick appears and the menu closes. Click outside to dismiss.</p>
+
+        <div class="doc-variant-grid" style="grid-template-columns: 1fr 1fr;">
+
+          <!-- Live trigger + menu -->
+          <div class="doc-variant-card" style="overflow:visible;">
+            <div class="doc-variant-card__preview" style="flex-direction:column; align-items:flex-start; justify-content:flex-start; padding:24px; min-height:360px; overflow:visible;">
+              <div style="position:relative; display:inline-block;">
+                <button class="drp-button-contained-container-bg-medium drp-button-contained-color-primary-plain" data-menu="demo-menu-1" aria-haspopup="menu" aria-expanded="false">
+                  Select model
+                  <span style="display:inline-flex;width:1em;height:1em;"><svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div class="drp-list-container-bg" id="demo-menu-1" role="menu" aria-label="Select vehicle model" style="top:calc(100% + 4px); left:0;">
+                  <button class="drp-list-item-container-bg" role="menuitem" aria-checked="false">
+                    <div class="menu__body"><span class="menu__label">Silverado</span></div>
+                    <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </button>
+                  <button class="drp-list-item-container-bg is-selected" role="menuitem" aria-checked="true">
+                    <div class="menu__body"><span class="menu__label">Colorado</span></div>
+                    <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </button>
+                  <button class="drp-list-item-container-bg" role="menuitem" aria-checked="false">
+                    <div class="menu__body"><span class="menu__label">Tahoe</span></div>
+                    <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </button>
+                  <button class="drp-list-item-container-bg" role="menuitem" aria-checked="false">
+                    <div class="menu__body"><span class="menu__label">Suburban</span></div>
+                    <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </button>
+                  <button class="drp-list-item-container-bg" role="menuitem" aria-checked="false">
+                    <div class="menu__body"><span class="menu__label">Blazer</span></div>
+                    <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </button>
+                  <button class="drp-list-item-container-bg" role="menuitem" aria-checked="false" disabled>
+                    <div class="menu__body"><span class="menu__label">Corvette (unavailable)</span></div>
+                    <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Click to open — click an item to select</div>
+          </div>
+
+          <!-- Item state reference -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 0;">
+              <div class="drp-list-container-bg is-open" style="position:static; width:100%; max-width:240px; box-shadow:none; border-radius:0; padding:0;">
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Default</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-hovered" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Hover</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-pressed" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Pressed</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-selected" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Selected</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg drp-disabled" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Disabled</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Item states reference</div>
+          </div>
+
+        </div>
+
+        <pre class="doc-code"><span class="hl-com">&lt;!-- Wrap trigger + menu in a position:relative container --&gt;</span>
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">style</span>=<span class="hl-val">"position:relative; display:inline-block;"</span><span class="hl-tag">&gt;</span>
+
+  <span class="hl-com">&lt;!-- Trigger button --&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-button-contained-container-bg-medium drp-button-contained-color-primary-plain"</span>
+          <span class="hl-attr">data-menu</span>=<span class="hl-val">"my-menu"</span> <span class="hl-attr">aria-haspopup</span>=<span class="hl-val">"menu"</span> <span class="hl-attr">aria-expanded</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-text">Select option</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-icon"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- chevron SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/button&gt;</span>
+
+  <span class="hl-com">&lt;!-- Menu panel (positioned below trigger) --&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-container-bg"</span> <span class="hl-attr">id</span>=<span class="hl-val">"my-menu"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menu"</span>
+       <span class="hl-attr">style</span>=<span class="hl-val">"top: calc(100% + 4px); left: 0;"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span> <span class="hl-attr">aria-checked</span>=<span class="hl-val">"false"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__body"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option 1</span><span class="hl-tag">&lt;/span&gt;</span><span class="hl-tag">&lt;/div&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__tick"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- tick SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/button&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg is-selected"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span> <span class="hl-attr">aria-checked</span>=<span class="hl-val">"true"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__body"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Option 2</span><span class="hl-tag">&lt;/span&gt;</span><span class="hl-tag">&lt;/div&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__tick"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- tick SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/button&gt;</span>
+    <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span> <span class="hl-attr">disabled</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__body"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Unavailable</span><span class="hl-tag">&lt;/span&gt;</span><span class="hl-tag">&lt;/div&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__tick"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- tick SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/button&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+
+<span class="hl-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <!-- ======================= WITH DESCRIPTION ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">With Description</h2>
+        <p class="doc-section__subtitle">Each item can carry a secondary description line below the label. Use it to clarify the option — keep it to one short sentence.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 0;">
+              <div class="drp-list-container-bg is-open" style="position:static; min-width:280px; max-width:320px;">
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body">
+                    <span class="menu__label">Finance</span>
+                    <span class="menu__desc">Pay monthly with approved credit</span>
+                  </div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-selected" style="pointer-events:none;">
+                  <div class="menu__body">
+                    <span class="menu__label">Lease</span>
+                    <span class="menu__desc">Lower monthly payment, fixed term</span>
+                  </div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body">
+                    <span class="menu__label">Cash</span>
+                    <span class="menu__desc">Full payment, no interest</span>
+                  </div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg drp-disabled" style="pointer-events:none;">
+                  <div class="menu__body">
+                    <span class="menu__label">Balloon</span>
+                    <span class="menu__desc">Not available in your region</span>
+                  </div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Items with descriptions</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__body"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__label"</span><span class="hl-tag">&gt;</span><span class="hl-text">Finance</span><span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__desc"</span><span class="hl-tag">&gt;</span><span class="hl-text">Pay monthly with approved credit</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__tick"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- tick SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= GROUPED WITH DIVIDER ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Grouped with Header &amp; Divider</h2>
+        <p class="doc-section__subtitle">Use a <code>.menu__header</code> to label a section and a <code>.menu__divider</code> to visually separate groups of related options.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 0;">
+              <div class="drp-list-container-bg is-open" style="position:static; width:240px;">
+                <div class="menu__header" role="presentation">Body Style</div>
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">Truck</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-selected" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">SUV</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <div class="menu__divider" role="separator"></div>
+                <div class="menu__header" role="presentation">Electric</div>
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">BEV</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg" style="pointer-events:none;">
+                  <div class="menu__body"><span class="menu__label">PHEV</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Grouped sections</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-container-bg is-open"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menu"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__header"</span> <span class="hl-attr">role</span>=<span class="hl-val">"presentation"</span><span class="hl-tag">&gt;</span><span class="hl-text">Body Style</span><span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/button&gt;</span>
+
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__divider"</span> <span class="hl-attr">role</span>=<span class="hl-val">"separator"</span><span class="hl-tag">&gt;&lt;/div&gt;</span>
+
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__header"</span> <span class="hl-attr">role</span>=<span class="hl-val">"presentation"</span><span class="hl-tag">&gt;</span><span class="hl-text">Electric</span><span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/button&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <!-- ======================= WITH SEARCH ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">With Search</h2>
+        <p class="doc-section__subtitle">An optional search row at the top filters visible items as the user types. Use when the list has more than 7–8 options.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview" style="align-items:flex-start; padding:20px 0;">
+              <div class="drp-list-container-bg is-open" id="demo-search-menu" style="position:static; width:240px;">
+                <div class="menu__search">
+                  <div class="menu__search-row">
+                    <span class="menu__search-icon">
+                      <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </span>
+                    <input type="text" class="menu__search-input" placeholder="Search models…" aria-label="Search menu items">
+                  </div>
+                  <div class="menu__search-line"></div>
+                </div>
+                <button class="drp-list-item-container-bg" role="menuitem">
+                  <div class="menu__body"><span class="menu__label">Silverado</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg is-selected" role="menuitem">
+                  <div class="menu__body"><span class="menu__label">Colorado</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg" role="menuitem">
+                  <div class="menu__body"><span class="menu__label">Tahoe</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg" role="menuitem">
+                  <div class="menu__body"><span class="menu__label">Suburban</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg" role="menuitem">
+                  <div class="menu__body"><span class="menu__label">Blazer</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg" role="menuitem">
+                  <div class="menu__body"><span class="menu__label">Equinox</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+                <button class="drp-list-item-container-bg" role="menuitem">
+                  <div class="menu__body"><span class="menu__label">Traverse</span></div>
+                  <span class="menu__tick"><svg viewBox="0 0 16 16" fill="none"><path d="M2.5 8.5L6 12L13.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Menu with search — type to filter</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-container-bg is-open"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menu"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__search"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__search-row"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__search-icon"</span><span class="hl-tag">&gt;</span><span class="hl-com">&lt;!-- search SVG --&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;input</span> <span class="hl-attr">type</span>=<span class="hl-val">"text"</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__search-input"</span> <span class="hl-attr">placeholder</span>=<span class="hl-val">"Search…"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-val">"menu__search-line"</span><span class="hl-tag">&gt;&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"drp-list-item-container-bg"</span> <span class="hl-attr">role</span>=<span class="hl-val">"menuitem"</span><span class="hl-tag">&gt;</span><span class="hl-text">...</span><span class="hl-tag">&lt;/button&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span></pre>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map to the Figma <code>body/list-item</code> and <code>component-typography/list</code> variable collections.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr><th>Token</th><th>Value</th><th>Applied to</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--menu-bg</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Container + default item background</td></tr>
+              <tr><td><code>--menu-border</code></td><td><span class="doc-swatch" style="background:#e6e6e6;"></span>#e6e6e6</td><td>Container border</td></tr>
+              <tr><td><code>--menu-radius</code></td><td>4px</td><td>Container corner radius</td></tr>
+              <tr><td><code>--menu-width</code></td><td>240px</td><td>Min-width of the container</td></tr>
+              <tr><td><code>--menu-shadow</code></td><td>0 1px 2px rgba(0,0,0,.10)…</td><td>Container drop shadow</td></tr>
+              <tr><td><code>--menu-py</code></td><td>8px</td><td>Container top / bottom padding</td></tr>
+              <tr><td><code>--menu-item-px</code></td><td>24px</td><td>Item horizontal padding</td></tr>
+              <tr><td><code>--menu-item-py</code></td><td>12px</td><td>Item vertical padding</td></tr>
+              <tr><td><code>--menu-item-gap</code></td><td>8px</td><td>Gap between icon, body, and tick</td></tr>
+              <tr><td><code>--menu-item-bg</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Item default background</td></tr>
+              <tr><td><code>--menu-item-bg-hover</code></td><td><span class="doc-swatch" style="background:#f2f2f2;"></span>#f2f2f2</td><td>Item hover background</td></tr>
+              <tr><td><code>--menu-item-bg-selected</code></td><td><span class="doc-swatch" style="background:#f2f2f2;"></span>#f2f2f2</td><td>Item selected background</td></tr>
+              <tr><td><code>--menu-text</code></td><td><span class="doc-swatch" style="background:#262626;"></span>#262626</td><td>Label text — default &amp; selected</td></tr>
+              <tr><td><code>--menu-text-disabled</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Label text — disabled</td></tr>
+              <tr><td><code>--menu-desc-text</code></td><td><span class="doc-swatch" style="background:#666;"></span>#666666</td><td>Description text — enabled</td></tr>
+              <tr><td><code>--menu-desc-disabled</code></td><td><span class="doc-swatch" style="background:#b3b3b3;"></span>#b3b3b3</td><td>Description text — disabled</td></tr>
+              <tr><td><code>--menu-tick-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9</td><td>Selected-state checkmark</td></tr>
+              <tr><td><code>--menu-font-size</code></td><td>14px</td><td>Item label font size</td></tr>
+              <tr><td><code>--menu-lh</code></td><td>22px</td><td>Item label line height</td></tr>
+              <tr><td><code>--menu-header-size</code></td><td>12px</td><td>Section header font size</td></tr>
+              <tr><td><code>--menu-header-lh</code></td><td>20px</td><td>Section header line height</td></tr>
+              <tr><td><code>--menu-desc-size</code></td><td>12px</td><td>Description font size</td></tr>
+              <tr><td><code>--menu-desc-lh</code></td><td>20px</td><td>Description line height</td></tr>
+              <tr><td><code>--menu-icon-size</code></td><td>24px</td><td>Left icon container size</td></tr>
+              <tr><td><code>--menu-tick-size</code></td><td>16px</td><td>Tick icon size</td></tr>
+              <tr><td><code>--menu-divider-color</code></td><td><span class="doc-swatch" style="background:#e6e6e6;"></span>#e6e6e6</td><td>Divider line color</td></tr>
+              <tr><td><code>--menu-search-border</code></td><td><span class="doc-swatch" style="background:#d2d2d2;"></span>#d2d2d2</td><td>Search row bottom separator</td></tr>
+              <tr><td><code>--menu-search-px</code></td><td>16px</td><td>Search row horizontal padding</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Always wrap the trigger + menu in a <code>position: relative</code> container so the menu positions correctly below the trigger.</li>
+              <li>Mark the initially selected option with <code>is-selected</code> and <code>aria-checked="true"</code>.</li>
+              <li>Add <code>aria-haspopup="menu"</code> and <code>aria-expanded</code> to the trigger button so screen readers announce the control correctly.</li>
+              <li>Use a <code>.menu__header</code> to label groups when there are two or more distinct sections.</li>
+              <li>Add the search row when the list has 8 or more items — it prevents long scrolling.</li>
+              <li>Close the menu after an item is selected for single-select menus.</li>
+              <li>Keep item labels short — truncate with <code>text-overflow: ellipsis</code> if necessary.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use more than 10 items without a search or pagination — long lists overwhelm users.</li>
+              <li>Don't nest menus inside menus — use a different pattern (accordion, page navigation) instead.</li>
+              <li>Don't use <code>.menu__header</code> as a clickable item — it is purely a section label with no interaction.</li>
+              <li>Don't let the menu overflow the viewport — position it to open upward or to the side if it would clip at the bottom.</li>
+              <li>Don't mix icons on some items but not others within the same list — either all items have an icon or none do.</li>
+              <li>Don't use the description line for full sentences — keep it to a short phrase (4–6 words).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="menu.js"></script>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

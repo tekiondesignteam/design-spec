@@ -1,0 +1,74 @@
+/* ======================================================================
+   Empty - core Global Kit empty-state block (node 276-16677 "Empty").
+   A centered vertical stack: optional media, title + subtitle, optional
+   actions row, optional footer. No variant axes - a single "default".
+
+   Binds ONLY to --component-empty-* token custom properties; no hardcoded
+   colours, sizes, fonts or spacing. Retheming across brand/theme/device is
+   the [data-*] token cascade.
+
+   The empty-* spacing/padding leaf tokens already resolve to px lengths
+   (primitive spacing carries its unit), so they bind raw - no
+   calc(... * 1px) is needed. Figma exposes an empty-color-border token but
+   NO empty-borderWidth token, and the border colour is transparent in every
+   brand, so only the background is painted (matches the Figma spec).
+   ====================================================================== */
+
+.gk-empty {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  /* section-to-section rhythm (media / content / actions / footer) */
+  gap: var(--component-empty-gap-lg);
+
+  background: var(--component-empty-color-bg-default);
+
+  /* four-side padding, one token per side (matches the Figma spec) */
+  padding: var(--component-empty-padding-top-default)
+           var(--component-empty-padding-right-default)
+           var(--component-empty-padding-bottom-default)
+           var(--component-empty-padding-left-default);
+
+  transition: background-color .12s ease;
+}
+
+/* leading media / icon slot */
+.gk-empty__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* title + subtitle stack - tighter gap than the outer rhythm */
+.gk-empty__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--component-empty-gap-md);
+}
+
+.gk-empty__title {
+  color: var(--component-empty-color-text-primary);
+}
+
+.gk-empty__subtitle {
+  color: var(--component-empty-color-text-secondary);
+}
+
+/* actions row - fill with a <ButtonGroup>; the group owns its own spacing */
+.gk-empty__actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* footer row - helper text + a <Link>, tinted with the secondary text token */
+.gk-empty__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--component-empty-gap-md);
+  color: var(--component-empty-color-text-secondary);
+}

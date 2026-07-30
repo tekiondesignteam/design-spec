@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inline Button — DRP Design System</title>
+  <link rel="stylesheet" href="../../styles/global.css">
+  <link rel="stylesheet" href="../../styles/brands.css">
+  <script>(function(){var b;try{b=localStorage.getItem('drp-brand')}catch(e){}if(b&&['chevrolet','buick','gmc','cadillac'].indexOf(b)!==-1){document.documentElement.dataset.brand=b}})();</script>
+</head>
+<body>
+  <div class="doc-shell">
+
+    <!-- Sidebar -->
+    <aside class="doc-sidebar">
+      <a href="../../index.html" class="doc-sidebar__logo">
+        <div class="doc-sidebar__logo-mark">DRP</div>
+        <div>
+          <div class="doc-sidebar__logo-text">Design System</div>
+          <div class="doc-sidebar__logo-sub">GM · Core Variables</div>
+        </div>
+      </a>
+      <nav class="doc-sidebar__nav">
+        <div class="doc-sidebar__section">Overview</div>
+        <a href="../../index.html" class="doc-sidebar__link">Home</a>
+
+        <div class="doc-sidebar__section">Components</div>
+        <a href="../accordion/index.html" class="doc-sidebar__link">Accordion</a>
+        <a href="../breadcrumb/index.html" class="doc-sidebar__link">Breadcrumb</a>
+        <a href="../button/index.html" class="doc-sidebar__link">Button</a>
+        <a href="../checkbox/index.html" class="doc-sidebar__link">Checkbox</a>
+        <a href="../icon-button/index.html" class="doc-sidebar__link">Icon Button</a>
+        <a href="../inline-button/index.html" class="doc-sidebar__link is-active">Inline Button</a>
+        <a href="../link/index.html" class="doc-sidebar__link">Link</a>
+        <a href="../menu/index.html" class="doc-sidebar__link">Menu</a>
+        <a href="../radio/index.html" class="doc-sidebar__link">Radio Button</a>
+        <a href="../search/index.html" class="doc-sidebar__link">Search</a>
+        <a href="../slider/index.html" class="doc-sidebar__link">Slider</a>
+        <a href="../stepper/index.html" class="doc-sidebar__link">Stepper</a>
+        <a href="../switch/index.html" class="doc-sidebar__link">Switch</a>
+        <a href="../tabs/index.html" class="doc-sidebar__link">Tabs</a>
+        <a href="../text-input/index.html" class="doc-sidebar__link">Text Input</a>
+
+        <div class="doc-sidebar__section">Resources</div>
+        <a href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/" class="doc-sidebar__link" target="_blank">Figma File ↗</a>
+        <a href="https://aecgm-dev.tekion.xyz/docs/ui-components/" class="doc-sidebar__link" target="_blank">Storybook ↗</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="doc-header">
+      <div class="doc-header__breadcrumb">
+        <a href="../../index.html">Design System</a>
+        <span class="sep">/</span>
+        <span>Components</span>
+        <span class="sep">/</span>
+        <span class="doc-header__title">Inline Button</span>
+      </div>
+      <div class="brand-tabs">
+        <button class="brand-tabs__tab" data-brand="chevrolet">Chevrolet</button>
+        <button class="brand-tabs__tab" data-brand="cadillac">Cadillac</button>
+        <button class="brand-tabs__tab" data-brand="buick">Buick</button>
+        <button class="brand-tabs__tab" data-brand="gmc">GMC</button>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="doc-main">
+
+      <div class="doc-page-header">
+        <div class="doc-page-header__eyebrow">Components</div>
+        <h1 class="doc-page-header__title">Inline Button</h1>
+        <p class="doc-page-header__desc">
+          Inline buttons (link-style) are used for actions that appear within text content or need minimal
+          visual weight. Unlike contained buttons, they have no background or border — only a text label
+          with an optional icon. They are distinct from navigation links: they trigger actions, not page transitions.
+        </p>
+        <div class="doc-page-header__meta">
+          <span class="doc-tag doc-tag--blue">Inline Button - Primary</span>
+          <span class="doc-tag doc-tag--blue">Inline Button - Inverse</span>
+          <a class="doc-page-header__link" href="https://www.figma.com/design/RsCbyz0LF6FaItYny1FqUU/?node-id=4740-67485" target="_blank">View in Figma ↗</a>
+          <a class="doc-page-header__link" href="https://aecgm-dev.tekion.xyz/docs/ui-components/?path=/story/ui-components-button--primary" target="_blank">Storybook ↗</a>
+        </div>
+      </div>
+
+      <!-- ======================= PRIMARY – SIZES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Primary — Sizes</h2>
+        <p class="doc-section__subtitle">The Primary inline button uses the brand's button font and plain button color. Three sizes share the same color tokens — only typography scale changes.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-large">Large (16px)</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-medium">Medium (14px)</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-small">Small (12px)</button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Sizes</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Large (default) --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--primary"</span><span class="hl-tag">&gt;</span><span class="hl-text">Learn more</span><span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Medium --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--primary btn-inline--md"</span><span class="hl-tag">&gt;</span><span class="hl-text">Learn more</span><span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Small --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--primary btn-inline--sm"</span><span class="hl-tag">&gt;</span><span class="hl-text">Learn more</span><span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= PRIMARY – INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Primary — Interactive States</h2>
+        <p class="doc-section__subtitle">All states are shown below.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-large" style="pointer-events:none;">Default</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary is-hovered drp-button-link-typography-large" style="pointer-events:none;">Hover</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary is-pressed drp-button-link-typography-large" style="pointer-events:none;">Pressed</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-disabled drp-button-link-typography-large" style="pointer-events:none;" disabled>Disabled</button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Primary states</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================= PRIMARY – WITH ICONS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Primary — With Icons</h2>
+        <p class="doc-section__subtitle">Icons inherit <code>currentColor</code>. Large and Medium use 24×24px icons; Small uses 16×16px icons.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <!-- Large -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-large">
+                  <i class="drp-icon drp-icon--plus" aria-hidden="true"></i>
+                  Leading Icon
+                </button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-large">
+                  Trailing Icon
+                  <i class="drp-icon drp-icon--circle-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Large</div>
+          </div>
+          <!-- Medium -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-medium">
+                  <i class="drp-icon drp-icon--plus" aria-hidden="true"></i>
+                  Leading Icon
+                </button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-medium">
+                  Trailing Icon
+                  <i class="drp-icon drp-icon--circle-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Medium</div>
+          </div>
+          <!-- Small -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-small">
+                  <i class="drp-icon drp-icon--plus" aria-hidden="true" style="width:16px;height:16px;"></i>
+                  Leading Icon
+                </button>
+                <button class="drp-button-link-container-bg drp-button-link-color-primary drp-button-link-typography-small">
+                  Trailing Icon
+                  <i class="drp-icon drp-icon--circle-arrow-right" aria-hidden="true" style="width:16px;height:16px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Small</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Leading icon --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--primary"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn__icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-text">Button Label</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Trailing icon --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--primary"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-text">Button Label</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn__icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INVERSE – SIZES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Sizes</h2>
+        <p class="doc-section__subtitle">Inverse inline buttons use white text (<code>#ffffff</code>) for use on dark or image-filled backgrounds. Three sizes share the same color tokens — only typography scale changes.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-large">Large (16px)</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-medium">Medium (14px)</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-small">Small (12px)</button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Sizes</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Large (default) --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--inverse"</span><span class="hl-tag">&gt;</span><span class="hl-text">Learn more</span><span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Medium --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--inverse btn-inline--md"</span><span class="hl-tag">&gt;</span><span class="hl-text">Learn more</span><span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Small --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--inverse btn-inline--sm"</span><span class="hl-tag">&gt;</span><span class="hl-text">Learn more</span><span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= INVERSE – INTERACTIVE STATES ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — Interactive States</h2>
+        <p class="doc-section__subtitle">All states are shown below.</p>
+
+        <div class="doc-variant-grid">
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-large" style="pointer-events:none;">Default</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse is-hovered drp-button-link-typography-large" style="pointer-events:none;">Hover</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse is-pressed drp-button-link-typography-large" style="pointer-events:none;">Pressed</button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-disabled drp-button-link-typography-large" style="pointer-events:none;" disabled>Disabled</button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Inverse states</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================= INVERSE – WITH ICONS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Inverse — With Icons</h2>
+        <p class="doc-section__subtitle">Icons inherit <code>currentColor</code>. Large and Medium use 24×24px icons; Small uses 16×16px icons.</p>
+
+        <div class="doc-variant-grid doc-variant-grid--wide">
+          <!-- Large -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-large">
+                  <i class="drp-icon drp-icon--plus" aria-hidden="true"></i>
+                  Leading Icon
+                </button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-large">
+                  Trailing Icon
+                  <i class="drp-icon drp-icon--circle-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Large</div>
+          </div>
+          <!-- Medium -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-medium">
+                  <i class="drp-icon drp-icon--plus" aria-hidden="true"></i>
+                  Leading Icon
+                </button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-medium">
+                  Trailing Icon
+                  <i class="drp-icon drp-icon--circle-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Medium</div>
+          </div>
+          <!-- Small -->
+          <div class="doc-variant-card">
+            <div class="doc-variant-card__preview doc-variant-card__preview--dark">
+              <div style="display:inline-flex; flex-direction:column; align-items:flex-start; gap:20px;">
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-small">
+                  <i class="drp-icon drp-icon--plus" aria-hidden="true" style="width:16px;height:16px;"></i>
+                  Leading Icon
+                </button>
+                <button class="drp-button-link-container-bg drp-button-link-color-inverse drp-button-link-typography-small">
+                  Trailing Icon
+                  <i class="drp-icon drp-icon--circle-arrow-right" aria-hidden="true" style="width:16px;height:16px;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="doc-variant-card__label">Small</div>
+          </div>
+        </div>
+
+        <pre class="doc-code"><span class="hl-tag">&lt;!-- Leading icon --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--inverse"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn__icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+  <span class="hl-text">Button Label</span>
+<span class="hl-tag">&lt;/button&gt;</span>
+
+<span class="hl-tag">&lt;!-- Trailing icon --&gt;</span>
+<span class="hl-tag">&lt;button</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn-inline btn-inline--inverse"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-text">Button Label</span>
+  <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-val">"btn__icon"</span><span class="hl-tag">&gt;</span><span class="hl-tag">&lt;svg .../&gt;</span><span class="hl-tag">&lt;/span&gt;</span>
+<span class="hl-tag">&lt;/button&gt;</span></pre>
+      </div>
+
+      <!-- ======================= TOKEN TABLE ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Design Tokens</h2>
+        <p class="doc-section__subtitle">All tokens are defined in <code>styles/global.css</code> and map 1:1 from the Figma <code>tokens.css</code> variable collection.</p>
+
+        <div class="doc-table-wrap">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Value</th>
+                <th>Applied to</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>--button-link-color-primary-color</code></td><td><span class="doc-swatch" style="background:#0077d9;"></span>#0077d9 (Chevrolet)</td><td>Primary default text color</td></tr>
+              <tr><td><code>--button-link-color-primary-hover-color</code></td><td><span class="doc-swatch" style="background:#0e4180;"></span>#0e4180 (Chevrolet)</td><td>Primary hover text color</td></tr>
+              <tr><td><code>--button-link-color-primary-active-color</code></td><td><span class="doc-swatch" style="background:#0e4180;"></span>#0e4180 (Chevrolet)</td><td>Primary pressed text color</td></tr>
+              <tr><td><code>--button-link-color-primary-disabled-color</code></td><td><span class="doc-swatch" style="background:#c3cfd9;"></span>#c3cfd9 (Chevrolet)</td><td>Primary disabled text color</td></tr>
+              <tr><td><code>--button-link-color-inverse-color</code></td><td><span class="doc-swatch" style="background:#fff; border:1px solid #ccc;"></span>#ffffff</td><td>Inverse default text</td></tr>
+              <tr><td><code>--button-link-color-inverse-hover-color</code></td><td><span class="doc-swatch" style="background:#e6e6e6;"></span>#e6e6e6</td><td>Inverse hover/pressed text</td></tr>
+              <tr><td><code>--button-link-color-inverse-disabled-color</code></td><td><span class="doc-swatch" style="background:#666;"></span>#666666</td><td>Inverse disabled text</td></tr>
+              <tr><td><code>--button-link-container-bg-gap</code></td><td>8px</td><td>Icon–label gap</td></tr>
+              <tr><td><code>--button-link-typography-large-font-family</code></td><td>brand font</td><td>Font family (brand overridable)</td></tr>
+              <tr><td><code>--button-link-typography-large-font-size</code></td><td>16px</td><td>Large font size</td></tr>
+              <tr><td><code>--button-link-typography-medium-font-size</code></td><td>14px</td><td>Medium font size</td></tr>
+              <tr><td><code>--button-link-typography-small-font-size</code></td><td>12px</td><td>Small font size</td></tr>
+              <tr><td><code>--button-link-typography-large-text-transform</code></td><td>none / uppercase</td><td>Uppercase for GMC &amp; Cadillac (brand overridable)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ======================= DOS & DON'TS ======================= -->
+      <div class="doc-section">
+        <h2 class="doc-section__title">Dos &amp; Don'ts</h2>
+        <div class="doc-dos-donts">
+          <div class="doc-dos">
+            <div class="doc-dos__header">Do</div>
+            <ul class="doc-dos__body">
+              <li>Use for secondary, low-emphasis actions within text or card content.</li>
+              <li>Pair a trailing arrow icon with directional labels like "Learn more" or "View details".</li>
+              <li>Use Inverse on dark hero banners, dark drawers, or photo backgrounds.</li>
+              <li>Keep labels concise and action-oriented (verb + noun pattern).</li>
+              <li>Size down (medium/small) when the surrounding text is body or caption size.</li>
+            </ul>
+          </div>
+          <div class="doc-donts">
+            <div class="doc-donts__header">Don't</div>
+            <ul class="doc-donts__body">
+              <li>Don't use inline buttons as page-navigation links — use <code>&lt;a&gt;</code> anchors instead.</li>
+              <li>Don't use them for primary call-to-action — use a contained <code>.btn--filled</code> button.</li>
+              <li>Don't combine Primary and Inverse themes in the same light or dark section.</li>
+              <li>Don't use Primary inline buttons on dark backgrounds — they will have low contrast.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="../../js/brand-switcher.js"></script>
+</body>
+</html>

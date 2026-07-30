@@ -1,0 +1,1239 @@
+/* =============================================================================
+   DRP Design System — GM • Core Variables (Latest)
+   Design Tokens: All CSS custom properties in :root
+   Source: Figma RsCbyz0LF6FaItYny1FqUU
+   ============================================================================= */
+
+:root {
+  /* ==========================================================================
+     BUTTON CONTAINED — Container sizes
+     ========================================================================== */
+
+  --button-contained-container-bg-small-height: 32px;
+  --button-contained-container-bg-small-padding: 0 16px;
+  --button-contained-container-bg-small-gap: 8px;
+  --button-contained-container-bg-small-border-radius: 8px;
+  --button-contained-container-bg-small-border-width: 2px;
+
+  --button-contained-container-bg-medium-height: 40px;
+  --button-contained-container-bg-medium-padding: 0 20px;
+  --button-contained-container-bg-medium-gap: 8px;
+  --button-contained-container-bg-medium-border-radius: 8px;
+  --button-contained-container-bg-medium-border-width: 2px;
+
+  --button-contained-container-bg-large-height: 48px;
+  --button-contained-container-bg-large-padding: 0 24px;
+  --button-contained-container-bg-large-gap: 8px;
+  --button-contained-container-bg-large-border-radius: 8px;
+  --button-contained-container-bg-large-border-width: 2px;
+
+  /* ==========================================================================
+     BUTTON CONTAINED — Typography
+     ========================================================================== */
+
+  --button-contained-typography-small-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --button-contained-typography-small-font-weight: 600;
+  --button-contained-typography-small-font-size: 12px;
+  --button-contained-typography-small-line-height: 20px;
+  --button-contained-typography-small-letter-spacing: 0;
+  --button-contained-typography-small-text-transform: none;
+
+  --button-contained-typography-medium-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --button-contained-typography-medium-font-weight: 600;
+  --button-contained-typography-medium-font-size: 14px;
+  --button-contained-typography-medium-line-height: 22px;
+  --button-contained-typography-medium-letter-spacing: 0;
+  --button-contained-typography-medium-text-transform: none;
+
+  --button-contained-typography-large-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --button-contained-typography-large-font-weight: 600;
+  --button-contained-typography-large-font-size: 16px;
+  --button-contained-typography-large-line-height: 24px;
+  --button-contained-typography-large-letter-spacing: 0;
+  --button-contained-typography-large-text-transform: none;
+
+  /* ==========================================================================
+     BUTTON CONTAINED — Colors: Primary
+     ========================================================================== */
+
+  --button-contained-color-primary-filled-background-color: #0077d9;
+  --button-contained-color-primary-filled-border-color: transparent;
+  --button-contained-color-primary-filled-color: #ffffff;
+  --button-contained-color-primary-filled-icon-color: #ffffff;
+
+  --button-contained-color-primary-filled-hover-background-color: #0e4180;
+  --button-contained-color-primary-filled-hover-border-color: transparent;
+  --button-contained-color-primary-filled-hover-color: #ffffff;
+  --button-contained-color-primary-filled-hover-icon-color: #ffffff;
+
+  --button-contained-color-primary-filled-active-background-color: #0e4180;
+  --button-contained-color-primary-filled-active-border-color: transparent;
+  --button-contained-color-primary-filled-active-color: #ffffff;
+
+  --button-contained-color-primary-filled-disabled-background-color: #c3cfd9;
+  --button-contained-color-primary-filled-disabled-border-color: transparent;
+  --button-contained-color-primary-filled-disabled-color: #ffffff;
+
+  --button-contained-color-primary-outlined-background-color: transparent;
+  --button-contained-color-primary-outlined-border-color: #0077d9;
+  --button-contained-color-primary-outlined-color: #0077d9;
+
+  --button-contained-color-primary-outlined-hover-background-color: transparent;
+  --button-contained-color-primary-outlined-hover-border-color: #0e4180;
+  --button-contained-color-primary-outlined-hover-color: #0e4180;
+
+  --button-contained-color-primary-outlined-active-background-color: transparent;
+  --button-contained-color-primary-outlined-active-border-color: #0e4180;
+  --button-contained-color-primary-outlined-active-color: #0e4180;
+
+  --button-contained-color-primary-outlined-disabled-background-color: transparent;
+  --button-contained-color-primary-outlined-disabled-border-color: #c3cfd9;
+  --button-contained-color-primary-outlined-disabled-color: #c3cfd9;
+
+  --button-contained-color-primary-plain-background-color: transparent;
+  --button-contained-color-primary-plain-border-color: transparent;
+  --button-contained-color-primary-plain-color: #0077d9;
+
+  --button-contained-color-primary-plain-hover-background-color: transparent;
+  --button-contained-color-primary-plain-hover-border-color: transparent;
+  --button-contained-color-primary-plain-hover-color: #0e4180;
+
+  --button-contained-color-primary-plain-active-background-color: transparent;
+  --button-contained-color-primary-plain-active-border-color: transparent;
+  --button-contained-color-primary-plain-active-color: #0e4180;
+
+  --button-contained-color-primary-plain-disabled-background-color: transparent;
+  --button-contained-color-primary-plain-disabled-border-color: transparent;
+  --button-contained-color-primary-plain-disabled-color: #c3cfd9;
+
+  /* ==========================================================================
+     BUTTON CONTAINED — Colors: Inverse
+     ========================================================================== */
+
+  --button-contained-color-inverse-filled-background-color: #ffffff;
+  --button-contained-color-inverse-filled-border-color: transparent;
+  --button-contained-color-inverse-filled-color: #262626;
+
+  --button-contained-color-inverse-filled-hover-background-color: #e6e6e6;
+  --button-contained-color-inverse-filled-hover-border-color: transparent;
+  --button-contained-color-inverse-filled-hover-color: #262626;
+
+  --button-contained-color-inverse-filled-disabled-background-color: rgba(255,255,255,0.4);
+  --button-contained-color-inverse-filled-disabled-border-color: transparent;
+  --button-contained-color-inverse-filled-disabled-color: rgba(255,255,255,0.5);
+
+  --button-contained-color-inverse-outlined-background-color: transparent;
+  --button-contained-color-inverse-outlined-border-color: #ffffff;
+  --button-contained-color-inverse-outlined-color: #ffffff;
+
+  --button-contained-color-inverse-outlined-hover-background-color: rgba(255,255,255,0.1);
+  --button-contained-color-inverse-outlined-hover-border-color: #ffffff;
+  --button-contained-color-inverse-outlined-hover-color: #ffffff;
+
+  --button-contained-color-inverse-outlined-disabled-background-color: transparent;
+  --button-contained-color-inverse-outlined-disabled-border-color: rgba(255,255,255,0.3);
+  --button-contained-color-inverse-outlined-disabled-color: rgba(255,255,255,0.3);
+
+  --button-contained-color-inverse-plain-background-color: transparent;
+  --button-contained-color-inverse-plain-border-color: transparent;
+  --button-contained-color-inverse-plain-color: #ffffff;
+
+  --button-contained-color-inverse-plain-hover-background-color: transparent;
+  --button-contained-color-inverse-plain-hover-border-color: transparent;
+  --button-contained-color-inverse-plain-hover-color: #e6e6e6;
+
+  --button-contained-color-inverse-plain-disabled-background-color: transparent;
+  --button-contained-color-inverse-plain-disabled-border-color: transparent;
+  --button-contained-color-inverse-plain-disabled-color: #666666;
+
+  /* ==========================================================================
+     BUTTON CONTAINED — Icon button sizes (rect)
+     ========================================================================== */
+
+  --button-contained-icon-container-rect-bg-small-height: 32px;
+  --button-contained-icon-container-rect-bg-small-width: 32px;
+  --button-contained-icon-container-rect-bg-small-border-radius: 8px;
+  --button-contained-icon-container-rect-bg-small-border-width: 2px;
+  --button-contained-icon-container-rect-bg-small-padding: 0;
+
+  --button-contained-icon-container-rect-bg-medium-height: 40px;
+  --button-contained-icon-container-rect-bg-medium-width: 40px;
+  --button-contained-icon-container-rect-bg-medium-border-radius: 8px;
+  --button-contained-icon-container-rect-bg-medium-border-width: 2px;
+
+  --button-contained-icon-container-rect-bg-large-height: 48px;
+  --button-contained-icon-container-rect-bg-large-width: 48px;
+  --button-contained-icon-container-rect-bg-large-border-radius: 8px;
+  --button-contained-icon-container-rect-bg-large-border-width: 2px;
+
+  /* ==========================================================================
+     BUTTON CONTAINED — Icon button sizes (circle)
+     ========================================================================== */
+
+  --button-contained-icon-container-circle-bg-small-height: 32px;
+  --button-contained-icon-container-circle-bg-small-width: 32px;
+  --button-contained-icon-container-circle-bg-small-border-radius: 50%;
+  --button-contained-icon-container-circle-bg-small-border-width: 2px;
+
+  --button-contained-icon-container-circle-bg-medium-height: 40px;
+  --button-contained-icon-container-circle-bg-medium-width: 40px;
+  --button-contained-icon-container-circle-bg-medium-border-radius: 50%;
+  --button-contained-icon-container-circle-bg-medium-border-width: 2px;
+
+  --button-contained-icon-container-circle-bg-large-height: 48px;
+  --button-contained-icon-container-circle-bg-large-width: 48px;
+  --button-contained-icon-container-circle-bg-large-border-radius: 50%;
+  --button-contained-icon-container-circle-bg-large-border-width: 2px;
+
+  /* ==========================================================================
+     BUTTON CONTAINED — Colors: Neutral (icon buttons)
+     ========================================================================== */
+
+  --button-contained-color-neutral-filled-background-color: #1a1a1a;
+  --button-contained-color-neutral-filled-border-color: transparent;
+  --button-contained-color-neutral-filled-color: #ffffff;
+  --button-contained-color-neutral-filled-icon-color: #ffffff;
+
+  --button-contained-color-neutral-filled-hover-background-color: #333333;
+  --button-contained-color-neutral-filled-hover-border-color: transparent;
+  --button-contained-color-neutral-filled-hover-color: #ffffff;
+
+  --button-contained-color-neutral-filled-disabled-background-color: #c3cfd9;
+  --button-contained-color-neutral-filled-disabled-border-color: transparent;
+  --button-contained-color-neutral-filled-disabled-color: #ffffff;
+
+  --button-contained-color-neutral-outlined-background-color: transparent;
+  --button-contained-color-neutral-outlined-border-color: #1a1a1a;
+  --button-contained-color-neutral-outlined-color: #1a1a1a;
+  --button-contained-color-neutral-outlined-icon-color: #1a1a1a;
+
+  --button-contained-color-neutral-outlined-hover-background-color: transparent;
+  --button-contained-color-neutral-outlined-hover-border-color: #333333;
+  --button-contained-color-neutral-outlined-hover-color: #333333;
+
+  --button-contained-color-neutral-outlined-disabled-background-color: transparent;
+  --button-contained-color-neutral-outlined-disabled-border-color: #c3cfd9;
+  --button-contained-color-neutral-outlined-disabled-color: #c3cfd9;
+
+  --button-contained-color-neutral-plain-background-color: transparent;
+  --button-contained-color-neutral-plain-border-color: transparent;
+  --button-contained-color-neutral-plain-color: #1a1a1a;
+  --button-contained-color-neutral-plain-icon-color: #1a1a1a;
+
+  --button-contained-color-neutral-plain-hover-background-color: transparent;
+  --button-contained-color-neutral-plain-hover-color: #333333;
+
+  --button-contained-color-neutral-plain-disabled-color: #c3cfd9;
+
+  /* ==========================================================================
+     BUTTON LINK (Inline)
+     ========================================================================== */
+
+  --button-link-container-bg-height: 24px;
+  --button-link-container-bg-padding: 0;
+  --button-link-container-bg-gap: 8px;
+  --button-link-container-bg-border-radius: 0;
+  --button-link-container-bg-border-width: 0;
+
+  --button-link-typography-small-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --button-link-typography-small-font-weight: 500;
+  --button-link-typography-small-font-size: 12px;
+  --button-link-typography-small-line-height: 20px;
+  --button-link-typography-small-letter-spacing: 0;
+  --button-link-typography-small-text-transform: none;
+
+  --button-link-typography-medium-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --button-link-typography-medium-font-weight: 500;
+  --button-link-typography-medium-font-size: 14px;
+  --button-link-typography-medium-line-height: 22px;
+  --button-link-typography-medium-letter-spacing: 0;
+  --button-link-typography-medium-text-transform: none;
+
+  --button-link-typography-large-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --button-link-typography-large-font-weight: 500;
+  --button-link-typography-large-font-size: 16px;
+  --button-link-typography-large-line-height: 24px;
+  --button-link-typography-large-letter-spacing: 0;
+  --button-link-typography-large-text-transform: none;
+
+  --button-link-color-primary-color: #0077d9;
+  --button-link-color-primary-hover-color: #0e4180;
+  --button-link-color-primary-active-color: #0e4180;
+  --button-link-color-primary-disabled-color: #c3cfd9;
+
+  --button-link-color-inverse-color: #ffffff;
+  --button-link-color-inverse-hover-color: #e6e6e6;
+  --button-link-color-inverse-disabled-color: #666666;
+
+  /* ==========================================================================
+     BREADCRUMB
+     ========================================================================== */
+
+  --breadcrumb-container-height: 24px;
+  --breadcrumb-container-gap: 4px;
+  --breadcrumb-typography-small-default-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --breadcrumb-typography-small-default-font-weight: 500;
+  --breadcrumb-typography-small-default-font-size: 12px;
+  --breadcrumb-typography-small-default-line-height: 20px;
+  --breadcrumb-typography-small-default-letter-spacing: 0;
+  --breadcrumb-typography-small-default-color: #666666;
+  --breadcrumb-typography-small-default-hover-color: #0077d9;
+  --breadcrumb-typography-small-default-active-color: #0e4180;
+  --breadcrumb-typography-small-default-disabled-color: #b3b3b3;
+  --breadcrumb-typography-small-selected-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --breadcrumb-typography-small-selected-font-weight: 700;
+  --breadcrumb-typography-small-selected-font-size: 12px;
+  --breadcrumb-typography-small-selected-line-height: 20px;
+  --breadcrumb-typography-small-selected-color: #262626;
+  --breadcrumb-sep-color: #999999;
+  --breadcrumb-sep-size: 16px;
+
+  /* ==========================================================================
+     CHECKBOX
+     ========================================================================== */
+
+  --checkbox-container-height: 24px;
+  --checkbox-container-width: 24px;
+  --checkbox-container-border-radius: 2px;
+  --checkbox-container-border-width: 1.5px;
+  --checkbox-hit-area-height: 44px;
+  --checkbox-hit-area-width: 44px;
+  --checkbox-typography-small-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --checkbox-typography-small-font-size: 12px;
+  --checkbox-typography-small-line-height: 20px;
+  --checkbox-typography-small-letter-spacing: 0;
+  --checkbox-typography-large-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --checkbox-typography-large-font-size: 14px;
+  --checkbox-typography-large-line-height: 22px;
+  --checkbox-typography-large-letter-spacing: 0;
+
+  /* ==========================================================================
+     RADIO
+     ========================================================================== */
+
+  --radio-typography-small-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --radio-typography-small-font-size: 12px;
+  --radio-typography-small-line-height: 20px;
+  --radio-typography-large-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --radio-typography-large-font-size: 14px;
+  --radio-typography-large-line-height: 22px;
+
+  /* ==========================================================================
+     FORM CONTROL WRAPPER
+     ========================================================================== */
+
+  --form-control-container-bg-padding: 8px 0;
+  --form-control-container-bg-gap: 8px;
+
+  /* ==========================================================================
+     SLIDER
+     ========================================================================== */
+
+  --slider-typography-title-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --slider-typography-title-font-size: 14px;
+  --slider-typography-title-line-height: 22px;
+  --slider-typography-range-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --slider-typography-range-font-size: 12px;
+  --slider-typography-range-line-height: 20px;
+  --slider-typography-input-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --slider-typography-input-font-size: 14px;
+  --slider-typography-input-line-height: 22px;
+
+  /* ==========================================================================
+     SWITCH
+     ========================================================================== */
+
+  --switch-typography-small-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --switch-typography-small-font-size: 12px;
+  --switch-typography-small-line-height: 20px;
+  --switch-typography-large-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --switch-typography-large-font-size: 14px;
+  --switch-typography-large-line-height: 22px;
+
+  /* ==========================================================================
+     ACCORDION
+     ========================================================================== */
+
+  --accordion-container-bg-height: 56px;
+  --accordion-container-bg-border-bottom-width: 1px;
+  --accordion-container-summary-bg-height: 56px;
+  --accordion-container-summary-bg-padding: 0 16px;
+  --accordion-details-padding: 16px;
+  --accordion-color-border: #e6e6e6;
+  --accordion-color-text-default: #666666;
+  --accordion-color-text-hover: #0e4180;
+  --accordion-color-text-active: #0077d9;
+  --accordion-color-text-disabled: #b3b3b3;
+  --accordion-color-bg: #ffffff;
+  --accordion-icon-size: 24px;
+  --accordion-gap: 24px;
+  --accordion-inner-gap: 8px;
+
+  /* ==========================================================================
+     TABS
+     ========================================================================== */
+
+  --tab-contained-container-bg-border-radius: 4px;
+  --tab-contained-container-bg-padding: 4px;
+  --tab-contained-tab-container-bg-large-height: 48px;
+  --tab-contained-tab-container-bg-large-padding: 0 20px;
+  --tab-contained-typography-large-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --tab-contained-typography-large-font-size: 16px;
+  --tab-contained-typography-large-line-height: 24px;
+  --tab-contained-typography-font-weight: 600;
+  --tab-contained-typography-selected-large-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --tab-contained-typography-selected-large-font-size: 16px;
+  --tab-contained-typography-selected-large-line-height: 24px;
+
+  /* ==========================================================================
+     LINK
+     ========================================================================== */
+
+  --link-container-small-height: 20px;
+  --link-container-small-gap: 4px;
+  --link-container-medium-height: 22px;
+  --link-container-medium-gap: 4px;
+  --link-container-large-height: 24px;
+  --link-container-large-gap: 4px;
+  --link-typography-small-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --link-typography-small-font-weight: 500;
+  --link-typography-small-font-size: 12px;
+  --link-typography-small-line-height: 20px;
+  --link-typography-medium-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --link-typography-medium-font-weight: 500;
+  --link-typography-medium-font-size: 14px;
+  --link-typography-medium-line-height: 22px;
+  --link-typography-large-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --link-typography-large-font-weight: 500;
+  --link-typography-large-font-size: 16px;
+  --link-typography-large-line-height: 24px;
+
+  /* ==========================================================================
+     INPUT / TEXT FIELD
+     ========================================================================== */
+
+  --input-standard-outlined-container-bg-large-height: 56px;
+  --input-standard-outlined-container-bg-large-border-radius: 4px;
+  --input-standard-outlined-container-bg-large-border-width: 1px;
+  --input-standard-outlined-container-bg-small-height: 44px;
+  --input-standard-outlined-container-bg-small-border-radius: 4px;
+  --input-standard-outlined-container-bg-small-border-width: 1px;
+  --input-standard-outlined-container-padding: 0 16px;
+  --input-standard-outlined-typography-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --input-standard-outlined-typography-font-size: 14px;
+  --input-standard-outlined-typography-line-height: 22px;
+  --input-standard-outlined-typography-label-font-size: 12px;
+  --input-standard-outlined-typography-label-line-height: 20px;
+
+  /* ==========================================================================
+     FOCUS RING
+     ========================================================================== */
+
+  --focus-ring-color: #0077d9;
+  --focus-ring-offset: 4px;
+  --focus-ring-radius-rect: 4px;
+  --focus-ring-radius-btn: 12px;
+
+  /* ==========================================================================
+     CHECKBOX — Colors
+     ========================================================================== */
+
+  --checkbox-color-border-default: #262626;
+  --checkbox-color-bg: #ffffff;
+  --checkbox-color-checked-bg: #ffffff;
+  --checkbox-color-checked-border: #262626;
+  --checkbox-color-checked-icon: #262626;
+  --checkbox-color-indeterminate-dash: #262626;
+  --checkbox-color-disabled-border: #c3cfd9;
+  --checkbox-color-disabled-bg: #ffffff;
+  --checkbox-color-disabled-icon: #c3cfd9;
+  --checkbox-color-text: #262626;
+  --checkbox-color-text-large-size: 16px;
+  --checkbox-color-text-large-lh: 24px;
+
+  /* ==========================================================================
+     RADIO — Colors
+     ========================================================================== */
+
+  --radio-color-border: #1a1a1a;
+  --radio-color-bg: #ffffff;
+  --radio-color-dot: #1a1a1a;
+  --radio-dot-size: 16px;
+  --radio-color-disabled-border: #c3cfd9;
+  --radio-color-disabled-dot: #c3cfd9;
+  --radio-color-text: #262626;
+
+  /* ==========================================================================
+     LINK — Colors
+     ========================================================================== */
+
+  --link-color-primary: #0077d9;
+  --link-color-primary-hover: #0e4180;
+  --link-color-primary-disabled: #b3b3b3;
+  --link-color-neutral: #262626;
+  --link-color-neutral-disabled: #b3b3b3;
+  --link-color-inverse: #ffffff;
+  --link-color-inverse-hover: #b3b3b3;
+  --link-color-inverse-disabled: #666666;
+
+  /* ==========================================================================
+     ACCORDION — Typography
+     ========================================================================== */
+
+  --accordion-typography-label-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --accordion-typography-label-font-size: 16px;
+  --accordion-typography-label-line-height: 24px;
+  --accordion-typography-body-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --accordion-typography-body-font-size: 14px;
+  --accordion-typography-body-line-height: 22px;
+  --accordion-typography-body-color: #666666;
+
+  /* ==========================================================================
+     SLIDER — Dimensions & Colors
+     ========================================================================== */
+
+  --slider-track-height: 4px;
+  --slider-track-radius: 2px;
+  --slider-thumb-size: 16px;
+  --slider-thumb-border-width: 2px;
+  --slider-track-bg: #e8ecef;
+  --slider-fill-color: #0077d9;
+  --slider-thumb-bg: #ffffff;
+  --slider-thumb-border-color: #0077d9;
+  --slider-thumb-hover-shadow: rgba(0,119,217,0.12);
+  --slider-disabled-fill: #c3cfd9;
+  --slider-disabled-border: #c3cfd9;
+  --slider-label-color: #1a1a1a;
+  --slider-value-bg: #f2f4f6;
+  --slider-minmax-color: #888888;
+
+  /* ==========================================================================
+     SWITCH — Dimensions & Colors
+     ========================================================================== */
+
+  --switch-track-width: 48px;
+  --switch-track-height: 24px;
+  --switch-track-radius: 1000px;
+  --switch-track-border-width: 1px;
+  --switch-thumb-size: 20px;
+  --switch-gap: 8px;
+  --switch-color-off-track-border: #1a1a1a;
+  --switch-color-off-track-bg: #ffffff;
+  --switch-color-off-thumb-color: #1a1a1a;
+  --switch-color-on-track-bg: #1a1a1a;
+  --switch-color-on-thumb-color: #ffffff;
+  --switch-color-disabled-track-border: #c3cfd9;
+  --switch-color-disabled-thumb-color: #c3cfd9;
+  --switch-color-disabled-on-track-bg: #c3cfd9;
+  --switch-color-disabled-on-thumb-color: #ffffff;
+  --switch-label-color: #1a1a1a;
+  --switch-label-disabled-color: #c3cfd9;
+
+  /* ==========================================================================
+     TEXT INPUT — Dimensions & Colors
+     ========================================================================== */
+
+  --text-input-height: 56px;
+  --text-input-bg: #f2f2f2;
+  --text-input-border-width: 2px;
+  --text-input-border-radius: 4px 4px 0 0;
+  --text-input-padding-x: 16px;
+  --text-input-gap: 4px;
+  --text-input-label-size: 12px;
+  --text-input-label-color: #666666;
+  --text-input-value-size: 16px;
+  --text-input-value-color: #262626;
+  --text-input-assistive-size: 12px;
+  --text-input-assistive-color: #666666;
+  --text-input-border-default: #e6e6e6;
+  --text-input-border-hover: #b3b3b3;
+  --text-input-border-active: #262626;
+  --text-input-border-error: #d64022;
+  --text-input-border-disabled: #e6e6e6;
+  --text-input-error-label: #d64022;
+  --text-input-error-assistive: #d64022;
+  --text-input-disabled-color: #b3b3b3;
+  --list-item-color-bg-default: #ffffff;
+  --list-item-color-border-default: #b3b3b3;
+  --list-item-color-bg-hover: #f2f2f2;
+  --list-item-color-text-default: #262626;
+
+  /* ==========================================================================
+     SEARCH — Dimensions & Colors
+     ========================================================================== */
+
+  --search-height: 56px;
+  --search-bg: #f2f2f2;
+  --search-border-default: #e6e6e6;
+  --search-border-hover: #b3b3b3;
+  --search-border-active: #262626;
+  --search-border-width: 2px;
+  --search-border-radius: 4px;
+  --search-padding-x: 16px;
+  --search-gap: 16px;
+  --search-text: #262626;
+  --search-placeholder: #666666;
+  --search-text-disabled: #b3b3b3;
+  --search-icon: #262626;
+  --search-icon-disabled: #c3cfd9;
+
+  /* ==========================================================================
+     TABS — Colors & Dimensions
+     ========================================================================== */
+
+  --tabs-border-selected: #0077d9;
+  --tabs-border-default: #e6e6e6;
+  --tabs-text-selected: #0077d9;
+  --tabs-text-default: #666666;
+  --tabs-bg: #ffffff;
+  --tabs-height-lg: 48px;
+  --tabs-radius: 8px;
+  --tabs-underline: 4px;
+
+  /* Underlined variants (Inside + Inset) — Figma node 20420:6333 */
+  --tab-underlined-height-md: 40px;
+  --tab-underlined-height-lg: 48px;
+  --tab-underlined-border-width: 4px;
+  --tab-underlined-bar-border-width: 1px;
+  --tab-underlined-bar-border: #e6e6e6;
+  --tab-underlined-text-default: #262626;
+  --tab-underlined-text-selected-inside: var(--brand-color, #0077d9);
+  --tab-underlined-text-selected-inset: #262626;
+  --tab-underlined-border-selected: var(--brand-color, #0077d9);
+  --tab-underlined-inside-gap: 40px;
+  --tab-underlined-inset-padding-x: 16px;
+  --tab-underlined-font-family: 'Chevy_Sans', sans-serif;
+  --tab-underlined-font-weight: 600;
+  --tab-underlined-font-md-size: 14px;
+  --tab-underlined-font-md-line-height: 22px;
+  --tab-underlined-font-lg-size: 16px;
+  --tab-underlined-font-lg-line-height: 24px;
+  --tab-underlined-text-transform: none;
+
+  /* ==========================================================================
+     TOGGLE BUTTON GROUP — Colors & Dimensions
+     Figma node: 20408-58136
+     ========================================================================== */
+
+  --toggle-height-lg: 48px;
+  --toggle-height-md: 40px;
+  --toggle-gap: 8px;
+  --toggle-padding-x: 16px;
+  --toggle-min-width: 120px;
+  --toggle-radius: 8px;
+  --toggle-border-width: 1px;
+
+  --toggle-bg-default: #ffffff;
+  --toggle-border-default: #e6e6e6;
+  --toggle-text-default: #666666;
+
+  --toggle-bg-selected: #0077d9;
+  --toggle-border-selected: #0077d9;
+  --toggle-text-selected: #ffffff;
+
+  --toggle-border-hover: #0077d9;
+  --toggle-text-hover: #0077d9;
+
+  --toggle-font-family: 'Chevy_Sans', sans-serif;
+  --toggle-font-weight: 500;
+  --toggle-font-weight-selected: 500;
+  --toggle-font-size-lg: 16px;
+  --toggle-lh-lg: 24px;
+  --toggle-font-size-md: 14px;
+  --toggle-lh-md: 22px;
+  --toggle-letter-spacing: 0;
+  --toggle-text-transform: none;
+
+  /* ==========================================================================
+     STEPPER — Colors & Dimensions
+     ========================================================================== */
+
+  --stepper-height-lg: 48px;
+  --stepper-height-sm: 40px;
+  --stepper-border-default: #e6e6e6;
+  --stepper-border-active: #0077d9;
+  --stepper-text: #262626;
+  --stepper-badge-bg: #0077d9;
+  --stepper-badge-text: #ffffff;
+  --stepper-badge-size: 16px;
+  --stepper-badge-radius: 1000px;
+  --stepper-underline: 4px;
+  --stepper-font-family: 'Chevy_Sans:Demi', sans-serif;
+  --stepper-font-size: 16px;
+  --stepper-lh: 24px;
+  --stepper-gap: 8px;
+  --stepper-padding-x: 16px;
+  --stepper-compact-w: 32px;
+  --stepper-nav-size: 40px;
+  --stepper-badge-font-family: 'Chevy_Sans:Demi', sans-serif;
+
+  /* ==========================================================================
+     MENU — Colors & Dimensions
+     ========================================================================== */
+
+  --menu-bg: #ffffff;
+  --menu-border: #e6e6e6;
+  --menu-radius: 4px;
+  --menu-width: 240px;
+  --menu-shadow: 0 1px 2px rgba(0,0,0,0.10), 0 1px 1px rgba(0,0,0,0.06);
+  --menu-py: 8px;
+  --menu-item-px: 24px;
+  --menu-item-py: 12px;
+  --menu-item-gap: 8px;
+  --menu-item-bg: #ffffff;
+  --menu-item-bg-hover: #f2f2f2;
+  --menu-item-bg-selected: #f2f2f2;
+  --menu-text: #262626;
+  --menu-text-disabled: #b3b3b3;
+  --menu-desc-text: #666666;
+  --menu-desc-disabled: #b3b3b3;
+  --menu-tick-color: #0077d9;
+  --menu-font-size: 14px;
+  --menu-lh: 22px;
+  --menu-header-size: 12px;
+  --menu-header-lh: 20px;
+  --menu-desc-size: 12px;
+  --menu-desc-lh: 20px;
+  --menu-icon-size: 24px;
+  --menu-tick-size: 16px;
+  --menu-divider-color: #e6e6e6;
+  --menu-search-border: #d2d2d2;
+  --menu-search-px: 16px;
+  --menu-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --menu-font-family-selected: 'Chevy_Sans:Demi', sans-serif;
+
+  /* ==========================================================================
+     AVATAR + NOTIFICATION — Dimensions & Colors
+     Figma node: 20408-69707
+     Used in the global navigation header. "Logged in" shows initials +
+     bell-with-badge; "logged out" shows the generic user icon.
+     ========================================================================== */
+
+  --avatar-size-desktop: 40px;
+  --avatar-size-mobile: 32px;
+  --avatar-radius: 1000px;
+  --avatar-bg: transparent;
+  --avatar-stroke-width: 1.5px;
+  --avatar-stroke-color: #262626;
+  --avatar-initials-color: #262626;
+  --avatar-initials-font-family: 'Chevy_Sans:Bold', sans-serif;
+  --avatar-initials-font-weight: 700;
+  --avatar-initials-font-size-desktop: 14px;
+  --avatar-initials-font-size-mobile: 12px;
+  --avatar-initials-lh: 20px;
+  --avatar-user-icon-color: #262626;
+
+  --avatar-gap: 16px;
+  --avatar-bell-size: 24px;
+  --avatar-bell-color: #262626;
+  --avatar-bell-hit: 40px;
+
+  --notification-badge-height: 16px;
+  --notification-badge-min-width: 16px;
+  --notification-badge-radius: 1000px;
+  --notification-badge-border-width: 1px;
+  --notification-badge-border-color: #ffffff;
+  --notification-badge-padding-x: 4px;
+  --notification-badge-bg: #0077d9;
+  --notification-badge-color: #ffffff;
+  --notification-badge-font-family: 'Chevy_Sans:Bold', sans-serif;
+  --notification-badge-font-weight: 700;
+  --notification-badge-font-size: 10px;
+  --notification-badge-lh: 14px;
+  --notification-badge-offset-top: 2px;
+  --notification-badge-offset-right: 4px;
+
+  /* ============================================================
+     SPACING
+     ============================================================
+     Spacing scale: 0, 1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64
+     All semantic tokens below MUST resolve to one of these values.
+     If you need a value not in the scale, add it to the scale first
+     (and justify it in code review). Do not introduce one-off values.
+
+     Tokens are brand-invariant — do NOT add overrides in brands.css.
+     ============================================================ */
+
+  /* Container padding */
+  --spacing-container-padding-none: 0;
+  --spacing-container-padding-1px: 1px;
+  --spacing-container-padding-2px: 2px;
+  --spacing-container-padding-4px: 4px;
+  --spacing-container-padding-xs: 8px;
+  --spacing-container-padding-s: 16px;
+  --spacing-container-padding-m: 24px;
+  --spacing-container-padding-32px: 32px;
+  --spacing-container-padding-l: 40px;
+  --spacing-container-padding-xl: 48px;
+  --spacing-container-padding-56px: 56px;
+
+  /* Container gap */
+  --spacing-container-gap-none: 0;
+  --spacing-container-gap-2px: 2px;
+  --spacing-container-gap-xs: 4px;
+  --spacing-container-gap-s: 8px;
+  --spacing-container-gap-m: 16px;
+  --spacing-container-gap-l: 24px;
+  --spacing-container-gap-xl: 40px;
+
+  /* Container stack */
+  --spacing-container-stack-none: 0;
+  --spacing-container-stack-xs: 8px;
+  --spacing-container-stack-s: 16px;
+  --spacing-container-stack-m: 24px;
+  --spacing-container-stack-l: 40px;
+  --spacing-container-stack-xl: 64px;
+
+  /* Selectable padding */
+  --spacing-selectable-padding-none: 0;
+  --spacing-selectable-padding-1px: 1px;
+  --spacing-selectable-padding-2px: 2px;
+  --spacing-selectable-padding-xs: 4px;
+  --spacing-selectable-padding-s: 8px;
+  --spacing-selectable-padding-m: 16px;
+  --spacing-selectable-padding-l: 24px;
+  --spacing-selectable-padding-12: 12px;
+
+  /* Selectable gap */
+  --spacing-selectable-gap-none: 0;
+  --spacing-selectable-gap-1px: 1px;
+  --spacing-selectable-gap-xs: 2px;
+  --spacing-selectable-gap-s: 4px;
+  --spacing-selectable-gap-m: 8px;
+  --spacing-selectable-gap-l: 16px;
+
+  /* Selectable stack */
+  --spacing-selectable-stack-none: 0;
+  --spacing-selectable-stack-s: 8px;
+  --spacing-selectable-stack-m: 16px;
+  --spacing-selectable-stack-l: 24px;
+
+  /* ============================================================
+     CHIP — Containers (shared sizing)
+     Sizes (height / padding-x):
+       xs = 24px / 8px  — dismissable only, compact density
+       sm = 32px / 8px  — selectable + dismissable + information
+       md = 40px / 16px — selectable + dismissable + information
+     ============================================================ */
+  --chip-container-xs-height: 24px;
+  --chip-container-xs-padding-x: 8px;
+  --chip-container-xs-gap: 8px;
+  --chip-container-xs-border-width: 1px;
+
+  --chip-container-sm-height: 32px;
+  --chip-container-sm-padding-x: 8px;
+  --chip-container-sm-gap: 8px;
+  --chip-container-sm-border-width: 1px;
+
+  --chip-container-md-height: 40px;
+  --chip-container-md-padding-x: 16px;
+  --chip-container-md-gap: 8px;
+  --chip-container-md-border-width: 1px;
+
+  --chip-radius: 0; /* sharp corners on Chevy; brands override */
+
+  /* ============================================================
+     CHIP — Typography (component-typography/chip/*)
+     ============================================================ */
+  --chip-font-small-family: 'Chevy_Sans:Medium', sans-serif;
+  --chip-font-small-size: 12px;
+  --chip-font-small-line-height: 20px;
+  --chip-font-small-weight-medium: 500;
+  --chip-font-small-weight-bold: 700;
+
+  --chip-font-large-family: 'Chevy_Sans:Bold', sans-serif;
+  --chip-font-large-size: 14px;
+  --chip-font-large-line-height: 22px;
+  --chip-font-large-weight-medium: 500;
+  --chip-font-large-weight-bold: 700;
+
+  /* ============================================================
+     CHIP — Selectable colors
+     ============================================================ */
+  --chip-selectable-bg-default:            #ffffff;
+  --chip-selectable-border-default:        #e6e6e6;
+  --chip-selectable-text-default:          #666666;
+
+  --chip-selectable-bg-hover:              #f2f2f2;
+  --chip-selectable-border-hover:          #b3b3b3;
+  --chip-selectable-text-hover:            #262626;
+
+  --chip-selectable-bg-active:             #f2f2f2;
+  --chip-selectable-border-active:         #262626;
+  --chip-selectable-text-active:           #262626;
+
+  --chip-selectable-bg-disabled:           #ffffff;
+  --chip-selectable-border-disabled:       #c3cfd9;
+  --chip-selectable-text-disabled:         #b3b3b3;
+
+  --chip-selectable-bg-selected:           #1a1a1a;
+  --chip-selectable-border-selected:       transparent;
+  --chip-selectable-text-selected:         #ffffff;
+
+  --chip-selectable-bg-selected-disabled:     #c3cfd9;
+  --chip-selectable-border-selected-disabled: #c3cfd9;
+  --chip-selectable-text-selected-disabled:   #b3b3b3;
+
+  /* ============================================================
+     CHIP — Dismissable colors
+     ============================================================ */
+  --chip-dismissable-bg-default:     #ffffff;
+  --chip-dismissable-border-default: #e6e6e6;
+  --chip-dismissable-text-default:   #262626;
+
+  --chip-dismissable-bg-hover:       #f2f2f2;
+  --chip-dismissable-border-hover:   #b3b3b3;
+  --chip-dismissable-text-hover:     #262626;
+
+  --chip-dismissable-bg-active:      #f2f2f2;
+  --chip-dismissable-border-active:  #262626;
+  --chip-dismissable-text-active:    #262626;
+
+  --chip-dismissable-bg-disabled:     #ffffff;
+  --chip-dismissable-border-disabled: #c3cfd9;
+  --chip-dismissable-text-disabled:   #b3b3b3;
+
+  /* ============================================================
+     CHIP — Plain (label-only) colors
+     ============================================================ */
+  --chip-plain-text-primary: #0077d9;
+  --chip-plain-text-success: #2d871b;
+  --chip-plain-text-warning: #b3842d;
+  --chip-plain-text-error:   #d64022;
+  --chip-plain-text-grey:    #666666;
+
+  /* ============================================================
+     CHIP — Information (subtle + emphasis) colors
+     ============================================================ */
+  /* Subtle variants (default) — tinted background, colored text */
+  --chip-info-subtle-bg-primary: #ecf1fc;
+  --chip-info-subtle-bg-success: #e1eddc;
+  --chip-info-subtle-bg-warning: #f6ecde;
+  --chip-info-subtle-bg-error:   #ffe4db;
+  --chip-info-subtle-bg-grey:    #f2f2f2;
+
+  --chip-info-subtle-text-primary: #0077d9;
+  --chip-info-subtle-text-success: #2d871b;
+  --chip-info-subtle-text-warning: #b3842d;
+  --chip-info-subtle-text-error:   #d64022;
+  --chip-info-subtle-text-grey:    #262626;
+
+  /* Emphasis variants — full-color background, white/dark text */
+  --chip-info-emphasis-bg-primary: #0077d9;
+  --chip-info-emphasis-bg-success: #2d871b;
+  --chip-info-emphasis-bg-warning: #b3842d;
+  --chip-info-emphasis-bg-error:   #d64022;
+  --chip-info-emphasis-bg-grey:    #1a1a1a;
+
+  --chip-info-emphasis-text-primary: #ffffff;
+  --chip-info-emphasis-text-success: #ffffff;
+  --chip-info-emphasis-text-warning: #1a1a1a;
+  --chip-info-emphasis-text-error:   #ffffff;
+  --chip-info-emphasis-text-grey:    #ffffff;
+
+  /* ============================================================
+     TOOLTIP — Dark variant (Figma node 20408:95124)
+     Chevrolet base values. Brand overrides in brands.css.
+     ============================================================ */
+  --tooltip-bg:                 #1a1a1a;
+  --tooltip-border-color:       transparent;
+  --tooltip-border-width:       1px;
+  --tooltip-border-radius:      0;
+  --tooltip-padding:            16px;
+  --tooltip-gap:                8px;
+  --tooltip-width:              384px;
+  --tooltip-shadow:             0 4px 4px rgba(0, 0, 0, 0.10), 0 10px 8px rgba(0, 0, 0, 0.04);
+  --tooltip-body-color:         #ffffff;
+  --tooltip-body-font-family:   'Chevy_Sans', sans-serif;
+  --tooltip-body-font-weight:   500;
+  --tooltip-body-font-size:     14px;
+  --tooltip-body-line-height:   22px;
+  --tooltip-title-color:        #ffffff;
+  --tooltip-title-font-family:  'Chevy_Sans:Bold', sans-serif;
+  --tooltip-title-font-weight:  700;
+  --tooltip-title-font-size:    16px;
+  --tooltip-title-line-height:  22px;
+  --tooltip-icon-color:         #ffffff;
+  --tooltip-link-color:         #ffffff;
+  --tooltip-arrow-size:         16px;
+  --tooltip-arrow-thickness:    8px;
+  --tooltip-arrow-inset:        16px;
+
+  /* ============================================================
+     HEADER (Domain Component) — Chevrolet base
+     Figma: GM • 02.01 Navigation — node 478:4898 (sc + pc variants)
+     Brand overrides live in brands.css.
+     ============================================================ */
+  --header-bg:                     #f2f2f2;
+  --header-border-color:           #e6e6e6;
+  --header-height-desktop:         88px;
+  --header-height-tablet-sc:       64px;
+  --header-height-tablet-pc:       120px;
+  --header-height-mobile-compact:  80px;
+  --header-height-mobile-pc:       121px;
+  --header-padding-x:              24px;
+  --header-padding-x-mobile:       16px;
+  --header-padding-y:              16px;
+  --header-padding-y-mobile-sc:    8px;
+  --header-row-gap:                16px;
+  --header-icon-size-desktop:      40px;
+  --header-icon-size-compact:      32px;
+  --header-gap-group:              16px;
+  --header-gap-group-stacked:      8px;
+  --header-gap-actions:            24px;
+  --header-gap-nav:                40px;
+  --header-dealership-font-size-compact:   14px;
+  --header-dealership-line-height-compact: 22px;
+  --header-divider-color:          #e6e6e6;
+  --header-divider-height:         32px;
+  --header-divider-width:          1px;
+  --header-logo-height:            33px;
+  --header-logo-max-width:         90px;
+  --header-dealership-color:       #262626;
+  --header-dealership-font-family: 'Chevy_Sans:Bold', sans-serif;
+  --header-dealership-font-weight: 700;
+  --header-dealership-font-size:   16px;
+  --header-dealership-line-height: 24px;
+  --header-dealership-letter-spacing: 0;
+  --header-nav-color:              #262626;
+  --header-nav-font-family:        'Chevy_Sans', sans-serif;
+  --header-nav-font-weight:        500;
+  --header-nav-font-size:          16px;
+  --header-nav-line-height:        24px;
+  --header-icon-color:             #262626;
+
+  /* -- Footer (domain component) — Chevy base --------------------------- */
+  --footer-bg:                     #ffffff;
+  --footer-bg-configurator:        #f2f2f2;
+  --footer-border-color:           #e6e6e6;
+  --footer-text-color:             #262626;
+  --footer-text-subtle-color:      #666666;
+  --footer-icon-color:             #262626;
+  --footer-padding-x-desktop:      40px;
+  --footer-padding-y-desktop:      40px;
+  --footer-padding-x-tablet:       24px;
+  --footer-padding-y-tablet:       24px;
+  --footer-padding-x-mobile:       16px;
+  --footer-padding-y-mobile:       16px;
+  --footer-action-row-height:      80px;
+  --footer-gap-links:              24px;
+  --footer-gap-stack:              16px;
+  --footer-font-family:            'Chevy_Sans', sans-serif;
+  --footer-links-font-family:      'Chevy_Sans', sans-serif;
+  --footer-links-font-weight:      400;
+  --footer-links-font-size:        12px;
+  --footer-links-line-height:      20px;
+  --footer-disclaimer-heading-font-family: 'Chevy_Sans:Bold', sans-serif;
+  --footer-disclaimer-heading-font-weight: 700;
+  --footer-disclaimer-heading-font-size:   14px;
+  --footer-disclaimer-heading-line-height: 22px;
+  --footer-disclaimer-body-font-family:    'Chevy_Sans', sans-serif;
+  --footer-disclaimer-body-font-weight:    400;
+  --footer-disclaimer-body-font-size:      12px;
+  --footer-disclaimer-body-line-height:    20px;
+  --footer-price-label-font-size:  14px;
+  --footer-price-label-line-height:22px;
+  --footer-price-label-font-weight:500;
+  --footer-price-value-font-family:'Chevy_Sans:Bold', sans-serif;
+  --footer-price-value-font-weight:700;
+  --footer-price-value-font-size:  20px;
+  --footer-price-value-line-height:24px;
+  --footer-chat-fab-size:          48px;
+  --footer-chat-fab-bg:            #787878;
+  --footer-chat-fab-color:         #ffffff;
+  --footer-chat-fab-primary-bg:    #0077D9;
+
+  /* ==========================================================================
+     VSR CARD — Vehicle Search Result card
+     Source: Figma node 1390:104316 (chevrolet ✦ VSR Card Grid)
+     Defaults below mirror the Chevrolet variant; brands.css overrides bg,
+     border, radius, font sizes, and (for Cadillac) flat corners + grey panel.
+     ========================================================================== */
+  --vsr-card-bg:                    #ffffff;
+  --vsr-card-border-color:          #e6e6e6;
+  --vsr-card-border-width:          1px;
+  --vsr-card-border-radius:         16px;
+  --vsr-card-width:                 305px;
+  --vsr-card-mobile-width:          433px;
+  --vsr-card-padding-y:             16px;
+  --vsr-card-image-height:          135px;
+  --vsr-card-cta-section-height:    48px;
+  --vsr-card-divider-color:         #e6e6e6;
+  --vsr-card-status-color:          #262626;
+  --vsr-card-name-color:            #262626;
+  --vsr-card-msrp-label-color:      #666666;
+  --vsr-card-msrp-value-color:      #262626;
+  --vsr-card-dealership-color:      #666666;
+  --vsr-card-distance-color:        #666666;
+  --vsr-card-price-label-color:     #666666;
+  --vsr-card-price-value-color:     #262626;
+  --vsr-card-detail-color:          #666666;
+  --vsr-card-vin-label-color:       #666666;
+  --vsr-card-vin-value-color:       #262626;
+  --vsr-card-heart-color:           #262626;
+  --vsr-card-status-text-transform: uppercase;
+  --vsr-card-name-text-transform:   none;
+  --vsr-card-status-font-family:    'Chevy_Sans:Medium', sans-serif;
+  --vsr-card-status-font-size:      12px;
+  --vsr-card-status-font-weight:    500;
+  --vsr-card-name-font-family:      'Chevy_Sans:Bold', sans-serif;
+  --vsr-card-name-font-size:        16px;
+  --vsr-card-name-line-height:      24px;
+  --vsr-card-name-font-weight:      700;
+  --vsr-card-meta-font-family:      'Chevy_Sans:Medium', sans-serif;
+  --vsr-card-meta-font-size:        12px;
+  --vsr-card-meta-line-height:      20px;
+  --vsr-card-price-label-font-family: 'Chevy_Sans:Medium', sans-serif;
+  --vsr-card-price-label-font-size: 14px;
+  --vsr-card-price-label-line-height: 22px;
+  --vsr-card-price-value-font-family: 'Chevy_Sans:Bold', sans-serif;
+  --vsr-card-price-value-font-size: 16px;
+  --vsr-card-price-value-line-height: 24px;
+  --vsr-card-vin-font-size:         12px;
+  --vsr-card-vin-line-height:       20px;
+
+  /* ==========================================================================
+     VSR MATH BOX (domain — Price Summary panel)
+     ========================================================================== */
+  --vsr-math-box-bg:              #ffffff;
+  --vsr-math-box-text-primary:    #262626;
+  --vsr-math-box-text-secondary:  #666666;
+  --vsr-math-box-text-success:    #2d871b;
+  --vsr-math-box-divider:         #b3b3b3;
+  --vsr-math-box-font-family:     'Chevy_Sans:Medium', sans-serif;
+  --vsr-math-box-bold-font-family:'Chevy_Sans:Bold', sans-serif;
+
+  /* ==========================================================================
+     CONFIGURATOR SUB-HEADER (domain — secondary nav under global Header)
+     Source: Figma node 481:9086 (GM Navigation file, NOT Core Variables).
+     Defaults below mirror the Chevy variant; brands.css overrides typography
+     family + weight + (Buick / GMC) size for the 3 non-Chevy brands.
+     S8 closed 2026-04-27: tokens previously lived as CSS fallbacks in
+     global.css; moved here to match the three-layer architectural invariant.
+     Tab tokens remain because the molecule's tab bar is engineered locally
+     pending S26 (atomic Tabs Underlined Inside Figma reconciliation).
+     ========================================================================== */
+  --config-subheader-bg:                        #ffffff;
+  --config-subheader-border-color:              #e6e6e6;
+  --config-subheader-text-color:                #262626;
+  --config-subheader-subtitle-color:            #262626;
+  --config-subheader-icon-color:                #262626;
+  --config-subheader-font-family:               'Chevy_Sans', sans-serif;
+  --config-subheader-height-desktop:            88px;
+  --config-subheader-height-tablet:             120px;
+  --config-subheader-height-mobile:             120px;
+  --config-subheader-top-row-height:            72px;
+  --config-subheader-padding-x-desktop:         40px;
+  --config-subheader-padding-x-tablet:          24px;
+  --config-subheader-padding-x-mobile:          16px;
+  --config-subheader-col-gap:                   32px;
+  --config-subheader-name-font-family:          'Chevy_Sans', sans-serif;
+  --config-subheader-name-font-weight:          700;
+  --config-subheader-name-font-size:            24px;
+  --config-subheader-name-font-size-mobile:     18px;
+  --config-subheader-name-line-height:          30px;
+  --config-subheader-subtitle-font-family:      'Chevy_Sans', sans-serif;
+  --config-subheader-subtitle-font-weight:      500;
+  --config-subheader-subtitle-font-size:        16px;
+  --config-subheader-subtitle-font-size-mobile: 14px;
+  --config-subheader-subtitle-line-height:      24px;
+  --config-subheader-tab-bar-height:            48px;
+  --config-subheader-tab-gap:                   40px;
+  --config-subheader-tab-underline-height:      4px;
+  --config-subheader-tab-font-family:           'Chevy_Sans', sans-serif;
+  --config-subheader-tab-font-weight:           600;
+  --config-subheader-tab-font-size:             16px;
+  --config-subheader-tab-line-height:           24px;
+  --config-subheader-tab-inactive-color:        #262626;
+  --config-subheader-tab-selected-color:        var(--brand-color);
+  --config-subheader-price-label-font-family:   'Chevy_Sans', sans-serif;
+  --config-subheader-price-label-font-weight:   500;
+  --config-subheader-price-label-font-size:     14px;
+  --config-subheader-price-label-line-height:   22px;
+  --config-subheader-price-value-font-family:   'Chevy_Sans', sans-serif;
+  --config-subheader-price-value-font-weight:   700;
+  --config-subheader-price-value-font-size:     20px;
+  --config-subheader-count-bg:                  #262626;
+  --config-subheader-count-color:               #ffffff;
+  --config-subheader-count-size:                40px;
+  --config-subheader-count-font-family:         'Chevy_Sans', sans-serif;
+
+  /* ==========================================================================
+     VSR FILTER (domain — left-rail filter for Vehicle Search Results)
+     Source: Figma node 1382:18101 (GM • 02.06 VSR).
+     Tokens cover layout, color-swatch picker, count badge, and mobile chrome.
+     Defaults below mirror the Chevy variant; the molecule has no brand-specific
+     overrides — brand surface is inherited entirely through the atomic
+     components it composes (Tabs Contained, Slider, Accordion, Checkbox,
+     Switch, Button, IconButton, QuickFilter), each of which has its own
+     [data-brand] block in brands.css.
+     S8 closed 2026-04-27: tokens previously lived as CSS fallbacks in
+     global.css; moved here to match the three-layer architectural invariant.
+     ========================================================================== */
+  /* Layout & surface */
+  --vsr-filter-bg:                              #ffffff;
+  --vsr-filter-border-color:                    #e6e6e6;
+  --vsr-filter-padding-x:                       16px;
+  --vsr-filter-stack-gap:                       20px;
+  --vsr-filter-heading-color:                   #1a1a1a;
+  /* Color swatch picker (NET NEW — no atomic equivalent for two-tone disc) */
+  --vsr-filter-swatch-size:                     32px;
+  --vsr-filter-swatch-grid-cols:                7;
+  --vsr-filter-swatch-gap:                      10px;
+  --vsr-filter-swatch-ring-width:               2px;
+  --vsr-filter-swatch-ring-offset:              3px;
+  --vsr-filter-swatch-ring-color:               var(--brand-color);
+  /* Count badge (NET NEW — flagged as future Badge atom candidate per S26 sibling discussion) */
+  --vsr-filter-count-badge-size:                20px;
+  --vsr-filter-count-badge-bg:                  var(--brand-color);
+  --vsr-filter-count-badge-color:               #ffffff;
+  /* Mobile chrome */
+  --vsr-filter-mobile-header-height:            56px;
+  --vsr-filter-mobile-action-height:            96px;
+
+  /* ==========================================================================
+     VSR QUICK VIEW (domain — desktop-only modal Quick View for VSR)
+     Source: Figma node 1:967 (canvas "VSR Quick view", Claude file).
+     Defaults below mirror the Chevy variant. Brand re-theming flows almost
+     entirely through atomic Button + IconButton tokens (CTAs, gallery nav,
+     close X) and foundation typography tokens (--type-heading-family /
+     --type-heading-weight). Per-brand overrides in brands.css handle only
+     radius (GMC + Cadillac flatten to 0) and primary text color (mirrors
+     vsr-card neutrals). Two NET NEW slots — pagination dots and the captioned
+     color swatch — are flagged as future atom-extraction candidates per S27.
+     ========================================================================== */
+  /* Layout & surface */
+  --vsr-quick-view-bg:                          #ffffff;
+  --vsr-quick-view-radius:                      16px;
+  --vsr-quick-view-padding:                     24px;
+  --vsr-quick-view-padding-top:                 80px;
+  --vsr-quick-view-col-gap:                     24px;
+  --vsr-quick-view-row-gap:                     20px;
+  --vsr-quick-view-divider-color:               #e6e6e6;
+  --vsr-quick-view-text-primary:                #262626;
+  --vsr-quick-view-text-secondary:              #666666;
+  /* Per-brand text-transform (Chevy + Buick: none; GMC + Cadillac: uppercase title; GMC: uppercase options heading) */
+  --vsr-quick-view-title-text-transform:        none;
+  --vsr-quick-view-options-heading-text-transform: none;
+  /* Identity panel (gray block: title/trim/VIN + status/dealership) */
+  --vsr-quick-view-identity-bg:                 #f5f5f5;
+  --vsr-quick-view-identity-padding:            16px;
+  --vsr-quick-view-identity-radius:             8px;
+  /* Specs grid (NET NEW — flagged as future SpecItem atom candidate per S27).
+     Per Figma node 1:2054: 40px icon container, 8px gap to text, 24px between
+     specs in the 2x2 grid. */
+  --vsr-quick-view-spec-icon-size:              40px;
+  --vsr-quick-view-spec-row-gap:                0;
+  --vsr-quick-view-spec-col-gap:                24px;
+  /* Pagination dots (NET NEW — flagged as future Carousel Pagination atom candidate) */
+  --vsr-quick-view-dot-w:                       24px;
+  --vsr-quick-view-dot-h:                       3px;
+  --vsr-quick-view-dot-color:                   #d6d6d6;
+  --vsr-quick-view-dot-active-color:            var(--brand-color);
+  --vsr-quick-view-dot-gap:                     6px;
+  /* Captioned color swatch (NET NEW — flagged as future shared Swatch atom per S27).
+     Radius flips per brand (GMC + Cadillac square, Chevy + Buick circle), mirroring
+     the same flat-vs-rounded pattern already established in --vsr-quick-view-radius. */
+  --vsr-quick-view-color-swatch-size:           32px;
+  --vsr-quick-view-color-swatch-radius:         50%;
+}
