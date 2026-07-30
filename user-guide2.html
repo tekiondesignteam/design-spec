@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Designer's Guide — Spec-Driven Design Workspace</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5a6473; --faint: #8a94a3; --line: #e3e7ec;
+    --bg: #ffffff; --panel: #f6f8fa; --panel2: #eef2f6;
+    --accent: #0077d9; --accent-ink: #0e4180; --accent-soft: #e7f0fb;
+    --good: #2d871b; --warn: #b3842d; --danger: #c0392b;
+    --max: 1120px; --nav: 232px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: #eef1f4; color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: var(--max); margin: 32px auto; background: var(--bg); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(20,34,48,.10); }
+
+  header.hero { padding: 44px 48px 30px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,#f8fafc,#ffffff); }
+  .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  h1 { font-size: 32px; line-height: 1.12; margin: 8px 0 8px; letter-spacing: -.015em; }
+  .sub { color: var(--muted); font-size: 16px; margin: 0 0 4px; max-width: 720px; }
+  .note { color: var(--faint); font-size: 13px; margin: 12px 0 0; }
+
+  .flowbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 22px 0 2px; }
+  .flowbar .fchip { display: inline-flex; flex-direction: column; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 8px 13px; min-width: 96px; }
+  .flowbar .fchip b { font-size: 13px; }
+  .flowbar .fchip span { font-size: 11px; color: var(--faint); margin-top: 1px; }
+  .flowbar .arr { color: var(--faint); font-weight: 700; }
+
+  .layout { display: grid; grid-template-columns: var(--nav) 1fr; align-items: start; }
+  nav.toc { position: sticky; top: 0; align-self: start; padding: 26px 14px 26px 34px; max-height: 100vh; overflow: auto; border-right: 1px solid var(--line); }
+  nav.toc .tt { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--faint); font-weight: 700; margin: 0 0 10px; }
+  nav.toc a { display: block; color: var(--muted); text-decoration: none; font-size: 13.5px; padding: 5px 10px; border-radius: 7px; border-left: 2px solid transparent; }
+  nav.toc a:hover { background: var(--panel); color: var(--ink); }
+  nav.toc a.active { color: var(--accent-ink); background: var(--accent-soft); border-left-color: var(--accent); font-weight: 600; }
+
+  main { padding: 8px 48px 44px; min-width: 0; }
+  section { padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 20px; }
+  section:last-child { border-bottom: 0; }
+  h2 { font-size: 21px; margin: 0 0 6px; letter-spacing: -.01em; }
+  h2 .num { color: var(--faint); font-weight: 700; margin-right: 8px; }
+  h3 { font-size: 15px; margin: 22px 0 8px; }
+  p { margin: 0 0 12px; color: #2b3442; }
+  a { color: var(--accent); }
+  ul { margin: 0 0 12px; padding-left: 20px; } li { margin: 6px 0; color: #2b3442; }
+  .lead { font-size: 16.5px; color: #2b3442; }
+  code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
+
+  pre { background: #0f1729; color: #d7e2f2; border-radius: 10px; padding: 14px 16px; overflow: auto; font-size: 13px; line-height: 1.5; margin: 4px 0 16px; }
+  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: 13px; }
+  pre .cmt { color: #7c8aa5; }
+  pre .cmd { color: #7fd0ff; }
+
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); border-bottom: 2px solid var(--line); }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:nth-child(even) { background: #fbfcfd; }
+
+  .callout { border-radius: 8px; padding: 13px 16px; margin: 14px 0; font-size: 14px; }
+  .callout.tip { background: #f0f8f1; border-left: 4px solid var(--good); }
+  .callout.warn { background: #fdf6ec; border-left: 4px solid var(--warn); }
+  .callout.info { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+  .callout b { color: var(--ink); }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .cols h3 { margin-top: 0; }
+
+  .steps { list-style: none; margin: 6px 0 0; padding: 0; counter-reset: step; }
+  .steps > li { position: relative; padding: 0 0 20px 46px; margin: 0; }
+  .steps > li:before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: -2px; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+  .steps > li:not(:last-child):after { content: ""; position: absolute; left: 14px; top: 30px; bottom: 4px; width: 2px; background: var(--line); }
+  .steps h3 { margin: 4px 0 6px; font-size: 16px; }
+  .steps .then { color: var(--accent-ink); font-size: 13.5px; margin-top: 6px; }
+
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 6px 0 0; }
+  .rule { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
+  .rule b { display: block; font-size: 14px; margin-bottom: 3px; }
+  .rule span { font-size: 13px; color: var(--muted); }
+
+  .linkcard { display: flex; align-items: center; gap: 16px; background: linear-gradient(180deg,#f8fbff,#f2f7fd); border: 1px solid #cfe1f5; border-radius: 12px; padding: 18px 20px; margin: 16px 0 4px; text-decoration: none; }
+  .linkcard:hover { border-color: var(--accent); box-shadow: 0 4px 18px rgba(0,119,217,.12); }
+  .linkcard .ic { flex: 0 0 auto; width: 42px; height: 42px; border-radius: 10px; background: #0f1729; color: #fff; display: flex; align-items: center; justify-content: center; }
+  .linkcard .ic svg { width: 24px; height: 24px; }
+  .linkcard .tx { min-width: 0; }
+  .linkcard .tx b { display: block; color: var(--ink); font-size: 15px; }
+  .linkcard .tx span { display: block; color: var(--muted); font-size: 13px; word-break: break-all; }
+  .linkcard .go { margin-left: auto; flex: 0 0 auto; color: var(--accent); font-weight: 700; font-size: 20px; }
+
+  .paste { position: relative; }
+  .paste .lbl { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--faint); margin: 8px 0 4px; }
+  .plain { font-size: 14px; color: var(--muted); margin: -6px 0 14px; }
+
+  .say { display: flex; gap: 12px; align-items: flex-start; background: var(--accent-soft); border: 1px solid #cfe1f5; border-radius: 12px; border-bottom-left-radius: 4px; padding: 14px 16px; margin: 6px 0 6px; }
+  .say .who { flex: 0 0 auto; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--accent-ink); padding-top: 2px; }
+  .say .msg { font-size: 15px; color: var(--ink); line-height: 1.5; }
+
+  footer { padding: 22px 48px 34px; color: var(--faint); font-size: 12.5px; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 880px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { display: none; }
+    header.hero, main, footer { padding-left: 22px; padding-right: 22px; }
+    .cols, .rules { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <div class="eyebrow">Designer's Guide</div>
+  <h1>Spec-Driven Design Workspace</h1>
+  <p class="sub">Describe <em>what</em> you want to build — grounded in a real design system — and Claude builds a working, reviewable prototype without drifting from your intent. You don't need to write code. You do need to be concrete.</p>
+  <div class="flowbar">
+    <div class="fchip"><b>constitution</b><span>frame</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>spec</b><span>what</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>plan</b><span>order</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>tasks</b><span>checklist</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>build</b><span>HTML</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>reviews</b><span>evidence</span></div>
+  </div>
+  <p class="note">Each artifact is approved one at a time — that's what keeps a long AI session from drifting off your intent.</p>
+</header>
+
+<div class="layout">
+  <nav class="toc" id="toc">
+    <p class="tt">On this page</p>
+    <a href="#setup">Get set up</a>
+    <a href="#idea">The idea in a minute</a>
+    <a href="#before">Before you start</a>
+    <a href="#artifacts">The five artifacts</a>
+    <a href="#workflow">The workflow</a>
+    <a href="#rules">Rules Claude follows</a>
+    <a href="#running">Running your prototype</a>
+    <a href="#results">Getting better results</a>
+    <a href="#reference">Quick reference</a>
+  </nav>
+
+  <main>
+
+  <section id="setup">
+    <h2><span class="num">1</span>Get set up</h2>
+    <p class="lead">You don't need to be technical, and you never touch a terminal. It's a one-time, ~10-minute setup: install one free app, then <b>ask Claude — in plain English — to fetch the workspace for you</b>. Claude runs the technical bits and asks your permission first; you just click <b>Allow</b>.</p>
+
+    <p><b>Where this lives</b> — the workspace is a project hosted on GitHub. This is the page it comes from:</p>
+    <a class="linkcard" href="https://github.com/tekiondesignteam/design-spec" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></span>
+      <span class="tx"><b>tekiondesignteam / design-spec</b><span>github.com/tekiondesignteam/design-spec</span></span>
+      <span class="go">↗</span>
+    </a>
+    <p class="plain">You don't download anything from that page by hand — Claude fetches it for you in Step 3. It's just where the workspace lives, in case you want to look.</p>
+
+    <h3>Step 1 — Install the Claude desktop app</h3>
+    <p>This is the app you'll do everything in — Claude Code is built right in, so there's nothing else to install. Download it from <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>, open it, and sign in with your work account.</p>
+    <p class="plain">One small requirement Claude needs to fetch the workspace: <b>Git</b>. Most Macs already have it. If yours doesn't, the app will offer to install it the first time it's needed — just say yes.</p>
+
+    <h3>Step 2 — Open Claude Code and pick a folder</h3>
+    <ul>
+      <li>In the app, click the <b>Code</b> tab at the top, then <b>+ New session</b>.</li>
+      <li>Use the <b>Project folder</b> picker (in the message area) to choose where the workspace should live — your <b>Desktop</b> is a fine choice. You can also drag a folder in.</li>
+    </ul>
+
+    <h3>Step 3 — Ask Claude to fetch the workspace</h3>
+    <p>Type this message to Claude and send it, word for word:</p>
+    <div class="say">
+      <span class="who">You</span>
+      <span class="msg">Clone https://github.com/tekiondesignteam/design-spec into this folder, then install the pre-commit hook from its <code>hooks/</code> folder.</span>
+    </div>
+    <p>Claude will ask permission before it runs anything — click <b>Allow</b>. When it's done, you'll have a new <code>design-spec</code> folder, and a safety guardrail is switched on that quietly keeps the shared design systems read-only (so you can only ever change your own work — nothing breaks for anyone else). You don't need to understand it; it just protects you.</p>
+
+    <h3>Step 4 — Point Claude at the workspace</h3>
+    <p>Start a <b>+ New session</b> and set the <b>Project folder</b> to the <code>design-spec</code> folder Claude just created. That's the workspace — everything you build lives inside it.</p>
+
+    <h3>Step 5 — Start building</h3>
+    <p>That's the whole setup. From here you just <b>tell Claude what you want in plain English</b>. Two shortcuts speed up the two main steps — type them, or just say the same thing in words:</p>
+    <ul>
+      <li><code>/new-project</code> — <em>or</em> "start a new project called vehicle-search using the t1 design system" (§5, step 1)</li>
+      <li><code>/spec</code> — <em>or</em> "turn this PRD into a spec" (§5, step 2)</li>
+    </ul>
+    <div class="callout info"><b>Next time</b> you want to work, there's nothing to reinstall: open the app → <b>Code</b> → <b>+ New session</b> → set the folder to <code>design-spec</code>. Steps 1–3 are one-time only. Ready to build? Head to <a href="#workflow">§5 — The workflow</a>.</div>
+  </section>
+
+  <section id="idea">
+    <h2><span class="num">2</span>The idea in one minute</h2>
+    <p class="lead">Long AI sessions drift: Claude fills gaps with guesses and forgets decisions made an hour ago. This workspace fights that with a chain of small artifacts you approve one at a time.</p>
+    <p>Each project lives in its own folder under <code>projects/&lt;name&gt;/</code> and is pinned to <b>one</b> design system (<code>t1</code>, <code>alloy</code>, …). The design system is the source of truth for look, type, spacing, and components — you never invent visual style, you inherit it.</p>
+    <div class="callout info">The deliverable is always <b>a single HTML file</b> you can open in a browser. No build tools, no bundlers.</div>
+  </section>
+
+  <section id="before">
+    <h2><span class="num">3</span>Before you start</h2>
+    <ul>
+      <li>Prototypes are opened through a local web link (Claude sets this up for you), <b>not</b> by double-clicking the file. (Double-clicking uses <code>file://</code>, which browsers block for these prototypes.) See <a href="#running">§7</a>.</li>
+      <li>You work <b>only</b> inside your own <code>projects/&lt;name&gt;/</code> folder. Everything under <code>design-systems/</code> is read-only — a commit that touches it is blocked automatically (that's the guardrail from §1).</li>
+      <li>Pick your design system up front. Designers can't add new ones; ask a maintainer if the system you need isn't listed.</li>
+    </ul>
+    <p>Not sure which design systems are available? Just ask Claude:</p>
+    <div class="say">
+      <span class="who">You</span>
+      <span class="msg">Which design systems can I use in this workspace?</span>
+    </div>
+  </section>
+
+  <section id="artifacts">
+    <h2><span class="num">4</span>The five artifacts</h2>
+    <p>Everything Claude builds traces back to these files. You read and approve them; Claude fills them in.</p>
+    <table>
+      <thead><tr><th>File</th><th>What it is</th><th>Who writes it</th></tr></thead>
+      <tbody>
+        <tr><td><code>constitution.md</code></td><td>The fixed frame: boundaries + the design system's visual language. Read this first.</td><td>Generated by <code>/new-project</code>, then you review</td></tr>
+        <tr><td><code>spec.md</code></td><td><em>What</em> you're building: the problem, scope, user flows, components, states, and acceptance criteria (<code>AC-1</code>, <code>AC-2</code>, …).</td><td><code>/spec</code>, with your input</td></tr>
+        <tr><td><code>plan.md</code></td><td>The build broken into small, checkpointed steps.</td><td>You + Claude</td></tr>
+        <tr><td><code>tasks.md</code></td><td>A checklist — one line per behavior, each citing an acceptance criterion. Also the drift log.</td><td>Claude, as it builds</td></tr>
+        <tr><td><code>reviews/step-N.md</code></td><td>Screenshots + checks proving each step matches the spec, at every breakpoint.</td><td>Claude, at each checkpoint</td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip"><b>Acceptance criteria (<code>AC-n</code>) are the backbone.</b> Every task cites the AC it satisfies, and every review frame proves an AC is true in the browser. If it isn't in the spec as an AC, it doesn't get built.</div>
+  </section>
+
+  <section id="workflow">
+    <h2><span class="num">5</span>The workflow, step by step</h2>
+    <ol class="steps">
+      <li>
+        <h3>Scaffold the project</h3>
+        <pre><code><span class="cmd">/new-project</span> &lt;name&gt; [design-system]</code></pre>
+        <ul>
+          <li><code>&lt;name&gt;</code> is lowercase, kebab-case, no spaces (e.g. <code>vehicle-search</code>).</li>
+          <li>If you skip the design system, Claude lists the options and asks you to pick.</li>
+        </ul>
+        <p>This creates <code>projects/&lt;name&gt;/</code> with the four template files and a <code>RUN.md</code>, and fills the constitution from the chosen design system. <b>Nothing gets designed yet.</b></p>
+        <p class="then">→ Then: read <code>constitution.md</code>. Does the visual direction and the boundary look right?</p>
+      </li>
+      <li>
+        <h3>Write the spec</h3>
+        <pre><code><span class="cmd">/spec</span> &lt;name&gt; &lt;your PRD&gt;</code></pre>
+        <p>The source can be pasted text, a Confluence/Jira link, a Figma link, a URL, or a file path. Claude saves it to <code>brief.md</code> so the spec is traceable.</p>
+        <p>Claude then scores your brief on six dimensions (problem, scope, flows, components, states, acceptance criteria) and <b>only asks about the gaps</b>. Anything you skip stays a visible <code>{{TODO}}</code>, never an invented requirement.</p>
+        <p class="then">→ Then: read <code>spec.md</code>. This is where you kill ambiguity. Be concrete — name real components, real states, real copy. Vague specs produce vague UI.</p>
+      </li>
+      <li>
+        <h3>Plan the build</h3>
+        <p>Ask Claude to fill in <code>plan.md</code>: order the work so each step is small and reviewable — shell/layout first, then sections, then states (empty / loading / error / success), then polish.</p>
+      </li>
+      <li>
+        <h3>Build, one checkpoint at a time</h3>
+        <p>Claude builds step by step. Before each step it re-reads the constitution and spec; after each step it records a <code>reviews/step-N.md</code> walkthrough — screenshots at every breakpoint, plus checks a screenshot can't prove (element counts, scroll behavior, "the rest of the screen didn't change").</p>
+        <p><b>Then it stops and waits for you to review</b> before moving on. Checkpoints are where drift gets caught — use them. Review <code>reviews/step-N.md</code>, then tell Claude to continue.</p>
+      </li>
+      <li>
+        <h3>Done</h3>
+        <p>A screen is done when it uses only the design system's tokens and components, every state in the spec is built, it renders at every breakpoint, and nothing outside your project folder changed. <code>tasks.md</code> tracks all of this.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="rules">
+    <h2><span class="num">6</span>The rules Claude follows</h2>
+    <p>So you know what to expect:</p>
+    <div class="rules">
+      <div class="rule"><b>One folder</b><span>Only <code>projects/&lt;name&gt;/</code> is ever modified.</span></div>
+      <div class="rule"><b>One design system</b><span>No mixing, borrowing, or inventing tokens. A missing piece is logged as a <em>gap</em> in the constitution, not faked.</span></div>
+      <div class="rule"><b>One HTML file, no build step</b><span>Plain HTML/CSS/JS, or React via in-browser Babel. Never a Vite/webpack app that must be compiled.</span></div>
+      <div class="rule"><b>Every state, every breakpoint</b><span>Empty, loading, error, and success — verified visually and with a DOM check.</span></div>
+      <div class="rule"><b>Drift is logged, not hidden</b><span>If the UI diverges from the spec, it goes in the drift log in <code>tasks.md</code> and the spec is updated first.</span></div>
+      <div class="rule"><b>kebab-case filenames</b><span>No spaces, no leading <code>_</code> — they break URLs and hosting.</span></div>
+    </div>
+    <div class="callout warn">Want to intentionally break from the design system? That's a <b>deviation</b> — it gets recorded in constitution §5 with a reason. Nothing silent.</div>
+  </section>
+
+  <section id="running">
+    <h2><span class="num">7</span>Running your prototype</h2>
+    <p>The simplest way — just ask Claude, and click <b>Allow</b> when it asks:</p>
+    <div class="say">
+      <span class="who">You</span>
+      <span class="msg">Serve this repo locally and give me the link to open my prototype.</span>
+    </div>
+    <p>Claude starts a little local web server and hands you a <code>http://localhost/…</code> link. <b>Don't double-click the HTML file</b> — opening it directly (as <code>file://</code>) is blocked for any prototype that loads its design-system bundle. If you'd rather run it yourself, your project's <code>RUN.md</code> has the exact command (it's <code>python3 -m http.server</code> from the repo root).</p>
+    <ul>
+      <li><b>Sharing outside the repo?</b> Ask for a <b>Portable build</b> — a self-contained file that inlines the kit so it opens by double-click (see <code>plan.md</code>).</li>
+      <li><b>Hosting for a team?</b> GitHub Pages gives every project a real <code>https://</code> link (see <a href="DEPLOY.md">DEPLOY.md</a>). Note this publicly exposes the design system — prefer a Portable build for internal-only work.</li>
+    </ul>
+  </section>
+
+  <section id="results">
+    <h2><span class="num">8</span>Getting better results</h2>
+    <ul>
+      <li><b>Be specific in the spec.</b> "A card with the vehicle photo, price in bold, and a disabled Reserve button when out of stock" beats "a nice vehicle card."</li>
+      <li><b>Name the unhappy paths.</b> Empty results, no permission, network error — these are the #1 cause of "this isn't what I wanted."</li>
+      <li><b>Approve at every checkpoint.</b> Don't let Claude build five steps then review. Small reviews catch drift cheaply.</li>
+      <li><b>Re-read the constitution when a session gets long</b> — and ask Claude to as well. It's the anchor.</li>
+      <li><b>Want the design pushed further?</b> Ask Claude to use the <code>impeccable</code> skill for a design-quality pass (hierarchy, spacing, states, accessibility).</li>
+    </ul>
+  </section>
+
+  <section id="reference">
+    <h2><span class="num">9</span>Quick reference</h2>
+    <table>
+      <thead><tr><th>I want to…</th><th>Do this</th></tr></thead>
+      <tbody>
+        <tr><td>Open Claude Code</td><td>Claude desktop app → <b>Code</b> tab → <b>+ New session</b></td></tr>
+        <tr><td>Get the workspace (one time)</td><td>Ask Claude: "Clone <code>github.com/tekiondesignteam/design-spec</code> here + install the pre-commit hook"</td></tr>
+        <tr><td>Start a new project</td><td><code>/new-project &lt;name&gt; &lt;design-system&gt;</code> (or say it in plain English)</td></tr>
+        <tr><td>Turn a PRD into a spec</td><td><code>/spec &lt;name&gt; &lt;paste / link / file&gt;</code> (or say it in plain English)</td></tr>
+        <tr><td>See available design systems</td><td>Ask Claude "which design systems are available?"</td></tr>
+        <tr><td>Open a prototype</td><td>Ask Claude to "serve the repo and give me the link" — never open the file directly</td></tr>
+        <tr><td>Share outside the repo</td><td>Ask for a Portable build</td></tr>
+        <tr><td>Host for a team</td><td>GitHub Pages — see <a href="DEPLOY.md">DEPLOY.md</a></td></tr>
+        <tr><td>Check what's built vs. spec</td><td>Read <code>tasks.md</code> and <code>reviews/step-N.md</code></td></tr>
+      </tbody>
+    </table>
+    <div class="callout info">Two worked examples live in the repo — <a href="projects/gm-vsr/">gm-vsr</a> and <a href="projects/t1-vehicle-search/">t1-vehicle-search</a>. Open their <code>spec.md</code>, <code>tasks.md</code>, and <code>reviews/</code> to see the whole chain end to end.</div>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  Designer's Guide · Spec-driven design workspace. Companion to <a href="GUIDE.md">GUIDE.md</a> and <a href="DEPLOY.md">DEPLOY.md</a>.
+</footer>
+
+</div>
+
+<script>
+  // Highlight the current section in the sidebar as you scroll.
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var a = map[e.target.id];
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('main section').forEach(function (s) { obs.observe(s); });
+</script>
+</body>
+</html>

@@ -1,287 +1,691 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Designer's Guide — Spec-Driven Design Workspace</title>
+<script>document.documentElement.className = "js";</script>
+<title>Designer's Guide · Spec-Driven Design Workspace</title>
+<meta name="description" content="A spec-driven design workspace: describe what you want, grounded in a real design system, and Claude builds a working, reviewable prototype that never drifts from your intent." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
+  /* ============================================================
+     TOKENS · Clay design system
+     Plain Black display face is licensed to Clay; per the spec the
+     substitute is Inter 500 with negative letter-spacing.
+     ============================================================ */
   :root {
-    --ink: #1a2230; --muted: #5a6473; --faint: #8a94a3; --line: #e3e7ec;
-    --bg: #ffffff; --panel: #f6f8fa; --panel2: #eef2f6;
-    --accent: #0077d9; --accent-ink: #0e4180; --accent-soft: #e7f0fb;
-    --good: #2d871b; --warn: #b3842d; --danger: #c0392b;
-    --max: 1120px; --nav: 232px;
+    --primary:#0a0a0a; --brand-pink:#ff4d8b; --brand-teal:#1a3a3a;
+    --brand-lavender:#b8a4ed; --brand-peach:#ffb084; --brand-ochre:#e8b94a;
+    --brand-mint:#a4d4c5; --brand-coral:#ff6b5a;
+    --canvas:#fffaf0; --surface-soft:#faf5e8; --surface-card:#f5f0e0;
+    --surface-strong:#ebe6d6; --surface-dark:#0a1a1a; --surface-dark-elevated:#1a2a2a;
+    --hairline:#e5e5e5;
+    --ink:#0a0a0a; --body-strong:#1a1a1a; --body:#3a3a3a;
+    --muted:#6a6a6a; --muted-soft:#9a9a9a; --on-primary:#ffffff;
+    --success:#22c55e;
+    --r-xs:6px; --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:24px; --r-pill:9999px;
+    --xxs:4px; --xs:8px; --sm:12px; --md:16px; --lg:24px; --xl:32px; --xxl:48px; --section:96px;
+    --maxw:1200px;
+    --display-xl:clamp(2.6rem,1.4rem + 5.2vw,4.4rem);
+    --display-lg:clamp(2rem,1.4rem + 2.8vw,3.25rem);
+    --display-md:clamp(1.8rem,1.4rem + 1.8vw,2.4rem);
+    --display-sm:clamp(1.5rem,1.3rem + 1.1vw,1.9rem);
+    --ease-out:cubic-bezier(0.22,1,0.36,1);
+    --z-nav:100; --z-mobile:200;
   }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: #eef1f4; color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  *,*::before,*::after{box-sizing:border-box;} *{margin:0;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--canvas); color:var(--body); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow-x:hidden;
   }
-  .page { max-width: var(--max); margin: 32px auto; background: var(--bg); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(20,34,48,.10); }
+  svg{display:block;} img,svg{max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;}
+  code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:0.85em;background:var(--surface-card);border:1px solid var(--hairline);border-radius:var(--r-xs);padding:1px 6px;color:var(--body-strong);}
+  ::selection{background:var(--brand-lavender);color:var(--ink);}
 
-  header.hero { padding: 44px 48px 30px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,#f8fafc,#ffffff); }
-  .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
-  h1 { font-size: 32px; line-height: 1.12; margin: 8px 0 8px; letter-spacing: -.015em; }
-  .sub { color: var(--muted); font-size: 16px; margin: 0 0 4px; max-width: 720px; }
-  .note { color: var(--faint); font-size: 13px; margin: 12px 0 0; }
+  /* TYPE */
+  .display{font-weight:500;color:var(--ink);letter-spacing:-0.03em;line-height:1.05;text-wrap:balance;}
+  h1.display{font-size:var(--display-xl);line-height:1.0;letter-spacing:-0.035em;}
+  h2.display{font-size:var(--display-lg);letter-spacing:-0.03em;}
+  .display-md{font-size:var(--display-md);letter-spacing:-0.025em;line-height:1.1;}
+  .display-sm{font-size:var(--display-sm);letter-spacing:-0.018em;line-height:1.15;}
+  .title-lg{font-size:1.5rem;font-weight:600;letter-spacing:-0.01em;line-height:1.3;color:var(--ink);}
+  .title-md{font-size:1.125rem;font-weight:600;line-height:1.4;color:var(--ink);}
+  .caption-upper{font-size:0.75rem;font-weight:600;letter-spacing:0.125em;text-transform:uppercase;}
+  .lead{font-size:clamp(1.05rem,1rem + 0.4vw,1.25rem);color:var(--body-strong);line-height:1.5;text-wrap:pretty;}
 
-  .flowbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 22px 0 2px; }
-  .flowbar .fchip { display: inline-flex; flex-direction: column; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 8px 13px; min-width: 96px; }
-  .flowbar .fchip b { font-size: 13px; }
-  .flowbar .fchip span { font-size: 11px; color: var(--faint); margin-top: 1px; }
-  .flowbar .arr { color: var(--faint); font-weight: 700; }
+  /* LAYOUT */
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5vw,48px);}
+  .section{padding-block:clamp(56px,9vw,96px);}
 
-  .layout { display: grid; grid-template-columns: var(--nav) 1fr; align-items: start; }
-  nav.toc { position: sticky; top: 0; align-self: start; padding: 26px 14px 26px 34px; max-height: 100vh; overflow: auto; border-right: 1px solid var(--line); }
-  nav.toc .tt { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--faint); font-weight: 700; margin: 0 0 10px; }
-  nav.toc a { display: block; color: var(--muted); text-decoration: none; font-size: 13.5px; padding: 5px 10px; border-radius: 7px; border-left: 2px solid transparent; }
-  nav.toc a:hover { background: var(--panel); color: var(--ink); }
-  nav.toc a.active { color: var(--accent-ink); background: var(--accent-soft); border-left-color: var(--accent); font-weight: 600; }
+  /* BUTTONS */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding-inline:20px;font-size:0.875rem;font-weight:600;border-radius:var(--r-md);transition:transform .18s var(--ease-out),background-color .18s var(--ease-out),box-shadow .18s var(--ease-out),border-color .18s var(--ease-out);white-space:nowrap;}
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--primary);color:var(--on-primary);}
+  .btn-primary:hover{background:#2a2a2a;box-shadow:0 6px 18px rgba(10,10,10,.18);}
+  .btn-secondary{background:var(--canvas);color:var(--ink);border:1px solid var(--hairline);}
+  .btn-secondary:hover{border-color:var(--ink);}
+  .btn-on-color{background:#fff;color:var(--ink);}
+  .btn-on-color:hover{box-shadow:0 6px 18px rgba(0,0,0,.14);}
+  .btn-lg{height:52px;padding-inline:26px;font-size:0.95rem;}
+  .arrow-link{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:0.9375rem;color:var(--ink);}
+  .arrow-link svg{transition:transform .2s var(--ease-out);}
+  .arrow-link:hover svg{transform:translateX(3px);}
 
-  main { padding: 8px 48px 44px; min-width: 0; }
-  section { padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 20px; }
-  section:last-child { border-bottom: 0; }
-  h2 { font-size: 21px; margin: 0 0 6px; letter-spacing: -.01em; }
-  h2 .num { color: var(--faint); font-weight: 700; margin-right: 8px; }
-  h3 { font-size: 15px; margin: 22px 0 8px; }
-  p { margin: 0 0 12px; color: #2b3442; }
-  a { color: var(--accent); }
-  ul { margin: 0 0 12px; padding-left: 20px; } li { margin: 6px 0; color: #2b3442; }
-  .lead { font-size: 16.5px; color: #2b3442; }
-  code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:0.8125rem;font-weight:500;padding:5px 12px;border-radius:var(--r-pill);background:var(--surface-card);color:var(--body-strong);}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--brand-coral);}
 
-  pre { background: #0f1729; color: #d7e2f2; border-radius: 10px; padding: 14px 16px; overflow: auto; font-size: 13px; line-height: 1.5; margin: 4px 0 16px; }
-  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: 13px; }
-  pre .cmt { color: #7c8aa5; }
-  pre .cmd { color: #7fd0ff; }
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:var(--z-nav);background:color-mix(in srgb,var(--canvas) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:border-color .3s ease;}
+  .nav.scrolled{border-bottom-color:var(--hairline);}
+  .nav-inner{display:flex;align-items:center;gap:var(--xl);height:64px;}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:1.125rem;letter-spacing:-0.02em;color:var(--ink);}
+  .brand-mark{width:30px;height:30px;}
+  .nav-menu{display:flex;align-items:center;gap:4px;}
+  .nav-link{font-size:0.875rem;font-weight:500;color:var(--body-strong);padding:8px 12px;border-radius:var(--r-sm);transition:background-color .15s ease,color .15s ease;}
+  .nav-link:hover{background:var(--surface-card);color:var(--ink);}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:var(--md);}
+  .nav-toggle{display:none;width:44px;height:44px;align-items:center;justify-content:center;border-radius:var(--r-sm);}
+  .nav-toggle:hover{background:var(--surface-card);}
+  .mobile-menu{display:none;position:fixed;inset:64px 0 0;z-index:var(--z-mobile);background:var(--canvas);padding:var(--lg) clamp(20px,5vw,48px);flex-direction:column;gap:4px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{font-size:1.25rem;font-weight:500;color:var(--ink);padding:14px 0;border-bottom:1px solid var(--hairline);letter-spacing:-0.01em;}
+  .mobile-menu .btn{margin-top:var(--lg);}
 
-  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 14px; }
-  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  thead th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); border-bottom: 2px solid var(--line); }
-  tbody tr:last-child td { border-bottom: 0; }
-  tbody tr:nth-child(even) { background: #fbfcfd; }
+  /* HERO */
+  .hero{padding-top:clamp(28px,5vw,56px);padding-bottom:clamp(40px,7vw,80px);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:clamp(32px,5vw,64px);align-items:center;}
+  .hero h1{margin-top:var(--lg);}
+  .hero .lead{margin-top:var(--lg);max-width:48ch;}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:var(--sm);margin-top:var(--xl);}
+  .hero-note{margin-top:var(--md);font-size:0.875rem;color:var(--muted);}
+  .illus-card{background:var(--surface-soft);border-radius:var(--r-xl);aspect-ratio:5/4.6;overflow:hidden;position:relative;}
+  .illus-card svg{width:100%;height:100%;}
+  .float{animation:float 7s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}
+  .float.b{animation-duration:9s;animation-delay:-2s;} .float.c{animation-duration:8s;animation-delay:-4s;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
 
-  .callout { border-radius: 8px; padding: 13px 16px; margin: 14px 0; font-size: 14px; }
-  .callout.tip { background: #f0f8f1; border-left: 4px solid var(--good); }
-  .callout.warn { background: #fdf6ec; border-left: 4px solid var(--warn); }
-  .callout.info { background: var(--accent-soft); border-left: 4px solid var(--accent); }
-  .callout b { color: var(--ink); }
+  /* SECTION HEAD */
+  .sec-head{max-width:60ch;} .sec-head .display{margin-top:var(--sm);} .sec-head p{margin-top:var(--md);}
+  .sec-head.center{margin-inline:auto;text-align:center;}
+  .kick{color:var(--brand-coral);}
 
-  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
-  .cols h3 { margin-top: 0; }
+  /* FLOW CHIPS (one-minute idea) */
+  .flow-chips{margin-top:clamp(28px,4vw,44px);display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;}
+  .fchip{flex:1 1 130px;border-radius:var(--r-lg);padding:16px 16px 14px;display:flex;flex-direction:column;gap:2px;min-width:120px;}
+  .fchip b{font-size:1rem;color:inherit;font-weight:600;letter-spacing:-0.01em;}
+  .fchip span{font-size:0.8125rem;opacity:0.72;}
+  .fchip.c1{background:var(--brand-pink);color:#fff;}
+  .fchip.c2{background:var(--brand-teal);color:#fff;}
+  .fchip.c3{background:var(--brand-lavender);color:var(--ink);}
+  .fchip.c4{background:var(--brand-peach);color:var(--ink);}
+  .fchip.c5{background:var(--brand-ochre);color:var(--ink);}
+  .fchip.c6{background:var(--surface-card);color:var(--ink);border:1px solid var(--hairline);}
+  .flow-arrow{align-self:center;color:var(--muted-soft);font-weight:700;flex:0 0 auto;}
 
-  .steps { list-style: none; margin: 6px 0 0; padding: 0; counter-reset: step; }
-  .steps > li { position: relative; padding: 0 0 20px 46px; margin: 0; }
-  .steps > li:before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: -2px; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
-  .steps > li:not(:last-child):after { content: ""; position: absolute; left: 14px; top: 30px; bottom: 4px; width: 2px; background: var(--line); }
-  .steps h3 { margin: 4px 0 6px; font-size: 16px; }
-  .steps .then { color: var(--accent-ink); font-size: 13.5px; margin-top: 6px; }
+  /* SETUP STEPS */
+  .steps{margin-top:clamp(28px,4vw,44px);display:flex;flex-direction:column;gap:var(--md);}
+  .step{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:var(--lg);display:grid;grid-template-columns:auto 1fr;gap:var(--lg);align-items:start;}
+  .step .n{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:1.05rem;color:#fff;}
+  .step:nth-child(1) .n{background:var(--brand-pink);}
+  .step:nth-child(2) .n{background:var(--brand-teal);}
+  .step:nth-child(3) .n{background:var(--brand-lavender);color:var(--ink);}
+  .step:nth-child(4) .n{background:var(--brand-peach);color:var(--ink);}
+  .step:nth-child(5) .n{background:var(--brand-ochre);color:var(--ink);}
+  .step h3{font-size:1.1875rem;font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.3;}
+  .step p{margin-top:8px;font-size:0.9375rem;color:var(--body);max-width:60ch;}
+  .step p + p{margin-top:10px;}
+  .step ul{margin:10px 0 0;padding-left:20px;font-size:0.9375rem;color:var(--body);}
+  .step li{margin:6px 0;}
+  .then{color:var(--brand-teal);font-weight:600;}
 
-  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 6px 0 0; }
-  .rule { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
-  .rule b { display: block; font-size: 14px; margin-bottom: 3px; }
-  .rule span { font-size: 13px; color: var(--muted); }
+  /* GitHub link card */
+  .linkcard{display:flex;align-items:center;gap:16px;background:var(--surface-card);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:16px 18px;margin-top:14px;transition:box-shadow .18s var(--ease-out),transform .18s var(--ease-out);}
+  .linkcard:hover{box-shadow:0 12px 26px -16px rgba(10,10,10,.35);transform:translateY(-2px);}
+  .linkcard .ic{flex:none;width:42px;height:42px;border-radius:12px;background:var(--primary);color:#fff;display:grid;place-items:center;}
+  .linkcard .tx b{display:block;color:var(--ink);font-size:0.95rem;}
+  .linkcard .tx span{display:block;color:var(--muted);font-size:0.8125rem;word-break:break-all;}
+  .linkcard .go{margin-left:auto;color:var(--brand-coral);font-weight:700;font-size:1.1rem;}
 
-  footer { padding: 22px 48px 34px; color: var(--faint); font-size: 12.5px; }
-  footer a { color: var(--muted); }
+  /* SAY bubble */
+  .say{display:flex;gap:12px;align-items:flex-start;background:color-mix(in srgb,var(--brand-lavender) 24%,var(--canvas));border:1px solid color-mix(in srgb,var(--brand-lavender) 45%,var(--hairline));border-radius:var(--r-lg);border-top-left-radius:4px;padding:14px 16px;margin-top:12px;}
+  .say .who{flex:none;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--brand-teal);padding-top:3px;}
+  .say .msg{font-size:1rem;color:var(--ink);line-height:1.5;}
 
-  @media (max-width: 880px) {
-    .layout { grid-template-columns: 1fr; }
-    nav.toc { display: none; }
-    header.hero, main, footer { padding-left: 22px; padding-right: 22px; }
-    .cols, .rules { grid-template-columns: 1fr; }
+  /* ARTIFACT BENTO */
+  .bento{margin-top:clamp(28px,4vw,48px);display:grid;grid-template-columns:repeat(6,1fr);gap:var(--lg);}
+  .acard{border-radius:var(--r-xl);padding:var(--xl);display:flex;flex-direction:column;gap:10px;min-height:220px;transition:transform .3s var(--ease-out),box-shadow .3s var(--ease-out);}
+  .acard:hover{transform:translateY(-4px);box-shadow:0 20px 40px -18px rgba(10,10,10,.28);}
+  .acard .file{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:0.8rem;font-weight:600;opacity:0.75;}
+  .acard h3{font-size:1.25rem;font-weight:600;letter-spacing:-0.01em;}
+  .acard p{font-size:0.9375rem;opacity:0.95;}
+  .acard .who-writes{margin-top:auto;font-size:0.8rem;opacity:0.72;padding-top:12px;}
+  .ac-pink{background:var(--brand-pink);color:#fff;grid-column:span 2;}
+  .ac-teal{background:var(--brand-teal);color:#fff;grid-column:span 2;}
+  .ac-lav{background:var(--brand-lavender);color:var(--ink);grid-column:span 2;}
+  .ac-peach{background:var(--brand-peach);color:var(--ink);grid-column:span 3;}
+  .ac-ochre{background:var(--brand-ochre);color:var(--ink);grid-column:span 3;}
+  .ac-cream{background:var(--surface-card);color:var(--ink);grid-column:span 6;display:grid;grid-template-columns:auto 1fr;gap:var(--lg);align-items:center;min-height:0;}
+  .ac-cream .em{width:52px;height:52px;border-radius:16px;background:var(--brand-coral);display:grid;place-items:center;color:#fff;font-size:1.5rem;flex:none;}
+
+  /* WORKFLOW numbered */
+  .wf{margin-top:clamp(28px,4vw,44px);list-style:none;padding:0;counter-reset:wf;display:flex;flex-direction:column;gap:0;}
+  .wf > li{position:relative;padding:0 0 26px 58px;}
+  .wf > li:before{counter-increment:wf;content:counter(wf);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;font-weight:600;display:grid;place-items:center;}
+  .wf > li:not(:last-child):after{content:"";position:absolute;left:18px;top:38px;bottom:2px;width:2px;background:var(--hairline);}
+  .wf h3{font-size:1.1875rem;font-weight:600;color:var(--ink);letter-spacing:-0.01em;line-height:1.3;}
+  .wf .cmd{margin-top:10px;display:inline-block;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:0.85rem;background:var(--surface-strong);border-radius:var(--r-md);padding:8px 14px;color:var(--ink);}
+  .wf p{margin-top:10px;font-size:0.9375rem;color:var(--body);max-width:62ch;}
+  .wf .then{display:block;margin-top:10px;}
+
+  /* RULES grid */
+  .rules{margin-top:clamp(28px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--md);}
+  .rule{background:var(--surface-card);border-radius:var(--r-lg);padding:var(--lg);}
+  .rule .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:1.05rem;margin-bottom:12px;}
+  .rule b{display:block;color:var(--ink);font-size:1rem;letter-spacing:-0.01em;margin-bottom:5px;}
+  .rule span{font-size:0.9rem;color:var(--body);}
+
+  /* REFERENCE table */
+  .reftable{margin-top:clamp(24px,4vw,40px);width:100%;border-collapse:collapse;overflow:hidden;border-radius:var(--r-lg);background:var(--canvas);border:1px solid var(--hairline);}
+  .reftable th,.reftable td{text-align:left;padding:14px 18px;font-size:0.9375rem;}
+  .reftable thead th{background:var(--surface-card);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:600;}
+  .reftable tbody tr{border-top:1px solid var(--hairline);}
+  .reftable td:first-child{color:var(--ink);font-weight:500;width:34%;}
+  .reftable td:last-child{color:var(--body);}
+
+  /* CTA */
+  .cta-band{background:var(--surface-soft);border-radius:var(--r-xl);padding:clamp(40px,6vw,72px);overflow:hidden;}
+  .cta-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:var(--xl);align-items:center;}
+  .cta-band h2{max-width:16ch;} .cta-band p{margin-top:var(--md);max-width:44ch;} .cta-band .hero-cta{margin-top:var(--xl);}
+  .cta-illus svg{width:100%;height:auto;}
+
+  /* FOOTER */
+  .footer{background:var(--surface-soft);padding-top:clamp(44px,6vw,72px);}
+  .footer-top{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:var(--xl);padding-bottom:var(--xl);}
+  .footer-brand .brand{margin-bottom:var(--md);}
+  .footer-brand p{font-size:0.875rem;color:var(--muted);max-width:34ch;}
+  .fcol h4{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted-soft);margin-bottom:var(--md);}
+  .fcol a{display:block;font-size:0.875rem;color:var(--body);padding:5px 0;transition:color .15s ease;}
+  .fcol a:hover{color:var(--ink);}
+  .footer-legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--md);padding-block:var(--lg);border-top:1px solid var(--hairline);font-size:0.8125rem;color:var(--muted);}
+  .footer-mountains{width:100%;height:auto;display:block;margin-top:var(--lg);}
+
+  /* REVEAL · progressive enhancement only. Content is visible by default; the
+     hidden-then-animate state applies ONLY once JS confirms it can un-hide
+     (html.js), so a failed or paused observer never ships a blank page. */
+  html.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);}
+  html.js .reveal.in{opacity:1;transform:none;}
+
+  /* RESPONSIVE */
+  @media (max-width:1024px){
+    .ac-pink,.ac-teal,.ac-lav{grid-column:span 2;} .ac-peach,.ac-ochre{grid-column:span 3;} .ac-cream{grid-column:span 6;}
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;} .illus-card{order:-1;aspect-ratio:5/4;}
+    .cta-grid{grid-template-columns:1fr;} .cta-illus{max-width:300px;}
+    .footer-top{grid-template-columns:1fr 1fr;} .footer-brand{grid-column:1/-1;}
+    .bento{grid-template-columns:repeat(2,1fr);}
+    .ac-pink,.ac-teal,.ac-lav,.ac-peach,.ac-ochre{grid-column:span 1;} .ac-cream{grid-column:span 2;}
+  }
+  @media (max-width:768px){
+    .nav-menu,.nav-right .btn{display:none;} .nav-toggle{display:inline-flex;margin-left:auto;}
+    .flow-arrow{display:none;} .fchip{flex-basis:calc(50% - 5px);}
+    .step{grid-template-columns:1fr;gap:var(--sm);}
+  }
+  @media (max-width:560px){
+    .bento{grid-template-columns:1fr;} .ac-pink,.ac-teal,.ac-lav,.ac-peach,.ac-ochre,.ac-cream{grid-column:1/-1;}
+    .ac-cream{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr;}
+    .reftable, .reftable tbody, .reftable tr, .reftable td{display:block;width:100%;}
+    .reftable thead{display:none;}
+    .reftable td:first-child{padding-bottom:2px;} .reftable td:last-child{padding-top:2px;border:0;}
+    .reftable tbody tr{padding:6px 0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;} html{scroll-behavior:auto;}
+    html.js .reveal{opacity:1;transform:none;transition:none;} .float{animation:none !important;}
   }
 </style>
 </head>
 <body>
-<div class="page">
 
-<header class="hero">
-  <div class="eyebrow">Designer's Guide</div>
-  <h1>Spec-Driven Design Workspace</h1>
-  <p class="sub">Describe <em>what</em> you want to build — grounded in a real design system — and Claude builds a working, reviewable prototype without drifting from your intent. You don't need to write code. You do need to be concrete.</p>
-  <div class="flowbar">
-    <div class="fchip"><b>constitution</b><span>frame</span></div>
-    <div class="arr">→</div>
-    <div class="fchip"><b>spec</b><span>what</span></div>
-    <div class="arr">→</div>
-    <div class="fchip"><b>plan</b><span>order</span></div>
-    <div class="arr">→</div>
-    <div class="fchip"><b>tasks</b><span>checklist</span></div>
-    <div class="arr">→</div>
-    <div class="fchip"><b>build</b><span>HTML</span></div>
-    <div class="arr">→</div>
-    <div class="fchip"><b>reviews</b><span>evidence</span></div>
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill="#0a0a0a"/>
+        <circle cx="11.5" cy="12" r="4" fill="#ff4d8b"/><circle cx="20.5" cy="12" r="4" fill="#e8b94a"/><circle cx="16" cy="20" r="4" fill="#a4d4c5"/>
+      </svg> Spec Studio
+    </a>
+    <nav class="nav-menu" aria-label="Primary">
+      <a class="nav-link" href="#setup">Set up</a>
+      <a class="nav-link" href="#artifacts">Artifacts</a>
+      <a class="nav-link" href="#workflow">Workflow</a>
+      <a class="nav-link" href="#rules">Rules</a>
+      <a class="nav-link" href="#reference">Reference</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-primary" href="https://github.com/tekiondesignteam/design-spec" target="_blank" rel="noopener">Get the repo</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
   </div>
-  <p class="note">Each artifact is approved one at a time — that's what keeps a long AI session from drifting off your intent.</p>
 </header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#setup">Set up</a><a href="#artifacts">Artifacts</a><a href="#workflow">Workflow</a>
+  <a href="#rules">Rules</a><a href="#reference">Reference</a>
+  <a class="btn btn-primary btn-lg" href="https://github.com/tekiondesignteam/design-spec" target="_blank" rel="noopener">Get the repo</a>
+</div>
 
-<div class="layout">
-  <nav class="toc" id="toc">
-    <p class="tt">On this page</p>
-    <a href="#idea">The idea in a minute</a>
-    <a href="#before">Before you start</a>
-    <a href="#artifacts">The five artifacts</a>
-    <a href="#workflow">The workflow</a>
-    <a href="#rules">Rules Claude follows</a>
-    <a href="#running">Running your prototype</a>
-    <a href="#results">Getting better results</a>
-    <a href="#reference">Quick reference</a>
-  </nav>
+<main id="top">
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="badge"><span class="dot"></span> Designer's Guide</span>
+        <h1 class="display">From a spec to a working screen.</h1>
+        <p class="lead">Describe what you want in plain language, pinned to a real design system. Claude turns it into a working, reviewable prototype and stops at every checkpoint, so it never drifts from your intent.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#setup">Get set up</a>
+          <a class="btn btn-secondary btn-lg" href="#workflow">See how it works</a>
+        </div>
+        <p class="hero-note">Runs in the Claude desktop app · about a 10 minute setup · no terminal, no code</p>
+      </div>
+      <div class="illus-card">
+        <!-- Thematic 3D-clay scene: a spec sheet with checked acceptance criteria becomes a built app screen. -->
+        <svg viewBox="0 0 500 460" role="img" aria-label="A soft 3D claymation scene: a spec sheet with checked-off acceptance criteria transforms, along a rounded arrow, into a built app screen made of colored blocks.">
+          <defs>
+            <radialGradient id="sky" cx="50%" cy="26%" r="88%"><stop offset="0%" stop-color="#fff7ea"/><stop offset="100%" stop-color="#f4ead4"/></radialGradient>
+            <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#fdf6e9"/></linearGradient>
+            <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#fbf4e6"/></linearGradient>
+            <linearGradient id="arrow" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f2ca63"/><stop offset="100%" stop-color="#e3a72f"/></linearGradient>
+            <radialGradient id="bMint" cx="38%" cy="32%" r="70%"><stop offset="0%" stop-color="#c2e5d9"/><stop offset="100%" stop-color="#8fc7b5"/></radialGradient>
+            <radialGradient id="bCoral" cx="38%" cy="32%" r="70%"><stop offset="0%" stop-color="#ff9284"/><stop offset="100%" stop-color="#f5584a"/></radialGradient>
+            <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#8a6d3a" flood-opacity="0.20"/></filter>
+            <filter id="soft2" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#000" flood-opacity="0.16"/></filter>
+          </defs>
+          <rect width="500" height="460" fill="url(#sky)"/>
+          <circle cx="250" cy="118" r="66" fill="#ffe7b0" opacity="0.6"/>
 
-  <main>
+          <!-- SPEC SHEET -->
+          <g transform="rotate(-5 140 245)" filter="url(#soft)">
+            <rect x="55" y="128" width="168" height="220" rx="20" fill="url(#paper)"/>
+            <rect x="78" y="156" width="88" height="14" rx="7" fill="#0a0a0a"/>
+            <rect x="78" y="184" width="118" height="9" rx="4.5" fill="#e6ddc9"/>
+            <rect x="78" y="201" width="100" height="9" rx="4.5" fill="#e6ddc9"/>
+            <g>
+              <circle cx="88" cy="238" r="11" fill="#22c55e"/><path d="M83 238l4 4 7-8" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="106" y="233" width="94" height="9" rx="4.5" fill="#d9cfbb"/>
+            </g>
+            <g>
+              <circle cx="88" cy="266" r="11" fill="#22c55e"/><path d="M83 266l4 4 7-8" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="106" y="261" width="80" height="9" rx="4.5" fill="#d9cfbb"/>
+            </g>
+            <g>
+              <circle cx="88" cy="294" r="11" fill="#ff4d8b"/><path d="M88 289v10M83 294h10" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+              <rect x="106" y="289" width="90" height="9" rx="4.5" fill="#d9cfbb"/>
+            </g>
+            <g>
+              <circle cx="88" cy="322" r="11" fill="#e8b94a"/>
+              <rect x="106" y="317" width="66" height="9" rx="4.5" fill="#d9cfbb"/>
+            </g>
+          </g>
 
-  <section id="idea">
-    <h2><span class="num">1</span>The idea in one minute</h2>
-    <p class="lead">Long AI sessions drift: Claude fills gaps with guesses and forgets decisions made an hour ago. This workspace fights that with a chain of small artifacts you approve one at a time.</p>
-    <p>Each project lives in its own folder under <code>projects/&lt;name&gt;/</code> and is pinned to <b>one</b> design system (<code>t1</code>, <code>alloy</code>, …). The design system is the source of truth for look, type, spacing, and components — you never invent visual style, you inherit it.</p>
-    <div class="callout info">The deliverable is always <b>a single HTML file</b> you can open in a browser. No build tools, no bundlers.</div>
+          <!-- ARROW -->
+          <g class="float b" filter="url(#soft2)">
+            <path d="M231 250 h27 v-12 l24 21 -24 21 v-12 h-27 z" fill="url(#arrow)"/>
+          </g>
+
+          <!-- APP SCREEN -->
+          <g transform="rotate(4 372 240)" filter="url(#soft)">
+            <rect x="290" y="118" width="176" height="236" rx="22" fill="url(#screen)"/>
+            <circle cx="313" cy="144" r="5" fill="#ff6b5a"/><circle cx="329" cy="144" r="5" fill="#e8b94a"/><circle cx="345" cy="144" r="5" fill="#a4d4c5"/>
+            <rect x="310" y="166" width="136" height="40" rx="12" fill="#ff4d8b"/>
+            <rect x="310" y="216" width="63" height="58" rx="12" fill="#b8a4ed"/>
+            <rect x="383" y="216" width="63" height="58" rx="12" fill="#ffb084"/>
+            <rect x="310" y="286" width="92" height="26" rx="13" fill="#1a3a3a"/>
+          </g>
+
+          <!-- floating clay blobs -->
+          <g class="float"><ellipse cx="432" cy="92" rx="26" ry="23" fill="url(#bMint)" filter="url(#soft2)"/></g>
+          <g class="float c"><circle cx="66" cy="104" r="15" fill="url(#bCoral)" filter="url(#soft2)"/></g>
+        </svg>
+      </div>
+    </div>
   </section>
 
-  <section id="before">
-    <h2><span class="num">2</span>Before you start</h2>
-    <ul>
-      <li>Prototypes are served over a local web address, <b>not</b> by double-clicking the file. (Double-clicking uses <code>file://</code>, which browsers block for these prototypes.) See §6.</li>
-      <li>You work <b>only</b> inside your own <code>projects/&lt;name&gt;/</code> folder. Everything under <code>design-systems/</code> is read-only — a commit that touches it is blocked automatically.</li>
-      <li>Pick your design system up front. Designers can't add new ones; ask a maintainer if the system you need isn't listed.</li>
-    </ul>
-    <p>Check which design systems exist:</p>
-    <pre><code><span class="cmd">ls</span> design-systems/</code></pre>
+  <!-- ONE-MINUTE IDEA -->
+  <section class="section wrap">
+    <div class="sec-head reveal">
+      <span class="caption-upper kick">The idea in one minute</span>
+      <h2 class="display display-md">Small artifacts you approve one at a time.</h2>
+      <p class="lead">Long AI sessions drift. Claude fills gaps with guesses and forgets decisions it made an hour ago. This workspace fights that with a chain of small artifacts you sign off on as you go. Each project lives in its own folder and is pinned to <strong>one</strong> design system, so you inherit its look instead of inventing visual style.</p>
+    </div>
+    <div class="flow-chips reveal">
+      <div class="fchip c1"><b>constitution</b><span>the frame</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="fchip c2"><b>spec</b><span>the what</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="fchip c3"><b>plan</b><span>the order</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="fchip c4"><b>tasks</b><span>the checklist</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="fchip c5"><b>build</b><span>the HTML</span></div>
+      <span class="flow-arrow">→</span>
+      <div class="fchip c6"><b>reviews</b><span>the evidence</span></div>
+    </div>
   </section>
 
-  <section id="artifacts">
-    <h2><span class="num">3</span>The five artifacts</h2>
-    <p>Everything Claude builds traces back to these files. You read and approve them; Claude fills them in.</p>
-    <table>
-      <thead><tr><th>File</th><th>What it is</th><th>Who writes it</th></tr></thead>
-      <tbody>
-        <tr><td><code>constitution.md</code></td><td>The fixed frame: boundaries + the design system's visual language. Read this first.</td><td>Generated by <code>/new-project</code>, then you review</td></tr>
-        <tr><td><code>spec.md</code></td><td><em>What</em> you're building: the problem, scope, user flows, components, states, and acceptance criteria (<code>AC-1</code>, <code>AC-2</code>, …).</td><td><code>/spec</code>, with your input</td></tr>
-        <tr><td><code>plan.md</code></td><td>The build broken into small, checkpointed steps.</td><td>You + Claude</td></tr>
-        <tr><td><code>tasks.md</code></td><td>A checklist — one line per behavior, each citing an acceptance criterion. Also the drift log.</td><td>Claude, as it builds</td></tr>
-        <tr><td><code>reviews/step-N.md</code></td><td>Screenshots + checks proving each step matches the spec, at every breakpoint.</td><td>Claude, at each checkpoint</td></tr>
-      </tbody>
-    </table>
-    <div class="callout tip"><b>Acceptance criteria (<code>AC-n</code>) are the backbone.</b> Every task cites the AC it satisfies, and every review frame proves an AC is true in the browser. If it isn't in the spec as an AC, it doesn't get built.</div>
+  <!-- SETUP -->
+  <section class="section wrap" id="setup" style="background:var(--surface-soft);border-radius:var(--r-xl);padding-inline:clamp(24px,5vw,56px);">
+    <div class="sec-head reveal">
+      <span class="caption-upper kick">Get set up</span>
+      <h2 class="display display-md">A one-time, 10 minute setup.</h2>
+      <p class="lead">You don't need to be technical, and you never touch a terminal. Install one free app, then ask Claude in plain English to fetch the workspace for you. Claude runs the technical bits and asks permission first, so all you do is click <strong>Allow</strong>.</p>
+      <a class="linkcard" href="https://github.com/tekiondesignteam/design-spec" target="_blank" rel="noopener">
+        <span class="ic"><svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></span>
+        <span class="tx"><b>tekiondesignteam / design-spec</b><span>github.com/tekiondesignteam/design-spec</span></span>
+        <span class="go">↗</span>
+      </a>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="n">1</div>
+        <div>
+          <h3>Install the Claude desktop app</h3>
+          <p>This is where you'll do everything, and Claude Code is built right in, so there's nothing else to install. Download it from <a style="color:var(--brand-teal);font-weight:600" href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>, open it, and sign in with your work account.</p>
+          <p style="color:var(--muted)">One thing Claude needs to fetch the workspace: <strong>Git</strong>. Most Macs already have it. If yours doesn't, the app offers to install it the first time it's needed, so just say yes.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="n">2</div>
+        <div>
+          <h3>Open Claude Code and pick a folder</h3>
+          <ul>
+            <li>Click the <strong>Code</strong> tab at the top, then <strong>+ New session</strong>.</li>
+            <li>Use the <strong>Project folder</strong> picker to choose where the workspace should live. Your <strong>Desktop</strong> is a fine choice. You can also drag a folder in.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="n">3</div>
+        <div>
+          <h3>Ask Claude to fetch the workspace</h3>
+          <p>Type this to Claude and send it, word for word:</p>
+          <div class="say">
+            <span class="who">You</span>
+            <span class="msg">Clone https://github.com/tekiondesignteam/design-spec into this folder, then install the pre-commit hook from its <code>hooks/</code> folder.</span>
+          </div>
+          <p>Claude asks permission before it runs anything, so just click <strong>Allow</strong>. When it's done you'll have a new <code>design-spec</code> folder, and a safety guardrail is switched on that quietly keeps the shared design systems read-only. You don't need to understand it; it just protects you.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="n">4</div>
+        <div>
+          <h3>Point Claude at the workspace</h3>
+          <p>Start a <strong>+ New session</strong> and set the <strong>Project folder</strong> to the <code>design-spec</code> folder Claude just created. That's the workspace, and everything you build lives inside it.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="n">5</div>
+        <div>
+          <h3>Start building</h3>
+          <p>That's the whole setup. From here you just tell Claude what you want in plain English. Two shortcuts speed up the main steps. Type them, or say the same thing in words:</p>
+          <ul>
+            <li><code>/new-project</code> or <em>“start a new project called vehicle-search using the t1 design system”</em></li>
+            <li><code>/spec</code> or <em>“turn this PRD into a spec”</em></li>
+          </ul>
+          <span class="then">Next time there's nothing to reinstall. Open the app, go to Code, start a new session, and set the folder to design-spec.</span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="workflow">
-    <h2><span class="num">4</span>The workflow, step by step</h2>
-    <ol class="steps">
-      <li>
+  <!-- ARTIFACTS -->
+  <section class="section wrap" id="artifacts">
+    <div class="sec-head reveal">
+      <span class="caption-upper kick">The five artifacts</span>
+      <h2 class="display display-md">Everything Claude builds traces back to these.</h2>
+      <p class="lead">You read and approve them; Claude fills them in. Acceptance criteria (<code>AC-1</code>, <code>AC-2</code>, and so on) are the backbone. Every task cites one, and every review frame proves one in the browser.</p>
+    </div>
+    <div class="bento">
+      <article class="acard ac-pink reveal">
+        <span class="file">constitution.md</span>
+        <h3>The frame</h3>
+        <p>Boundaries plus the design system's visual language. Read this first.</p>
+        <span class="who-writes">Generated by /new-project, then you review</span>
+      </article>
+      <article class="acard ac-teal reveal">
+        <span class="file">spec.md</span>
+        <h3>The what</h3>
+        <p>The problem, scope, flows, components, states, and acceptance criteria.</p>
+        <span class="who-writes">/spec, with your input</span>
+      </article>
+      <article class="acard ac-lav reveal">
+        <span class="file">plan.md</span>
+        <h3>The order</h3>
+        <p>The build broken into small, checkpointed steps.</p>
+        <span class="who-writes">You and Claude together</span>
+      </article>
+      <article class="acard ac-peach reveal">
+        <span class="file">tasks.md</span>
+        <h3>The checklist</h3>
+        <p>One line per behavior, each citing an acceptance criterion. It's also the drift log, where any divergence from the spec is recorded rather than hidden.</p>
+        <span class="who-writes">Claude, as it builds</span>
+      </article>
+      <article class="acard ac-ochre reveal">
+        <span class="file">reviews/step-N.md</span>
+        <h3>The evidence</h3>
+        <p>Screenshots plus checks proving each step matches the spec, at every breakpoint the design system defines.</p>
+        <span class="who-writes">Claude, at each checkpoint</span>
+      </article>
+      <article class="acard ac-cream reveal">
+        <span class="em">★</span>
+        <div>
+          <h3 style="font-size:1.125rem">If it isn't an AC, it doesn't get built.</h3>
+          <p style="margin-top:6px">Acceptance criteria are the contract between your intent and the pixels. That's what keeps the prototype honest to the spec.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="section wrap" id="workflow" style="background:var(--surface-card);border-radius:var(--r-xl);padding-inline:clamp(24px,5vw,56px);">
+    <div class="sec-head reveal">
+      <span class="caption-upper kick">The workflow</span>
+      <h2 class="display display-md">Build one checkpoint at a time.</h2>
+    </div>
+    <ol class="wf">
+      <li class="reveal">
         <h3>Scaffold the project</h3>
-        <pre><code><span class="cmd">/new-project</span> &lt;name&gt; [design-system]</code></pre>
-        <ul>
-          <li><code>&lt;name&gt;</code> is lowercase, kebab-case, no spaces (e.g. <code>vehicle-search</code>).</li>
-          <li>If you skip the design system, Claude lists the options and asks you to pick.</li>
-        </ul>
-        <p>This creates <code>projects/&lt;name&gt;/</code> with the four template files and a <code>RUN.md</code>, and fills the constitution from the chosen design system. <b>Nothing gets designed yet.</b></p>
-        <p class="then">→ Then: read <code>constitution.md</code>. Does the visual direction and the boundary look right?</p>
+        <span class="cmd">/new-project &lt;name&gt; [design-system]</span>
+        <p>Creates <code>projects/&lt;name&gt;/</code> with the template files and fills the constitution from the chosen design system. Nothing gets designed yet.</p>
+        <span class="then">→ Then: read <code>constitution.md</code>. Does the visual direction look right?</span>
       </li>
-      <li>
+      <li class="reveal">
         <h3>Write the spec</h3>
-        <pre><code><span class="cmd">/spec</span> &lt;name&gt; &lt;your PRD&gt;</code></pre>
-        <p>The source can be pasted text, a Confluence/Jira link, a Figma link, a URL, or a file path. Claude saves it to <code>brief.md</code> so the spec is traceable.</p>
-        <p>Claude then scores your brief on six dimensions (problem, scope, flows, components, states, acceptance criteria) and <b>only asks about the gaps</b>. Anything you skip stays a visible <code>{{TODO}}</code>, never an invented requirement.</p>
-        <p class="then">→ Then: read <code>spec.md</code>. This is where you kill ambiguity. Be concrete — name real components, real states, real copy. Vague specs produce vague UI.</p>
+        <span class="cmd">/spec &lt;name&gt; &lt;your PRD&gt;</span>
+        <p>Paste text, a Confluence, Jira, or Figma link, or a file path. Claude scores your brief on six dimensions and only asks about the gaps. Anything you skip stays a visible <code>{{TODO}}</code>, never an invented requirement.</p>
+        <span class="then">→ Then: read <code>spec.md</code> and kill ambiguity. Name real components, real states, real copy.</span>
       </li>
-      <li>
+      <li class="reveal">
         <h3>Plan the build</h3>
-        <p>Ask Claude to fill in <code>plan.md</code>: order the work so each step is small and reviewable — shell/layout first, then sections, then states (empty / loading / error / success), then polish.</p>
+        <p>Ask Claude to fill in <code>plan.md</code>. It orders the work so each step is small and reviewable: shell first, then sections, then states (empty, loading, error, success), then polish.</p>
       </li>
-      <li>
-        <h3>Build, one checkpoint at a time</h3>
-        <p>Claude builds step by step. Before each step it re-reads the constitution and spec; after each step it records a <code>reviews/step-N.md</code> walkthrough — screenshots at every breakpoint, plus checks a screenshot can't prove (element counts, scroll behavior, "the rest of the screen didn't change").</p>
-        <p><b>Then it stops and waits for you to review</b> before moving on. Checkpoints are where drift gets caught — use them. Review <code>reviews/step-N.md</code>, then tell Claude to continue.</p>
+      <li class="reveal">
+        <h3>Build, then review</h3>
+        <p>Before each step Claude re-reads the constitution and spec; after each step it records a <code>reviews/step-N.md</code> walkthrough with screenshots at every breakpoint. Then it stops and waits for you. Checkpoints are where drift gets caught, so use them.</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>Done</h3>
-        <p>A screen is done when it uses only the design system's tokens and components, every state in the spec is built, it renders at every breakpoint, and nothing outside your project folder changed. <code>tasks.md</code> tracks all of this.</p>
+        <p>A screen is done when it uses only the design system's tokens and components, every state in the spec is built, it renders at every breakpoint, and nothing outside your project folder changed.</p>
       </li>
     </ol>
   </section>
 
-  <section id="rules">
-    <h2><span class="num">5</span>The rules Claude follows</h2>
-    <p>So you know what to expect:</p>
-    <div class="rules">
-      <div class="rule"><b>One folder</b><span>Only <code>projects/&lt;name&gt;/</code> is ever modified.</span></div>
-      <div class="rule"><b>One design system</b><span>No mixing, borrowing, or inventing tokens. A missing piece is logged as a <em>gap</em> in the constitution, not faked.</span></div>
-      <div class="rule"><b>One HTML file, no build step</b><span>Plain HTML/CSS/JS, or React via in-browser Babel. Never a Vite/webpack app that must be compiled.</span></div>
-      <div class="rule"><b>Every state, every breakpoint</b><span>Empty, loading, error, and success — verified visually and with a DOM check.</span></div>
-      <div class="rule"><b>Drift is logged, not hidden</b><span>If the UI diverges from the spec, it goes in the drift log in <code>tasks.md</code> and the spec is updated first.</span></div>
-      <div class="rule"><b>kebab-case filenames</b><span>No spaces, no leading <code>_</code> — they break URLs and hosting.</span></div>
+  <!-- RULES -->
+  <section class="section wrap" id="rules">
+    <div class="sec-head reveal">
+      <span class="caption-upper kick">The rules Claude follows</span>
+      <h2 class="display display-md">So you know what to expect.</h2>
     </div>
-    <div class="callout warn">Want to intentionally break from the design system? That's a <b>deviation</b> — it gets recorded in constitution §5 with a reason. Nothing silent.</div>
+    <div class="rules">
+      <div class="rule reveal"><div class="ic" style="background:var(--brand-pink);color:#fff">▢</div><b>One folder</b><span>Only <code>projects/&lt;name&gt;/</code> is ever modified.</span></div>
+      <div class="rule reveal"><div class="ic" style="background:var(--brand-teal);color:#fff">◇</div><b>One design system</b><span>No mixing, borrowing, or inventing tokens. A missing piece is logged as a gap, not faked.</span></div>
+      <div class="rule reveal"><div class="ic" style="background:var(--brand-lavender)">⌘</div><b>One HTML file</b><span>Plain HTML, CSS, and JS, or React via in-browser Babel. No build step to compile.</span></div>
+      <div class="rule reveal"><div class="ic" style="background:var(--brand-peach)">◑</div><b>Every state, every breakpoint</b><span>Empty, loading, error, and success, all verified visually and with a DOM check.</span></div>
+      <div class="rule reveal"><div class="ic" style="background:var(--brand-ochre)">↯</div><b>Drift is logged</b><span>If the UI diverges from the spec, it goes in the drift log and the spec updates first.</span></div>
+      <div class="rule reveal"><div class="ic" style="background:var(--brand-coral);color:#fff">✎</div><b>Deviations are on purpose</b><span>Intentional breaks from the system are recorded in the constitution with a reason. Nothing silent.</span></div>
+    </div>
   </section>
 
-  <section id="running">
-    <h2><span class="num">6</span>Running your prototype</h2>
-    <p>Serve the repo over a local web address, then open your file:</p>
-    <pre><code><span class="cmd">cd</span> &lt;repo-root&gt;
-<span class="cmd">python3</span> -m http.server 4599
-<span class="cmt"># open http://localhost:4599/projects/&lt;name&gt;/index.html</span></code></pre>
-    <p>Your project's <code>RUN.md</code> has the exact command. <b>Don't double-click the HTML file</b> — <code>file://</code> is blocked for any prototype that loads its kit bundle.</p>
-    <ul>
-      <li><b>Sharing outside the repo?</b> Ask for a <b>Portable build</b> — a self-contained file that inlines the kit so it opens by double-click (see <code>plan.md</code>).</li>
-      <li><b>Hosting for a team?</b> GitHub Pages gives every project a real <code>https://</code> link (see <a href="DEPLOY.md">DEPLOY.md</a>). Note this publicly exposes the design system — prefer a Portable build for internal-only work.</li>
-    </ul>
-  </section>
+  <!-- RUNNING + REFERENCE -->
+  <section class="section wrap" id="reference">
+    <div class="sec-head reveal">
+      <span class="caption-upper kick">Running &amp; quick reference</span>
+      <h2 class="display display-md">Open your prototype, and everything at a glance.</h2>
+      <p class="lead">The simplest way to view a build is to ask, then click <strong>Allow</strong>:</p>
+      <div class="say reveal">
+        <span class="who">You</span>
+        <span class="msg">Serve this repo locally and give me the link to open my prototype.</span>
+      </div>
+      <p style="margin-top:14px;color:var(--body)">Claude starts a local web server and hands you a <code>http://localhost/…</code> link. Don't double-click the HTML file, because opening it directly is blocked for any prototype that loads its design-system bundle.</p>
+    </div>
 
-  <section id="results">
-    <h2><span class="num">7</span>Getting better results</h2>
-    <ul>
-      <li><b>Be specific in the spec.</b> "A card with the vehicle photo, price in bold, and a disabled Reserve button when out of stock" beats "a nice vehicle card."</li>
-      <li><b>Name the unhappy paths.</b> Empty results, no permission, network error — these are the #1 cause of "this isn't what I wanted."</li>
-      <li><b>Approve at every checkpoint.</b> Don't let Claude build five steps then review. Small reviews catch drift cheaply.</li>
-      <li><b>Re-read the constitution when a session gets long</b> — and ask Claude to as well. It's the anchor.</li>
-      <li><b>Want the design pushed further?</b> Ask Claude to use the <code>impeccable</code> skill for a design-quality pass (hierarchy, spacing, states, accessibility).</li>
-    </ul>
-  </section>
-
-  <section id="reference">
-    <h2><span class="num">8</span>Quick reference</h2>
-    <table>
+    <table class="reftable reveal">
       <thead><tr><th>I want to…</th><th>Do this</th></tr></thead>
       <tbody>
-        <tr><td>Start a new project</td><td><code>/new-project &lt;name&gt; &lt;design-system&gt;</code></td></tr>
-        <tr><td>Turn a PRD into a spec</td><td><code>/spec &lt;name&gt; &lt;paste / link / file&gt;</code></td></tr>
-        <tr><td>See available design systems</td><td><code>ls design-systems/</code></td></tr>
-        <tr><td>Open a prototype</td><td>Serve over http (see project <code>RUN.md</code>), never <code>file://</code></td></tr>
-        <tr><td>Share outside the repo</td><td>Ask for a Portable build</td></tr>
-        <tr><td>Host for a team</td><td>GitHub Pages — see <a href="DEPLOY.md">DEPLOY.md</a></td></tr>
+        <tr><td>Open Claude Code</td><td>Claude desktop app, then <strong>Code</strong> tab, then <strong>+ New session</strong></td></tr>
+        <tr><td>Get the workspace (one time)</td><td>Ask Claude to clone <code>github.com/tekiondesignteam/design-spec</code> and install the pre-commit hook</td></tr>
+        <tr><td>Start a new project</td><td><code>/new-project &lt;name&gt; &lt;design-system&gt;</code>, or say it in plain English</td></tr>
+        <tr><td>Turn a PRD into a spec</td><td><code>/spec &lt;name&gt; &lt;paste / link / file&gt;</code>, or say it in plain English</td></tr>
+        <tr><td>See available design systems</td><td>Ask Claude “which design systems can I use?”</td></tr>
+        <tr><td>Open a prototype</td><td>Ask Claude to serve the repo and give you the link. Never open the file directly</td></tr>
         <tr><td>Check what's built vs. spec</td><td>Read <code>tasks.md</code> and <code>reviews/step-N.md</code></td></tr>
       </tbody>
     </table>
-    <div class="callout info">Two worked examples live in the repo — <a href="projects/gm-vsr/">gm-vsr</a> and <a href="projects/t1-vehicle-search/">t1-vehicle-search</a>. Open their <code>spec.md</code>, <code>tasks.md</code>, and <code>reviews/</code> to see the whole chain end to end.</div>
   </section>
 
-  </main>
-</div>
+  <!-- CTA -->
+  <section class="wrap" style="padding-bottom:clamp(56px,9vw,96px);">
+    <div class="cta-band reveal">
+      <div class="cta-grid">
+        <div>
+          <h2 class="display display-md">Turn your design ideas into reality today</h2>
+          <p class="lead">Get the workspace, describe your first screen, and watch a real, on-brand prototype come together, one reviewable step at a time.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#setup">Get set up</a>
+            <a class="btn btn-secondary btn-lg" href="https://github.com/tekiondesignteam/design-spec" target="_blank" rel="noopener">Open the repo</a>
+          </div>
+        </div>
+        <div class="cta-illus" aria-hidden="true">
+          <!-- A built clay app screen with a green approved checkmark. -->
+          <svg viewBox="0 0 320 260" role="img" aria-label="A clay app screen made of colored blocks with a green approved checkmark badge.">
+            <defs>
+              <linearGradient id="screen2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="100%" stop-color="#fbf4e6"/></linearGradient>
+              <radialGradient id="bLav2" cx="40%" cy="32%" r="72%"><stop offset="0%" stop-color="#cdbdf5"/><stop offset="100%" stop-color="#a48fe0"/></radialGradient>
+              <filter id="cs1" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#8a6d3a" flood-opacity="0.20"/></filter>
+              <filter id="cs2" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000" flood-opacity="0.16"/></filter>
+            </defs>
+            <g filter="url(#cs1)">
+              <rect x="70" y="34" width="182" height="188" rx="22" fill="url(#screen2)"/>
+              <circle cx="95" cy="60" r="5" fill="#ff6b5a"/><circle cx="111" cy="60" r="5" fill="#e8b94a"/><circle cx="127" cy="60" r="5" fill="#a4d4c5"/>
+              <rect x="92" y="82" width="138" height="34" rx="11" fill="#ff4d8b"/>
+              <rect x="92" y="126" width="65" height="52" rx="11" fill="#b8a4ed"/>
+              <rect x="165" y="126" width="65" height="52" rx="11" fill="#ffb084"/>
+              <rect x="92" y="188" width="82" height="22" rx="11" fill="#1a3a3a"/>
+            </g>
+            <g class="float b" filter="url(#cs2)">
+              <circle cx="240" cy="198" r="30" fill="#22c55e"/>
+              <path d="M227 198l9 9 16-18" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g class="float"><circle cx="58" cy="70" r="14" fill="url(#bLav2)" filter="url(#cs2)"/></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
-<footer>
-  Designer's Guide · Spec-driven design workspace. Companion to <a href="GUIDE.md">GUIDE.md</a> and <a href="DEPLOY.md">DEPLOY.md</a>.
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="#top" aria-label="Home">
+          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="#0a0a0a"/>
+            <circle cx="11.5" cy="12" r="4" fill="#ff4d8b"/><circle cx="20.5" cy="12" r="4" fill="#e8b94a"/><circle cx="16" cy="20" r="4" fill="#a4d4c5"/>
+          </svg> Spec Studio
+        </a>
+        <p>A spec-driven design workspace. Describe what you want; Claude builds it, grounded in a real design system.</p>
+      </div>
+      <div class="fcol">
+        <h4>Guide</h4>
+        <a href="#setup">Get set up</a><a href="#artifacts">The five artifacts</a><a href="#workflow">The workflow</a><a href="#rules">Rules</a>
+      </div>
+      <div class="fcol">
+        <h4>Reference</h4>
+        <a href="#reference">Quick reference</a><a href="GUIDE.md">GUIDE.md</a><a href="DEPLOY.md">DEPLOY.md</a>
+      </div>
+      <div class="fcol">
+        <h4>Examples</h4>
+        <a href="projects/gm-vsr/">gm-vsr</a><a href="projects/t1-vehicle-search/">t1-vehicle-search</a><a href="https://github.com/tekiondesignteam/design-spec" target="_blank" rel="noopener">GitHub repo</a>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>Spec-driven design workspace · companion to GUIDE.md</span>
+      <span>Warm-throughout, on purpose.</span>
+    </div>
+  </div>
+  <svg class="footer-mountains" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="fm1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e6d3f5"/><stop offset="100%" stop-color="#c9b3ee"/></linearGradient>
+      <linearGradient id="fm2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffd0a8"/><stop offset="100%" stop-color="#f7b183"/></linearGradient>
+      <linearGradient id="fm3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f0d268"/><stop offset="100%" stop-color="#e8b94a"/></linearGradient>
+    </defs>
+    <path d="M0 90 Q240 20 480 80 Q760 150 1000 70 Q1240 10 1440 80 L1440 160 L0 160 Z" fill="url(#fm1)"/>
+    <path d="M0 120 Q300 60 620 115 Q900 160 1180 105 Q1320 80 1440 120 L1440 160 L0 160 Z" fill="url(#fm2)"/>
+    <path d="M0 150 Q360 105 760 140 Q1080 165 1440 135 L1440 160 L0 160 Z" fill="url(#fm3)"/>
+  </svg>
 </footer>
 
-</div>
-
 <script>
-  // Highlight the current section in the sidebar as you scroll.
-  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
-  var map = {};
-  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
-  var obs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        links.forEach(function (l) { l.classList.remove('active'); });
-        var a = map[e.target.id];
-        if (a) a.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-15% 0px -70% 0px' });
-  document.querySelectorAll('main section').forEach(function (s) { obs.observe(s); });
+  var nav=document.getElementById('nav');
+  var onScroll=function(){nav.classList.toggle('scrolled',window.scrollY>8);};
+  onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+  var toggle=document.getElementById('navToggle'),menu=document.getElementById('mobileMenu');
+  toggle.addEventListener('click',function(){
+    var open=menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    document.body.style.overflow=open?'hidden':'';
+  });
+  menu.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+  });
+
+  // Reveal: entrance animation as pure enhancement. Content is already visible
+  // (html.js gates the hidden state); the observer animates it in, and a
+  // failsafe guarantees nothing stays hidden even if the observer never fires.
+  var items=[].slice.call(document.querySelectorAll('.reveal'));
+  var revealAll=function(){items.forEach(function(el){el.classList.add('in');});};
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window)){revealAll();}
+  else{
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.1});
+    items.forEach(function(el,i){el.style.transitionDelay=((i%6)*55)+'ms';io.observe(el);});
+    setTimeout(revealAll,2500); // failsafe: never leave content hidden
+  }
 </script>
 </body>
 </html>
