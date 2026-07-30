@@ -54,5 +54,6 @@ A screen is done when:
 - The deliverable is **always a single browser-openable HTML file — no build step, no bundler.** Allowed: plain HTML/CSS/JS, or React/JSX transpiled in-browser via **Babel Standalone** inline (as T1's `chat-interface.html` does). Never a Vite/TS/webpack app that must be compiled.
 - It uses {{DESIGN_SYSTEM}}'s tokens, CSS, components, and conventions (`design-systems/{{DESIGN_SYSTEM}}/CLAUDE.md`) — link/consume its token CSS for visual fidelity. Where {{DESIGN_SYSTEM}}'s native workflow assumes a bundler (e.g. Vite/TS), render its components via Babel or apply its CSS classes in plain HTML instead, so the output stays a single openable file (note it in §5).
 - Every state in the spec (empty / loading / error / success) is built.
+- It renders correctly at **every breakpoint {{DESIGN_SYSTEM}} defines** (§3), verified in the step's `reviews/` walkthrough.
 - It follows {{DESIGN_SYSTEM}}'s visual direction (§2), with any deviation recorded in §5.
 - Nothing outside `projects/{{PROJECT_NAME}}/` was modified.

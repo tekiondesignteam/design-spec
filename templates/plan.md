@@ -17,7 +17,7 @@ Before starting **any** step below:
 After finishing each step:
 
 4. Check the result against the spec's acceptance criteria and states for that step.
-5. **Record a walkthrough for review.** Open the built HTML in the browser, drive each cited `AC-n` for this step (click / type / scroll), and screenshot the frames into `projects/{{PROJECT_NAME}}/reviews/step-N/`. Then write `projects/{{PROJECT_NAME}}/reviews/step-N.md` — one section per AC, each embedding its frame(s) (`![AC-3 — card expands](step-N/frame-02.png)`) with a one-line result (✅ matches spec / ⚠️ note). This markdown is the visual evidence behind the ticked boxes.
+5. **Record a walkthrough for review.** Open the built HTML in the browser and drive each cited `AC-n` for this step (click / type / scroll). **Capture at every breakpoint {{DESIGN_SYSTEM}} defines** (constitution §3): resize the viewport to a representative width in each tier and screenshot the flow at each (e.g. an Alloy project → mobile `<600` / tablet `600–1024` / desktop `≥1024`). If the system is panel-relative with no viewport breakpoints (e.g. T1), capture at its relevant panel/dock states instead. Save frames under `projects/{{PROJECT_NAME}}/reviews/step-N/`, named by breakpoint + AC (e.g. `desktop/AC-3-02.png`). Then write `projects/{{PROJECT_NAME}}/reviews/step-N.md` — one section per AC, embedding its frames **grouped by breakpoint**, each with a one-line result (✅ matches spec / ⚠️ note). This markdown is the visual evidence behind the ticked boxes.
 6. Update `tasks.md` — check off what's done, link `reviews/step-N.md` next to the step, and note anything that drifted.
 7. **Stop and let the designer review before the next step** (they review `reviews/step-N.md`). Checkpoints are where drift gets caught.
 

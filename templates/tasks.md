@@ -45,7 +45,7 @@ Grouped by plan step. **One behavior per line, each citing the spec acceptance c
 
 - [ ] Every `AC-n` in `spec.md` is cited by at least one task above (no orphaned criteria).
 - [ ] Every task cites a real `AC-n` (no tasks without a source criterion).
-- [ ] Every build step has a `reviews/step-N.md` walkthrough showing its cited ACs passing in the browser.
+- [ ] Every build step has a `reviews/step-N.md` walkthrough showing its cited ACs passing in the browser **at each breakpoint the design system defines** (constitution §3).
 
 ---
 
