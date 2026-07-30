@@ -37,15 +37,15 @@ Parse the arguments as: **first token = project name**, optional **second token 
    - `templates/spec.md`         → `projects/<name>/spec.md`
    - `templates/plan.md`         → `projects/<name>/plan.md`
    - `templates/tasks.md`        → `projects/<name>/tasks.md`
-   Also write **`projects/<name>/RUN.md`** — the exact way to open the deliverable (never promise `file://`):
+   The project's deliverable HTML is **always `projects/<name>/index.html`** (named `index.html` so it serves at the folder root — no filename in the URL). Also write **`projects/<name>/RUN.md`** — the exact way to open it (never promise `file://`):
    ```
    # Run <name> — serve over http, never file://
    cd <repo-root>
    python3 -m http.server 4599
-   # open: http://localhost:4599/projects/<name>/<file>.html
+   # open: http://localhost:4599/projects/<name>/   (serves index.html)
    ```
    Note in it that `file://` is blocked for any fork that `fetch()`es its kit bundle, and point to the Portable build step in `plan.md` (handoff) and `DEPLOY.md` (hosting).
-   Use **kebab-case, no spaces, no leading `_`** for every file created in the project — URLs and GitHub Pages/Jekyll break otherwise.
+   The deliverable is `index.html`; use **kebab-case, no spaces, no leading `_`** for every *other* file created in the project — URLs and GitHub Pages/Jekyll break otherwise.
 
 6. **Fill in the files:**
    - Write `constitution.md` with §2 (visual direction) and §3 (anchors) **generated from the design system** per step 4. Leave §1 (boundaries), §4 (gaps), §5 (deviations = "none"), and §6 (done) as-is.

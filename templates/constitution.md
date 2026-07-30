@@ -51,7 +51,7 @@ Default: **none** — this project inherits {{DESIGN_SYSTEM}} exactly. Record he
 A screen is done when:
 
 - It uses only {{DESIGN_SYSTEM}} tokens and components (per §1–§3).
-- The deliverable is **a single HTML file, no build step, no bundler — served via a local static server, not opened as `file://`.** Allowed: plain HTML/CSS/JS, or React/JSX transpiled in-browser via **Babel Standalone** inline (as T1's `chat-interface.html` does). Never a Vite/TS/webpack app that must be compiled. ⚠️ Don't assume "double-click to open" — any fork whose loader uses `fetch()` (every T1 fork) is **blocked on `file://`** by the browser and only works over http(s). See `RUN.md`.
+- The deliverable is **a single HTML file at `projects/{{PROJECT_NAME}}/index.html` — no build step, no bundler — served via a local static server, not opened as `file://`.** (Always `index.html`, so it serves at the folder root; any other files are kebab-case.) Allowed: plain HTML/CSS/JS, or React/JSX transpiled in-browser via **Babel Standalone** inline (as T1's `chat-interface.html` does). Never a Vite/TS/webpack app that must be compiled. ⚠️ Don't assume "double-click to open" — any fork whose loader uses `fetch()` (every T1 fork) is **blocked on `file://`** by the browser and only works over http(s). See `RUN.md`.
 - It uses {{DESIGN_SYSTEM}}'s tokens, CSS, components, and conventions (`design-systems/{{DESIGN_SYSTEM}}/CLAUDE.md`) — link/consume its token CSS for visual fidelity. Where {{DESIGN_SYSTEM}}'s native workflow assumes a bundler (e.g. Vite/TS), render its components via Babel or apply its CSS classes in plain HTML instead, so the output stays a single served file (note it in §5).
 - Every state in the spec (empty / loading / error / success) is built.
 - It renders correctly at **every breakpoint {{DESIGN_SYSTEM}} defines** (§3), verified in the step's `reviews/` walkthrough.
@@ -62,7 +62,7 @@ A screen is done when:
 
 ```
 cd <repo-root> && python3 -m http.server 4599
-# open http://localhost:4599/projects/{{PROJECT_NAME}}/<file>.html
+# open http://localhost:4599/projects/{{PROJECT_NAME}}/   (serves index.html)
 ```
 
 `file://` fails for any fork that `fetch()`es its kit bundle. To hand a file to someone outside the repo, build a **Portable** variant (see `plan.md`) or host it (see `DEPLOY.md`). Full run notes are in this project's `RUN.md`.

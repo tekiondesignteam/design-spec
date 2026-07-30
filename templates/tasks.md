@@ -13,7 +13,7 @@ Before checking off a task, ask:
 - Does this task cite a real spec criterion (`[AC-n]`), and does what I built satisfy **that exact criterion**, word for word?
 - Does it use **only {{DESIGN_SYSTEM}} tokens/components** (constitution §3)?
 - Is it a **single HTML file, no build step, that runs over a local server (not `file://`)** (plain HTML/CSS/JS, or React/JSX via Babel Standalone), using {{DESIGN_SYSTEM}}'s tokens/CSS per its `CLAUDE.md`?
-- Are files named **kebab-case, no spaces, no leading `_`** (e.g. `vehicle-search.html`)?
+- Is the deliverable **`index.html`** (served at the project folder root), and are any other files kebab-case, no spaces, no leading `_`?
 - Did I touch **anything outside `projects/{{PROJECT_NAME}}/`**? (If yes — that's a violation, revert it.)
 - Did any decision quietly change since the spec was written? If so, **update the spec first**, then continue.
 
