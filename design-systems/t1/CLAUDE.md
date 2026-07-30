@@ -44,7 +44,7 @@ This is NON-NEGOTIABLE. Do not build standalone HTML pages that recreate or subs
 
 ### Workflow
 
-1. Copy `ui_kit/template/chat-interface.html` into the project root with a descriptive filename (e.g. `Focus Today Response.html`).
+1. Copy `ui_kit/template/chat-interface.html` into the project root with a descriptive **kebab-case** filename — no spaces, no leading `_` (e.g. `focus-today-response.html`). Spaces force `%20` in URLs and break on GitHub Pages; keep the human-readable title in `<title>` / the NavBar, not the filename.
 2. Fix the relative asset paths. The template lives at `ui_kit/template/`, so its internal paths must be rewritten once the fork is at the project root:
 
    | Asset | Path in template | Path in fork |
@@ -71,7 +71,7 @@ Consumer projects scaffolded for T1 design work SHOULD ship with a pre-forked co
 <!-- T1 Design System starter. This is your starting point.
      For a single design task: edit in place.
      For multi-task projects: copy this file to a descriptive filename
-     (e.g., `Focus Today Response.html`) and edit the copy.
+     (e.g., `focus-today-response.html`) and edit the copy.
      Do not build new HTML files from scratch. -->
 ```
 
@@ -445,7 +445,7 @@ After editing any `.jsx` or `.scss`, rebuild and verify:
 node dev.js --build
 ```
 
-Then open the fork in the browser (e.g., `http://localhost:3030/Focus Today Response.html`). Do not verify against `http://localhost:3030/template/chat-interface.html` — that URL loads the canonical template, not your fork.
+Then open the fork in the browser (e.g., `http://localhost:3030/focus-today-response.html`). Do not verify against `http://localhost:3030/template/chat-interface.html` — that URL loads the canonical template, not your fork.
 
 ---
 
@@ -499,7 +499,7 @@ node dev.js --serve               # both servers, no build/watch
 
 Server URLs:
 - `http://localhost:3030/template/chat-interface.html` — the canonical prototype (unmodified)
-- `http://localhost:3030/<YourFork>.html` — your forked design file (e.g., `Focus Today Response.html`)
+- `http://localhost:3030/<YourFork>.html` — your forked design file (e.g., `focus-today-response.html`)
 - `http://localhost:3030/docs/docs-preview.html` — docs preview
 - `http://localhost:3030/ui_kit/index.html` — kit component gallery
 
@@ -559,6 +559,15 @@ These exist because consumer projects keep drifting away from the kit. Don't bac
     The outcome of a pull is a downstream project where every fork has the latest shell, styles, and kit structure from the canonical template, and all project-specific design content is fully preserved.
 
 For Claude Code projects, rule 1 is hard-enforced by `.claude/hooks/enforce-chat-interface.js` — a `PreToolUse` hook that blocks any HTML write outside `ui_kit/template/chat-interface.html`. The hook ships with the design system and has no effect in Claude Design or other hosts; for those, rule 1 is advisory and lives in this file plus `SKILL.md`.
+
+---
+
+## Known gaps / gotchas
+
+Component behaviors that repeatedly surprise downstream projects. `/spec` reads this section and pre-flags any that a spec touches, so they're decided up front instead of mid-build.
+
+- **`ListingCard` has no image/thumbnail prop.** It renders a letter `Avatar`, not a photo. Any "show a photo per row" ask needs a fork-level workaround or an upstream kit change — raise it as a `constitution §5` deviation before building.
+- **`ListingCard` hides its avatar in the narrow AI panel** via `@container t1-response (max-width: 500px)`. A thumbnail in the docked/popover panel (≤ 500px) needs an explicit override; by default it won't show at those widths.
 
 ---
 
