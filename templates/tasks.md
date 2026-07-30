@@ -51,8 +51,8 @@ Grouped by plan step. **One behavior per line, each citing the spec acceptance c
 
 ## Drift log
 
-Record anything that diverged from the spec, and how it was resolved (spec updated / reverted / accepted with sign-off). Capture **Timestamp** and **Who** automatically — from `date '+%Y-%m-%d %H:%M %Z'` and `git config user.name` (the person driving this session) — never hand-type them.
+Record anything that diverged from the spec, and how it was resolved (spec updated / reverted / accepted with sign-off). Capture **Timestamp** and **Who** automatically — from `date '+%Y-%m-%dT%H:%M:%S%z'` (ISO 8601 with numeric offset, so it's unambiguous across timezones) and `git config user.name` (the person driving this session) — never hand-type them.
 
 | Timestamp | Who | What drifted | Resolution |
 |-----------|-----|--------------|------------|
-| {{2026-07-30 14:32 PDT}} | {{jrajan}} | {{}} | {{}} |
+| {{2026-07-30T14:32:00-0700}} | {{jrajan}} | {{}} | {{}} |
