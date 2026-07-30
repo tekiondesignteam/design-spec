@@ -1,6 +1,6 @@
 # Step 5 review — Loading + error states
 
-**Built:** `?scenario=loading` (frozen searching turn) + `vehicleSearchError` response via `?scenario=error` in [`Vehicle Search.html`](../Vehicle%20Search.html).
+**Built:** `?scenario=loading` (frozen searching turn) + `vehicleSearchError` response via `?scenario=error` in [`index.html`](../index.html).
 **Date:** 2026-07-30  |  **Owner:** jrajan
 **How to view:** `…?scenario=loading` and `…?scenario=error`.
 

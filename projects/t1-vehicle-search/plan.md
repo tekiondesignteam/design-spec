@@ -25,10 +25,10 @@ After finishing each step:
 
 ## Build order
 
-Order steps so each produces something reviewable. Fork the shell first, then the happy-path result, then the unhappy states, then polish. Everything lives in **one fork** of `design-systems/t1/ui_kit/template/chat-interface.html` at the project root (e.g. `Vehicle Search.html`); each step adds/refines a `RESPONSES` entry and its `matchResponse()` routing — nothing is built from scratch.
+Order steps so each produces something reviewable. Fork the shell first, then the happy-path result, then the unhappy states, then polish. Everything lives in **one fork** of `design-systems/t1/ui_kit/template/chat-interface.html` at the project root (e.g. `index.html`); each step adds/refines a `RESPONSES` entry and its `matchResponse()` routing — nothing is built from scratch.
 
 ### Step 1: Fork the template + seed the turn
-- **Builds:** Copy `design-systems/t1/ui_kit/template/chat-interface.html` into `projects/t1-vehicle-search/` as `Vehicle Search.html`. Fix all asset paths per T1's Workflow table (tokens, components.css, manifest, loader `data-base`, fonts). Pre-seed `messages` so the fork opens on the user query — a right-aligned `<ChatBubble>` "find me a Toyota Camry from my inventory".
+- **Builds:** Copy `design-systems/t1/ui_kit/template/chat-interface.html` into `projects/t1-vehicle-search/` as `index.html`. Fix all asset paths per T1's Workflow table (tokens, components.css, manifest, loader `data-base`, fonts). Pre-seed `messages` so the fork opens on the user query — a right-aligned `<ChatBubble>` "find me a Toyota Camry from my inventory".
 - **Satisfies:** AC-1, AC-11
 - **Done when:** The fork opens in the browser showing the T1 shell (unmodified `.ts-menubar` / `.ts-body`) with the user `<ChatBubble>` pre-seeded in the thread; no console errors; paths resolve.
 - **Re-read spec:** ☐ (check before starting)

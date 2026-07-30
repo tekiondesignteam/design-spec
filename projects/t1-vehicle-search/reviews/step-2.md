@@ -1,6 +1,6 @@
 # Step 2 review — Happy-path result (summary + ListingCard)
 
-**Built:** `vehicleSearch` entry in `RESPONSES` + `matchResponse()` route + pre-seeded assistant message in [`Vehicle Search.html`](../Vehicle%20Search.html).
+**Built:** `vehicleSearch` entry in `RESPONSES` + `matchResponse()` route + pre-seeded assistant message in [`index.html`](../index.html).
 **Date:** 2026-07-30  |  **Owner:** jrajan
 **Field map (spec Components table):** YMMM→`title` · Stock#→`id` · Type→`chip`/`chipColor` · Transmission→`subtitle1` · VIN→`description`. (Vehicle photo → Step 3.)
 

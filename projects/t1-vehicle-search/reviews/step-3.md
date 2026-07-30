@@ -1,6 +1,6 @@
 # Step 3 review — Vehicle photo thumbnail (signed-off deviation)
 
-**Built:** fork-level `.veh-listing` thumbnail CSS in [`Vehicle Search.html`](../Vehicle%20Search.html) + 4 local assets in [`assets/vehicles/`](../assets/vehicles/). Kit untouched (read-only).
+**Built:** fork-level `.veh-listing` thumbnail CSS in [`index.html`](../index.html) + 4 local assets in [`assets/vehicles/`](../assets/vehicles/). Kit untouched (read-only).
 **Date:** 2026-07-30  |  **Owner:** jrajan
 
 ![Step 3 — vehicle photo thumbnails in each row; row 4 shows the neutral placeholder](step-3/frame-01-thumbnails.png)

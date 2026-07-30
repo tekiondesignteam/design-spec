@@ -1,8 +1,8 @@
 # Step 4 review — Empty / no-match state
 
-**Built:** `vehicleSearchEmpty` in `RESPONSES` + a `?scenario=` seed switch + a `<SuggestionList>` render below the `<Response>` in [`Vehicle Search.html`](../Vehicle%20Search.html).
+**Built:** `vehicleSearchEmpty` in `RESPONSES` + a `?scenario=` seed switch + a `<SuggestionList>` render below the `<Response>` in [`index.html`](../index.html).
 **Date:** 2026-07-30  |  **Owner:** jrajan
-**How to view:** `…/Vehicle Search.html?scenario=empty` (default `?scenario=match` unchanged).
+**How to view:** `…/index.html?scenario=empty` (default `?scenario=match` unchanged).
 
 ![Step 4 — no-match response with broaden-search suggestions, no card](step-4/frame-01-empty.png)
 

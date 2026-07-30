@@ -152,7 +152,7 @@ Cost is dominated by context re-reads, not generation. The 98% cache-hit rate he
 
 ## Appendix — where to look
 
-- **Live prototype:** `projects/t1-vehicle-search/Vehicle Search.html` — served locally over HTTP during review (`python3 -m http.server` from the repo root; `file://` will not work). States/surfaces via `?scenario=` and `?panel=`.
+- **Live prototype:** `projects/t1-vehicle-search/index.html` — served locally over HTTP during review (`python3 -m http.server` from the repo root; `file://` will not work). States/surfaces via `?scenario=` and `?panel=`.
 - **Artifact chain:** `constitution.md` · `spec.md` · `plan.md` · `tasks.md` (incl. drift log) · `brief.md` (original ask, verbatim).
 - **Per-step reviews:** `reviews/step-1…6.md` with screenshots.
 - **Assets & attribution:** `assets/vehicles/` (`NOTICE.md` records the stock-photo sources/licenses).

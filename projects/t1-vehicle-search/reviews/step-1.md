@@ -1,8 +1,8 @@
 # Step 1 review — Fork the template + seed the turn
 
-**Built:** [`Vehicle Search.html`](../Vehicle%20Search.html) — a fork of `design-systems/t1/ui_kit/template/chat-interface.html`.
+**Built:** [`index.html`](../index.html) — a fork of `design-systems/t1/ui_kit/template/chat-interface.html`.
 **Date:** 2026-07-30  |  **Owner:** jrajan
-**How to view:** serve the repo root and open `projects/t1-vehicle-search/Vehicle Search.html` (frame below captured via headless Chrome at 1280px).
+**How to view:** serve the repo root and open `projects/t1-vehicle-search/index.html` (frame below captured via headless Chrome at 1280px).
 
 Asset paths point at the read-only design system (`../../design-systems/t1/...`); no T1 files were copied into the project and the shell/chrome was not modified.
 
