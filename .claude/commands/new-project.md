@@ -26,18 +26,11 @@ Parse the arguments as: **first token = project name**, optional **second token 
 
 3. **Check for collision:** if `projects/<name>/` already exists, apply Hard Rule 2 and stop **now** — before the questionnaire, so you don't waste the designer's time.
 
-4. **Run the constitution questionnaire.** As soon as the design system is chosen, walk the designer through a short questionnaire that captures their `constitution.md` — so it comes out filled, not blank. Use the AskUserQuestion tool (batch up to 4 questions per prompt). Ground the options in the chosen design system: skim `design-systems/<design-system>/` (e.g. its `README.md`, `ui_kit/docs/INDEX.md`, `tokens.scss`) first so your suggestions match what actually exists.
-
-   Capture these (they map to constitution §2 and §3):
-   - **Look and feel** — offer a few archetypes (e.g. "Calm, data-dense, enterprise", "Bold, spacious, consumer", "Minimal, utilitarian"), plus custom.
-   - **Density** — compact / comfortable / spacious.
-   - **Primary surface(s)** — offer common shells (e.g. left-nav settings, card grid / dashboard, full-page flow / wizard, chat / conversation). Multi-select is fine.
-   - **What it should NOT look like** — anti-references that keep the design from drifting; offer a couple of common ones plus custom.
-   - **Components in scope** — read the design system's component catalog and propose a starter set relevant to the surfaces chosen above; let the designer add/remove in chat. Do NOT force a fixed multiple-choice list — the catalog is large.
-
-   For the §3 token anchors (color / type / spacing): do not quiz value-by-value. Point to the design system's token files (`design-systems/<design-system>/tokens.scss`, `colors_and_type.css`) and note that all of that system's tokens are in scope unless the designer restricts them here.
-
-   If the designer answers "skip" / "not sure" for any item, leave that section's placeholder intact for them to fill later — a partial constitution is fine.
+4. **Generate the constitution from the design system.** Do NOT ask the designer for visual direction — it is inherited from the chosen design system, which is the source of truth. Read that system's own documentation and derive the constitution's §2 (visual direction) and §3 (anchors) from it:
+   - Read `design-systems/<design-system>/README.md`, `design-systems/<design-system>/CLAUDE.md`, and `design-systems/<design-system>/ui_kit/docs/INDEX.md` (whichever exist).
+   - From those, write a short **summary** into constitution §2: look & feel; type / density / spacing; anti-patterns (pull these from the design system's own "hard rules" / "brand essentials" / "never do" content); and the available surfaces. Keep it a summary with pointers — the design-system docs remain authoritative, and the constitution must never restate token *values* (those live only in `tokens.scss`).
+   - Leave §3 pointing at the design system's token files and component catalog. Leave "components this project uses" for the spec to narrow (default: any component in the catalog).
+   - The only thing you may ask the designer is whether this project **intentionally deviates** from the design system's defaults. Default is "none" (§5). Don't ask about anything the design system already answers.
 
 5. **Scaffold.** Create `projects/<name>/` and copy the four template files into it, renaming as you go:
    - `templates/constitution.md` → `projects/<name>/constitution.md`
@@ -46,7 +39,7 @@ Parse the arguments as: **first token = project name**, optional **second token 
    - `templates/tasks.md`        → `projects/<name>/tasks.md`
 
 6. **Fill in the files:**
-   - Write `constitution.md` **filled** from the questionnaire: replace the §2 (visual direction) and §3 (anchors) placeholders with the designer's answers. Leave §1, §4, §5 as-is (boundaries and done-criteria are boilerplate; gaps emerge later).
+   - Write `constitution.md` with §2 (visual direction) and §3 (anchors) **generated from the design system** per step 4. Leave §1 (boundaries), §4 (gaps), §5 (deviations = "none"), and §6 (done) as-is.
    - Across all four files, fill the auto-derivable placeholders (use shell values, don't hand-type):
      - `{{PROJECT_NAME}}` → the project name
      - `{{DESIGN_SYSTEM}}` → `<design-system>`
