@@ -16,7 +16,7 @@ Parse the arguments as: **first token = project name**; **everything after = the
 
 ## Steps
 
-1. **Resolve the project.** Confirm `projects/<name>/` exists and has `constitution.md` (apply Hard Rule 2 otherwise). Read `constitution.md` to learn the **design system** this project is pinned to.
+1. **Resolve the project.** Confirm `projects/<name>/` exists and has `constitution.md` (apply Hard Rule 2 otherwise). Read `constitution.md` to learn the **design system** this project is pinned to, and skim that system's `CLAUDE.md` for its **"Known gaps / gotchas"** — you'll need them in step 3.
 
 2. **Capture the source into the project** (do this before generating — a saved source makes the spec reproducible and keeps work inside the boundary). Auto-detect the lane:
    - **Pasted text** (arg is prose, or the designer pastes in chat) → write it verbatim to `projects/<name>/brief.md`.
@@ -36,12 +36,14 @@ Parse the arguments as: **first token = project name**; **everything after = the
 
    Auto-fill what's rated **High** directly. For **Partial/Missing** items, ask the designer targeted questions (use the AskUserQuestion tool, batch up to 4) — do **not** guess on Missing items. Show the designer the score so they see what was inferred vs. asked. Skipped gaps stay as explicit `{{TODO: …}}` markers in the spec, never invented content.
 
+   **Pre-flag design-system gotchas.** For any component the spec touches that has a documented gotcha in the design system's `CLAUDE.md` (e.g. T1's `ListingCard` has no image/thumbnail prop, and hides its avatar in the narrow AI panel), surface it to the designer **up front** as a `constitution §5` deviation candidate — don't let it surface mid-build.
+
 4. **Generate `projects/<name>/spec.md`** from the template, in the team's shipped format:
    - Blockquote summary (one paragraph: what it is, who it's for, what it does).
    - **User Flows** — one sentence + a `mermaid flowchart TD` each; cover unhappy paths.
    - **Components** — table mapping each to its design-system component (or a flagged gap).
    - **States** — the four-state table per screen/component.
-   - **Acceptance criteria** — one checkable behavior per line, each with a **stable ID** (`AC-1`, `AC-2`, …) so `tasks.md` can trace to it. Never renumber; add new ones at the end.
+   - **Acceptance criteria** — one checkable behavior per line, each with a **stable ID** (`AC-1`, `AC-2`, …) so `tasks.md` can trace to it. Never renumber; add new ones at the end. Any example copy must pass the design system's **voice rules** (from its `CLAUDE.md` — e.g. T1 avoids "I" outside the greeting), and mark example strings "e.g." so the wording stays illustrative, not binding.
    Every component/flow references the real design system from step 1. Add a short header line noting the source (`brief.md` origin) and the completeness score.
 
 5. **Report** the path written, the completeness score, which parts were inferred vs. asked, and any `{{TODO}}` gaps left. Then point the designer to the next step: review `spec.md`, then `plan.md`.

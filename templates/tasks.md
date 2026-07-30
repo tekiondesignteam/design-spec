@@ -12,7 +12,8 @@ Before checking off a task, ask:
 
 - Does this task cite a real spec criterion (`[AC-n]`), and does what I built satisfy **that exact criterion**, word for word?
 - Does it use **only {{DESIGN_SYSTEM}} tokens/components** (constitution §3)?
-- Is it a **single browser-openable HTML file with no build step** (plain HTML/CSS/JS, or React/JSX via Babel Standalone), using {{DESIGN_SYSTEM}}'s tokens/CSS per its `CLAUDE.md`?
+- Is it a **single HTML file, no build step, that runs over a local server (not `file://`)** (plain HTML/CSS/JS, or React/JSX via Babel Standalone), using {{DESIGN_SYSTEM}}'s tokens/CSS per its `CLAUDE.md`?
+- Are files named **kebab-case, no spaces, no leading `_`** (e.g. `vehicle-search.html`)?
 - Did I touch **anything outside `projects/{{PROJECT_NAME}}/`**? (If yes — that's a violation, revert it.)
 - Did any decision quietly change since the spec was written? If so, **update the spec first**, then continue.
 
@@ -46,6 +47,8 @@ Grouped by plan step. **One behavior per line, each citing the spec acceptance c
 - [ ] Every `AC-n` in `spec.md` is cited by at least one task above (no orphaned criteria).
 - [ ] Every task cites a real `AC-n` (no tasks without a source criterion).
 - [ ] Every build step has a `reviews/step-N.md` walkthrough showing its cited ACs passing in the browser **at each breakpoint the design system defines** (constitution §3).
+- [ ] Each cited AC is verified **two ways** — a visual frame *and* a DOM/assertion check (element counts, cursor state, overflow, "shell unchanged").
+- [ ] Portable build produced for handoff (only if sharing outside the repo).
 
 ---
 
