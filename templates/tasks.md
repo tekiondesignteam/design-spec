@@ -12,6 +12,7 @@ Before checking off a task, ask:
 
 - Does what I built match the **spec's acceptance criteria** for it, word for word?
 - Does it use **only {{DESIGN_SYSTEM}} tokens/components** (constitution §3)?
+- Is it **built in {{DESIGN_SYSTEM}}'s native format** (per `design-systems/{{DESIGN_SYSTEM}}/CLAUDE.md`) — not a substituted framework or a from-scratch standalone file?
 - Did I touch **anything outside `projects/{{PROJECT_NAME}}/`**? (If yes — that's a violation, revert it.)
 - Did any decision quietly change since the spec was written? If so, **update the spec first**, then continue.
 

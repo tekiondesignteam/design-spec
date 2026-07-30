@@ -53,3 +53,4 @@ Order steps so each produces something reviewable. Layout/shell first, then sect
 - Work only inside `projects/{{PROJECT_NAME}}/`.
 - Everything under `design-systems/` is read-only. Use only this project's design system — **{{DESIGN_SYSTEM}}** (`design-systems/{{DESIGN_SYSTEM}}/`) — never another.
 - Only {{DESIGN_SYSTEM}} tokens/components — gaps get flagged, not invented.
+- **Build in {{DESIGN_SYSTEM}}'s native format** — follow `design-systems/{{DESIGN_SYSTEM}}/CLAUDE.md` (the canonical template to fork, or the component-creation process). Do not substitute another framework or hand-roll a standalone file from scratch unless that CLAUDE.md says to.
