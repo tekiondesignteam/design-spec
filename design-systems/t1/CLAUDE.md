@@ -44,7 +44,7 @@ This is NON-NEGOTIABLE. Do not build standalone HTML pages that recreate or subs
 
 ### Workflow
 
-1. Copy `ui_kit/template/chat-interface.html` into the project root with a descriptive **kebab-case** filename — no spaces, no leading `_` (e.g. `focus-today-response.html`). Spaces force `%20` in URLs and break on GitHub Pages; keep the human-readable title in `<title>` / the NavBar, not the filename.
+1. Copy `ui_kit/template/chat-interface.html` into the project root as **`index.html`** — spec-driven projects ship one `index.html` per `projects/<name>/`, so it serves at the folder root. If you genuinely need multiple forks in one project, name the extras **kebab-case, no spaces, no leading `_`** (e.g. `focus-today-response.html`). Keep the human-readable title in `<title>` / the NavBar, not the filename.
 2. Fix the relative asset paths. The template lives at `ui_kit/template/`, so its internal paths must be rewritten once the fork is at the project root:
 
    | Asset | Path in template | Path in fork |
