@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>gm-vsr — POC Report</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5a6473; --faint: #8a94a3; --line: #e3e7ec;
+    --bg: #ffffff; --panel: #f6f8fa; --accent: #0077d9; --accent-ink: #0e4180;
+    --good: #2d871b; --warn: #b3842d;
+    --max: 980px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #eef1f4; color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: var(--max); margin: 32px auto; background: var(--bg); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(20,34,48,.10); }
+  header.hero { padding: 40px 48px 28px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,#f8fafc,#ffffff); }
+  .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  h1 { font-size: 30px; line-height: 1.15; margin: 8px 0 6px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); font-size: 15px; margin: 0 0 4px; }
+  .note { color: var(--faint); font-size: 13px; font-style: italic; margin: 10px 0 0; }
+  .meta { color: var(--faint); font-size: 13px; margin-top: 10px; }
+  main { padding: 8px 48px 44px; }
+  section { padding: 26px 0; border-bottom: 1px solid var(--line); }
+  section:last-child { border-bottom: 0; }
+  h2 { font-size: 20px; margin: 0 0 14px; letter-spacing: -.01em; }
+  h3 { font-size: 15px; margin: 22px 0 8px; color: var(--ink); }
+  p { margin: 0 0 12px; color: #2b3442; }
+  a { color: var(--accent); }
+  ul { margin: 0 0 12px; padding-left: 20px; } li { margin: 5px 0; color: #2b3442; }
+  .lead { font-size: 16px; color: #2b3442; }
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 20px 0 4px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .stat .n { font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
+  .stat .l { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .stat .n.accent { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 6px; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); border-bottom: 2px solid var(--line); }
+  td.r, th.r { text-align: right; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .cols h3 { margin-top: 0; }
+  .callout { background: var(--panel); border-left: 4px solid var(--faint); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 13.5px; color: var(--muted); }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #e7f0fb; color: var(--accent-ink); margin: 2px 2px 0 0; }
+  .shot { margin: 18px 0 22px; }
+  .shot img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 2px 10px rgba(20,34,48,.06); }
+  .shot .cap { font-size: 13px; color: var(--muted); margin-top: 7px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .muted { color: var(--muted); }
+  code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
+  footer { padding: 22px 48px 34px; color: var(--faint); font-size: 12.5px; }
+  @media (max-width: 760px) {
+    header.hero, main { padding-left: 22px; padding-right: 22px; }
+    .stats { grid-template-columns: repeat(2,1fr); } .cols, .grid2 { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: #fff; } .page { box-shadow: none; margin: 0; border-radius: 0; max-width: none; }
+    section { break-inside: avoid; } .shot { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <div class="eyebrow">Proof of Concept · Spec Driven Design</div>
+  <h1>Chevrolet Vehicle Search Result page (VSR)</h1>
+  <p class="sub">A working front-end prototype built from a pasted PRD using a spec-driven, design-system-grounded AI workflow in Claude Code.</p>
+  <p class="note">Written to be accurate, not persuasive. The cost figures are actual (`/cost`); the “what was hard” and limitations sections matter as much as the results.</p>
+  <p class="meta"><strong>Owner:</strong> jrajan &nbsp;·&nbsp; <strong>Design system:</strong> Alloy (GM Digital Retail Program) &nbsp;·&nbsp; <strong>Date:</strong> 2026-07-30</p>
+  <div class="stats">
+    <div class="stat"><div class="n accent">$102.35</div><div class="l">Total cost (actual)</div></div>
+    <div class="stat"><div class="n">1h 45m</div><div class="l">Active session time</div></div>
+    <div class="stat"><div class="n">+3,467</div><div class="l">Lines of code</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">Screen, Chevrolet only</div></div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2>1. Summary</h2>
+  <p class="lead">From a pasted PRD, we produced a working Chevrolet VSR prototype in one session. It runs in a browser, consumes <strong>Alloy</strong> as a read-only source of truth (its real CSS classes and tokens), and covers the PRD jobs: filter, gauge affordability, save, compare, and link out to the VDP.</p>
+  <div class="cols">
+    <div>
+      <h3>What it is</h3>
+      <p>A functional, on-brand, responsive front-end prototype in vanilla HTML/CSS/JS that reuses Alloy's stylesheet, plus a full artifact chain (constitution → spec → plan → tasks → drift log).</p>
+    </div>
+    <div>
+      <h3>What it is not</h3>
+      <p>Production code, a real integration (data is mocked), or a multi-brand build (Chevrolet only). It required an engaged human reviewer throughout — it was not autonomous.</p>
+    </div>
+  </div>
+  <p class="muted">Cost was <strong>$102.35</strong> over ~1h 45m of active session time.</p>
+</section>
+
+<section>
+  <h2>2. Visual evidence</h2>
+  <div class="shot">
+    <img src="screenshots/01-desktop-vsr.png" alt="Desktop VSR" />
+    <div class="cap">Desktop VSR — Alloy header, filter rail (instant apply, live count), result cards, sort menu.</div>
+  </div>
+  <div class="grid2">
+    <div class="shot">
+      <img src="screenshots/02-quickview.png" alt="Quick View modal" />
+      <div class="cap">Quick View (<code>vsr-quick-view</code>) + itemized Price Summary (<code>vsr-math-box</code>).</div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/03-compare.png" alt="Compare modal" />
+      <div class="cap">Compare — side-by-side spec table (up to 3) + sticky, session-persistent tray.</div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/05-zero-result.png" alt="Zero-result state" />
+      <div class="cap">Zero-result state with relaxed-filter suggestions.</div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/06-error.png" alt="Error state" />
+      <div class="cap">API-failure state — error copy + Retry (filters preserved).</div>
+    </div>
+  </div>
+  <div class="shot" style="max-width:360px;">
+    <img src="screenshots/04-mobile-vsr.png" alt="Mobile VSR" />
+    <div class="cap">Mobile — brand-only header, full-width Filters sheet trigger, mobile card variant.</div>
+  </div>
+</section>
+
+<section>
+  <h2>3. What was built</h2>
+  <table>
+    <thead><tr><th style="width:150px;">Area</th><th>Delivered</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Shell</strong></td><td>Alloy tier-3 header + footer; responsive rail-vs-results layout (desktop / tablet / mobile)</td></tr>
+      <tr><td><strong>Filter panel</strong></td><td>Instant-apply desktop with live count; mobile bottom-sheet with Apply (N) / Clear all; collapsible Price · Model · Color · Features; editable ZIP + search radius (radius filters by distance)</td></tr>
+      <tr><td><strong>Active filters</strong></td><td>Removable chips + Clear all</td></tr>
+      <tr><td><strong>Result cards</strong></td><td>PRD data fields; cash / finance / lease payment; APR tooltip; favorite heart; photo-count badge; days-on-lot; low-inventory overlay</td></tr>
+      <tr><td><strong>Sort &amp; paging</strong></td><td>"Best Match" (+ 4 sorts) via Alloy menu; desktop 24/page numbered pager; mobile infinite scroll (12 at a time)</td></tr>
+      <tr><td><strong>Quick View</strong></td><td>Desktop modal + itemized Price Summary</td></tr>
+      <tr><td><strong>Compare</strong></td><td>Sticky tray (max 3, session-persistent) + side-by-side spec table (11 rows)</td></tr>
+      <tr><td><strong>States</strong></td><td>Skeleton loading, zero-result + suggestions, partial-match banner, error + retry, low-inventory</td></tr>
+      <tr><td><strong>Persistence</strong></td><td>Filters, favorites, compare tray persist within the session — no login</td></tr>
+      <tr><td><strong>Quality bar</strong></td><td>Responsive at 600 / 1024; motion + <code>prefers-reduced-motion</code>; keyboard focus rings; ≥40px tap targets; AA contrast; CTA link-outs</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Each step was verified in a live browser (filter math, staged mobile apply, pagination, compare limits, and each state were exercised), not only visually reviewed.</p>
+</section>
+
+<section>
+  <h2>4. How it was done — the workflow</h2>
+  <ul>
+    <li><strong>Scaffold</strong> — a <em>constitution</em> pins the project to Alloy and inherits its visual direction.</li>
+    <li><strong>Spec</strong> — the pasted PRD becomes a full spec (problem, scope, flows, component map, four-state matrix, acceptance criteria). It scored completeness and asked targeted questions where the PRD was ambiguous (brand scope, gap handling, flow boundary, out-of-scope).</li>
+    <li><strong>Plan + tasks</strong> — 10 checkpointed build steps, each re-reading the spec and stopping for review.</li>
+    <li><strong>Build</strong> — step by step, verified in-browser, checkpointed with the designer between steps.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Design-system fidelity &amp; governance</h2>
+  <ul>
+    <li><strong>Alloy-grounded, Chevrolet only.</strong> No hardcoded brand hex, no invented token namespaces.</li>
+    <li><strong>Read-only enforced.</strong> Nothing under <code>design-systems/alloy/</code> was modified; nothing outside <code>projects/gm-vsr/</code> was touched.</li>
+    <li><strong>8 gaps flagged, not faked</strong> — needs Alloy doesn't cover yet, built net-new from Alloy atoms and logged in the constitution. Whether they're valuable depends on the design-system team acting on them; on their own they're a byproduct of building against the real system, not a deliverable.<br>
+      <span class="tag">compare tray</span><span class="tag">compare modal</span><span class="tag">numbered pagination</span><span class="tag">skeleton loader</span><span class="tag">photo-count badge</span><span class="tag">days-on-lot</span><span class="tag">form-select</span><span class="tag">surface/text tokens</span></li>
+    <li><strong>Full drift log</strong> — every deviation and judgment call recorded in <code>tasks.md</code>.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="cols">
+    <div>
+      <h2>6. What went well</h2>
+      <ul>
+        <li>Clarifying questions up front prevented building the wrong thing (brand scope and out-of-scope settled before code).</li>
+        <li>The output reads as genuine Alloy UI because it reuses Alloy's actual classes, not approximations.</li>
+        <li>In-browser verification caught real bugs during the build rather than after.</li>
+        <li>The artifact chain makes every decision auditable by someone who wasn't in the session.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What was hard</h2>
+      <ul>
+        <li><strong>My cost estimate was wrong</strong> — I said $30–60; actual was $102.35 (~2× low). Underweighted cache-read volume.</li>
+        <li><strong>Bugs needed iteration</strong> — Alloy CSS overriding the HTML <code>hidden</code> attribute; a JS/CSS breakpoint desync. Normal, but not first-try-correct.</li>
+        <li><strong>The spec didn't map cleanly everywhere</strong> — "partial-match by trim" had no trim filter; the card "status pill" is plain text in Alloy. Judgment calls, recorded as drift.</li>
+        <li><strong>Alloy has its own gaps</strong> — no global surface/text tokens, so the shell reused Alloy's fallback literals. Acceptable, not clean.</li>
+        <li><strong>Verification tooling added overhead</strong> — the preview pane didn't fire resize events on programmatic resize and dropped screenshot bands; needed workarounds.</li>
+        <li><strong>It needed a human at every checkpoint</strong> — several designer redirects shaped the result. Good for control; it means the workflow is assisted, not autonomous.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>7. Cost breakdown (actual, from <code>/cost</code>)</h2>
+
+  <h3>7.1 Measured totals</h3>
+  <table>
+    <tbody>
+      <tr><td>Total cost</td><td class="r"><strong>$102.35</strong></td></tr>
+      <tr><td>Active time</td><td class="r">1h 45m (API compute 1h 39m)</td></tr>
+      <tr><td>Code produced</td><td class="r">+3,467 / −482 lines</td></tr>
+      <tr><td>Model</td><td class="r">Opus 4.8 · 100% (no Haiku)</td></tr>
+      <tr><td>Cache hit rate</td><td class="r">95%</td></tr>
+      <tr><td>Tokens (reported)</td><td class="r">cache read 203.0M · cache write 10.7M · output 8.7k · input 1.2k</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 Token composition (~213.7M total)</h3>
+  <table>
+    <thead><tr><th>Category</th><th class="r">Tokens</th><th class="r">Share</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Cache read</strong></td><td class="r">203.0M</td><td class="r">~95%</td><td>Re-reading the working context each turn — Alloy source, artifact chain, prior conversation, ~20 verification screenshots</td></tr>
+      <tr><td><strong>Cache write</strong></td><td class="r">10.7M</td><td class="r">~5%</td><td>First-time ingest of that context into the cache</td></tr>
+      <tr><td>Output</td><td class="r">8.7k</td><td class="r">&lt;0.01%</td><td>Newly generated tokens (as reported)</td></tr>
+      <tr><td>Input</td><td class="r">1.2k</td><td class="r">&lt;0.01%</td><td>Uncached prompt tokens</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Cost is dominated by context re-reads, not generation. The 95% cache-hit rate held it at ~$100; without caching it would have been several times higher. The most expensive single content type was verification screenshots.</p>
+  <div class="callout"><code>/cost</code> does not itemize dollars per token category, and the reported output count (8.7k) is lower than +3,467 lines of code would imply — so the per-category numbers are volumes as displayed, not a reconciled dollar split. The authoritative figure is the <strong>$102.35 total</strong>.</div>
+
+  <h3>7.3 Unit economics (derived from the $102.35 total)</h3>
+  <table>
+    <thead><tr><th>Unit</th><th class="r">Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Per million tokens processed (blended)</td><td class="r">~$0.48</td></tr>
+      <tr><td>Per active hour</td><td class="r">~$58</td></tr>
+      <tr><td>Per build step (10 steps)</td><td class="r">~$10</td></tr>
+      <tr><td>Per line of code produced</td><td class="r">~$0.03</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.4 Reading the cost honestly</h3>
+  <ul>
+    <li><strong>$102 for one prototype screen is real money.</strong> It's favorable <em>if</em> the alternative is days of designer + engineer time — but that comparison is an unmeasured estimate, not a benchmark, and this was a single screen with an engaged reviewer, not a hands-off batch.</li>
+    <li><strong>The cost is front-loaded in context</strong> (re-reading the design system + growing session). That implies per-screen cost should fall when the extraction is reused across projects — a <strong>projection</strong>, not something this POC proved.</li>
+    <li><strong>Levers, in priority order:</strong> reuse the design-system extraction across projects; prefer DOM assertions over screenshots for verification; run longer autonomous stretches between checkpoints.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>8. Assessment &amp; recommendation</h2>
+  <p>For turning a written spec into a working, on-brand, verified prototype on an existing design system, this was effective — one screen in one session for ~$100, with an auditable trail and no off-brand invention. The caveats are equally real: it's a prototype not production, it needed continuous human review, several things took more than one try, and the per-screen economics at scale are a projection.</p>
+  <p><strong>Suggested next steps (each with a cost/effort implication):</strong></p>
+  <ul>
+    <li><strong>Try it on 2–3 more screens</strong> to test whether per-screen cost actually drops with design-system reuse — the key open question.</li>
+    <li><strong>Route the 8 flagged Alloy gaps</strong> to the design-system owner as a backlog.</li>
+    <li><strong>If pursued further:</strong> Buick/GMC/Cadillac theming, live API wiring, and hardening the net-new pieces into real Alloy components — all additional work beyond this POC.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  Artifact chain: <code>constitution.md</code> · <code>spec.md</code> · <code>plan.md</code> · <code>tasks.md</code> (incl. drift log) · <code>brief.md</code> (original PRD, verbatim — still uses the shopper's original "VRP" wording).
+  Live prototype: <code>projects/gm-vsr/index.html</code>. Cost/time are actual values from <code>/cost</code>; unit economics are derived from those totals.
+</footer>
+
+</div>
+</body>
+</html>

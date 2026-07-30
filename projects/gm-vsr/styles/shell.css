@@ -1,0 +1,512 @@
+/* ============================================================================
+   gm-vsr — Step 1 shell layout (project-local)
+   ----------------------------------------------------------------------------
+   This file styles ONLY the page-level VSR layout (rail vs. results grid).
+   It does NOT re-style any Alloy atom — all chrome (header/footer/buttons)
+   is styled by Alloy's own global.css via its .drp-* classes.
+
+   Spacing/gaps consume Alloy spacing tokens (var(--spacing-*)).
+
+   FOUNDATION GAP (logged in constitution §4): Alloy has no global surface /
+   body-text foundation token yet (its own Constitution flags --text-primary/
+   -secondary/-muted and --font-body-* as pending). The page canvas, ink, and
+   hairline below reuse Alloy's OWN documented fallback values (#ffffff,
+   #262626, #e6e6e6 — the same literals in Alloy's var(--token, fallback)
+   fallbacks) centralized here, not scattered. Replace with real foundation
+   tokens when Alloy ships them.
+   ============================================================================ */
+
+:root {
+  /* Layout geometry — mirrors Alloy's documented vsr-filter rail widths. */
+  --gmvsr-rail-desktop: 354px;
+  --gmvsr-rail-tablet: 287px;
+  --gmvsr-content-max: 1440px;
+  /* Alloy foundation-gap fallbacks (see header comment). */
+  --gmvsr-canvas: #ffffff;
+  --gmvsr-ink: #262626;
+  --gmvsr-hairline: #e6e6e6;
+  --gmvsr-muted-surface: #f2f2f2;
+}
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--gmvsr-canvas);
+  color: var(--gmvsr-ink);
+  font-family: 'Chevy_Sans', sans-serif;
+  font-weight: 500;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The shell grows to push the footer down. */
+.gmvsr-page {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: var(--gmvsr-content-max);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ---- Mobile filter affordance (real sheet trigger comes in Step 2) ------- */
+.gmvsr-filterbar {
+  display: none; /* shown only on mobile */
+  padding: var(--spacing-container-padding-s, 16px);
+  border-bottom: 1px solid var(--gmvsr-hairline);
+}
+.gmvsr-filterbar__btn { width: 100%; }
+
+/* ---- Two-region layout: rail + results ---------------------------------- */
+.gmvsr-shell {
+  display: grid;
+  grid-template-columns: var(--gmvsr-rail-desktop) 1fr;
+  gap: var(--spacing-container-gap-l, 24px);
+  padding: var(--spacing-container-padding-m, 24px);
+  box-sizing: border-box;
+  align-items: start;
+}
+
+.gmvsr-rail {
+  position: sticky;
+  top: var(--spacing-container-padding-m, 24px);
+  align-self: start;
+}
+
+.gmvsr-results { min-width: 0; } /* prevents grid blowout */
+
+.gmvsr-results__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-container-gap-m, 16px);
+  margin-bottom: var(--spacing-container-stack-s, 16px);
+  flex-wrap: wrap;
+}
+.gmvsr-results__count {
+  margin: 0;
+  font-family: 'Chevy_Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+/* Anchors styled as Alloy buttons (link-outs) shouldn't underline. */
+a[class*="drp-button-contained"] { text-decoration: none; }
+a[class*="drp-button-contained"]:focus-visible { outline: 2px solid var(--brand-color, #0077d9); outline-offset: 2px; }
+
+/* Active filter chips row (Alloy .chip--dismissable). */
+.gmvsr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-container-gap-s, 8px);
+  margin-bottom: var(--spacing-container-stack-s, 16px);
+}
+.gmvsr-chips[hidden] { display: none; }
+.gmvsr-chips__clear { margin-left: var(--spacing-container-gap-xs, 4px); }
+
+/* Results grid — card min mirrors the 305px desktop vsr-card width. */
+.gmvsr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(305px, 1fr));
+  gap: var(--spacing-container-gap-l, 24px);
+}
+
+/* ---- Sort control (Alloy menu) ----------------------------------------- */
+.gmvsr-sort { position: relative; display: inline-block; }
+.gmvsr-sort__trigger { white-space: nowrap; }
+.gmvsr-sort__chevron { display: inline-flex; width: 16px; height: 16px; margin-left: 4px; }
+.gmvsr-sort__chevron svg { width: 16px; height: 16px; }
+/* Position the Alloy list popover under the trigger, right-aligned. */
+.gmvsr-sort__menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 220px;
+  z-index: 40;
+}
+
+/* ---- Numbered pagination (NET-NEW, constitution §4) --------------------- */
+.gmvsr-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-container-gap-xs, 4px);
+  margin-top: var(--spacing-container-stack-m, 24px);
+}
+.gmvsr-pager[hidden] { display: none; }
+.gmvsr-pager__page,
+.gmvsr-pager__nav {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  font-family: 'Chevy_Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--gmvsr-ink);
+  background: transparent;
+  border: 1px solid var(--gmvsr-hairline);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.gmvsr-pager__page:hover:not(.is-current),
+.gmvsr-pager__nav:hover:not([disabled]) { background: var(--gmvsr-muted-surface); }
+.gmvsr-pager__page.is-current {
+  background: var(--brand-color, #0077d9);
+  border-color: var(--brand-color, #0077d9);
+  color: #ffffff;
+}
+.gmvsr-pager__nav[disabled] { color: #b3b3b3; cursor: not-allowed; }
+.gmvsr-pager__page:focus-visible,
+.gmvsr-pager__nav:focus-visible { outline: 2px solid var(--brand-color, #0077d9); outline-offset: 2px; }
+.gmvsr-sentinel { height: 1px; }
+
+/* ---- Motion (Alloy: functional + subtle, ~100ms ease-out) -------------- */
+.gmvsr-pager__page, .gmvsr-pager__nav, .gmvsr-loc-radius {
+  transition: background-color 100ms ease-out, color 100ms ease-out, border-color 100ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gmvsr-pager__page, .gmvsr-pager__nav, .gmvsr-loc-radius { transition: none; }
+  .gmvsr-skeleton__line, .gmvsr-skeleton__image { animation: none; }
+}
+
+/* ---- VSR card net-new bits (constitution §4 gaps + placeholders) -------- */
+/* Placeholder "photo": center a big car glyph in the image band. */
+.gmvsr-card-image { position: relative; display: flex; align-items: center; justify-content: center; }
+.gmvsr-card-image__glyph { font-size: 72px; color: #c3cfd9; } /* Alloy disabled-grey (foundation gap) */
+
+/* NET-NEW photo-count badge overlaid on the image (no Alloy class/glyph). */
+.gmvsr-photo-badge {
+  position: absolute;
+  left: 16px;
+  bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 1000px; /* Alloy pill radius */
+  background: rgba(0, 0, 0, 0.72);
+  color: #ffffff;
+  font-family: 'Chevy_Sans', sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+}
+.gmvsr-photo-badge .drp-icon { font-size: 12px; }
+
+/* NET-NEW days-on-lot line + savings line (small, muted). */
+.gmvsr-days { font-size: 12px; line-height: 20px; color: #666666; }
+.gmvsr-savings { font-size: 12px; line-height: 20px; color: #2d871b; font-weight: 600; } /* Alloy success hex */
+
+/* Tooltip reveal wrapper (Alloy .tooltip ships no trigger/hover). */
+.gmvsr-tip { position: relative; display: inline-flex; }
+.gmvsr-tip__trigger {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 6px; margin: -6px; /* enlarge hit area without changing layout */
+  border: none; background: none; cursor: pointer;
+  color: #666666; font-size: 16px; line-height: 1;
+}
+.gmvsr-tip__trigger:focus-visible { outline: 2px solid var(--brand-color, #0077d9); outline-offset: 2px; border-radius: 2px; }
+.gmvsr-tip__pop {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: -8px;
+  width: 240px;             /* narrower than Alloy's 384px default to fit a card */
+  z-index: 30;
+}
+.gmvsr-tip:hover .gmvsr-tip__pop,
+.gmvsr-tip:focus-within .gmvsr-tip__pop { display: block; }
+
+/* ---- Low-inventory warning chip — floats over the vehicle image -------- */
+.gmvsr-lowinv {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  display: inline-flex;
+}
+
+/* ---- Skeleton loading cards (NET-NEW §4; not spinners, per spec) -------- */
+.gmvsr-skeleton {
+  border: 1px solid var(--gmvsr-hairline);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.gmvsr-skeleton__line, .gmvsr-skeleton__image {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 37%, #ececec 63%);
+  background-size: 400% 100%;
+  animation: gmvsr-shimmer 1.3s ease infinite;
+  border-radius: 4px;
+}
+.gmvsr-skeleton__line--status { width: 40%; height: 14px; }
+.gmvsr-skeleton__line--title { width: 70%; height: 20px; }
+.gmvsr-skeleton__line--sub { width: 50%; height: 14px; }
+.gmvsr-skeleton__image { height: 135px; border-radius: 8px; }
+.gmvsr-skeleton__line--price { width: 45%; height: 20px; }
+.gmvsr-skeleton__line--footer { width: 100%; height: 32px; margin-top: 8px; }
+@keyframes gmvsr-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .gmvsr-skeleton__line, .gmvsr-skeleton__image { animation: none; } }
+
+/* ---- Empty / error states (zero-result, API failure) ------------------- */
+.gmvsr-state {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-container-gap-m, 16px);
+  text-align: center;
+  padding: 48px var(--spacing-container-padding-m, 24px);
+}
+.gmvsr-state__title { margin: 0; font-family: 'Chevy_Sans', sans-serif; font-weight: 700; font-size: 20px; line-height: 24px; }
+.gmvsr-state__body { margin: 0; max-width: 440px; font-size: 14px; line-height: 22px; color: #666666; }
+.gmvsr-state__suggest-label { margin: 0; font-size: 12px; line-height: 20px; color: #666666; }
+.gmvsr-state__suggestions { display: flex; flex-wrap: wrap; gap: var(--spacing-container-gap-s, 8px); justify-content: center; }
+
+/* ---- Partial-match banner ---------------------------------------------- */
+.gmvsr-banner { margin-bottom: var(--spacing-container-stack-s, 16px); }
+.gmvsr-banner[hidden] { display: none; }
+.gmvsr-banner__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-container-gap-m, 16px);
+  padding: 12px 16px;
+  background: var(--gmvsr-muted-surface);
+  border-left: 4px solid var(--brand-color, #0077d9);
+  border-radius: 4px;
+}
+.gmvsr-banner__text { flex: 1; font-size: 14px; line-height: 22px; }
+
+/* ---- Step-1 placeholders (all replaced in later steps) ------------------ */
+.gmvsr-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-container-gap-xs, 4px);
+  background: var(--gmvsr-muted-surface);
+  border: 1px dashed var(--gmvsr-hairline);
+  border-radius: 8px;
+  color: #666666; /* Alloy documented muted grey (foundation gap) */
+  text-align: center;
+}
+.gmvsr-placeholder__label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--gmvsr-ink);
+}
+.gmvsr-placeholder__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 20px;
+}
+.gmvsr-placeholder--rail { min-height: 480px; padding: var(--spacing-container-padding-m, 24px); }
+.gmvsr-placeholder--card { aspect-ratio: 305 / 360; }
+.gmvsr-placeholder--inline { padding: 8px 12px; border-style: dotted; background: transparent; }
+
+/* ---- Location editor (ZIP via Alloy text-input; radius = form-select) ---
+   Alloy documents a dropdown text-input and a popover menu, but no plain
+   form-select. The radius select is a small net-new control styled to match
+   the text-input field (bg / border-bottom / radius), reusing foundation-gap
+   neutrals. ZIP uses Alloy's real .drp-input-standard-outlined-* classes. */
+.gmvsr-loc-edit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-container-gap-m, 16px);
+}
+.gmvsr-loc-error {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 20px;
+  color: #d64022; /* Alloy documented error hex (foundation gap) */
+}
+.gmvsr-loc-radius-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-container-gap-xs, 4px);
+}
+.gmvsr-loc-radius-label {
+  font-size: 12px;
+  line-height: 20px;
+  color: #666666;
+}
+.gmvsr-loc-radius {
+  height: 44px;
+  padding: 0 12px;
+  font-family: 'Chevy_Sans', sans-serif;
+  font-size: 14px;
+  color: var(--gmvsr-ink);
+  background: var(--gmvsr-muted-surface);
+  border: none;
+  border-bottom: 2px solid var(--gmvsr-hairline);
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+}
+.gmvsr-loc-radius:focus-visible { outline: 2px solid var(--brand-color, #0077d9); outline-offset: 2px; }
+.gmvsr-loc-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-container-gap-m, 16px);
+}
+
+/* ---- Compare control on the card (Alloy checkbox) ---------------------- */
+/* Lives in the price row, pushed to the right edge (row is flex). Hidden at
+   rest and revealed on hover (like the CTAs); reserve its box via
+   visibility so the price row doesn't shift. Stays visible when already
+   selected, on keyboard focus, and on mobile (no hover). */
+.gmvsr-compare-check { --checkbox-size: 18px; white-space: nowrap; margin-left: auto; visibility: hidden; }
+.drp-vsr-card:hover .gmvsr-compare-check,
+.drp-vsr-card.is-hovered .gmvsr-compare-check,
+.drp-vsr-card:focus-within .gmvsr-compare-check,
+.gmvsr-compare-check.is-checked,
+.drp-vsr-card--mobile .gmvsr-compare-check { visibility: visible; }
+
+/* ---- Compare tray (NET-NEW, sticky bottom) ----------------------------- */
+.gmvsr-compare-tray {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 90;
+  background: var(--gmvsr-canvas);
+  border-top: 1px solid var(--gmvsr-hairline);
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.12);
+}
+.gmvsr-compare-tray[hidden] { display: none; }
+body.gmvsr-has-tray { padding-bottom: 96px; }
+.gmvsr-compare-tray__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-container-gap-m, 16px);
+  max-width: var(--gmvsr-content-max);
+  margin: 0 auto;
+  padding: var(--spacing-container-padding-s, 16px) var(--spacing-container-padding-m, 24px);
+  box-sizing: border-box;
+}
+.gmvsr-compare-tray__items { display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-container-gap-s, 8px); }
+.gmvsr-compare-tray__title { font-family: 'Chevy_Sans', sans-serif; font-weight: 600; font-size: 14px; margin-right: 4px; }
+.gmvsr-compare-tray__hint { font-weight: 500; font-size: 12px; color: #666666; }
+.gmvsr-compare-tray__actions { display: flex; align-items: center; gap: var(--spacing-container-gap-m, 16px); }
+
+/* ---- Compare modal — side-by-side spec table (NET-NEW) ----------------- */
+.gmvsr-compare-panel { padding: 0; }
+.gmvsr-cmp { display: flex; flex-direction: column; max-height: 92vh; }
+.gmvsr-cmp__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--spacing-container-padding-m, 24px);
+  border-bottom: 1px solid var(--gmvsr-hairline);
+}
+.gmvsr-cmp__heading { margin: 0; font-family: 'Chevy_Sans', sans-serif; font-weight: 700; font-size: 20px; line-height: 24px; }
+.gmvsr-cmp__scroll { overflow: auto; }
+.gmvsr-cmp__table { width: 100%; border-collapse: collapse; font-family: 'Chevy_Sans', sans-serif; }
+.gmvsr-cmp__corner { background: var(--gmvsr-canvas); }
+.gmvsr-cmp__vehhead {
+  text-align: left; vertical-align: bottom;
+  padding: var(--spacing-container-padding-s, 16px);
+  border-bottom: 2px solid var(--gmvsr-hairline);
+  min-width: 200px;
+}
+.gmvsr-cmp__vehname { display: block; font-weight: 700; font-size: 16px; line-height: 24px; }
+.gmvsr-cmp__vehtrim { display: block; font-weight: 500; font-size: 12px; line-height: 20px; color: #666666; }
+.gmvsr-cmp__rowlabel {
+  text-align: left; vertical-align: top;
+  padding: 12px 16px;
+  font-weight: 600; font-size: 12px; line-height: 20px; color: #666666;
+  white-space: nowrap;
+  background: var(--gmvsr-muted-surface);
+  position: sticky; left: 0;
+}
+.gmvsr-cmp__cell {
+  padding: 12px 16px;
+  font-size: 14px; line-height: 22px; color: var(--gmvsr-ink);
+  vertical-align: top;
+  border-bottom: 1px solid var(--gmvsr-hairline);
+}
+.gmvsr-cmp__corner, .gmvsr-cmp__vehhead { position: sticky; top: 0; z-index: 1; background: var(--gmvsr-canvas); }
+
+/* ---- Quick View modal (desktop-only; Alloy quick-view ships no overlay) - */
+.gmvsr-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-container-padding-m, 24px);
+  box-sizing: border-box;
+}
+.gmvsr-modal[hidden] { display: none; }
+.gmvsr-modal__scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); }
+.gmvsr-modal__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-container-gap-l, 24px);
+  width: 100%;
+  max-width: 1240px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--gmvsr-canvas);
+  border-radius: 16px;
+  padding: var(--spacing-container-padding-m, 24px);
+  box-sizing: border-box;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.24);
+}
+/* Center the Alloy math-box within the modal's stacked column. */
+.gmvsr-modal__panel .drp-vsr-math-box { align-self: center; }
+body.gmvsr-modal-open { overflow: hidden; }
+
+/* ---- Mobile filter sheet overlay (net-new; Alloy has no scrim) ---------- */
+.gmvsr-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+}
+.gmvsr-sheet[hidden] { display: none; }
+.gmvsr-sheet__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+.gmvsr-sheet__panel {
+  position: relative;
+  margin-left: auto;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: var(--gmvsr-canvas);
+  overflow: hidden; /* the vsr-filter --mobile body scrolls internally */
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
+}
+body.gmvsr-sheet-open { overflow: hidden; }
+
+/* The Alloy --mobile filter reserves space for its own sticky header/action
+   bar and scrolls its middle. Give the panel-hosted instance full height. */
+.gmvsr-sheet__panel .drp-vsr-filter--mobile {
+  height: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* ================= TABLET + MOBILE (< 1024px) =================
+   Filters move into the sheet (rail hidden, Filters button shown) — same as
+   mobile. Tablet shows a 2-up card grid. */
+@media (max-width: 1023px) {
+  .gmvsr-filterbar { display: block; }
+  .gmvsr-rail { display: none; }
+  .gmvsr-shell { grid-template-columns: 1fr; } /* rail hidden; results full width */
+  .gmvsr-grid { grid-template-columns: repeat(2, 1fr); } /* 2 cards per row */
+}
+
+/* ============================ MOBILE (<600px) ============================ */
+@media (max-width: 599px) {
+  .gmvsr-shell { padding: var(--spacing-container-padding-s, 16px); }
+  .gmvsr-grid { grid-template-columns: 1fr; } /* single column */
+}

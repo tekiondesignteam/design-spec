@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<!-- Fork of design-systems/t1/ui_kit/template/chat-interface.html for project t1-vehicle-search.
+     Asset paths point at the read-only design system (../../design-systems/t1/...).
+     Do not rebuild the shell or edit .ts-menubar/.ts-body. Work lives in RESPONSES + the seeded thread. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>T1 AI Sales Assistant</title>
+
+  <!-- Fonts (relative to server root /; server.js serves project root as /) -->
+  <style>
+    /* Font paths resolve via server.js: /template/* → /ui_kit/template/*,
+       other paths served from project root. Fonts are at /fonts/ (project root). */
+    @font-face { font-family:"Proxima Nova"; font-weight:300; src:url("../../design-systems/t1/fonts/Proxima-Nova-Light.otf")   format("opentype"); font-display:swap; }
+    @font-face { font-family:"Proxima Nova"; font-weight:400; src:url("../../design-systems/t1/fonts/Proxima-Nova-Regular.otf") format("opentype"); font-display:swap; }
+    @font-face { font-family:"Proxima Nova"; font-weight:500; src:url("../../design-systems/t1/fonts/Proxima-Nova-Medium.otf")  format("opentype"); font-display:swap; }
+    @font-face { font-family:"Proxima Nova"; font-weight:600; src:url("../../design-systems/t1/fonts/Proxima-Nova-Semibold.otf")format("opentype"); font-display:swap; }
+  </style>
+
+  <!-- Kit CSS — paths resolve against page URL /template/; ../ = project root -->
+  <link rel="stylesheet" href="../../design-systems/t1/colors_and_type.css">
+  <link rel="stylesheet" href="../../design-systems/t1/ui_kit/components.css">
+
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+  <!-- React + Babel -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"     crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"     crossorigin="anonymous"></script>
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
+    p, h1, h2, h3 { margin: 0; padding: 0; }
+    button { cursor: pointer; border: none; background: none; padding: 0; }
+    #root  { height: 100%; }
+    body   { font-family: "Proxima Nova", sans-serif; }
+
+    /* ═══════════════════════════════════════════════
+       TEKION SHELL  (ts-* prefix)
+    ═══════════════════════════════════════════════ */
+    .ts-shell { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+    /* ── Menubar (64px dark top bar) ── */
+    .ts-menubar { height: 64px; background: #3f4757; display: flex; align-items: center; flex-shrink: 0; }
+    .ts-menubar__main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 24px; height: 64px; padding: 0 16px; }
+    .ts-menubar__nav  { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+
+    .ts-icon-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 2px; flex-shrink: 0; color: rgba(255,255,255,0.75); padding: 4px; transition: background 0.12s, color 0.12s; }
+    .ts-icon-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    .ts-wordmark { font-weight: 600; font-size: 15px; letter-spacing: 0.1em; color: #25c8a5; flex-shrink: 0; line-height: 16px; display: flex; align-items: center; gap: 6px; }
+    .ts-wordmark__product-logo { width: 16px; height: 16px; }
+
+    .ts-menubar__search { flex: 1; min-width: 0; display: flex; justify-content: flex-end; max-width: 688px; overflow: hidden; border-radius: 2px; isolation: isolate; }
+    .ts-search-field  { flex: 1; display: flex; align-items: center; gap: 8px; background: #fff; height: 32px; padding: 4px 8px; }
+    .ts-search-field__placeholder { font-size: 14px; line-height: 16px; color: #969aa3; flex: 1; min-width: 0; }
+
+    .ts-menubar__actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .ts-split-btn       { display: flex; align-items: flex-start; gap: 1px; flex-shrink: 0; }
+    .ts-split-btn__text { display: flex; align-items: center; justify-content: center; background: #152532; height: 32px; padding: 4px 16px 4px 12px; border-radius: 2px 0 0 2px; }
+    .ts-split-btn__text-inner { display: flex; align-items: center; gap: 8px; }
+    .ts-split-btn__label { font-weight: 600; font-size: 14px; line-height: 16px; color: #fff; white-space: nowrap; }
+    .ts-split-btn__caret { display: flex; align-items: center; justify-content: center; background: #152532; width: 32px; height: 32px; border-radius: 0 2px 2px 0; padding: 4px; }
+
+    /* ── Workspace section (right of menubar) ── */
+    .ts-workspace         { width: 296px; height: 100%; flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-left: 1px solid #152532; }
+    .ts-workspace__avatar { width: 40px; height: 40px; border-radius: 4px; background: #6285a3; flex-shrink: 0; display: flex; align-items: center; justify-content: center; padding: 8px; overflow: hidden; }
+    .ts-workspace__info   { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .ts-workspace__name   { font-weight: 600; font-size: 16px; line-height: 16px; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ts-workspace__site   { font-size: 12px; line-height: 16px; color: rgba(255,255,255,0.8); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ts-workspace__chevron { flex-shrink: 0; color: rgba(255,255,255,0.75); display: flex; align-items: center; }
+
+    /* ── Body ── */
+    .ts-body { flex: 1; display: flex; overflow: hidden; }
+
+    /* ── Favbar (64px left sidebar) ── */
+    .ts-favbar        { width: 64px; background: #3f4757; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+    .ts-favbar__scroll{ flex: 1; display: flex; flex-direction: column; align-items: center; width: 100%; overflow: hidden; }
+
+    .ts-ai-tile         { position: relative; width: 64px; height: 72px; flex-shrink: 0; cursor: pointer; }
+    .ts-ai-tile__bg     { position: absolute; top: 0; left: 0; width: 64px; height: 139px; background: #3f4757; }
+    .ts-ai-tile__inner  { position: absolute; left: 12px; top: 16px; width: 40px; height: 40px; border-radius: 6px; background: linear-gradient(-44.623deg,#2157f5 2.9%,#258dff 40.7%,#86ffbb 106.9%); display: flex; align-items: center; justify-content: center; overflow: hidden; transition: opacity 0.15s; }
+    .ts-ai-tile:hover .ts-ai-tile__inner { opacity: 0.85; }
+
+    .ts-app-tile        { position: relative; width: 64px; height: 64px; flex-shrink: 0; cursor: pointer; }
+    .ts-app-tile--tall  { height: 72px; }
+    .ts-app-tile__btn   { position: absolute; left: 12px; top: 12px; width: 40px; height: 36px; background: #6f7884; border-radius: 2px 2px 0 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ts-app-tile--tall .ts-app-tile__btn { top: 8px; }
+    .ts-app-tile__abbr  { font-weight: 600; font-size: 16px; line-height: 16px; color: #fff; white-space: nowrap; }
+    .ts-app-tile__indicator { position: absolute; left: 12px; top: 48px; width: 40px; height: 4px; border-radius: 0 0 2px 2px; }
+    .ts-app-tile--tall .ts-app-tile__indicator { top: 44px; }
+    .ts-app-tile__label { position: absolute; left: 50%; top: 60px; transform: translateX(-50%) translateY(-50%); font-weight: 600; font-size: 12px; color: #fff; text-align: center; width: 64px; white-space: nowrap; }
+    .ts-ind--red    { background: #fae3e1; }
+    .ts-ind--teal   { background: #dcfaf6; }
+    .ts-ind--green  { background: #e1faf0; }
+    .ts-ind--purple { background: #e6e1f5; }
+    .ts-ind--orange { background: #fff3e0; }
+
+    .ts-favbar__bottom         { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .ts-favbar__bottom-section { border-top: 1px solid #152532; border-bottom: 1px solid #152532; padding: 8px 0; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+    .ts-favbar__avatar         { width: 40px; height: 40px; border-radius: 1000px; background: #edeef0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ts-favbar__avatar-text    { font-weight: 600; font-size: 15px; line-height: 18px; color: #6d707a; text-align: center; }
+    .ts-favbar__time-row       { padding: 4px; display: flex; align-items: center; justify-content: center; width: 100%; }
+    .ts-favbar__time-text      { font-weight: 600; font-size: 12px; line-height: 16px; color: #fff; white-space: nowrap; }
+
+    /* ── Main content area ── */
+    .ts-main       { flex: 1; min-width: 0; background: #f4f5f6; position: relative; overflow: hidden; }
+    .ts-main__inner{ position: absolute; inset: 0; background: #fff; overflow: hidden; display: flex; flex-direction: row; }
+
+    /* ── CRM skeleton ── */
+    .ts-crm       { flex: 1; min-width: 0; position: relative; overflow: hidden; background: #fff; }
+    .ts-page-nav  { position: absolute; left: 0; right: 0; top: 0; height: 56px; background: #fff; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; padding: 0 24px 1px; }
+    .ts-page-nav__bar { background: #f1f5f9; height: 16px; width: 200px; border-radius: 4px; flex-shrink: 0; }
+    .ts-action-bar{ position: absolute; left: 0; right: 0; top: 56px; display: flex; align-items: center; justify-content: space-between; padding: 8px 4px; }
+    .ts-filter-group { display: flex; gap: 12px; align-items: center; }
+    .ts-filter-pill  { background: #f1f5f9; height: 32px; width: 80px; border-radius: 6px; flex-shrink: 0; }
+    .ts-search-box   { background: #f1f5f9; height: 32px; width: 240px; border-radius: 6px; flex-shrink: 0; }
+    .ts-table-wrap   { position: absolute; left: 0; right: 0; top: 104px; bottom: 48px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px 8px 0 0; overflow-x: auto; overflow-y: auto; }
+    .ts-table        { min-width: 1100px; width: max-content; }
+    .ts-row--header  { background: #f8fafc; border-bottom: 1px solid #e2e8f0; height: 40px; display: flex; align-items: center; gap: 16px; padding: 0 16px 1px; }
+    .ts-row          { background: #fff; border-bottom: 1px solid #f1f5f9; height: 36px; display: flex; align-items: center; gap: 16px; padding: 0 16px 1px; }
+    .ts-row:last-child { border-bottom: none; }
+    .ts-cell         { display: flex; align-items: center; flex-shrink: 0; }
+    .ts-cell--name   { width: 260px; gap: 12px; }
+    .ts-cell--col2, .ts-cell--col3, .ts-cell--col4 { width: 287px; }
+    .ts-cell--status { width: 120px; }
+    .ts-cell--action { width: 80px; }
+    .ts-bar          { background: #e2e8f0; height: 10px; border-radius: 4px; flex-shrink: 0; }
+    .ts-bar--sm      { background: #f1f5f9; height: 8px; border-radius: 4px; flex-shrink: 0; }
+    .ts-circle       { background: #f1f5f9; width: 20px; height: 20px; border-radius: 10px; flex-shrink: 0; }
+    .ts-pagination   { position: absolute; left: 0; right: 0; bottom: 0; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; }
+    .ts-pagination__info { background: #f1f5f9; height: 16px; width: 120px; border-radius: 4px; }
+    .ts-pagination__btns { display: flex; gap: 4px; align-items: center; }
+    .ts-page-btn     { width: 28px; height: 28px; background: #f1f5f9; border-radius: 4px; flex-shrink: 0; }
+
+    /* ═══════════════════════════════════════════════
+       AI PANEL  (ts-ai-* prefix)
+    ═══════════════════════════════════════════════ */
+    .ts-ai-panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #ffffff;
+      transition: width 0.25s ease, height 0.25s ease;
+    }
+
+    /* ── closed ── */
+    .ts-ai--closed .ts-ai-panel { display: none; }
+
+    /* ── left-docked (panel left, CRM right) ── */
+    .ts-ai--left .ts-ai-panel { width: 400px; flex-shrink: 0; border-right: 1px solid #d4d5d6; }
+    .ts-ai--left .ts-crm      { order: 2; }
+    .ts-ai--left .ts-ai-panel { order: 1; }
+
+    /* ── right-docked (CRM left, panel right) ── */
+    .ts-ai--right .ts-ai-panel { width: 400px; flex-shrink: 0; border-left: 1px solid #d4d5d6; }
+    .ts-ai--right .ts-crm     { order: 1; }
+    .ts-ai--right .ts-ai-panel{ order: 2; }
+
+    /* ── fullscreen ── */
+    .ts-ai--fullscreen .ts-crm      { display: none; }
+    .ts-ai--fullscreen .ts-ai-panel { flex: 1; min-width: 0; }
+    .ts-ai--fullscreen .ts-ai-panel .t1-ab { border-radius: 0 !important; }
+
+    /* ── Panel open animation — slides up from bottom ── */
+    @keyframes ts-panel-open {
+      from { transform: translateY(100%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    /* ── popover (floating above content) ── */
+    .ts-ai--popover .ts-crm { flex: 1; }
+    .ts-ai--popover .ts-ai-panel {
+      position: absolute;
+      left: 24px;
+      top: 26.9%;
+      bottom: 0;
+      width: 400px;
+      z-index: 10;
+      border: 1px solid #d4d5d6;
+      box-shadow: 0 8px 24px rgba(25,40,57,0.12);
+      border-radius: 8px 8px 0 0;
+      animation: ts-panel-open 0.38s cubic-bezier(0.32, 0.72, 0, 1) both;
+    }
+
+    /* ── minimized (44px strip at bottom) ── */
+    .ts-ai--minimized .ts-crm { flex: 1; }
+    .ts-ai--minimized .ts-ai-panel {
+      position: absolute;
+      left: 24px;
+      bottom: 0;
+      width: 400px;
+      height: 44px;
+      z-index: 10;
+      border: 1px solid #d4d5d6;
+      box-shadow: 0 -8px 24px rgba(25,40,57,0.12);
+      border-radius: 8px 8px 0 0;
+    }
+    .ts-ai--minimized .ts-ai-panel__body { display: none; }
+
+    /* AppBar corner overrides per state */
+    .ts-ai--left  .ts-ai-panel .t1-ab,
+    .ts-ai--right .ts-ai-panel .t1-ab { border-radius: 0 !important; }
+    .ts-ai--popover   .ts-ai-panel .t1-ab,
+    .ts-ai--minimized .ts-ai-panel .t1-ab { border-radius: 8px 8px 0 0 !important; }
+
+    /* ── Panel body ── */
+    .ts-ai-panel__body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      min-height: 0;
+      position: relative; /* contains drawer so it never overlaps AppBar */
+    }
+
+    /* ── Fullscreen sidebar (SideNavigation) ── */
+    .ts-ai-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-right: 1px solid #e2e8f0;
+    }
+    .ts-ai-sidebar .t1-sn { flex: 1; min-height: 0; border-right: none; width: 100%; }
+    .ts-ai--fullscreen .ts-ai-panel__body .t1-sn { width: 280px; flex-shrink: 0; min-height: 0; }
+
+    .ts-ai-settings { flex-shrink: 0; padding: 8px 16px 12px; border-top: 1px solid #e8e9eb; width: 280px; }
+    .ts-ai-settings .t1-btn { width: 100%; justify-content: flex-start; }
+
+    /* ── Sidenav drawer keyframes ── */
+    @keyframes ts-sidenav-backdrop-in  { from { background: rgba(25,40,57,0);    } to { background: rgba(25,40,57,0.35); } }
+    @keyframes ts-sidenav-backdrop-out { from { background: rgba(25,40,57,0.35); } to { background: rgba(25,40,57,0);    } }
+    @keyframes ts-sidenav-panel-in  { from { transform: translateX(-100%); } to { transform: translateX(0);    } }
+    @keyframes ts-sidenav-panel-out { from { transform: translateX(0);    } to { transform: translateX(-100%); } }
+
+    /* ── Sidenav drawer (hamburger toggle in non-fullscreen states) ── */
+    .ts-ai-sidenav-drawer {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      animation: ts-sidenav-backdrop-in 0.3s ease both;
+    }
+    .ts-ai-sidenav-drawer.is-closing {
+      animation: ts-sidenav-backdrop-out 0.22s ease both;
+      pointer-events: none;
+    }
+    .ts-ai-sidenav-drawer__panel {
+      width: 280px;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 2px 0 12px rgba(25,40,57,0.1);
+      animation: ts-sidenav-panel-in 0.32s cubic-bezier(0.32, 0.72, 0, 1) both;
+    }
+    .ts-ai-sidenav-drawer.is-closing .ts-ai-sidenav-drawer__panel {
+      animation: ts-sidenav-panel-out 0.22s ease both;
+    }
+    .ts-ai-sidenav-drawer__panel .t1-sn { flex: 1; min-height: 0; border-right: none; width: 100%; }
+    .ts-ai-sidenav-drawer__settings { flex-shrink: 0; padding: 8px 16px 12px; border-top: 1px solid #e8e9eb; }
+    .ts-ai-sidenav-drawer__settings .t1-btn { width: 100%; justify-content: flex-start; }
+
+    /* ── Chat content column ── */
+    .ts-ai-panel__chat {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* ── Thread ── */
+    .ts-ai-thread {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 16px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .ts-ai-thread .t1-chat__row--assistant { flex-direction: column; }
+    .ts-ai-thread .t1-chat__row--assistant > .t1-response { flex: initial; width: 100%; }
+
+    /* ── Welcome state ── */
+    .ts-ai-welcome {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 0 0;
+      gap: 16px;
+    }
+    .ts-ai-welcome .t1-wlc,
+    .ts-ai-welcome .t1-sug { width: 100%; }
+
+    /* ── PromptInput wrapper ── */
+    .ts-ai-input { flex-shrink: 0; padding: 16px; }
+
+    /* Fullscreen: center at max 820px */
+    .ts-ai--fullscreen .ts-ai-thread { padding: 0 0 16px; align-items: center; }
+    .ts-ai--fullscreen .ts-ai-thread > * { width: 100%; max-width: 820px; }
+    .ts-ai--fullscreen .ts-ai-input {
+      padding: 16px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .ts-ai--fullscreen .ts-ai-input > .t1-pi { width: 100%; max-width: 820px; }
+    .ts-ai--fullscreen .ts-ai-disclaimer { width: 100%; max-width: 820px; }
+
+    /* ── Disclaimer ── */
+    .ts-ai-disclaimer {
+      font-size: 11px;
+      font-weight: 400;
+      color: #969aa3;
+      text-align: center;
+      padding-top: 6px;
+    }
+
+    /* ── ListingCard: narrow container overrides ── */
+    .ts-ai--popover .t1-lc__item,
+    .ts-ai--left    .t1-lc__item,
+    .ts-ai--right   .t1-lc__item { padding: 12px; }
+    .ts-ai--popover .t1-lc__body,
+    .ts-ai--left    .t1-lc__body,
+    .ts-ai--right   .t1-lc__body { flex-wrap: wrap; align-items: flex-start; }
+    .ts-ai--popover .t1-lc__info,
+    .ts-ai--left    .t1-lc__info,
+    .ts-ai--right   .t1-lc__info { width: 100%; }
+    .ts-ai--popover .t1-lc__suffix,
+    .ts-ai--left    .t1-lc__suffix,
+    .ts-ai--right   .t1-lc__suffix { flex-direction: row; align-items: center; justify-content: flex-start; gap: 8px; width: 100%; min-width: 0; }
+    .ts-ai--popover .t1-lc__suffix-label,
+    .ts-ai--popover .t1-lc__suffix-detail,
+    .ts-ai--left    .t1-lc__suffix-label,
+    .ts-ai--left    .t1-lc__suffix-detail,
+    .ts-ai--right   .t1-lc__suffix-label,
+    .ts-ai--right   .t1-lc__suffix-detail { text-align: left; white-space: normal; padding: 0; }
+    .ts-ai--popover .t1-lc__suffix-label::after,
+    .ts-ai--left    .t1-lc__suffix-label::after,
+    .ts-ai--right   .t1-lc__suffix-label::after { content:'·'; margin-left:8px; color:#b4b6bb; }
+    .ts-ai--popover .t1-lc__title, .ts-ai--popover .t1-lc__sub, .ts-ai--popover .t1-lc__desc,
+    .ts-ai--left    .t1-lc__title, .ts-ai--left    .t1-lc__sub, .ts-ai--left    .t1-lc__desc,
+    .ts-ai--right   .t1-lc__title, .ts-ai--right   .t1-lc__sub, .ts-ai--right   .t1-lc__desc { white-space: normal; word-break: break-word; }
+    .ts-ai--popover .t1-lc__nameid,
+    .ts-ai--left    .t1-lc__nameid,
+    .ts-ai--right   .t1-lc__nameid { flex-wrap: wrap; }
+
+    /* ── Streaming cursor ── */
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+    .ts-ai-cursor { display:inline-block; width:2px; height:13px; background:#4285f4; margin-left:1px; vertical-align:middle; border-radius:1px; animation:blink 0.9s ease-in-out infinite; }
+
+    /* ── Message row fade-in — user bubbles only ── */
+    /* Assistant rows must NOT animate-in: the ReasoningLog was already visible
+       during the turn, and replaying opacity-0 would cause a flash on commit. */
+    @keyframes t1-msg-in { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+    .t1-chat__row--user { animation: t1-msg-in 0.18s ease; }
+
+    /* ── Lazy-load: response sections reveal after streaming completes ── */
+    /* Fires once when each element enters the DOM (committed message).    */
+    @keyframes t1-lazy-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0);   }
+    }
+    /* Ordered / unordered list items — stagger 80 ms per item */
+    .t1-chat__row--assistant .t1-response__list li {
+      animation: t1-lazy-in 0.28s ease both;
+    }
+    .t1-chat__row--assistant .t1-response__list li:nth-child(1) { animation-delay:  80ms; }
+    .t1-chat__row--assistant .t1-response__list li:nth-child(2) { animation-delay: 160ms; }
+    .t1-chat__row--assistant .t1-response__list li:nth-child(3) { animation-delay: 240ms; }
+    .t1-chat__row--assistant .t1-response__list li:nth-child(4) { animation-delay: 320ms; }
+    .t1-chat__row--assistant .t1-response__list li:nth-child(5) { animation-delay: 400ms; }
+    .t1-chat__row--assistant .t1-response__list li:nth-child(6) { animation-delay: 480ms; }
+    /* Content-slot card (listing card, deal card, etc.) */
+    .t1-chat__row--assistant .t1-response__slot {
+      animation: t1-lazy-in 0.35s ease 120ms both;
+    }
+    /* Feedback action bar — appears last once response is fully settled */
+    .t1-chat__row--assistant .t1-fa {
+      animation: t1-lazy-in 0.3s ease 520ms both;
+    }
+
+    /* ── Step 3: vehicle photo thumbnail in the ListingCard row prefix ──────
+       Signed-off deviation (constitution §5). The kit ListingCard renders a
+       letter <Avatar> in .t1-lc__avatar; the kit is read-only, so we paint the
+       vehicle photo into that same 40×40 slot from the fork's own styles.
+       Slot chrome (bg, radius) uses $t1-* tokens via var(--t1-*). A neutral
+       placeholder layer (assets/vehicles/placeholder.svg) sits under every
+       photo, so a missing OR failed photo degrades to the placeholder with no
+       broken-image icon (spec AC-6). Row order in .t1-lc is item,divider,item,
+       ... so rows are :nth-child(1,3,5,7). */
+    .veh-listing .t1-lc__avatar {
+      /* The kit hides .t1-lc__avatar in the narrow AI panel via
+         @container t1-response (max-width:500px). Our scoped rule (higher
+         specificity) restores the slot so the vehicle photo shows in-panel —
+         part of the signed-off constitution §5 deviation. */
+      display: inline-grid;
+      background-color: var(--t1-neutral-100);
+      background-image: url("assets/vehicles/placeholder.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 22px;
+      border-radius: var(--t1-radius-xs);
+      overflow: hidden;
+    }
+    .veh-listing .t1-lc__avatar .t1-av__initials { display: none; }
+    .veh-listing .t1-lc__item:nth-child(1) .t1-lc__avatar { background-image: url("assets/vehicles/camry-1.jpg"), url("assets/vehicles/placeholder.svg"); background-size: cover, 22px; }
+    .veh-listing .t1-lc__item:nth-child(3) .t1-lc__avatar { background-image: url("assets/vehicles/camry-2.jpg"), url("assets/vehicles/placeholder.svg"); background-size: cover, 22px; }
+    .veh-listing .t1-lc__item:nth-child(5) .t1-lc__avatar { background-image: url("assets/vehicles/camry-3.jpg"), url("assets/vehicles/placeholder.svg"); background-size: cover, 22px; }
+    /* Row 4 (2021 XLE): no photo on file → neutral placeholder only (demonstrates AC-6). */
+    /* Step 4: empty-state suggestions align under the Response body (24px left pad). */
+    .veh-empty-suggestions { padding-left: var(--t1-space-6); margin-top: var(--t1-space-2); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Kit component manifest + loader (no data-entry → JSX is inlined below) -->
+  <script src="../../design-systems/t1/ui_kit/components/manifest.js"></script>
+  <script src="../../design-systems/t1/ui_kit/loader.js" data-base="../../design-systems/t1/ui_kit/"></script>
+
+  <script type="text/babel">
+  /* =======================================================================
+     T1 AI Sales Assistant — Chat Interface  (Figma node 256:7943)
+     Self-contained React app; kit components (AppBar, NavBar, etc.) are
+     loaded by loader.js and available globally after t1:ready fires.
+  ======================================================================= */
+  window.addEventListener('t1:ready', function () {
+    const { useState, useRef, useEffect, useMemo } = React;
+
+    /* ── Static data ─────────────────────────────────────────────────── */
+    /* Full suggestion pool — 4 random items shown per session */
+    const ALL_SUGGESTIONS = [
+      { label: 'Summarize my open pipeline',            icon: 'chart-bar'        },
+      { label: 'Review Johnson deal status',            icon: 'briefcase'        },
+      { label: 'Show deals closing this month',         icon: 'calendar-check'   },
+      { label: 'Which deals are stalled?',              icon: 'warning'          },
+      { label: 'Draft quote for Model X',               icon: 'file-text'        },
+      { label: 'Summarize recent hot leads',            icon: 'users'            },
+      { label: 'List high-priority test drives',        icon: 'car'              },
+      { label: 'Who are my warmest prospects?',         icon: 'fire'             },
+      { label: 'Show leads with no recent follow-up',   icon: 'clock'            },
+      { label: 'What should I focus on today?',         icon: 'check-square'     },
+      { label: 'Draft a follow-up SMS for Flora',       icon: 'chat-circle-text' },
+      { label: 'Schedule a test drive for Marcus',      icon: 'calendar-plus'    },
+      { label: 'Remind me about pending approvals',     icon: 'bell'             },
+      { label: 'Show financing options for AeroVibe',   icon: 'bank'             },
+      { label: 'Which deals need finance approval?',    icon: 'seal-check'       },
+      { label: 'What is my conversion rate this month?',icon: 'trend-up'         },
+      { label: 'Top performing models this quarter',    icon: 'trophy'           },
+      { label: 'Compare pipeline vs last month',        icon: 'arrows-left-right'},
+      { label: 'Forecast this month\'s revenue',        icon: 'currency-dollar'  },
+    ];
+
+    function pickSuggestions() {
+      return [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5).slice(0, 4);
+    }
+
+    /* Task-tab suggestions — shown when navVariant === 'tasks' */
+    const TASK_SUGGESTIONS = [
+      { label: 'Show my open tasks for today',          icon: 'check-square'    },
+      { label: 'List overdue tasks',                    icon: 'warning-circle'  },
+      { label: 'Create a follow-up task for Flora',     icon: 'plus-circle'     },
+      { label: 'Prioritize my task list this week',     icon: 'list-numbers'    },
+      { label: 'Show all scheduled appointments',       icon: 'calendar'        },
+      { label: 'Which tasks need immediate attention?', icon: 'clock-countdown' },
+    ];
+
+    const PINNED_CHATS = [
+      { id:'p1', label:'Monthly Sales Review'        },
+      { id:'p2', label:'Summarize recent hot leads'  },
+      { id:'p3', label:'Draft quote for Model X'     },
+    ];
+
+    const RECENT_CHATS = [
+      { id:'r1', label:'Monthly Sales Review'                        },
+      { id:'r2', label:'Summarize recent hot leads'                  },
+      { id:'r3', label:'Draft quote for Model X'                     },
+      { id:'r4', label:'Last high-priority test drives'              },
+      { id:'r5', label:'Coordinate follow-up calls with prospects'   },
+      { id:'r6', label:'Schedule follow-up meetings'                 },
+      { id:'r7', label:'Prepare presentation for upcoming trade show'},
+      { id:'r8', label:'Update inventory status for shipment'        },
+    ];
+
+    const RECENT_TASKS = [
+      {
+        id:'t1', label:'Daily Sales Report', status:'active',
+        subItems:[
+          { id:'t1-1', label:'Apr 8 - Daily Sales Report', status:'active' },
+          { id:'t1-2', label:'Apr 7 - Daily Sales Report' },
+          { id:'t1-3', label:'Apr 6 - Daily Sales Report' },
+        ],
+      },
+      { id:'t2', label:'Prepare monthly performance reports' },
+      { id:'t3', label:'Analyze quarterly revenue trends', status:'error' },
+    ];
+
+    /* Skeleton row widths */
+    const ROWS = [
+      [173,213,256,244,55,40],[200,243,236,142,100,40],[182,204,142,125,85,40],
+      [156,241,202,139,96,40],[204,195,231,252,71,40],[182,203,163,157,62,40],
+      [180,189,188,154,55,40],[199,188,204,163,70,40],[174,232,235,144,93,40],
+      [212,220,180,251,82,40],[165,247,215,204,68,40],[156,241,246,188,78,40],
+      [186,211,193,178,61,40],[139,189,188,154,55,40],
+    ];
+
+    /* ── Canned AI responses ─────────────────────────────────────────── */
+    const RESPONSES = {
+      /* Step 2: inventory search happy-path result (spec AC-2..AC-5, AC-7).
+         Summary count line (title) + one ListingCard (contentType 'listing')
+         with 4 display-only vehicle rows. Field map per spec Components table:
+         YMMM->title · Stock#->id · Type->chip/chipColor · Transmission->subtitle1 · VIN->description.
+         (Vehicle photo thumbnail is Step 3.) */
+      vehicleSearch: {
+        title:'Found 4 Camrys in your inventory',
+        body:'Here are the matching Toyota Camrys currently in stock at Tachyon Motors.',
+        contentType:'listing',
+        contentData:{ className:'veh-listing', items:[
+          { initials:'TC', title:'2023 Toyota Camry XSE', id:'#STK-24187', chip:'New',  chipColor:'primary', subtitle1:'8-speed automatic', description:'VIN 4T1K61AK9PU739210' },
+          { initials:'TC', title:'2022 Toyota Camry SE',  id:'#STK-23088', chip:'Used', chipColor:'neutral', subtitle1:'8-speed automatic', description:'VIN 4T1G11AK7NU665432' },
+          { initials:'TC', title:'2024 Toyota Camry LE',  id:'#STK-24512', chip:'New',  chipColor:'primary', subtitle1:'CVT automatic',     description:'VIN 4T1C11AK4RU210987' },
+          { initials:'TC', title:'2021 Toyota Camry XLE', id:'#STK-22045', chip:'Used', chipColor:'neutral', subtitle1:'8-speed automatic', description:'VIN 4T1F31AK3MU556677' },
+        ]},
+        filterCount:3, sourceCount:1,
+        filterItems:['Make: Toyota','Model: Camry','Location: In stock — Main site'],
+        sourceItems:['Dealer Inventory — Live (Apr 2026)'],
+        steps:['Searching your inventory...','Matching make & model...','Ranking available units...'],
+      },
+      /* Step 4: empty / no-match state (spec AC-8). No card — a plain
+         Response + a SuggestionList to broaden the search. */
+      vehicleSearchEmpty: {
+        title:'No Toyota Supras found in your inventory',
+        body:'There are no Toyota Supras in stock at Tachyon Motors right now. Try broadening the search:',
+        suggestions:[
+          { label:'Include used inventory',     icon:'car'               },
+          { label:'Try another model',          icon:'magnifying-glass'  },
+          { label:'Show all Toyotas in stock',  icon:'list'              },
+        ],
+        steps:['Searching your inventory...','Matching make & model...','No matching units found'],
+      },
+      /* Step 5: inventory-lookup error state (spec AC-10). No card — a plain
+         Response + a SuggestionList whose first action is 'Try again'. No steps
+         so no ReasoningLog renders. */
+      vehicleSearchError: {
+        title:'Couldn\u2019t reach your inventory',
+        body:'Something went wrong loading your inventory just now. Please try again in a moment.',
+        suggestions:[
+          { label:'Try again',       icon:'arrow-clockwise' },
+          { label:'Contact support', icon:'headset'         },
+        ],
+      },
+      pipeline: {
+        title:'Sales Pipeline Summary — April 2026',
+        body:'Your pipeline holds 34 open deals across 6 stages. Here is the stage-by-stage breakdown:',
+        orderedList:[
+          'Prospect (8 deals, $142 k) — 3 need follow-up within 24 hrs',
+          'Qualified (7 deals, $218 k) — 2 test drives scheduled this week',
+          'Proposal Sent (5 deals, $197 k) — average 8 days in stage',
+          'Negotiation (6 deals, $304 k) — 2 deals stalled, action needed',
+          'Pending Finance (5 deals, $281 k) — awaiting credit approval',
+          'Closed Won (3 deals, $186 k) — delivered this month',
+        ],
+        filterCount:6, sourceCount:3,
+        filterItems:['Stage: All active stages','Date range: April 2026','Owner: Current user','Region: All regions','Vehicle type: All','Deal value: Any'],
+        sourceItems:['CRM Deal Records — Apr 2026','Pipeline Activity Log','Sales Forecast Model v3'],
+        steps:['Pulling active deal records...','Grouping by stage...','Calculating totals...'],
+      },
+      leads: {
+        title:'Hot Leads — This Week',
+        body:'Based on engagement score and recency, these four prospects are your highest-priority contacts right now:',
+        contentType:'listing',
+        contentData:{ items:[
+          { initials:'FF', title:'Flora Fleisher',  id:'#CRM-1024', chip:'Hot',    chipColor:'error',   subtitle1:'2023 AeroVibe — Finance', subtitle2:'Last contact: 2 days ago',       suffixLabel:'Score', suffixDetail:'94' },
+          { initials:'MW', title:'Marcus Webb',     id:'#CRM-2187', chip:'Warm',   chipColor:'warning', subtitle1:'2024 Terrain X — Cash',   subtitle2:'Last contact: 4 days ago',       suffixLabel:'Score', suffixDetail:'81' },
+          { initials:'PN', title:'Priya Nair',      id:'#CRM-3341', chip:'Warm',   chipColor:'warning', subtitle1:'2023 CityRide SE — Lease',subtitle2:'Last contact: 5 days ago',       suffixLabel:'Score', suffixDetail:'76' },
+          { initials:'DJ', title:'Derek Johnson',   id:'#CRM-0082', chip:'Active', chipColor:'primary', subtitle1:'2022 Ranger Pro — Finance',subtitle2:'Deal currently in negotiation', suffixLabel:'Score', suffixDetail:'68' },
+        ]},
+        filterCount:4, sourceCount:1,
+        filterItems:['Engagement score: ≥ 60','Contact type: Lead','Recency: Last 7 days','Assigned to: Current user'],
+        sourceItems:['Lead Scoring Engine v2'],
+        steps:['Scanning engagement scores...','Filtering by recency...','Ranking top prospects...'],
+      },
+      draft: {
+        title:'Draft SMS — Flora Fleisher',
+        body:'Based on your last conversation, here is a personalized follow-up message ready to send:',
+        contentType:'messageDraft',
+        contentData:{ to:'Flora Fleisher', body:'Hi Flora,\n\nJust checking in after our conversation last week. The 2023 AeroVibe is still available and I have put together a financing option I think you will love.\n\nWould Tuesday at 10 AM work for you to come take a closer look?\n\nLooking forward to hearing from you!\nSarah' },
+        filterCount:1, sourceCount:2,
+        filterItems:['Contact: Flora Fleisher (#CRM-1024)'],
+        sourceItems:['Conversation History — Apr 16, 2026','Customer Preference Profile'],
+        steps:['Retrieving conversation history...','Identifying key talking points...','Drafting follow-up SMS...'],
+      },
+      deal: {
+        title:'Deal Details — #DEAL-4821',
+        body:'The Johnson deal is currently in the Negotiation stage. Derek is reviewing the final finance package — a follow-up this week could help close.',
+        contentType:'dealCard',
+        contentData:{ dealId:'#DEAL-4821', vehicle:'2022 Ranger Pro XLT 4WD', salesperson:'Sarah Mitchell', purchaseType:'Finance', status:'Negotiation', lastUpdated:'Apr 22, 2026' },
+        filterCount:2, sourceCount:1,
+        filterItems:['Deal ID: #DEAL-4821','Stage: Negotiation'],
+        sourceItems:['CRM Deal Records'],
+        steps:['Looking up deal #DEAL-4821...','Fetching stage from CRM...','Summarizing status...'],
+      },
+      credit: {
+        title:'Credit Pre-Qualification — Marcus Webb',
+        body:'Marcus has a strong credit profile and qualifies for Tier 1 financing. Here is his pre-qualification summary:',
+        contentType:'creditScore',
+        contentData:{ score:748, maxApproval:'$64,500', eligibleApr:'4.29%', chipLabel:'Tier 1 Qualified', showChip:true },
+        filterCount:1, sourceCount:1,
+        filterItems:['Contact: Marcus Webb (#CRM-2187)'],
+        sourceItems:['Credit Bureau — Soft Pull (Apr 22, 2026)'],
+        steps:['Pulling soft credit data...','Calculating tier qualification...','Determining max approval...'],
+      },
+      planner: {
+        title:'Action Plan — Flora Fleisher Follow-up',
+        body:'Here is a step-by-step plan to move Flora through to close this week:',
+        contentType:'planner',
+        contentData:{ title:'Flora Fleisher — Close Plan', lists:[
+          { label:'Communication', items:[
+            { text:'Send personalized SMS follow-up',   checked:true  },
+            { text:'Confirm Tuesday 10 AM appointment', checked:false },
+            { text:'Email financing options summary',   checked:false },
+          ]},
+          { label:'Test Drive & Proposal', items:[
+            { text:'Schedule 2023 AeroVibe test drive',          checked:false },
+            { text:'Prepare custom quote with trade-in value',   checked:false },
+            { text:'Review credit pre-qualification with Flora', checked:false },
+          ]},
+        ]},
+        filterCount:3, sourceCount:2,
+        filterItems:['Contact: Flora Fleisher','Deal: 2023 AeroVibe (#CRM-1024)','Priority: High'],
+        sourceItems:['Conversation History — Apr 16, 2026','Customer Preference Profile'],
+        steps:['Reviewing interaction history...','Identifying follow-up priorities...','Building close plan...'],
+      },
+      taskOpen: {
+        title:'Open Tasks — Today',
+        body:'Here are your open tasks for today, ordered by priority:',
+        contentType:'taskCard',
+        contentData:{ title:"Today's Priority Tasks", tasks:[
+          { label:'Follow up with Flora Fleisher via SMS',    done:false },
+          { label:'Review Johnson deal financing package',    done:false },
+          { label:'Confirm test drive for Marcus Webb',       done:true  },
+          { label:'Update April pipeline forecast',           done:false },
+          { label:'Send quote to Priya Nair',                 done:false },
+        ]},
+        filterCount:2, sourceCount:1,
+        filterItems:['Owner: Current user','Status: Open'],
+        sourceItems:['CRM Task Manager'],
+        steps:['Fetching open tasks...','Sorting by priority...','Summarizing...'],
+      },
+      taskOverdue: {
+        title:'Overdue Tasks',
+        body:'You have tasks past their due date that need immediate attention:',
+        contentType:'taskCard',
+        contentData:{ title:'Overdue Tasks', tasks:[
+          { label:'Send financing summary to Marcus Webb',     done:false },
+          { label:'Schedule closing appointment — Johnson',   done:false },
+          { label:'Review trade-in valuation for Flora',      done:false },
+        ]},
+        filterCount:1, sourceCount:1,
+        filterItems:['Status: Overdue'],
+        sourceItems:['CRM Task Manager'],
+        steps:['Checking task due dates...','Flagging overdue items...'],
+      },
+      default: {
+        title:'Here is what I found',
+        body:'I searched across your CRM data and pipeline records. Here is a quick summary:',
+        unorderedList:[
+          'You have 34 open deals across 6 pipeline stages',
+          '4 leads are flagged as high-priority this week',
+          'Your top conversion is Negotiation → Closed Won at 71%',
+          '2 deals have been stalled for more than 7 days and need attention',
+          'You are currently tracking toward 112% of your April quota',
+        ],
+        filterCount:5, sourceCount:3,
+        filterItems:['Date range: April 2026','Owner: Current user','Region: All regions','Deal status: Open','Engagement: All levels'],
+        sourceItems:['CRM Deal Records — Apr 2026','Pipeline Activity Log','Conversion Rate Analytics'],
+        steps:['Searching CRM records...','Reviewing deal activity...','Preparing summary...'],
+      },
+    };
+
+    function matchResponse(text) {
+      const t = text.toLowerCase();
+      if (/inventory|camry|vehicle|in stock|find me a|show me (cars|vehicles)/.test(t)) return RESPONSES.vehicleSearch;
+      if (/pipeline|stage|overview|total deal|how many/.test(t))                             return RESPONSES.pipeline;
+      if (/lead|hot|prospect|top contact|who should|summarize recent|summarise recent/.test(t)) return RESPONSES.leads;
+      if (/draft|sms|text|email|follow.?up|send|message flora|model x/.test(t))              return RESPONSES.draft;
+      if (/deal|johnson|negotiate|#deal|contract|purchase/.test(t))                           return RESPONSES.deal;
+      if (/credit|score|loan|apr|tier|qualif|financing|pre.?qual|marcus/.test(t))            return RESPONSES.credit;
+      if (/open task|my task|due today|today.*task|scheduled appoint|follow.?up task|focus on today/.test(t)) return RESPONSES.taskOpen;
+      if (/overdue|past due|immediate attention|late task/.test(t))                          return RESPONSES.taskOverdue;
+      if (/plan|action|next step|checklist|prioritize|task.*week|week.*task|what should/.test(t)) return RESPONSES.planner;
+      return RESPONSES.default;
+    }
+
+    function renderSlot(msg) {
+      if (!msg.contentType) return null;
+      const d = msg.contentData;
+      switch (msg.contentType) {
+        case 'listing':      return <ListingCard items={d.items} expanded={true} className={d.className} />;
+        case 'messageDraft': return <MessageDraft to={d.to} body={d.body} />;
+        case 'taskCard':     return <TaskCard title={d.title} tasks={d.tasks} />;
+        case 'dealCard':     return <DealCard {...d} />;
+        case 'creditScore':
+          return (
+            <div className="t1-domain-grid">
+              <CreditScoreCard {...d} />
+            </div>
+          );
+        case 'planner':      return <PlannerCard title={d.title} lists={d.lists} />;
+        default:             return null;
+      }
+    }
+
+    /* ── Streaming helper ────────────────────────────────────────────── */
+    /* Updates DOM directly via ref — no React re-renders per character.   */
+    const streamRef      = { current: null };
+    const scrollTimerRef = { current: null };
+
+    /* Soft-scroll el to its bottom. */
+    function softScrollToBottom(el) {
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+    }
+
+    /* True when the user hasn't scrolled more than 120 px above the bottom.
+       Guards the auto-scroll so users can freely read older messages. */
+    function isNearBottom(el) {
+      return el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+    }
+
+    function streamText(full, bodyRef, threadEl, onDone) {
+      let i = 0;
+      /* Initial kick — content is about to grow */
+      if (threadEl) softScrollToBottom(threadEl);
+      /* Keep following the bottom every 200 ms; throttled to avoid
+         conflicting smooth-scroll animations in the browser. */
+      scrollTimerRef.current = threadEl
+        ? setInterval(() => {
+            if (isNearBottom(threadEl)) softScrollToBottom(threadEl);
+          }, 200)
+        : null;
+
+      function tick() {
+        if (i < full.length) {
+          i = Math.min(i + 1, full.length);
+          if (bodyRef.current) bodyRef.current.textContent = full.slice(0, i);
+          streamRef.current = requestAnimationFrame(tick);
+        } else {
+          clearInterval(scrollTimerRef.current);
+          scrollTimerRef.current = null;
+          if (threadEl) softScrollToBottom(threadEl);
+          onDone();
+        }
+      }
+      streamRef.current = requestAnimationFrame(tick);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SHELL COMPONENTS
+    ═══════════════════════════════════════════════════════════════════ */
+    function T1Logo({ width=24, height=18 }) {
+      return (
+        <svg width={width} height={height} viewBox="0 0 24 18" fill="none">
+          <path d="M10.4468 3.74071C11.5196 1.67514 14.2755 0 16.6009 0H23.9699L22.0263 3.74071L16.9464 3.92038C15.5252 3.97036 14.242 4.76066 13.59 5.9873L8.95458 14.7169H4.74408L10.4468 3.74071Z" fill="white"/>
+          <path d="M1.94501 0L10.8912 0.00405277L8.94763 3.74476H0L1.94501 0Z" fill="white"/>
+          <path d="M21.4507 6.83419L17.9912 6.8396L16.0462 10.5844L18.3549 10.5965C18.6531 10.5925 18.8495 10.8951 18.7158 11.1531L15.1601 17.9969H19.3706L23.503 10.0048C24.2624 8.53504 23.145 6.80856 21.4494 6.83419H21.4507Z" fill="white"/>
+        </svg>
+      );
+    }
+
+    function WorkspaceAvatar() {
+      return (
+        <div className="ts-workspace__avatar">
+          <svg width="24" height="24" viewBox="0 0 16 16" fill="none">
+            <path d="M3.90234 12.1417C4.35913 11.3507 5.37099 11.0796 6.1621 11.5362C6.95276 11.993 7.22378 13.004 6.76757 13.795C6.31077 14.5862 5.299 14.8573 4.50781 14.4005C3.71688 13.9436 3.44577 12.9327 3.90234 12.1417Z" fill="url(#wa_g)"/>
+            <path d="M9.85253 11.5362C10.6436 11.0795 11.6554 11.3507 12.1123 12.1417C12.5687 12.9327 12.2976 13.9436 11.5068 14.4005C10.7156 14.8573 9.70386 14.5862 9.24706 13.795C8.79076 13.0039 9.06163 11.9929 9.85253 11.5362Z" fill="url(#wa_g)"/>
+            <path d="M1.82714 6.87897C2.61816 6.42229 3.62997 6.69366 4.08691 7.48444C4.5437 8.27563 4.27262 9.2874 3.48144 9.74421C2.69025 10.201 1.67846 9.92992 1.22167 9.13874C0.765282 8.34764 1.03617 7.3357 1.82714 6.87897Z" fill="url(#wa_g)"/>
+            <path d="M9.84667 2.22175C10.6377 1.76509 11.6495 2.03645 12.1064 2.82721C12.2712 3.11258 12.342 3.42711 12.3271 3.73346C12.2949 4.39469 12.144 5.12681 12.4746 5.70026C12.8057 6.27373 13.5156 6.50978 14.1045 6.81257C14.3772 6.95281 14.6145 7.17081 14.7793 7.45612C15.2361 8.24727 14.9649 9.25905 14.1738 9.71589C13.3826 10.1727 12.3709 9.90162 11.9141 9.11042C11.7494 8.82504 11.6794 8.51051 11.6943 8.20417C11.7266 7.54286 11.8768 6.81076 11.5459 6.23737C11.2147 5.66396 10.5049 5.42789 9.91601 5.12507C9.64334 4.98476 9.40593 4.76682 9.2412 4.48151C8.78485 3.69046 9.05581 2.67851 9.84667 2.22175Z" fill="url(#wa_g)"/>
+            <path d="M4.50781 2.27839C5.2989 1.82171 6.31071 2.0929 6.76757 2.88385C7.22408 3.67496 6.95309 4.68685 6.1621 5.14362C5.37103 5.60035 4.35924 5.32907 3.90234 4.53815C3.44576 3.74699 3.7167 2.73513 4.50781 2.27839Z" fill="url(#wa_g)"/>
+            <defs>
+              <linearGradient id="wa_g" x1="1" y1="2" x2="16.87" y2="5.12" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#25C8A5"/><stop offset="0.5" stopColor="#1B90B4"/><stop offset="1" stopColor="#1A6CC4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      );
+    }
+
+    function AppTile({ abbr, indicator, icon, label }) {
+      const tall = !!label;
+      return (
+        <div className={`ts-app-tile${tall?' ts-app-tile--tall':''}`}>
+          <div className="ts-app-tile__btn">
+            {icon
+              ? <i className={`ph ph-${icon}`} style={{fontSize:24,color:'#fff'}}/>
+              : <span className="ts-app-tile__abbr">{abbr}</span>}
+          </div>
+          <div className={`ts-app-tile__indicator ${indicator}`}/>
+          {label && <div className="ts-app-tile__label">{label}</div>}
+        </div>
+      );
+    }
+
+    function HeaderRow() {
+      return (
+        <div className="ts-row--header">
+          <div className="ts-cell ts-cell--name">  <div className="ts-bar" style={{width:182}}/></div>
+          <div className="ts-cell ts-cell--col2">  <div className="ts-bar" style={{width:201}}/></div>
+          <div className="ts-cell ts-cell--col3">  <div className="ts-bar" style={{width:201}}/></div>
+          <div className="ts-cell ts-cell--col4">  <div className="ts-bar" style={{width:201}}/></div>
+          <div className="ts-cell ts-cell--status"> <div className="ts-bar" style={{width:84}}/></div>
+          <div className="ts-cell ts-cell--action"> <div className="ts-bar" style={{width:56}}/></div>
+        </div>
+      );
+    }
+    function DataRow({ widths }) {
+      const [w1,w2,w3,w4,w5] = widths;
+      return (
+        <div className="ts-row">
+          <div className="ts-cell ts-cell--name">  <div className="ts-circle"/><div className="ts-bar--sm" style={{width:w1}}/></div>
+          <div className="ts-cell ts-cell--col2">  <div className="ts-bar--sm" style={{width:w2}}/></div>
+          <div className="ts-cell ts-cell--col3">  <div className="ts-bar--sm" style={{width:w3}}/></div>
+          <div className="ts-cell ts-cell--col4">  <div className="ts-bar--sm" style={{width:w4}}/></div>
+          <div className="ts-cell ts-cell--status"> <div className="ts-bar--sm" style={{width:w5}}/></div>
+          <div className="ts-cell ts-cell--action"> <div className="ts-bar--sm" style={{width:40}}/></div>
+        </div>
+      );
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       CHAT APP — root component
+    ═══════════════════════════════════════════════════════════════════ */
+    function ChatApp() {
+      /* Panel state: 'closed'|'popover'|'left'|'right'|'fullscreen'|'minimized' */
+      const [panelState,  setPanelState]  = useState((new URLSearchParams(window.location.search).get('panel')) || 'popover'); /* ?panel=popover|left|right|fullscreen for review */
+      const [panelLeft,   setPanelLeft]   = useState(null); /* px — X-only drag */
+      const prevStateRef                  = useRef('popover');
+      const dragRef                       = useRef(null);
+
+      /* Chat state */
+      /* Seeded scenarios — choose via ?scenario=match|empty (default match).
+         Lets each spec state be reviewed in isolation without disturbing the others. */
+      const SCENARIO = (new URLSearchParams(window.location.search).get('scenario')) || 'match';
+      const SEEDS = {
+        match: [
+          { id: 1, role: 'user', content: 'find me a Toyota Camry from my inventory' },
+          { id: 2, role: 'assistant', userText: 'find me a Toyota Camry from my inventory', ...RESPONSES.vehicleSearch },
+        ],
+        empty: [
+          { id: 1, role: 'user', content: 'find me a Toyota Supra from my inventory' },
+          { id: 2, role: 'assistant', userText: 'find me a Toyota Supra from my inventory', ...RESPONSES.vehicleSearchEmpty },
+        ],
+        /* Step 5: frozen 'searching' turn — user message only, phase starts at
+           'thinking' (see below) so the ReasoningLog shows in-progress and no card. */
+        loading: [
+          { id: 1, role: 'user', content: 'find me a Toyota Camry from my inventory' },
+        ],
+        error: [
+          { id: 1, role: 'user', content: 'find me a Toyota Camry from my inventory' },
+          { id: 2, role: 'assistant', userText: 'find me a Toyota Camry from my inventory', ...RESPONSES.vehicleSearchError },
+        ],
+      };
+      const seedMsgs = SEEDS[SCENARIO] || SEEDS.match;
+      const [messages,    setMessages]    = useState(seedMsgs);
+      const [chatTitle,   setChatTitle]   = useState(seedMsgs[0].content.slice(0, 40));
+      const [phase,       setPhase]       = useState(SCENARIO === 'loading' ? 'thinking' : 'idle');
+      const [pendingMeta, setPendingMeta] = useState(SCENARIO === 'loading' ? RESPONSES.vehicleSearch : null);
+      const [sideSearch,  setSideSearch]  = useState('');
+
+      /* 4 randomly chosen suggestions — re-picked on every new chat */
+      const [activeSuggestions, setActiveSuggestions] = useState(pickSuggestions);
+
+      /* Nav variant — 'home' | 'tasks' — drives NavBar appearance */
+      const [navVariant,  setNavVariant]  = useState('home');
+      /* Sidenav drawer open in non-fullscreen panel states */
+      const [sideNavOpen,    setSideNavOpen]    = useState(false);
+      const [sideNavClosing, setSideNavClosing] = useState(false);
+
+      function closeSideNav() {
+        setSideNavClosing(true);
+        setTimeout(() => {
+          setSideNavOpen(false);
+          setSideNavClosing(false);
+        }, 220);
+      }
+
+      const threadRef       = useRef(null);
+      const streamBodyRef   = useRef(null);
+      const thinkTimer      = useRef(null);
+      const thoughtTimer    = useRef(null);
+      const msgIdRef        = useRef(2); /* seeded messages use ids 1 (user) & 2 (assistant) */
+      /* Holds stream args until the streaming DOM has been committed by React */
+      const pendingStreamRef = useRef(null);
+
+      /* Auto-scroll on message/phase changes — soft so the eye follows. */
+      useEffect(() => {
+        if (threadRef.current) softScrollToBottom(threadRef.current);
+      }, [messages, phase]);
+
+      /* Start streaming AFTER React has committed the streaming-phase DOM so
+         streamBodyRef.current is guaranteed to be set before the first tick. */
+      useEffect(() => {
+        if (phase !== 'streaming' || !pendingStreamRef.current) return;
+        const { body, onDone } = pendingStreamRef.current;
+        pendingStreamRef.current = null;
+        streamText(body, streamBodyRef, threadRef.current, onDone);
+      }, [phase]); // eslint-disable-line react-hooks/exhaustive-deps
+
+      /* Cleanup timers on unmount */
+      useEffect(() => () => {
+        clearTimeout(thinkTimer.current);
+        clearTimeout(thoughtTimer.current);
+        cancelAnimationFrame(streamRef.current);
+        clearInterval(scrollTimerRef.current);
+      }, []);
+
+      /* ── State machine ── */
+      function goToState(next) {
+        if (panelState !== 'minimized' && panelState !== 'fullscreen' && panelState !== 'closed') {
+          prevStateRef.current = panelState;
+        }
+        setPanelLeft(null);
+        setPanelState(next);
+      }
+
+      /* ── Drag — X-axis only; panel stays bottom-anchored ── */
+      function handleAppBarDragStart(e) {
+        if (panelState !== 'popover' && panelState !== 'minimized') return;
+        e.preventDefault();
+        const panel = e.currentTarget.closest('.ts-ai-panel');
+        if (!panel) return;
+        const rect = panel.getBoundingClientRect();
+        dragRef.current = { offsetX: e.clientX - rect.left };
+        const onMove = (ev) => {
+          const maxLeft = window.innerWidth - rect.width;
+          const x = Math.min(Math.max(0, ev.clientX - dragRef.current.offsetX), maxLeft);
+          setPanelLeft(x);
+        };
+        const onUp = () => {
+          window.removeEventListener('pointermove', onMove);
+          window.removeEventListener('pointerup',   onUp);
+        };
+        window.addEventListener('pointermove', onMove);
+        window.addEventListener('pointerup',   onUp);
+      }
+
+      /* ── Chat handlers ── */
+      function handleSend(text) {
+        if (!text || !text.trim() || phase !== 'idle') return;
+        if (panelState === 'closed') setPanelState('popover');
+        const response = matchResponse(text);
+        const uid = ++msgIdRef.current;
+        if (messages.length === 0) setChatTitle(text.trim().slice(0, 40));
+        setMessages(prev => [...prev, { id:uid, role:'user', content:text.trim() }]);
+        setPendingMeta(response);
+        setPhase('thinking');
+        /* Wait for typewriter to finish all steps (65 ms/char) + 400 ms buffer */
+        const totalTypingMs = response.steps.reduce((acc, s) => acc + s.length * 65, 0);
+        thinkTimer.current = setTimeout(() => {
+          setPhase('thought');
+          thoughtTimer.current = setTimeout(() => {
+            pendingStreamRef.current = {
+              body: response.body,
+              onDone: () => {
+                const aid = ++msgIdRef.current;
+                setMessages(prev => [...prev, { id:aid, role:'assistant', userText: text.trim(), ...response }]);
+                setPhase('idle');
+                setPendingMeta(null);
+              },
+            };
+            setPhase('streaming');
+          }, 400);
+        }, Math.max(3000, totalTypingMs + 400));
+      }
+
+      /* Edit an existing user message in-place and regenerate the AI response.
+         - Updates the user bubble text to newText
+         - Drops all messages that came after it (the old AI response)
+         - Streams a fresh AI response without appending another user message */
+      function handleEditAndResend(msgId, newText) {
+        const trimmed = newText.trim();
+        if (!trimmed || phase !== 'idle') return;
+
+        const response = matchResponse(trimmed);
+        const msgIdx = messages.findIndex(m => m.id === msgId);
+
+        /* Replace the edited message, discard everything after it */
+        setMessages(prev => [
+          ...prev.slice(0, msgIdx),
+          { ...prev[msgIdx], content: trimmed },
+        ]);
+
+        setPendingMeta(response);
+        setPhase('thinking');
+
+        clearTimeout(thinkTimer.current);
+        clearTimeout(thoughtTimer.current);
+        cancelAnimationFrame(streamRef.current);
+        clearInterval(scrollTimerRef.current);
+
+        /* Wait for typewriter to finish all steps (65 ms/char) + 400 ms buffer */
+        const totalTypingMs = response.steps.reduce((acc, s) => acc + s.length * 65, 0);
+        thinkTimer.current = setTimeout(() => {
+          setPhase('thought');
+          thoughtTimer.current = setTimeout(() => {
+            pendingStreamRef.current = {
+              body: response.body,
+              onDone: () => {
+                const aid = ++msgIdRef.current;
+                setMessages(prev => [...prev, { id: aid, role: 'assistant', userText: trimmed, ...response }]);
+                setPhase('idle');
+                setPendingMeta(null);
+              },
+            };
+            setPhase('streaming');
+          }, 400);
+        }, Math.max(3000, totalTypingMs + 400));
+      }
+
+      function handleNewChat() {
+        clearTimeout(thinkTimer.current);
+        clearTimeout(thoughtTimer.current);
+        cancelAnimationFrame(streamRef.current);
+        clearInterval(scrollTimerRef.current);
+        setMessages([]);
+        setChatTitle('Title');
+        setPhase('idle');
+        setPendingMeta(null);
+        setNavVariant('home');
+        setSideNavOpen(false);
+        setSideNavClosing(false);
+        setActiveSuggestions(pickSuggestions());
+        if (panelState === 'closed') setPanelState('popover');
+      }
+
+      function handleNewTask() {
+        clearTimeout(thinkTimer.current);
+        clearTimeout(thoughtTimer.current);
+        cancelAnimationFrame(streamRef.current);
+        clearInterval(scrollTimerRef.current);
+        setMessages([]);
+        setChatTitle('New Task');
+        setPhase('idle');
+        setPendingMeta(null);
+        setNavVariant('tasks');
+        setSideNavOpen(false);
+        setSideNavClosing(false);
+        if (panelState === 'closed') setPanelState('popover');
+      }
+
+      function handleChatSelect(item) {
+        handleNewChat();
+        setChatTitle(item.label);
+      }
+
+      /* ── AppBar type + orientation (Figma 1:1 mapping) ──
+         popover  → stickyMaximized (drag grip + menu: L / R / Full)
+         left     → panel orientation=right  (menu: R / Full / Pop Out)
+         right    → panel orientation=left   (menu: L / Full / Pop Out)
+         fullscreen → fullscreen             (menu: L / R / Pop Out)
+         minimized → stickyMinimized         (caret-up + close, no menu)
+      */
+      const appBarType =
+        panelState === 'fullscreen' ? 'fullscreen'      :
+        panelState === 'minimized'  ? 'stickyMinimized' :
+        panelState === 'popover'    ? 'stickyMaximized' :
+                                      'panel';
+      const appBarOrientation = panelState === 'left' ? 'right' : 'left';
+
+      const showWelcome = messages.length === 0 && phase === 'idle';
+
+      /* ── Render ── */
+      return (
+        <div className="ts-shell">
+
+          {/* ══════════════════ MENUBAR ══════════════════ */}
+          <div className="ts-menubar">
+            <div className="ts-menubar__main">
+
+              <div className="ts-menubar__nav">
+                <button className="ts-icon-btn"><i className="ph ph-list" style={{fontSize:24}}/></button>
+                <div className="ts-wordmark">
+                  <svg width="178" height="32" viewBox="0 0 178 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M31.4745 6.20032C32.68 6.20032 33.657 7.19448 33.657 8.42115C33.657 9.64698 32.68 10.642 31.4745 10.642H19.0115V23.7878C19.0115 25.0145 18.0336 26.0087 16.8289 26.0087C15.6234 26.0087 14.6464 25.0145 14.6464 23.7878V10.642H2.18254C0.977845 10.642 0 9.64698 0 8.42115C0 7.19448 0.977845 6.20032 2.18254 6.20032H31.4745ZM175.904 6.22065C177.206 6.09482 178.301 7.13232 178.301 8.43065V21.774C178.301 23.054 177.763 24.3023 176.76 25.0757C175.536 26.0198 173.945 26.1598 172.601 25.4681C172.567 25.4506 172.533 25.4323 172.5 25.4123L149.09 11.7448C148.507 11.4056 147.782 11.8331 147.782 12.5165V23.7882C147.782 25.0865 146.687 26.1248 145.384 25.9982C144.25 25.8882 143.416 24.8523 143.416 23.6923V10.339C143.416 9.05732 143.956 7.80732 144.96 7.03398C146.184 6.09148 147.772 5.95315 149.116 6.64315C149.15 6.66148 149.184 6.67982 149.218 6.69982L172.626 20.3657C173.21 20.7065 173.936 20.2781 173.936 19.594V8.52648C173.936 7.36648 174.77 6.33065 175.904 6.22065ZM88.6503 6.54607C89.5553 5.73523 90.9336 5.82357 91.7313 6.74357C92.5289 7.66357 92.4413 9.0669 91.5372 9.87773C88.204 12.8677 84.8266 14.7794 81.7219 15.9927C84.8266 17.2061 88.204 19.1152 91.5372 22.1052C92.4413 22.9169 92.5289 24.3194 91.7313 25.2394C91.3005 25.7369 90.6977 25.9919 90.0933 25.9919C89.5807 25.9919 89.0655 25.8086 88.6503 25.4369C80.2297 17.8827 71.5266 18.3077 69.6438 18.5044V23.7077C69.6438 24.9352 68.6667 25.9286 67.4612 25.9286C66.2565 25.9286 65.2795 24.9352 65.2795 23.7077V8.42107C65.2795 7.1944 66.2565 6.20023 67.4612 6.20023C68.6667 6.20023 69.6438 7.1944 69.6438 8.42107V13.4769C70.4717 13.5602 72.6109 13.6869 75.4339 13.1769C80.2723 12.3044 84.7185 10.0736 88.6503 6.54607ZM59.4873 6.19998C60.6928 6.19998 61.6698 7.19415 61.6698 8.42082C61.6698 9.6003 60.7665 10.5648 59.6253 10.6373L59.4873 10.6416H45.4134C42.47 10.6416 40.0835 13.07 40.0835 16.065C40.0835 18.9949 42.3674 21.3817 45.2222 21.4841L45.4134 21.4875H59.4873C60.6928 21.4875 61.6698 22.4825 61.6698 23.7083C61.6698 24.8878 60.7665 25.8523 59.6253 25.9248L59.4873 25.9291H45.4134C40.059 25.9291 35.7193 21.5125 35.7193 16.065C35.7193 10.7005 39.9265 6.33612 45.167 6.20311L45.4134 6.19998H59.4873ZM98.4525 6.20032C99.658 6.20032 100.634 7.19448 100.634 8.42115V23.7078C100.634 24.9345 99.658 25.9287 98.4525 25.9287C97.247 25.9287 96.27 24.9345 96.27 23.7078V8.42115C96.27 7.19448 97.247 6.20032 98.4525 6.20032ZM130.635 6.20032C135.682 6.20032 139.787 10.3778 139.787 15.512V16.617C139.787 21.752 135.682 25.9287 130.635 25.9287H113.836C108.789 25.9287 104.685 21.752 104.685 16.617V15.512C104.685 10.3778 108.789 6.20032 113.836 6.20032H130.635ZM130.635 10.642H113.836C111.196 10.642 109.05 12.827 109.05 15.512V16.617C109.05 19.3028 111.196 21.4878 113.836 21.4878H130.635C133.275 21.4878 135.422 19.3028 135.422 16.617V15.512C135.422 12.827 133.275 10.642 130.635 10.642ZM57.647 13.844C58.8525 13.844 59.8295 14.8381 59.8295 16.0648C59.8295 17.2435 58.9262 18.2088 57.785 18.2813L57.647 18.2856H45.4256C44.22 18.2856 43.2438 17.2906 43.2438 16.0648C43.2438 14.8853 44.1464 13.9208 45.2875 13.8484L45.4256 13.844H57.647Z" fill="#00C3B4"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div className="ts-menubar__search">
+                <div className="ts-search-field">
+                  <i className="ph ph-magnifying-glass" style={{fontSize:16,color:'#969aa3',flexShrink:0}}/>
+                  <span className="ts-search-field__placeholder">Search</span>
+                </div>
+              </div>
+
+              <div className="ts-menubar__actions">
+                <div className="ts-split-btn">
+                  <div className="ts-split-btn__text">
+                    <div className="ts-split-btn__text-inner">
+                      <i className="ph ph-plus" style={{fontSize:16,color:'#fff',flexShrink:0}}/>
+                      <span className="ts-split-btn__label">Get Help</span>
+                    </div>
+                  </div>
+                  <div className="ts-split-btn__caret">
+                    <i className="ph ph-caret-down" style={{fontSize:24,color:'#fff'}}/>
+                  </div>
+                </div>
+                <button className="ts-icon-btn"><i className="ph ph-user-circle"  style={{fontSize:24}}/></button>
+                <button className="ts-icon-btn"><i className="ph ph-bell"          style={{fontSize:24}}/></button>
+                <button className="ts-icon-btn"><i className="ph ph-chat-circle"   style={{fontSize:24}}/></button>
+                <button className="ts-icon-btn"><i className="ph ph-envelope"      style={{fontSize:24}}/></button>
+              </div>
+
+            </div>
+
+            <div className="ts-workspace">
+              <WorkspaceAvatar/>
+              <div className="ts-workspace__info">
+                <p className="ts-workspace__name">Tachyon Motors</p>
+                <p className="ts-workspace__site">Main site</p>
+              </div>
+              <div className="ts-workspace__chevron">
+                <i className="ph ph-caret-down" style={{fontSize:16}}/>
+              </div>
+            </div>
+          </div>
+
+          {/* ══════════════════ BODY ══════════════════ */}
+          <div className="ts-body">
+
+            {/* ── Favbar ── */}
+            <div className="ts-favbar">
+              <div className="ts-favbar__scroll">
+
+                {/* T1 AI tile — click to open/close panel */}
+                <div
+                  className="ts-ai-tile"
+                  onClick={() => panelState === 'closed' ? setPanelState('popover') : setPanelState('closed')}
+                  title="Toggle AI Assistant"
+                >
+                  <div className="ts-ai-tile__bg"/>
+                  <div className="ts-ai-tile__inner"><T1Logo/></div>
+                </div>
+
+                <AppTile abbr="DS" indicator="ts-ind--red"/>
+                <AppTile abbr="OM" indicator="ts-ind--teal"   icon="clock" label="OM"/>
+                <AppTile abbr="A"  indicator="ts-ind--green"/>
+                <AppTile abbr="CM" indicator="ts-ind--purple"/>
+                <AppTile abbr="CA" indicator="ts-ind--purple"/>
+                <AppTile abbr="SO" indicator="ts-ind--red"/>
+                <AppTile abbr="PS" indicator="ts-ind--orange"/>
+                <AppTile abbr="PO" indicator="ts-ind--orange"/>
+              </div>
+
+              <div className="ts-favbar__bottom">
+                <div className="ts-favbar__bottom-section">
+                  <AppTile abbr="" indicator="ts-ind--red" icon="clock" label="00.00 Hrs"/>
+                  <div className="ts-favbar__avatar">
+                    <span className="ts-favbar__avatar-text">AP</span>
+                  </div>
+                </div>
+                <div className="ts-favbar__time-row">
+                  <span className="ts-favbar__time-text">12:50 PM</span>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Main content ── */}
+            <div className="ts-main">
+              <div className={`ts-main__inner ts-ai--${panelState}`}>
+
+                {/* CRM skeleton */}
+                <div className="ts-crm">
+                  <div className="ts-page-nav"><div className="ts-page-nav__bar"/></div>
+                  <div className="ts-action-bar">
+                    <div className="ts-filter-group">
+                      <div className="ts-filter-pill"/>
+                      <div className="ts-filter-pill"/>
+                      <div className="ts-filter-pill"/>
+                    </div>
+                    <div className="ts-search-box"/>
+                  </div>
+                  <div className="ts-table-wrap">
+                    <div className="ts-table">
+                      <HeaderRow/>
+                      {ROWS.map((widths, i) => <DataRow key={i} widths={widths}/>)}
+                    </div>
+                  </div>
+                  <div className="ts-pagination">
+                    <div className="ts-pagination__info"/>
+                    <div className="ts-pagination__btns">
+                      {[1,2,3,4,5].map(i => <div key={i} className="ts-page-btn"/>)}
+                    </div>
+                  </div>
+                </div>
+
+                {/* ══════════════════ AI PANEL ══════════════════ */}
+                {panelState !== 'closed' && (
+                  <div
+                    className="ts-ai-panel"
+                    style={panelLeft !== null ? { left: panelLeft + 'px' } : undefined}
+                  >
+
+                    {/* AppBar — built-in Move & Resize menu + drag affordance */}
+                    <AppBar
+                      type={appBarType}
+                      orientation={appBarOrientation}
+                      title="AI Assistant"
+                      onMinimize={() => { prevStateRef.current = panelState; goToState('minimized'); }}
+                      onCollapse={() => goToState(prevStateRef.current || 'popover')}
+                      onMove={(target) => goToState(target)}
+                      onDragStart={handleAppBarDragStart}
+                      onClose={()  => setPanelState('closed')}
+                    />
+
+                    {/* Panel body (hidden in minimized state via CSS) */}
+                    <div className="ts-ai-panel__body">
+
+                      {/* SideNavigation — fullscreen only */}
+                      {panelState === 'fullscreen' && (() => {
+                        const q = sideSearch.toLowerCase();
+                        const filteredPinned = q
+                          ? PINNED_CHATS.filter(c => c.label.toLowerCase().includes(q))
+                          : PINNED_CHATS;
+                        const filteredRecent = q
+                          ? RECENT_CHATS.filter(c => c.label.toLowerCase().includes(q))
+                          : RECENT_CHATS;
+                        return (
+                        <div className="ts-ai-sidebar">
+                          <SideNavigation
+                            scheduledTask={true}
+                            sections="Expanded"
+                            task="Default"
+                            activeNav={navVariant === 'tasks' ? 'tasks' : 'home'}
+                            searchValue={sideSearch}
+                            onSearch={setSideSearch}
+                            pinnedChats={filteredPinned}
+                            recentTasks={RECENT_TASKS}
+                            recentChats={filteredRecent}
+                            onNewChat={handleNewChat}
+                            onChatSelect={handleChatSelect}
+                            onNavSelect={({ id }) => setNavVariant(id === 'tasks' ? 'tasks' : 'home')}
+                            onViewAllPinned={() => console.log('view all pinned')}
+                            onViewAllTasks={() => console.log('view all tasks')}
+                          />
+                          <div className="ts-ai-settings">
+                            <Button variant="text" color="neutral" size="md" iconStart="gear">Settings</Button>
+                          </div>
+                        </div>
+                        );
+                      })()}
+
+                      {/* Sidenav drawer — hamburger toggle for popover / docked states */}
+                      {sideNavOpen && panelState !== 'fullscreen' && (
+                        <div
+                          className={`ts-ai-sidenav-drawer${sideNavClosing ? ' is-closing' : ''}`}
+                          onClick={closeSideNav}
+                        >
+                          <div className="ts-ai-sidenav-drawer__panel" onClick={e => e.stopPropagation()}>
+                            <SideNavigation
+                              scheduledTask={true}
+                              sections="Expanded"
+                              task="Default"
+                              activeNav={navVariant === 'tasks' ? 'tasks' : 'home'}
+                              searchValue={sideSearch}
+                              onSearch={setSideSearch}
+                              pinnedChats={PINNED_CHATS}
+                              recentTasks={RECENT_TASKS}
+                              recentChats={RECENT_CHATS}
+                              onNewChat={() => handleNewChat()}
+                              onChatSelect={(c) => { handleChatSelect(c); closeSideNav(); }}
+                              onNavSelect={({ id }) => {
+                                setNavVariant(id === 'tasks' ? 'tasks' : 'home');
+                                closeSideNav();
+                              }}
+                              onViewAllPinned={() => console.log('view all pinned')}
+                              onViewAllTasks={() => console.log('view all tasks')}
+                            />
+                            <div className="ts-ai-sidenav-drawer__settings">
+                              <Button variant="text" color="neutral" size="md" iconStart="gear">Settings</Button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Chat column */}
+                      <div className="ts-ai-panel__chat">
+
+                        {/* NavBar — hamburger only in narrow panel states (not fullscreen) */}
+                        {navVariant === 'tasks' ? (
+                          <NavBar
+                            title="Tasks"
+                            onMenuClick={panelState !== 'fullscreen' ? () => sideNavOpen ? closeSideNav() : setSideNavOpen(true) : undefined}
+                            actionLabel="New task"
+                            actionIcon="plus"
+                            onAction={handleNewTask}
+                          />
+                        ) : (
+                          <NavBar
+                            title={chatTitle}
+                            onMenuClick={panelState !== 'fullscreen' ? () => sideNavOpen ? closeSideNav() : setSideNavOpen(true) : undefined}
+                            showNewChat
+                            onNewChat={handleNewChat}
+                            showMore
+                            onMore={() => console.log('more')}
+                          />
+                        )}
+
+                        {/* Thread */}
+                        <div className="ts-ai-thread" ref={threadRef}>
+                          {showWelcome ? (
+                            <div className="ts-ai-welcome">
+                              <Welcome
+                                name="Sarah"
+                                description="Your AI-powered sales assistant. Ask me about deals, leads, pipeline, or drafts."
+                              />
+                              <SuggestionList
+                                items={navVariant === 'tasks' ? TASK_SUGGESTIONS : activeSuggestions}
+                                onSelect={item => handleSend(item.label)}
+                              />
+                            </div>
+                          ) : (
+                            <div className="t1-chat">
+                              {messages.map(msg =>
+                                msg.role === 'user' ? (
+                                  <div key={msg.id} className="t1-chat__row t1-chat__row--user">
+                                    <ChatBubble
+                                      onEdit={(newText) => handleEditAndResend(msg.id, newText)}
+                                    >{msg.content}</ChatBubble>
+                                  </div>
+                                ) : (
+                                  <div key={msg.id} className="t1-chat__row t1-chat__row--assistant">
+                                    {msg.steps && msg.steps.length > 0 && (
+                                      <ReasoningLog inProgress={false} interrupted={false} steps={msg.steps}/>
+                                    )}
+                                    <Response
+                                      title={msg.title}
+                                      orderedList={msg.orderedList}
+                                      unorderedList={msg.unorderedList}
+                                      contentSlot={renderSlot(msg)}
+                                      filterCount={msg.filterCount}
+                                      sourceCount={msg.sourceCount}
+                                      showFilter={!!msg.filterCount}
+                                      showSource={!!msg.sourceCount}
+                                      filterItems={msg.filterItems}
+                                      sourceItems={msg.sourceItems}
+                                      onRegenerate={msg.userText ? () => handleSend(msg.userText) : undefined}
+                                      showFeedback={!(msg.suggestions && msg.suggestions.length)}
+                                    >
+                                      {msg.body}
+                                    </Response>
+                                    {msg.suggestions && msg.suggestions.length > 0 && (
+                                      <div className="veh-empty-suggestions">
+                                        <SuggestionList
+                                          items={msg.suggestions}
+                                          onSelect={item => handleSend(item.label)}
+                                        />
+                                      </div>
+                                    )}
+                                  </div>
+                                )
+                              )}
+                              {(phase === 'thinking' || phase === 'thought' || phase === 'streaming') && pendingMeta && (
+                                <div className="t1-chat__row t1-chat__row--assistant">
+                                  {/* ReasoningLog stays mounted through ALL three phases —
+                                      never unmounts so it never flashes off/on screen. */}
+                                  <ReasoningLog
+                                    inProgress={phase === 'thinking'}
+                                    interrupted={false}
+                                    steps={pendingMeta.steps}
+                                  />
+                                  {phase === 'streaming' && (
+                                    <Response
+                                      title={pendingMeta.title}
+                                      filterCount={pendingMeta.filterCount}
+                                      sourceCount={pendingMeta.sourceCount}
+                                      showFilter={false}
+                                      showSource={false}
+                                      showFeedback={false}
+                                    >
+                                      <span ref={streamBodyRef} /><span className="ts-ai-cursor" aria-hidden="true"/>
+                                    </Response>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* PromptInput */}
+                        <div className="ts-ai-input">
+                          <PromptInput
+                            onSend={handleSend}
+                            loading={phase !== 'idle'}
+                            disabled={phase !== 'idle'}
+                            placeholder='Ask anything or press "/" for shortcuts'
+                          />
+                          <p className="ts-ai-disclaimer">AI Assistant can make mistakes, so please verify responses.</p>
+                        </div>
+
+                      </div>{/* /ts-ai-panel__chat */}
+                    </div>{/* /ts-ai-panel__body */}
+
+                  </div>
+                )}{/* /ts-ai-panel */}
+
+              </div>{/* /ts-main__inner */}
+            </div>{/* /ts-main */}
+
+          </div>{/* /ts-body */}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<ChatApp/>);
+  });
+  </script>
+</body>
+</html>

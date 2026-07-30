@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Neutral vehicle placeholder glyph. Color = T1 $t1-neutral-400 (rgb 150,154,163 / #969aa3)
+       to match the design token; used only when a vehicle has no photo (spec AC-6). -->
+  <g fill="#969aa3">
+    <path d="M3 14.5c0-.42.22-.8.58-1.02l1.6-.98 1.55-3.3C8.66 8.4 7.9 8 8.7 8h6.6c.8 0 1.53.45 1.87 1.18l1.55 3.32 1.6.98c.36.22.58.6.58 1.02V17c0 .4-.33.72-.72.72h-1.15v-.92c0-.5-.4-.9-.9-.9H6.68c-.5 0-.9.4-.9.9v.92H4.72A.72.72 0 0 1 4 17v-2.5Z"/>
+    <circle cx="7.6" cy="17" r="1.7"/>
+    <circle cx="16.4" cy="17" r="1.7"/>
+  </g>
+</svg>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>t1-vehicle-search — POC Report</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5a6473; --faint: #8a94a3; --line: #e3e7ec;
+    --bg: #ffffff; --panel: #f6f8fa; --accent: #0077d9; --accent-ink: #0e4180;
+    --good: #2d871b; --warn: #b3842d;
+    --max: 980px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #eef1f4; color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55; -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: var(--max); margin: 32px auto; background: var(--bg); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(20,34,48,.10); }
+  header.hero { padding: 40px 48px 28px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,#f8fafc,#ffffff); }
+  .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  h1 { font-size: 30px; line-height: 1.15; margin: 8px 0 6px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); font-size: 15px; margin: 0 0 4px; }
+  .note { color: var(--faint); font-size: 13px; font-style: italic; margin: 10px 0 0; }
+  .meta { color: var(--faint); font-size: 13px; margin-top: 10px; }
+  main { padding: 8px 48px 44px; }
+  section { padding: 26px 0; border-bottom: 1px solid var(--line); }
+  section:last-child { border-bottom: 0; }
+  h2 { font-size: 20px; margin: 0 0 14px; letter-spacing: -.01em; }
+  h3 { font-size: 15px; margin: 22px 0 8px; color: var(--ink); }
+  p { margin: 0 0 12px; color: #2b3442; }
+  a { color: var(--accent); }
+  ul { margin: 0 0 12px; padding-left: 20px; } li { margin: 5px 0; color: #2b3442; }
+  .lead { font-size: 16px; color: #2b3442; }
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 20px 0 4px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .stat .n { font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
+  .stat .l { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .stat .n.accent { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 6px; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); border-bottom: 2px solid var(--line); }
+  td.r, th.r { text-align: right; white-space: nowrap; }
+  tbody tr:last-child td { border-bottom: 0; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .cols h3 { margin-top: 0; }
+  .callout { background: var(--panel); border-left: 4px solid var(--faint); border-radius: 6px; padding: 12px 16px; margin: 14px 0; font-size: 13.5px; color: var(--muted); }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #e7f0fb; color: var(--accent-ink); margin: 2px 2px 0 0; }
+  .shot { margin: 18px 0 22px; }
+  .shot img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 2px 10px rgba(20,34,48,.06); }
+  .shot .cap { font-size: 13px; color: var(--muted); margin-top: 7px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .muted { color: var(--muted); }
+  code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
+  footer { padding: 22px 48px 34px; color: var(--faint); font-size: 12.5px; }
+  @media (max-width: 760px) {
+    header.hero, main { padding-left: 22px; padding-right: 22px; }
+    .stats { grid-template-columns: repeat(2,1fr); } .cols, .grid2 { grid-template-columns: 1fr; }
+  }
+  @media print {
+    body { background: #fff; } .page { box-shadow: none; margin: 0; border-radius: 0; max-width: none; }
+    section { break-inside: avoid; } .shot { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <div class="eyebrow">Proof of Concept · Spec Driven Design</div>
+  <h1>T1 — In-chat Vehicle Inventory Search</h1>
+  <p class="sub">A working prototype of the Tekion T1 AI assistant answering an inventory search, built from a one-line ask using a spec-driven, design-system-grounded AI workflow in Claude Code.</p>
+  <p class="note">Written to be accurate, not persuasive. The cost figures are actual (<code>/cost</code>); the “what was hard” and limitations sections matter as much as the results.</p>
+  <p class="meta"><strong>Owner:</strong> jrajan &nbsp;·&nbsp; <strong>Design system:</strong> T1 (Tekion T1 AI Sales Assistant) &nbsp;·&nbsp; <strong>Date:</strong> 2026-07-30</p>
+  <div class="stats">
+    <div class="stat"><div class="n accent">$31.23</div><div class="l">Total cost (actual)</div></div>
+    <div class="stat"><div class="n">50m 8s</div><div class="l">Active session time</div></div>
+    <div class="stat"><div class="n">+1,010</div><div class="l">Lines of code</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">AI-panel flow · four states</div></div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2>1. Summary</h2>
+  <p class="lead">From a one-line ask, we produced a working T1 vehicle-search response in one session. It runs in a browser, consumes <strong>T1</strong> as a read-only source of truth (its real component bundle and tokens), and covers the ask — a count summary plus a list of matching vehicles — along with the three unhappy states (empty, loading, error).</p>
+  <div class="cols">
+    <div>
+      <h3>What it is</h3>
+      <p>A functional, on-brand prototype — a fork of T1's canonical <code>chat-interface.html</code> (React via in-browser Babel), seeded to land on the inventory-search scenario — plus a full artifact chain (constitution → spec → plan → tasks → drift log) and per-step visual reviews.</p>
+    </div>
+    <div>
+      <h3>What it is not</h3>
+      <p>Production code; a real integration (results, VINs, stock numbers are mocked); or a general search — it's a single seeded flow, not the whole assistant. The natural-language query→inventory mapping was <strong>out of scope</strong>. The vehicle images are royalty-free <strong>stock photos of other cars</strong> (Audi, Maserati, Celica), not the labeled Camrys. It <strong>does not open by double-click</strong> — it needs a local server. It was not autonomous.</p>
+    </div>
+  </div>
+  <p class="muted">Cost was <strong>$31.23</strong> over ~50 minutes of active session time. This is a much smaller scope than a full page build, so the low figure reflects less work — not a proven efficiency (see §7.4).</p>
+</section>
+
+<section>
+  <h2>2. Visual evidence</h2>
+  <div class="shot">
+    <img src="screenshots/01-result-popover.png" alt="Docked AI panel result" />
+    <div class="cap">Docked AI panel — “Found 4 Camrys in your inventory” + one <code>ListingCard</code> (photo · YMMM · VIN · Stock# · New/Used chip · transmission). Photos are stock placeholders and do not match the labeled trims.</div>
+  </div>
+  <div class="grid2">
+    <div class="shot">
+      <img src="screenshots/02-fullscreen.png" alt="Full-screen assistant" />
+      <div class="cap">Same result in the full-screen assistant, with T1's SideNavigation.</div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/03-empty.png" alt="Empty / no-match state" />
+      <div class="cap">No-match — “No Toyota Supras found…” + <code>SuggestionList</code> to broaden the search; no card.</div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/04-loading.png" alt="Loading / searching state" />
+      <div class="cap">Searching — in-progress <code>ReasoningLog</code>, no results card yet, composer disabled.</div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/05-error.png" alt="Error state" />
+      <div class="cap">Inventory-lookup failure — error copy + “Try again” / “Contact support”; no card.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>3. What was built</h2>
+  <table>
+    <thead><tr><th style="width:150px;">Area</th><th>Delivered</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Shell</strong></td><td>Fork of T1's canonical <code>chat-interface.html</code>; locked Tekion chrome (<code>.ts-menubar</code>/<code>.ts-body</code>) left untouched; docked-popover + full-screen surfaces</td></tr>
+      <tr><td><strong>Result</strong></td><td>AI <code>Response</code> with a sentence-case count summary + one <code>ListingCard</code> of 4 vehicle rows</td></tr>
+      <tr><td><strong>Row fields</strong></td><td>YMMM (title), VIN (description), Stock# (id), New/Used (<code>Chip</code>), transmission (subtitle), vehicle photo (see deviation) — display-only rows</td></tr>
+      <tr><td><strong>States</strong></td><td>Results (success), empty + broaden-search suggestions, loading/searching (<code>ReasoningLog</code>), error + retry</td></tr>
+      <tr><td><strong>Photo thumbnail</strong></td><td>Vehicle photo painted into the <code>ListingCard</code> avatar slot; neutral placeholder for the no-photo row (row 4)</td></tr>
+      <tr><td><strong>Review affordances</strong></td><td><code>?scenario=match|empty|loading|error</code> and <code>?panel=popover|left|right|fullscreen</code> seed switches, so each state/surface is reviewable in isolation</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Each step was verified in a live browser — not only eyeballed — with DOM assertions for facts a screenshot can't prove (1 card / 4 rows, no pointer cursor on rows, no results card during loading, and a diff confirming the locked shell CSS was unchanged).</p>
+</section>
+
+<section>
+  <h2>4. How it was done — the workflow</h2>
+  <ul>
+    <li><strong>Scaffold</strong> — a <em>constitution</em> pins the project to T1 and inherits its visual direction and hard rules (tokens only, Phosphor only, never rebuild the shell).</li>
+    <li><strong>Spec</strong> — the one-line ask became a full spec (problem, scope, flows, component map, four-state matrix, 11 numbered acceptance criteria). It scored completeness and asked 4 targeted questions where the ask was ambiguous (card layout, image handling, row interactivity, empty-state behavior).</li>
+    <li><strong>Plan + tasks</strong> — 6 checkpointed build steps, each re-reading the spec and stopping for review; every task traces to an acceptance criterion.</li>
+    <li><strong>Build</strong> — step by step, verified in-browser, checkpointed with the designer between steps.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Design-system fidelity &amp; governance</h2>
+  <ul>
+    <li><strong>T1-grounded.</strong> Real T1 components (<code>ChatBubble</code>, <code>Response</code>, <code>ListingCard</code>, <code>Chip</code>, <code>SuggestionList</code>, <code>ReasoningLog</code>) and <code>var(--t1-*)</code> tokens; no hardcoded colors in the added styling; no third-party UI; Phosphor icons only.</li>
+    <li><strong>Read-only enforced.</strong> Nothing under <code>design-systems/t1/</code> was modified; nothing outside <code>projects/t1-vehicle-search/</code> was touched. The locked Tekion chrome was verified <strong>byte-identical to the template</strong> by diff.</li>
+    <li><strong>1 deviation flagged, not faked.</strong> T1's <code>ListingCard</code> has no image prop and <em>intentionally hides its avatar in the narrow panel</em>; showing a vehicle photo there required a fork-level CSS workaround plus an override of that hide. Both are recorded in <code>constitution.md §5</code> and were <strong>explicitly signed off</strong> by the designer. On its own it's a byproduct of building against the real system, not a deliverable.<br>
+      <span class="tag">vehicle photo in ListingCard</span><span class="tag">narrow-panel avatar-hide override</span><span class="tag">candidate: ListingCard image prop</span></li>
+    <li><strong>Full drift log</strong> — every deviation and judgment call recorded in <code>tasks.md</code>.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="cols">
+    <div>
+      <h2>6. What went well</h2>
+      <ul>
+        <li>The 4 clarifying questions up front settled ambiguity (card layout, image handling, interactivity, empty behavior) before any code.</li>
+        <li>The output reads as genuine T1 because it composes T1's actual components and tokens, not approximations; the shell was provably untouched.</li>
+        <li>In-browser + DOM-assertion verification caught a real issue (the avatar hidden in the narrow panel) a glance would have missed.</li>
+        <li>The artifact chain + per-step screenshot reviews make every decision auditable by someone who wasn't in the session.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What was hard</h2>
+      <ul>
+        <li><strong>My cost estimate was wrong</strong> — I said $10–25; actual was $31.23 (~1.3–3× low). Underweighted cache-read volume.</li>
+        <li><strong>The brief's core requirement wasn't natively supported</strong> — “an image per vehicle” has no home in <code>ListingCard</code>. I also <strong>misjudged in Step 2 that the avatar was rendering</strong> when a container query was hiding it — caught in Step 3, not first-try-correct.</li>
+        <li><strong>The deliverable doesn't open by double-click</strong> — the designer hit <code>Failed to fetch</code> after handoff (<code>file://</code> blocks the T1 loader's <code>fetch()</code>). A real sharing gap surfaced post-build.</li>
+        <li><strong>The stock-photo fetch was unreliable</strong> — two pulls were unusable (a car undercarriage, a hood-open vintage car) and discarded; the usable three are the wrong makes for the labels.</li>
+        <li><strong>A copy inconsistency slipped through</strong> — the empty state paired a “Ferrari” query with “Camry” wording; caught and corrected.</li>
+        <li><strong>Verification tooling added overhead</strong> — the preview restarted the panel animation on resize; used a headless browser + seed switches for clean frames.</li>
+        <li><strong>It needed a human at every checkpoint</strong> — the override sign-off and photo swap were designer calls. Good for control; the workflow is assisted, not autonomous.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>7. Cost breakdown (actual, from <code>/cost</code>)</h2>
+
+  <h3>7.1 Measured totals</h3>
+  <table>
+    <tbody>
+      <tr><td>Total cost</td><td class="r"><strong>$31.23</strong></td></tr>
+      <tr><td>Active time</td><td class="r">50m 8s (API compute 45m 29s)</td></tr>
+      <tr><td>Code produced</td><td class="r">+1,010 / −88 lines</td></tr>
+      <tr><td>Model</td><td class="r">Opus 4.8 · 100% (no Haiku)</td></tr>
+      <tr><td>Cache hit rate</td><td class="r">98%</td></tr>
+      <tr><td>Tokens (reported)</td><td class="r">cache read 85.0M · cache write 1.5M · output 4.5k · input 657</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 Token composition (~86.5M total)</h3>
+  <table>
+    <thead><tr><th>Category</th><th class="r">Tokens</th><th class="r">Share</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Cache read</strong></td><td class="r">85.0M</td><td class="r">~98%</td><td>Re-reading the working context each turn — T1 source (CLAUDE.md, template, component specs), artifact chain, prior conversation, ~13 verification screenshots</td></tr>
+      <tr><td><strong>Cache write</strong></td><td class="r">1.5M</td><td class="r">~2%</td><td>First-time ingest of that context into the cache</td></tr>
+      <tr><td>Output</td><td class="r">4.5k</td><td class="r">&lt;0.01%</td><td>Newly generated tokens (as reported)</td></tr>
+      <tr><td>Input</td><td class="r">657</td><td class="r">&lt;0.01%</td><td>Uncached prompt tokens</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">Cost is dominated by context re-reads, not generation. The 98% cache-hit rate held it near $31; without caching it would have been several times higher.</p>
+  <div class="callout"><code>/cost</code> does not itemize dollars per token category, and the reported output count (4.5k) is lower than +1,010 lines of code would imply — so the per-category numbers are volumes as displayed, not a reconciled dollar split. The authoritative figure is the <strong>$31.23 total</strong>.</div>
+
+  <h3>7.3 Unit economics (derived from the $31.23 total)</h3>
+  <table>
+    <thead><tr><th>Unit</th><th class="r">Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Per million tokens processed (blended)</td><td class="r">~$0.36</td></tr>
+      <tr><td>Per active hour</td><td class="r">~$37</td></tr>
+      <tr><td>Per build step (6 steps)</td><td class="r">~$5</td></tr>
+      <tr><td>Per line of code produced</td><td class="r">~$0.03</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.4 Reading the cost honestly</h3>
+  <ul>
+    <li><strong>$31 for a single seeded flow is real money.</strong> It's favorable <em>if</em> the alternative is designer + engineer hours — but that comparison is an unmeasured estimate, not a benchmark, and this was one flow with an engaged reviewer, not a hands-off batch.</li>
+    <li><strong>Scope, not efficiency, explains the low figure.</strong> A larger companion POC (<code>gm-vsr</code>, a full multi-section search page over 10 steps) cost <strong>$102.35</strong>. This one is cheaper because it did <em>less</em> — one seeded AI-panel turn with four states — not because it was more efficient per unit of work. The two are not directly comparable.</li>
+    <li><strong>The cost is front-loaded in context</strong> (re-reading the design system + growing session). That implies per-screen cost <em>should</em> fall when the extraction is reused across projects — a <strong>projection</strong>, not something this POC proved.</li>
+    <li><strong>Levers, in priority order:</strong> reuse the design-system extraction across projects; prefer DOM assertions over screenshots for verification; run longer autonomous stretches between checkpoints.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>8. Assessment &amp; recommendation</h2>
+  <p>For turning a one-line ask into a working, on-brand, verified prototype of a T1 response — with all four states and an auditable trail — this was effective: one flow in one session for ~$31, with no off-brand invention and the locked shell provably untouched. The caveats are equally real: it's a prototype not production; the data and photos are mocked (and the photos don't match their labels); the brief's image requirement needed a workaround and a signed-off deviation; the file doesn't open without a server; it needed continuous human review; and the per-screen economics at scale are a projection, not a result.</p>
+  <p><strong>Suggested next steps (each with a cost/effort implication):</strong></p>
+  <ul>
+    <li><strong>Try it on 2–3 more T1 asks</strong> to test whether per-screen cost actually drops with design-system reuse — the key open question.</li>
+    <li><strong>Route the <code>ListingCard</code> image-prop gap</strong> to the T1 design-system owner (now logged in T1's “Known gaps”).</li>
+    <li><strong>Swap in licensed dealer inventory photos</strong> in place of the stock placeholders.</li>
+    <li><strong>Produce a portable or hosted build</strong> so stakeholders can open it without running a server.</li>
+    <li><strong>If pursued further:</strong> wire live inventory data and the natural-language query→inventory routing — both out of scope here.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  Artifact chain: <code>constitution.md</code> · <code>spec.md</code> · <code>plan.md</code> · <code>tasks.md</code> (incl. drift log) · <code>brief.md</code> (original ask, verbatim).
+  Live prototype: <code>projects/t1-vehicle-search/Vehicle Search.html</code> — served locally over HTTP (<code>file://</code> will not work). Cost/time are actual values from <code>/cost</code>; unit economics are derived from those totals.
+</footer>
+
+</div>
+</body>
+</html>
