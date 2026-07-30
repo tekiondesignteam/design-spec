@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Designer's Guide — Spec-Driven Design Workspace</title>
+<style>
+  :root {
+    --ink: #1a2230; --muted: #5a6473; --faint: #8a94a3; --line: #e3e7ec;
+    --bg: #ffffff; --panel: #f6f8fa; --panel2: #eef2f6;
+    --accent: #0077d9; --accent-ink: #0e4180; --accent-soft: #e7f0fb;
+    --good: #2d871b; --warn: #b3842d; --danger: #c0392b;
+    --max: 1120px; --nav: 232px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: #eef1f4; color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: var(--max); margin: 32px auto; background: var(--bg); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 40px rgba(20,34,48,.10); }
+
+  header.hero { padding: 44px 48px 30px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,#f8fafc,#ffffff); }
+  .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  h1 { font-size: 32px; line-height: 1.12; margin: 8px 0 8px; letter-spacing: -.015em; }
+  .sub { color: var(--muted); font-size: 16px; margin: 0 0 4px; max-width: 720px; }
+  .note { color: var(--faint); font-size: 13px; margin: 12px 0 0; }
+
+  .flowbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 22px 0 2px; }
+  .flowbar .fchip { display: inline-flex; flex-direction: column; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 8px 13px; min-width: 96px; }
+  .flowbar .fchip b { font-size: 13px; }
+  .flowbar .fchip span { font-size: 11px; color: var(--faint); margin-top: 1px; }
+  .flowbar .arr { color: var(--faint); font-weight: 700; }
+
+  .layout { display: grid; grid-template-columns: var(--nav) 1fr; align-items: start; }
+  nav.toc { position: sticky; top: 0; align-self: start; padding: 26px 14px 26px 34px; max-height: 100vh; overflow: auto; border-right: 1px solid var(--line); }
+  nav.toc .tt { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--faint); font-weight: 700; margin: 0 0 10px; }
+  nav.toc a { display: block; color: var(--muted); text-decoration: none; font-size: 13.5px; padding: 5px 10px; border-radius: 7px; border-left: 2px solid transparent; }
+  nav.toc a:hover { background: var(--panel); color: var(--ink); }
+  nav.toc a.active { color: var(--accent-ink); background: var(--accent-soft); border-left-color: var(--accent); font-weight: 600; }
+
+  main { padding: 8px 48px 44px; min-width: 0; }
+  section { padding: 30px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 20px; }
+  section:last-child { border-bottom: 0; }
+  h2 { font-size: 21px; margin: 0 0 6px; letter-spacing: -.01em; }
+  h2 .num { color: var(--faint); font-weight: 700; margin-right: 8px; }
+  h3 { font-size: 15px; margin: 22px 0 8px; }
+  p { margin: 0 0 12px; color: #2b3442; }
+  a { color: var(--accent); }
+  ul { margin: 0 0 12px; padding-left: 20px; } li { margin: 6px 0; color: #2b3442; }
+  .lead { font-size: 16.5px; color: #2b3442; }
+  code { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; font-size: 12.5px; }
+
+  pre { background: #0f1729; color: #d7e2f2; border-radius: 10px; padding: 14px 16px; overflow: auto; font-size: 13px; line-height: 1.5; margin: 4px 0 16px; }
+  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: 13px; }
+  pre .cmt { color: #7c8aa5; }
+  pre .cmd { color: #7fd0ff; }
+
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); border-bottom: 2px solid var(--line); }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:nth-child(even) { background: #fbfcfd; }
+
+  .callout { border-radius: 8px; padding: 13px 16px; margin: 14px 0; font-size: 14px; }
+  .callout.tip { background: #f0f8f1; border-left: 4px solid var(--good); }
+  .callout.warn { background: #fdf6ec; border-left: 4px solid var(--warn); }
+  .callout.info { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+  .callout b { color: var(--ink); }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .cols h3 { margin-top: 0; }
+
+  .steps { list-style: none; margin: 6px 0 0; padding: 0; counter-reset: step; }
+  .steps > li { position: relative; padding: 0 0 20px 46px; margin: 0; }
+  .steps > li:before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: -2px; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+  .steps > li:not(:last-child):after { content: ""; position: absolute; left: 14px; top: 30px; bottom: 4px; width: 2px; background: var(--line); }
+  .steps h3 { margin: 4px 0 6px; font-size: 16px; }
+  .steps .then { color: var(--accent-ink); font-size: 13.5px; margin-top: 6px; }
+
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 6px 0 0; }
+  .rule { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; }
+  .rule b { display: block; font-size: 14px; margin-bottom: 3px; }
+  .rule span { font-size: 13px; color: var(--muted); }
+
+  footer { padding: 22px 48px 34px; color: var(--faint); font-size: 12.5px; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 880px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { display: none; }
+    header.hero, main, footer { padding-left: 22px; padding-right: 22px; }
+    .cols, .rules { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <div class="eyebrow">Designer's Guide</div>
+  <h1>Spec-Driven Design Workspace</h1>
+  <p class="sub">Describe <em>what</em> you want to build — grounded in a real design system — and Claude builds a working, reviewable prototype without drifting from your intent. You don't need to write code. You do need to be concrete.</p>
+  <div class="flowbar">
+    <div class="fchip"><b>constitution</b><span>frame</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>spec</b><span>what</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>plan</b><span>order</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>tasks</b><span>checklist</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>build</b><span>HTML</span></div>
+    <div class="arr">→</div>
+    <div class="fchip"><b>reviews</b><span>evidence</span></div>
+  </div>
+  <p class="note">Each artifact is approved one at a time — that's what keeps a long AI session from drifting off your intent.</p>
+</header>
+
+<div class="layout">
+  <nav class="toc" id="toc">
+    <p class="tt">On this page</p>
+    <a href="#idea">The idea in a minute</a>
+    <a href="#before">Before you start</a>
+    <a href="#artifacts">The five artifacts</a>
+    <a href="#workflow">The workflow</a>
+    <a href="#rules">Rules Claude follows</a>
+    <a href="#running">Running your prototype</a>
+    <a href="#results">Getting better results</a>
+    <a href="#reference">Quick reference</a>
+  </nav>
+
+  <main>
+
+  <section id="idea">
+    <h2><span class="num">1</span>The idea in one minute</h2>
+    <p class="lead">Long AI sessions drift: Claude fills gaps with guesses and forgets decisions made an hour ago. This workspace fights that with a chain of small artifacts you approve one at a time.</p>
+    <p>Each project lives in its own folder under <code>projects/&lt;name&gt;/</code> and is pinned to <b>one</b> design system (<code>t1</code>, <code>alloy</code>, …). The design system is the source of truth for look, type, spacing, and components — you never invent visual style, you inherit it.</p>
+    <div class="callout info">The deliverable is always <b>a single HTML file</b> you can open in a browser. No build tools, no bundlers.</div>
+  </section>
+
+  <section id="before">
+    <h2><span class="num">2</span>Before you start</h2>
+    <ul>
+      <li>Prototypes are served over a local web address, <b>not</b> by double-clicking the file. (Double-clicking uses <code>file://</code>, which browsers block for these prototypes.) See §6.</li>
+      <li>You work <b>only</b> inside your own <code>projects/&lt;name&gt;/</code> folder. Everything under <code>design-systems/</code> is read-only — a commit that touches it is blocked automatically.</li>
+      <li>Pick your design system up front. Designers can't add new ones; ask a maintainer if the system you need isn't listed.</li>
+    </ul>
+    <p>Check which design systems exist:</p>
+    <pre><code><span class="cmd">ls</span> design-systems/</code></pre>
+  </section>
+
+  <section id="artifacts">
+    <h2><span class="num">3</span>The five artifacts</h2>
+    <p>Everything Claude builds traces back to these files. You read and approve them; Claude fills them in.</p>
+    <table>
+      <thead><tr><th>File</th><th>What it is</th><th>Who writes it</th></tr></thead>
+      <tbody>
+        <tr><td><code>constitution.md</code></td><td>The fixed frame: boundaries + the design system's visual language. Read this first.</td><td>Generated by <code>/new-project</code>, then you review</td></tr>
+        <tr><td><code>spec.md</code></td><td><em>What</em> you're building: the problem, scope, user flows, components, states, and acceptance criteria (<code>AC-1</code>, <code>AC-2</code>, …).</td><td><code>/spec</code>, with your input</td></tr>
+        <tr><td><code>plan.md</code></td><td>The build broken into small, checkpointed steps.</td><td>You + Claude</td></tr>
+        <tr><td><code>tasks.md</code></td><td>A checklist — one line per behavior, each citing an acceptance criterion. Also the drift log.</td><td>Claude, as it builds</td></tr>
+        <tr><td><code>reviews/step-N.md</code></td><td>Screenshots + checks proving each step matches the spec, at every breakpoint.</td><td>Claude, at each checkpoint</td></tr>
+      </tbody>
+    </table>
+    <div class="callout tip"><b>Acceptance criteria (<code>AC-n</code>) are the backbone.</b> Every task cites the AC it satisfies, and every review frame proves an AC is true in the browser. If it isn't in the spec as an AC, it doesn't get built.</div>
+  </section>
+
+  <section id="workflow">
+    <h2><span class="num">4</span>The workflow, step by step</h2>
+    <ol class="steps">
+      <li>
+        <h3>Scaffold the project</h3>
+        <pre><code><span class="cmd">/new-project</span> &lt;name&gt; [design-system]</code></pre>
+        <ul>
+          <li><code>&lt;name&gt;</code> is lowercase, kebab-case, no spaces (e.g. <code>vehicle-search</code>).</li>
+          <li>If you skip the design system, Claude lists the options and asks you to pick.</li>
+        </ul>
+        <p>This creates <code>projects/&lt;name&gt;/</code> with the four template files and a <code>RUN.md</code>, and fills the constitution from the chosen design system. <b>Nothing gets designed yet.</b></p>
+        <p class="then">→ Then: read <code>constitution.md</code>. Does the visual direction and the boundary look right?</p>
+      </li>
+      <li>
+        <h3>Write the spec</h3>
+        <pre><code><span class="cmd">/spec</span> &lt;name&gt; &lt;your PRD&gt;</code></pre>
+        <p>The source can be pasted text, a Confluence/Jira link, a Figma link, a URL, or a file path. Claude saves it to <code>brief.md</code> so the spec is traceable.</p>
+        <p>Claude then scores your brief on six dimensions (problem, scope, flows, components, states, acceptance criteria) and <b>only asks about the gaps</b>. Anything you skip stays a visible <code>{{TODO}}</code>, never an invented requirement.</p>
+        <p class="then">→ Then: read <code>spec.md</code>. This is where you kill ambiguity. Be concrete — name real components, real states, real copy. Vague specs produce vague UI.</p>
+      </li>
+      <li>
+        <h3>Plan the build</h3>
+        <p>Ask Claude to fill in <code>plan.md</code>: order the work so each step is small and reviewable — shell/layout first, then sections, then states (empty / loading / error / success), then polish.</p>
+      </li>
+      <li>
+        <h3>Build, one checkpoint at a time</h3>
+        <p>Claude builds step by step. Before each step it re-reads the constitution and spec; after each step it records a <code>reviews/step-N.md</code> walkthrough — screenshots at every breakpoint, plus checks a screenshot can't prove (element counts, scroll behavior, "the rest of the screen didn't change").</p>
+        <p><b>Then it stops and waits for you to review</b> before moving on. Checkpoints are where drift gets caught — use them. Review <code>reviews/step-N.md</code>, then tell Claude to continue.</p>
+      </li>
+      <li>
+        <h3>Done</h3>
+        <p>A screen is done when it uses only the design system's tokens and components, every state in the spec is built, it renders at every breakpoint, and nothing outside your project folder changed. <code>tasks.md</code> tracks all of this.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="rules">
+    <h2><span class="num">5</span>The rules Claude follows</h2>
+    <p>So you know what to expect:</p>
+    <div class="rules">
+      <div class="rule"><b>One folder</b><span>Only <code>projects/&lt;name&gt;/</code> is ever modified.</span></div>
+      <div class="rule"><b>One design system</b><span>No mixing, borrowing, or inventing tokens. A missing piece is logged as a <em>gap</em> in the constitution, not faked.</span></div>
+      <div class="rule"><b>One HTML file, no build step</b><span>Plain HTML/CSS/JS, or React via in-browser Babel. Never a Vite/webpack app that must be compiled.</span></div>
+      <div class="rule"><b>Every state, every breakpoint</b><span>Empty, loading, error, and success — verified visually and with a DOM check.</span></div>
+      <div class="rule"><b>Drift is logged, not hidden</b><span>If the UI diverges from the spec, it goes in the drift log in <code>tasks.md</code> and the spec is updated first.</span></div>
+      <div class="rule"><b>kebab-case filenames</b><span>No spaces, no leading <code>_</code> — they break URLs and hosting.</span></div>
+    </div>
+    <div class="callout warn">Want to intentionally break from the design system? That's a <b>deviation</b> — it gets recorded in constitution §5 with a reason. Nothing silent.</div>
+  </section>
+
+  <section id="running">
+    <h2><span class="num">6</span>Running your prototype</h2>
+    <p>Serve the repo over a local web address, then open your file:</p>
+    <pre><code><span class="cmd">cd</span> &lt;repo-root&gt;
+<span class="cmd">python3</span> -m http.server 4599
+<span class="cmt"># open http://localhost:4599/projects/&lt;name&gt;/index.html</span></code></pre>
+    <p>Your project's <code>RUN.md</code> has the exact command. <b>Don't double-click the HTML file</b> — <code>file://</code> is blocked for any prototype that loads its kit bundle.</p>
+    <ul>
+      <li><b>Sharing outside the repo?</b> Ask for a <b>Portable build</b> — a self-contained file that inlines the kit so it opens by double-click (see <code>plan.md</code>).</li>
+      <li><b>Hosting for a team?</b> GitHub Pages gives every project a real <code>https://</code> link (see <a href="DEPLOY.md">DEPLOY.md</a>). Note this publicly exposes the design system — prefer a Portable build for internal-only work.</li>
+    </ul>
+  </section>
+
+  <section id="results">
+    <h2><span class="num">7</span>Getting better results</h2>
+    <ul>
+      <li><b>Be specific in the spec.</b> "A card with the vehicle photo, price in bold, and a disabled Reserve button when out of stock" beats "a nice vehicle card."</li>
+      <li><b>Name the unhappy paths.</b> Empty results, no permission, network error — these are the #1 cause of "this isn't what I wanted."</li>
+      <li><b>Approve at every checkpoint.</b> Don't let Claude build five steps then review. Small reviews catch drift cheaply.</li>
+      <li><b>Re-read the constitution when a session gets long</b> — and ask Claude to as well. It's the anchor.</li>
+      <li><b>Want the design pushed further?</b> Ask Claude to use the <code>impeccable</code> skill for a design-quality pass (hierarchy, spacing, states, accessibility).</li>
+    </ul>
+  </section>
+
+  <section id="reference">
+    <h2><span class="num">8</span>Quick reference</h2>
+    <table>
+      <thead><tr><th>I want to…</th><th>Do this</th></tr></thead>
+      <tbody>
+        <tr><td>Start a new project</td><td><code>/new-project &lt;name&gt; &lt;design-system&gt;</code></td></tr>
+        <tr><td>Turn a PRD into a spec</td><td><code>/spec &lt;name&gt; &lt;paste / link / file&gt;</code></td></tr>
+        <tr><td>See available design systems</td><td><code>ls design-systems/</code></td></tr>
+        <tr><td>Open a prototype</td><td>Serve over http (see project <code>RUN.md</code>), never <code>file://</code></td></tr>
+        <tr><td>Share outside the repo</td><td>Ask for a Portable build</td></tr>
+        <tr><td>Host for a team</td><td>GitHub Pages — see <a href="DEPLOY.md">DEPLOY.md</a></td></tr>
+        <tr><td>Check what's built vs. spec</td><td>Read <code>tasks.md</code> and <code>reviews/step-N.md</code></td></tr>
+      </tbody>
+    </table>
+    <div class="callout info">Two worked examples live in the repo — <a href="projects/gm-vsr/">gm-vsr</a> and <a href="projects/t1-vehicle-search/">t1-vehicle-search</a>. Open their <code>spec.md</code>, <code>tasks.md</code>, and <code>reviews/</code> to see the whole chain end to end.</div>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  Designer's Guide · Spec-driven design workspace. Companion to <a href="GUIDE.md">GUIDE.md</a> and <a href="DEPLOY.md">DEPLOY.md</a>.
+</footer>
+
+</div>
+
+<script>
+  // Highlight the current section in the sidebar as you scroll.
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (l) { l.classList.remove('active'); });
+        var a = map[e.target.id];
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  document.querySelectorAll('main section').forEach(function (s) { obs.observe(s); });
+</script>
+</body>
+</html>
