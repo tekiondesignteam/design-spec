@@ -51,7 +51,8 @@ Default: **none** — this project inherits {{DESIGN_SYSTEM}} exactly. Record he
 A screen is done when:
 
 - It uses only {{DESIGN_SYSTEM}} tokens and components (per §1–§3).
-- It is **built in {{DESIGN_SYSTEM}}'s native format** — follow `design-systems/{{DESIGN_SYSTEM}}/CLAUDE.md` (its canonical template to fork or its component-creation process). Do not substitute a different framework, and do not build a standalone file from scratch unless that CLAUDE.md says to. Any departure is a §5 deviation.
+- The deliverable is **always a single browser-openable HTML file — no build step, no bundler.** Allowed: plain HTML/CSS/JS, or React/JSX transpiled in-browser via **Babel Standalone** inline (as T1's `chat-interface.html` does). Never a Vite/TS/webpack app that must be compiled.
+- It uses {{DESIGN_SYSTEM}}'s tokens, CSS, components, and conventions (`design-systems/{{DESIGN_SYSTEM}}/CLAUDE.md`) — link/consume its token CSS for visual fidelity. Where {{DESIGN_SYSTEM}}'s native workflow assumes a bundler (e.g. Vite/TS), render its components via Babel or apply its CSS classes in plain HTML instead, so the output stays a single openable file (note it in §5).
 - Every state in the spec (empty / loading / error / success) is built.
 - It follows {{DESIGN_SYSTEM}}'s visual direction (§2), with any deviation recorded in §5.
 - Nothing outside `projects/{{PROJECT_NAME}}/` was modified.
