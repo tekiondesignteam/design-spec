@@ -85,7 +85,7 @@ This file is inherited by every project built on T1. It records only values that
 
 ## 13. Governance
 
-- Who approves exceptions/deviations to this file: **The T1 design-system owner/maintainer** signs off on any deviation. (Role recorded; add the specific person's name here.) The Figma "T1 Components" file remains the design source of truth.
+- Who approves exceptions/deviations to this file: **Alpesh Karanpuria** (akaranpuria@tekion.com), T1 design-system owner/maintainer, signs off on any deviation. The Figma "T1 Components" file remains the design source of truth.
 - Where exceptions get logged: **Per project only** — in that project's `constitution.md` §5 "Project-specific deviations" (date / what / who approved). There is intentionally no system-wide exceptions log; every deviation is project-scoped.
 - Review cadence for this document: **Every release** — reviewed and updated at each CalVer release, when the system actually changes.
 
@@ -99,6 +99,6 @@ This file is inherited by every project built on T1. It records only values that
 4. **Tap target** — ensure interactive controls reserve a 32×32px hit area.
 5. **Text expansion** — audit fixed-width labels for 1.3x tolerance.
 6. **Versioning** — stamp the kit with a CalVer version and create `design-systems/t1/CHANGELOG.md`.
-7. **Governance** — record the specific owner's name in §13.
+7. **Governance** — owner recorded in §13 (Alpesh Karanpuria). ✓
 
 Decisions marked here are binding until changed via §13 governance (owner sign-off, reviewed every release).
