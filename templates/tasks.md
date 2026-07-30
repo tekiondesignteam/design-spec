@@ -27,21 +27,25 @@ Grouped by plan step. **One behavior per line, each citing the spec acceptance c
 ### Step 1 — {{Shell / layout}}
 - [ ] [AC-_] {{behavior}}
 - [ ] [AC-_] {{behavior}}
+- _Review:_ `reviews/step-1.md` (browser walkthrough of the ACs above)
 
 ### Step 2 — {{First section}}
 - [ ] [AC-_] {{behavior}}
 - [ ] [AC-_] {{behavior}}
+- _Review:_ `reviews/step-2.md`
 
 ### Step 3 — {{States}}
 - [ ] [AC-_] Empty state: {{}}
 - [ ] [AC-_] Loading state: {{}}
 - [ ] [AC-_] Error state: {{}}
 - [ ] [AC-_] Success state: {{}}
+- _Review:_ `reviews/step-3.md`
 
 ## Coverage (check at the final checkpoint)
 
 - [ ] Every `AC-n` in `spec.md` is cited by at least one task above (no orphaned criteria).
 - [ ] Every task cites a real `AC-n` (no tasks without a source criterion).
+- [ ] Every build step has a `reviews/step-N.md` walkthrough showing its cited ACs passing in the browser.
 
 ---
 
